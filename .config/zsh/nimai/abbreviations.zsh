@@ -1,7 +1,5 @@
-# quick piping
-abbr grepp='| grep'
-abbr sedd='| sed'
-abbr awkk='| awk'
+# shorted names
+abbr tp='trash-put'
 
 # git abbrevations
 abbr ga='git add'
@@ -19,16 +17,13 @@ abbr glol='git log --graph --oneline --decorate'
 
 # ls abbrevations
 abbr l='ls -A'
-abbr la='ls -lAh'
-abbr ll='ls -lh'
-abbr lsa='ls -lah'
+abbr ll='ls -lAh'
 
 # tmux abbrevations
 abbr ta='tmux attach -t'
 abbr tkss='tmux kill-session -t'
 abbr tksv='tmux kill-server'
 abbr tl='tmux list-sessions'
-abbr tp='trash-put'
 abbr ts='tmux new-session -s'
 
 # yadm abbrevations
