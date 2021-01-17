@@ -1,0 +1,5 @@
+#!/bin/sh
+
+LOCKSCREEN_FILE="$HOME/.config/lockscreen"
+
+i3lock -i "${LOCKSCREEN_FILE}"

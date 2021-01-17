@@ -1,0 +1,34 @@
+! Dracula Xresources palette {{{
+
+*.foreground: #f8f8f2
+*.background: #0e1419
+*.color0:     #000000
+*.color8:     #4d4d4d
+*.color1:     #ff5555
+*.color9:     #ff6e67
+*.color2:     #50fa7b
+*.color10:    #5af78e
+*.color3:     #f1fa8c
+*.color11:    #f4f99d
+*.color4:     #bd93f9
+*.color12:    #caa9fa
+*.color5:     #ff79c6
+*.color13:    #ff92d0
+*.color6:     #8be9fd
+*.color14:    #9aedfe
+*.color7:     #bfbfbf
+*.color15:    #e6e6e6
+
+dmenu.background :    #6272a4
+dmenu.foreground :    #f8f8f2
+dmenu.selbackground : #bd93f9
+dmenu.selforeground : #f8f8f2
+
+dwm.selbgcolor :          #282a46
+dwm.normbgcolor :         #6272a4
+dwm.selfgcolor :          #f8f8f2
+dwm.normfgcolor :         #f8f8f2
+dwm.selbordercolor :      #f8f8f2
+dwm.normbordercolor    :  #282a46
+
+!}}}

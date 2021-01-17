@@ -1,0 +1,35 @@
+#!/bin/sh
+
+WALLPAPER_FILE="$HOME/.config/wallpaper"
+LOCKSCREEN_FILE="$HOME/.config/lockscreen"
+KEYWORD=""
+DISPLAY_RES=$(xdpyinfo | grep dimensions | sed -r 's/^[^0-9]*([0-9]+x[0-9]+).*$/\1/')
+
+while getopts ":k:" o; do
+    case "${o}" in
+        k)
+            KEYWORD="${OPTARG}"
+            ;;
+        *)
+            echo "Wrong usage"
+            ;;
+    esac
+done
+shift $((OPTIND-1))
+
+if [ -f "$1" ]; then
+    BASE_NAME=$( basename "$1" )
+    SELECTED_WALL="${1}"
+fi
+
+if [ -d "$1" ]; then
+    WALLPAPER_DIR="$1"
+    RANDOM_WALL=$( find "$WALLPAPER_DIR" -name "*.jpg" -o -name "*.png" -type f | grep -i "$KEYWORD" | shuf -n 1 )
+    BASE_NAME=$( basename "$RANDOM_WALL" )
+    SELECTED_WALL="${RANDOM_WALL}"
+fi
+
+convert "${SELECTED_WALL}" -geometry "${DISPLAY_RES}^" -gravity center -crop "${DISPLAY_RES}+0+0" "${WALLPAPER_FILE}"
+convert "${WALLPAPER_FILE}" -filter Gaussian -blur 0x3 "${LOCKSCREEN_FILE}" &
+xwallpaper --zoom "$WALLPAPER_FILE"
+notify-send -t 3000 "Wallpaper set to $BASE_NAME"

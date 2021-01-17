@@ -1,0 +1,32 @@
+! Xresources Moonfly theme
+
+*.background: #080808
+*.foreground: #b2b2b2
+*.color 1   : #373c40
+*.color 2   : #ff5454
+*.color 3   : #8cc85f
+*.color 4   : #e3c78a
+*.color 5   : #80a0ff
+*.color 6   : #d183e8
+*.color 7   : #79dac8
+*.color 8   : #de935f
+*.color 9   : #f09479
+*.color 10  : #ff5189
+*.color 11  : #36c692
+*.color 12  : #bfbf97
+*.color 13  : #78c2ff
+*.color 14  : #ae81ff
+*.color 15  : #85dc85
+*.color 16  : #e2637f
+
+dmenu.background :    #373c40
+dmenu.foreground :    #b2b2b2
+dmenu.selbackground : #ae81ff
+dmenu.selforeground : #373c40
+
+dwm.selbgcolor :          #080808
+dwm.normbgcolor :         #373c40
+dwm.selfgcolor :          #b2b2b2
+dwm.normfgcolor :         #b2b2b2
+dwm.selbordercolor :      #b2b2b2
+dwm.normbordercolor    :  #373c40

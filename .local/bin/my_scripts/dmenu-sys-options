@@ -1,0 +1,24 @@
+#!/bin/sh
+
+OPTION=$(echo "Lock
+Shutdown
+Reboot" | dmenu -i)
+
+[ -z "$OPTION" ] && exit
+
+case $OPTION in
+    Lock) 
+        slock;;
+    Shutdown)
+        CONFIRM=$(echo "No
+Yes" |\
+            dmenu -i -p "Are you sure you want to shutdown?")
+        [ "$CONFIRM" = Yes ] && poweroff
+        ;;
+    Reboot)
+        CONFIRM=$(echo "No
+Yes" |\
+            dmenu -i -p "Are you sure you want to reboot?")
+        [ "$CONFIRM" = Yes ] && reboot
+        ;;
+esac

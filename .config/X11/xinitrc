@@ -1,0 +1,21 @@
+# make sure $userclientrc is set to $HOME/.config/X11/xinitrc in /usr/bin/startx script
+
+#export _JAVA_AWT_WM_NONREPARENTING=1 &
+
+[ -f ~/.config/X11/Xmodmap ] && xmodmap ~/.config/X11/Xmodmap &
+
+[ -f ~/.config/X11/Xresources-gruvbox ] && xrdb ~/.config/X11/Xresources-gruvbox &
+
+[ -d ~/Pictures/wallpapers ] && set-wallpaper ~/Pictures/wallpapers/ &
+
+which dunst &> /dev/null && dunst &
+
+which redshift &> /dev/null && redshift -P -O 2700 &
+
+#which picom &> /dev/null && picom &
+
+which dwmblocks &> /dev/null && dwmblocks &
+
+xset r rate 300 50 &
+
+exec dwm

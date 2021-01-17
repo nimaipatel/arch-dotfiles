@@ -1,0 +1,8 @@
+#!/bin/sh
+
+WALLPAPER_DIR="$HOME/Pictures/wallpapers"
+[ -d "$1" ] && WALLPAPER_DIR="$1"
+
+NAME=$( find "$WALLPAPER_DIR" -type f -exec basename {} \; | dmenu -p "Select a wallpaper" -l 10 )
+
+[ -z "$NAME" ] && exit || set-wallpaper "$WALLPAPER_DIR/$NAME"

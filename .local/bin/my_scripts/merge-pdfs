@@ -1,0 +1,12 @@
+#!/usr/bin/python3
+
+import sys
+import PyPDF2
+
+merger = PyPDF2.PdfFileMerger()
+
+for file in sys.argv[1:-1]:
+    merger.append(file)
+
+merger.write(sys.argv[-1])
+merger.close()
