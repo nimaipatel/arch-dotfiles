@@ -2,4 +2,36 @@
 
 LOCKSCREEN_FILE="$HOME/.config/lockscreen"
 
-i3lock -i "${LOCKSCREEN_FILE}"
+FONT='Iosevka'
+BLACK='1d2021'
+RED='cc241d'
+BLUE='458588'
+YELLOW='d79921'
+WHITE='ebdbb2'
+GREEN='98971a'
+PURPLE='b16286'
+
+i3lock -i "${LOCKSCREEN_FILE}" \
+--clock \
+--radius=120 \
+--timecolor="${BLACK}" \
+--time-font="${FONT}" \
+--date-font="${FONT}" \
+--layout-font="${FONT}" \
+--verif-font="${FONT}" \
+--wrong-font="${FONT}" \
+--greeter-font="${FONT}" \
+--insidevercolor="${BLUE}" \
+--insidewrongcolor="${RED}" \
+--insidecolor="${YELLOW}" \
+--ringvercolor="${BLUE}" \
+--ringwrongcolor="${RED}" \
+--ringcolor="${YELLOW}" \
+--linecolor="${WHITE}" \
+--keyhlcolor="${PURPLE}" \
+--bshlcolor="${GREEN}" \
+--timestr="%I:%M:%S %p" \
+--datestr="%A, %d %B" \
+--datesize=20 \
+--veriftext="Verifying" \
+--wrongtext="Wrong" \
