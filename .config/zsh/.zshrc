@@ -18,8 +18,5 @@ source $ZDOTDIR/nimai/aliases.zsh
 # abbreviations
 source $ZDOTDIR/nimai/abbreviations.zsh
 
-# exported variables
-source $ZDOTDIR/nimai/exports.zsh
-
 # prompt
 source $ZDOTDIR/nimai/prompt.zsh

@@ -1,3 +1,4 @@
+# default executables
 export EDITOR="nvim"
 export VISUAL="nvim"
 export TERMINAL="st"
@@ -5,7 +6,18 @@ export BROWSER="brave"
 export READER="zathura"
 export TERMINAL_FILE_BROWSER="vifm"
 export GUI_FILE_BROWSER="pcmanfm"
+
+# my scripts
+export MY_SCRIPTS="$HOME/.local/bin/my_scripts"
 export MY_SCRIPT_ASSETS="$HOME/.local/share/my_script_assets"
+
+# PATH variable
+export PATH="${HOME}/.local/bin/my_scripts:${PATH}"
+export PATH="${HOME}/.local/bin/:${PATH}"
+
+# en_IN doesn't work as expected
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
 
 # ~/ Clean-up:
 export XDG_CONFIG_HOME="$HOME/.config"
