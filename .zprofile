@@ -4,7 +4,7 @@ export VISUAL="nvim"
 export TERMINAL="st"
 export BROWSER="brave"
 export READER="zathura"
-export TERMINAL_FILE_BROWSER="vifm"
+export TERMINAL_FILE_BROWSER="ranger"
 export GUI_FILE_BROWSER="pcmanfm"
 
 # my scripts
