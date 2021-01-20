@@ -72,7 +72,7 @@ bindkey jj vi-cmd-mode
 
 # edit shell command in a vim buffer
 autoload edit-command-line; zle -N edit-command-line
-bindkey '^v' edit-command-line
+bindkey '^e' edit-command-line
 
 # fzf config
 source "$XDG_CONFIG_HOME/fzf/fzf.zsh"
