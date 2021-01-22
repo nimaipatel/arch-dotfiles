@@ -23,12 +23,12 @@ i3lock -i "${LOCKSCREEN_FILE}" \
 --greeter-font="${FONT}" \
 --insidevercolor="${BLUE}" \
 --insidewrongcolor="${RED}" \
---insidecolor="${YELLOW}" \
+--insidecolor="${PURPLE}" \
 --ringvercolor="${BLUE}" \
 --ringwrongcolor="${RED}" \
---ringcolor="${YELLOW}" \
+--ringcolor="${PURPLE}" \
 --linecolor="${WHITE}" \
---keyhlcolor="${PURPLE}" \
+--keyhlcolor="${YELLOW}" \
 --bshlcolor="${GREEN}" \
 --timestr="%I:%M:%S %p" \
 --datestr="%A, %d %B" \
