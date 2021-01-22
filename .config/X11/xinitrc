@@ -14,8 +14,10 @@ redshift -P -O 2700 &
 
 picom &
 
-dwmblocks &
-
 xset r rate 300 50 &
+
+unclutter --timeout 3 &
+
+dwmblocks &
 
 while type dwm >/dev/null ; do dwm && continue || break ; done
