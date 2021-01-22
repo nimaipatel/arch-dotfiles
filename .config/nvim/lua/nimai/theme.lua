@@ -15,9 +15,9 @@ elseif (vim.g.colors_name == 'gruvbox') then
     vim.g.gruvbox_contrast_dark='hard'
     vim.api.nvim_exec([[
         hi Normal guibg=NONE
-        hi StatusLine guifg=#1d2021
-        hi TabLineFill guibg=#1d2021
-        hi TabLine guibg=#1d2021
-        hi TabLineSel guibg=#1d2021
+        hi StatusLine guibg=NONE guifg=#ebdbb2 gui=bold
+        hi TabLineFill guibg=NONE
+        hi TabLine guibg=NONE
+        hi TabLineSel guibg=NONE
     ]], true)
 end
