@@ -3,13 +3,13 @@
 LOCKSCREEN_FILE="$HOME/.config/lockscreen"
 
 FONT='Iosevka'
-BLACK='1d2021'
-RED='cc241d'
-BLUE='458588'
-YELLOW='d79921'
-WHITE='ebdbb2'
-GREEN='98971a'
-PURPLE='b16286'
+BLACK='080808'
+RED='ff5454'
+BLUE='80a0ff'
+YELLOW='e3c78a'
+WHITE='b2b2b2'
+GREEN='8cc85f'
+PURPLE='d183e8'
 
 i3lock -i "${LOCKSCREEN_FILE}" \
 --clock \
