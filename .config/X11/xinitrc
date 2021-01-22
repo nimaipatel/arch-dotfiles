@@ -4,8 +4,6 @@
 
 xmodmap ~/.config/X11/Xmodmap &
 
-xrdb ~/.config/X11/Xresources-moonfly &
-
 set-wallpaper ~/Pictures/wallpapers/ &
 
 dunst &
