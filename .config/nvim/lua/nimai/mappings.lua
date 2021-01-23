@@ -11,18 +11,6 @@ nnoremap('<c-s>', ':w<cr>')
 -- unmap control + z for now
 nnoremap('<c-z>', '')
 
--- smart f, F & t, T
-nmap('f', '<plug>Sneak_f')
-nmap('F', '<plug>Sneak_F')
-nmap('t', '<plug>Sneak_t')
-nmap('T', '<plug>Sneak_T')
-
--- original f, F & t, T triggered with leader prefix
-nnoremap('<leader>f', 'f')
-nnoremap('<leader>F', 'F')
-nnoremap('<leader>t', 't')
-nnoremap('<leader>T', 'T')
-
 -- toggle relative and absolute line numbering
 nnoremap('<leader>nb', ':set relativenumber!<cr>')
 
