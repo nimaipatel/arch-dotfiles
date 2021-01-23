@@ -32,17 +32,20 @@ vim.o.smartcase = true
 vim.wo.number=true
 vim.wo.relativenumber=true
 
+-- show cursorline
+vim.wo.cursorline = true
+
 -- netrw default style
 vim.g.netrw_liststyle = 3
 
 -- copy and paste with OS clipboard
-vim.api.nvim_set_option('clipboard', 'unnamedplus')
+vim.o.clipboard = 'unnamedplus'
 
 -- always show tabline
 vim.o.showtabline=2
 
 -- whitespace characters
-vim.api.nvim_set_option('listchars', 'tab:→ ,space:·,nbsp:␣,trail:•,eol:¶,precedes:«,extends:»')
+vim.o.listchars = 'tab:→ ,space:·,nbsp:␣,trail:•,eol:¶,precedes:«,extends:»'
 
 -- completion style
-vim.api.nvim_set_option('completeopt', 'menuone,noinsert,noselect')
+vim.o.completeopt = 'menuone,noinsert,noselect'
