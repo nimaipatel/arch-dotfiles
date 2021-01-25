@@ -33,6 +33,9 @@ abbr yd='yadm diff'
 abbr ypom='yadm push origin master'
 abbr yst='yadm status'
 
+# untar command
+abbr untar='tar -xvf'
+
 # source nvm script installed via pacman
 abbr snvm='source /usr/share/nvm/init-nvm.sh'
 
