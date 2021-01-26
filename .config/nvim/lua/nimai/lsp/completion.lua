@@ -23,10 +23,10 @@ local on_attach = function(_, bufnr)
     bufnoremap('n','<leader>af','<cmd>lua vim.lsp.buf.code_action()<cr>')
     bufnoremap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<cr>')
     bufnoremap('n', 'gt', '<cmd>lua vim.lsp.buf.type_definition()<cr>')
-    bufnoremap('n', 'L', '<cmd>lua vim.lsp.buf.hover()<cr>')
     bufnoremap('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<cr>')
     bufnoremap('n', '<leader>f', '<cmd>lua vim.lsp.buf.formatting()<cr>')
-    vim.cmd('autocmd CursorHold <buffer> lua vim.lsp.diagnostic.show_line_diagnostics()')
+    bufnoremap('n', 'H', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<cr>')
+    bufnoremap('n', 'L', '<cmd>lua vim.lsp.buf.hover()<cr>')
 end
 
 lspconfig.jdtls.setup{
