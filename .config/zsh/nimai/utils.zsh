@@ -67,6 +67,18 @@ zle -N zle-line-init
 echo -ne '\e[6 q' 
 preexec() { echo -ne '\e[6 q' ;} 
 
+# make backspace work like in vim, unlike traditional vi
+bindkey "^?" backward-delete-char
+
+# delete previous words like in regular shell
+bindkey "^W" backward-kill-word
+
+# delete previous character like in regular shell
+bindkey "^H" backward-delete-char
+
+# delete previous line like in regular shell
+bindkey "^U" backward-kill-line
+
 # jj for exiting normal mode
 bindkey jj vi-cmd-mode
 
