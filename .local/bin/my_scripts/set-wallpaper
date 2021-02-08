@@ -31,5 +31,5 @@ fi
 
 convert "${SELECTED_WALL}" -geometry "${DISPLAY_RES}^" -gravity center -crop "${DISPLAY_RES}+0+0" "${WALLPAPER_FILE}"
 convert "${WALLPAPER_FILE}" -filter Gaussian -blur 0x3 "${LOCKSCREEN_FILE}" &
-xwallpaper --zoom "$WALLPAPER_FILE"
+display -size "${DISPLAY_RES}" -window root "${WALLPAPER_FILE}"
 notify-send -t 3000 "Wallpaper set to $BASE_NAME"
