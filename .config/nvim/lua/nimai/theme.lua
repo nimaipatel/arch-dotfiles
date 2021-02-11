@@ -1,6 +1,6 @@
 vim.o.termguicolors = true
 vim.o.background = 'dark'
-require("colorbuddy").colorscheme("gruvbox")
+vim.cmd('colorscheme shades_of_purple')
 vim.cmd('syntax on')
 
 if (vim.g.colors_name == 'moonfly') then
