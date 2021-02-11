@@ -10,11 +10,11 @@ dunst &
 
 redshift -P -O 2700 &
 
-picom &
-
 xset r rate 300 50 &
 
 unclutter --timeout 3 &
+
+flameshot &
 
 dwmblocks &
 
