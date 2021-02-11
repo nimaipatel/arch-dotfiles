@@ -1,0 +1,1 @@
+echo $1 | entr pdflatex -interaction=nonstopmode $1
