@@ -11,6 +11,6 @@ map R rotate
 map K zoom in
 map J zoom out
 map i recolor
-set recolor-darkcolor "#f8f8f2"
-set recolor-lightcolor "#0e1419"
+set recolor-darkcolor "#ebdbb2"
+set recolor-lightcolor "#1d2021"
 map p print
