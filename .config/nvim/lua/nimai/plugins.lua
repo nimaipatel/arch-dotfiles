@@ -4,7 +4,7 @@ require('packer').startup(function()
     use {'wbthomason/packer.nvim', opt = true}
     -- theme and looks
     use {'norcalli/nvim-colorizer.lua',config  = function () require('colorizer').setup() end}
-    use {'Rigellute/shades-of-purple.vim'}
+    use {'npxbr/gruvbox.nvim', requires = {'tjdevries/colorbuddy.vim'}}
     -- visual debugger
     use {'puremourning/vimspector'}
     -- fuzzy finder
