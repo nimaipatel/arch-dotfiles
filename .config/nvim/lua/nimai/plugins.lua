@@ -15,8 +15,6 @@ require('packer').startup(function()
     use {'tpope/vim-surround'}
     use {'tpope/vim-commentary'}
     use {'tpope/vim-repeat'}
-    use {'jiangmiao/auto-pairs'}
-    use {'alvan/vim-closetag'}
     use {'christoomey/vim-tmux-navigator'}
     -- treesitter
     use {'nvim-treesitter/nvim-treesitter'}
