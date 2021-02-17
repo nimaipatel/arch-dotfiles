@@ -22,6 +22,4 @@ require('packer').startup(function()
     -- lsp, autocomplete, snippets
     use {'neovim/nvim-lspconfig'}
     use {'nvim-lua/completion-nvim'}
-    use {'hrsh7th/vim-vsnip'}
-    use {'hrsh7th/vim-vsnip-integ'}
 end)
