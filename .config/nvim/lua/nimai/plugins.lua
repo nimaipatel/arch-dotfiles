@@ -4,7 +4,6 @@ require('packer').startup(function()
     use {'wbthomason/packer.nvim', opt = true}
     -- theme and looks
     use {'norcalli/nvim-colorizer.lua',config  = function () require('colorizer').setup() end}
-    -- use {'npxbr/gruvbox.nvim', requires = {'tjdevries/colorbuddy.vim'}}
     use {'lifepillar/vim-gruvbox8'}
     -- visual debugger
     use {'puremourning/vimspector'}
