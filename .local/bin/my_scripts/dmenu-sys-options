@@ -1,21 +1,27 @@
 #!/bin/sh
 
 OPTION=$(echo "Lock
+Exit XServer
+Logout
 Shutdown
 Reboot" | dmenu -i)
 
-[ -z "$OPTION" ] && exit
+[ -z "${OPTION}" ] && exit
 
-case $OPTION in
-    Lock) 
-        slock;;
-    Shutdown)
+case "${OPTION}" in
+    'Lock') 
+        lockscreen;;
+    'Exit XServer')
+        pkill xinit;;
+    'Logout')
+        kill -9 -1;;
+    'Shutdown')
         CONFIRM=$(echo "No
 Yes" |\
             dmenu -i -p "Are you sure you want to shutdown?")
         [ "$CONFIRM" = Yes ] && poweroff
         ;;
-    Reboot)
+    'Reboot')
         CONFIRM=$(echo "No
 Yes" |\
             dmenu -i -p "Are you sure you want to reboot?")
