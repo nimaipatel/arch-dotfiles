@@ -1,0 +1,19 @@
+[url "https://github.com/"]
+    insteadOf = gh:
+
+[url "https://gist.github.com/"]
+    insteadOf = gist:
+
+[url "https://bitbucket.org/"]
+    insteadOf = bb:
+
+[init]
+    defaultBranch = master
+
+[core]
+    editor = nvim
+    pager = diff-so-fancy | less --tabs=5 -RFX
+
+[user]
+    email = nimai.m.patel@gmail.com
+    name = nimai
