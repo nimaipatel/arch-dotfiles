@@ -1,6 +1,9 @@
 # include hidden files in tab autocomplete
 setopt GLOB_DOTS
 
+# add completion for aliases
+unsetopt nocompletealiases
+
 # highlight selected option in tab completion
 autoload -Uz compinit && compinit
 zstyle ':completion:*' menu select
