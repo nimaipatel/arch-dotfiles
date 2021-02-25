@@ -27,11 +27,11 @@ abbr tl='tmux list-sessions'
 abbr ts='tmux new-session -s'
 
 # cfg abbrevations
-abbr ya='cfg add'
-abbr yc='cfg commit -m'
-abbr yd='cfg diff'
-abbr ypom='cfg push origin master'
-abbr yst='cfg status'
+abbr ca='cfg add'
+abbr cm='cfg commit -m'
+abbr cdf='cfg diff'
+abbr cpom='cfg push origin master'
+abbr cst='cfg status'
 
 # untar command
 abbr untar='tar -xvf'
