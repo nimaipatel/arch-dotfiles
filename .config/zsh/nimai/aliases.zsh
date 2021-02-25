@@ -5,6 +5,7 @@ alias cfg='git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 alias zz="dwmswallow $WINDOWID && zathura"
 alias ss="dwmswallow $WINDOWID && sxiv"
 alias mm="dwmswallow $WINDOWID && mpv"
+alias yt="dwmswallow $WINDOWID && ytfzf"
 
 # default flags
 alias mv='mv -iv'
