@@ -26,12 +26,12 @@ abbr tksv='tmux kill-server'
 abbr tl='tmux list-sessions'
 abbr ts='tmux new-session -s'
 
-# yadm abbrevations
-abbr ya='yadm add'
-abbr yc='yadm commit -m'
-abbr yd='yadm diff'
-abbr ypom='yadm push origin master'
-abbr yst='yadm status'
+# cfg abbrevations
+abbr ya='cfg add'
+abbr yc='cfg commit -m'
+abbr yd='cfg diff'
+abbr ypom='cfg push origin master'
+abbr yst='cfg status'
 
 # untar command
 abbr untar='tar -xvf'

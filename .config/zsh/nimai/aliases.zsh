@@ -1,3 +1,6 @@
+# manage dotfiles with this
+alias cfg='git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
+
 # swallow aliases
 alias zz="dwmswallow $WINDOWID && zathura"
 alias ss="dwmswallow $WINDOWID && sxiv"
