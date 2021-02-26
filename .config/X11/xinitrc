@@ -8,6 +8,8 @@ set-wallpaper ~/Pictures/wallpapers/ &
 
 dunst &
 
+mpd &
+
 redshift -P -O 2700 &
 
 xset r rate 300 50 &
