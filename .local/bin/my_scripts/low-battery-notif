@@ -1,0 +1,13 @@
+#!/usr/bin/sh
+CRITICAL_LEVEL=20
+XDG_RUNTIME_DIR="/run/user/$(id -u)"
+export XDG_RUNTIME_DIR
+for BATTERY in /sys/class/power_supply/BAT?
+do
+    CAPACITY=$(/usr/bin/cat "$BATTERY/capacity")
+    STATUS=$(/usr/bin/cat "$BATTERY/status")
+    if [ "$CAPACITY" -le "$CRITICAL_LEVEL" ] && [ "$STATUS" = "Discharging" ]
+    then
+        /usr/bin/notify-send "$BATTERY 🔋 is below critical level 😰 plug in your charger🔌!" -u critical
+    fi
+done
