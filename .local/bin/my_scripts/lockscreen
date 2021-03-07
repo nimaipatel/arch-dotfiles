@@ -2,7 +2,7 @@
 
 LOCKSCREEN_FILE="$HOME/.config/lockscreen"
 
-FONT='Iosevka Slab'
+FONT='Iosevka Fixed Curly Slab'
 BLACK='080808'
 RED='ff5454'
 BLUE='80a0ff'
