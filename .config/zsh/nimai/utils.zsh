@@ -86,5 +86,19 @@ bindkey jj vi-cmd-mode
 autoload edit-command-line; zle -N edit-command-line
 bindkey '^e' edit-command-line
 
-# fzf config
-source "$XDG_CONFIG_HOME/fzf/fzf.zsh"
+# CTRL-R - Paste the selected command from history into the command line
+fzf-history-widget() {
+    local selected num
+    selected=($(history -1 0 | fzf --height=40%))
+    local ret=$?
+    if [ -n "$selected" ]; then
+        num=$selected[1]
+        if [ -n "$num" ]; then
+            zle vi-fetch-history -n $num
+        fi
+    fi
+    zle reset-prompt
+    return $ret
+}
+zle     -N   fzf-history-widget
+bindkey '^R' fzf-history-widget
