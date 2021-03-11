@@ -9,7 +9,3 @@ end)
 AddEventListener('EnableHighLight', { 'InsertLeave *' }, function ()
     vim.o.hlsearch = true
 end)
-
-AddEventListener('CenterOnInsert', { 'InsertEnter *' }, function ()
-    vim.cmd(':norm zz')
-end)
