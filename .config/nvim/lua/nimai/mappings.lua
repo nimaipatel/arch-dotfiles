@@ -34,7 +34,7 @@ nnoremap('Y', 'y$')
 nnoremap('D', 'd$')
 
 -- new tab
-nnoremap('<c-y>', ':tabnew<cr>')
+nnoremap('<c-t>', ':tabnew<cr>')
 
 -- next and previous tab like in vimium with K and J
 nnoremap('J', ':tabprevious<cr>')
@@ -49,6 +49,6 @@ nnoremap('<a-j>', ':tabmove -1<cr>')
 nnoremap('<a-k>', ':tabmove +1<cr>')
 
 -- spawn zsh shell with control + t
-nnoremap('<c-t>', ':8sp term://zsh <cr>')
+nnoremap('<c-y>', ':8sp term://zsh <cr>')
 -- turn terminal to normal mode with escape
 nnoremap('<esc>', '<c-\\><c-n>')
