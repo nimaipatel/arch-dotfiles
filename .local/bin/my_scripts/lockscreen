@@ -2,7 +2,7 @@
 
 LOCKSCREEN_FILE="$HOME/.config/lockscreen"
 
-FONT='Iosevka Fixed Curly Slab'
+FONT='monospace'
 BLACK='080808'
 RED='ff5454'
 BLUE='80a0ff'
@@ -13,7 +13,7 @@ PURPLE='d183e8'
 
 i3lock -i "${LOCKSCREEN_FILE}" \
 --clock \
---radius=120 \
+--radius=150 \
 --timecolor="${BLACK}" \
 --datecolor="${BLACK}" \
 --time-font="${FONT}" \
