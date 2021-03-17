@@ -15,7 +15,7 @@ vim.o.splitbelow=true
 -- don't wrap lines
 vim.wo.wrap=false
 
--- tab triggers four spaces and more
+-- 8 character wide tab for indentation
 vim.o.tabstop = 8 vim.bo.tabstop = 8
 vim.o.shiftwidth = 8 vim.bo.shiftwidth = 8
 vim.o.softtabstop = 8 vim.bo.softtabstop = 8
