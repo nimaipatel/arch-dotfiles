@@ -20,7 +20,6 @@ vim.o.tabstop = 8 vim.bo.tabstop = 8
 vim.o.shiftwidth = 8 vim.bo.shiftwidth = 8
 vim.o.softtabstop = 8 vim.bo.softtabstop = 8
 vim.o.autoindent = true vim.bo.autoindent = true
-vim.o.expandtab = true vim.bo.expandtab = true
 
 -- search options
 vim.o.hlsearch = true
