@@ -16,9 +16,9 @@ vim.o.splitbelow=true
 vim.wo.wrap=false
 
 -- tab triggers four spaces and more
-vim.o.tabstop = 4 vim.bo.tabstop = 4
-vim.o.shiftwidth = 4 vim.bo.shiftwidth = 4
-vim.o.softtabstop = 4 vim.bo.softtabstop = 4
+vim.o.tabstop = 8 vim.bo.tabstop = 8
+vim.o.shiftwidth = 8 vim.bo.shiftwidth = 8
+vim.o.softtabstop = 8 vim.bo.softtabstop = 8
 vim.o.autoindent = true vim.bo.autoindent = true
 vim.o.expandtab = true vim.bo.expandtab = true
 
