@@ -14,3 +14,7 @@ alias rm='echo Are you sure\? 🥺 👉👈; false'
 alias ls='ls --color=tty'
 alias diff='diff --color'
 alias grep='grep --color=auto --exclude-dir={.bzr,CVS,.git,.hg,.svn,.idea,.tox}'
+
+# start neovim as server to use nvr
+alias vi="NVIM_LISTEN_ADDRESS="/tmp/nvimsocket-"$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 8 | head -n 1)"" nvim" \
+
