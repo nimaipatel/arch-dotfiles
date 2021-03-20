@@ -17,3 +17,7 @@
 [user]
     email = nimai.m.patel@gmail.com
     name = nimai
+
+[grep]
+	lineNumber=true
+	column=true
