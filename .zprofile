@@ -13,7 +13,7 @@ export MY_SCRIPT_ASSETS="$HOME/.local/share/my_script_assets"
 
 # PATH variable
 export PATH="${HOME}/.local/bin/my_scripts:${PATH}"
-export PATH="${HOME}/.local/bin/:${PATH}"
+export PATH="${HOME}/.local/bin:${PATH}"
 
 # en_IN doesn't work as expected
 export LC_ALL=en_US.UTF-8
