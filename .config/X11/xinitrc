@@ -4,20 +4,20 @@
 
 xmodmap ~/.config/X11/Xmodmap &
 
+xset r rate 300 50 &
+
 set-wallpaper ~/Pictures/wallpapers/ &
-
-dunst &
-
-mpd &
 
 redshift -P -O 2700 &
 
-xset r rate 300 50 &
+killall dunst ; dunst &
 
-unclutter --timeout 3 &
+killall mpd ; mpd &
 
-flameshot &
+killall unclutter ; unclutter --timeout 3 &
 
-dwmblocks &
+killall flameshot ; flameshot &
+
+killall dwmblocks ; dwmblocks &
 
 while type dwm >/dev/null ; do dwm && continue || break ; done
