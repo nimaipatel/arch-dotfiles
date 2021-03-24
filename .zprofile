@@ -45,3 +45,5 @@ export NODE_REPL_HISTORY="${XDG_DATA_HOME:-$HOME/.local/share}/node_repl_history
 export RUSTUP_HOME="${XDG_DATA_HOME}/rustup"
 export NVM_DIR="${XDG_DATA_HOME}/nvm"
 export N_PREFIX="${XDG_DATA_HOME}"
+export GHCUP_USE_XDG_DIRS="1"
+export GHCUP_INSTALL_BASE_PREFIX="${XDG_DATA_HOME}/ghcup"
