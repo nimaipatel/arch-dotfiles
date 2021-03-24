@@ -1,0 +1,14 @@
+#!/bin/sh
+
+if git rev-parse --is-inside-work-tree >/dev/null 2>&1 
+then
+	LINES=$(git grep --line-number "${1}")
+else
+	LINES=$(grep --line-number "${1}" -r .)
+fi
+
+SEL_LINE=$(echo "$LINES" | fzf --height=40%)
+[ -z "$SEL_LINE" ] && exit 1
+SEL_FILE=$(echo "$SEL_LINE" | cut -d: -f1)
+LINE_NUM=$(echo "$SEL_LINE" | cut -d: -f2)
+vi "$SEL_FILE" "+${LINE_NUM}"
