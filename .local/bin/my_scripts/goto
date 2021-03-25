@@ -2,9 +2,9 @@
 
 if git rev-parse --is-inside-work-tree >/dev/null 2>&1 
 then
-	LINES=$(git grep --line-number "${1}")
+	LINES=$(git grep -I --line-number "${1}")
 else
-	LINES=$(grep --line-number "${1}" -r .)
+	LINES=$(grep -I --line-number "${1}" -r .)
 fi
 
 SEL_LINE=$(echo "$LINES" | fzf --height=40%)
