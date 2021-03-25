@@ -12,7 +12,7 @@
 
 [core]
     editor = nvim
-    pager = diff-so-fancy | less --tabs=5 -RFX
+    pager = diff-so-fancy | less --tabs=8 -RFX
 
 [user]
     email = nimai.m.patel@gmail.com
