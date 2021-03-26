@@ -1,0 +1,16 @@
+#!/bin/sh
+
+THEMES="gruvbox_dark
+gruvbox_light"
+
+CHOOSEN_THEME=$(echo "$THEMES" | dmenu)
+
+xrdb "${XDG_CONFIG_HOME}/X11/${CHOOSEN_THEME}"
+
+kill -s USR1 $(pidof st) &
+
+xdotool key "Super+F12" &
+
+nvimcmd ":lua SetColorScheme('${CHOOSEN_THEME}')" &
+
+sed -i "s/^SetColorScheme(.*)/SetColorScheme('${CHOOSEN_THEME}')/g" "$XDG_CONFIG_HOME/nvim/lua/nimai/theme.lua"
