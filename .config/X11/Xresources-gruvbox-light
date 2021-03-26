@@ -1,0 +1,34 @@
+! Gruvbox Xresources palette {{{
+
+*.background: #fbf1c7
+*.foreground: #3c3836
+*.color0:  #fdf4c1
+*.color1:  #cc241d
+*.color2:  #98971a
+*.color3:  #d79921
+*.color4:  #458588
+*.color5:  #b16286
+*.color6:  #689d6a
+*.color7:  #7c6f64
+*.color8:  #928374
+*.color9:  #9d0006
+*.color10: #79740e
+*.color11: #b57614
+*.color12: #076678
+*.color13: #8f3f71
+*.color14: #427b58
+*.color15: #3c3836
+
+dmenu.background :    #928374
+dmenu.foreground :    #3c3836
+dmenu.selbackground : #b16286
+dmenu.selforeground : #3c3836
+
+dwm.normbgcolor :         #928374
+dwm.normbordercolor    :  #f9f5d7
+dwm.normfgcolor :         #3c3836
+dwm.selfgcolor :          #3c3836
+dwm.selbordercolor :      #3c3836
+dwm.selbgcolor :          #f9f5d7
+
+!}}}
