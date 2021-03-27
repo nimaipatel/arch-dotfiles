@@ -13,4 +13,6 @@ xdotool key "Super+F12" &
 
 nvimcmd ":lua SetColorScheme('${CHOOSEN_THEME}')" &
 
+sed -i "s/^Net\/ThemeName \".*\"/Net\/ThemeName \"${CHOOSEN_THEME}\"/g" $XDG_CONFIG_HOME/xsettingsd/xsettingsd.conf && killall xsettingsd ; xsettingsd &
+
 sed -i "s/^SetColorScheme(.*)/SetColorScheme('${CHOOSEN_THEME}')/g" "$XDG_CONFIG_HOME/nvim/lua/nimai/theme.lua"
