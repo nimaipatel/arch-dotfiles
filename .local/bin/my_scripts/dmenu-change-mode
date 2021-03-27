@@ -3,16 +3,26 @@
 THEMES="gruvbox_dark
 gruvbox_light"
 
-CHOOSEN_THEME=$(echo "$THEMES" | dmenu)
+if [ -n "$*" ]
+then
+	CHOOSEN_THEME="$*"
+else
+	CHOOSEN_THEME=$(echo "$THEMES" | dmenu)
+fi
 
-xrdb "${XDG_CONFIG_HOME}/X11/${CHOOSEN_THEME}"
+if echo "$THEMES" | grep -q "^${CHOOSEN_THEME}$"
+then
+	xrdb "${XDG_CONFIG_HOME}/X11/${CHOOSEN_THEME}"
 
-kill -s USR1 $(pidof st) &
+	kill -s USR1 $(pidof st) &
 
-xdotool key "Super+F12" &
+	xdotool key "Super+F12" &
 
-nvimcmd ":lua SetColorScheme('${CHOOSEN_THEME}')" &
+	nvimcmd ":lua SetColorScheme('${CHOOSEN_THEME}')" &
 
-sed -i "s/^Net\/ThemeName \".*\"/Net\/ThemeName \"${CHOOSEN_THEME}\"/g" $XDG_CONFIG_HOME/xsettingsd/xsettingsd.conf && killall xsettingsd ; xsettingsd &
+	sed -i "s/^Net\/ThemeName \".*\"/Net\/ThemeName \"${CHOOSEN_THEME}\"/g" "$XDG_CONFIG_HOME/xsettingsd/xsettingsd.conf" && killall xsettingsd ; xsettingsd &
 
-sed -i "s/^SetColorScheme(.*)/SetColorScheme('${CHOOSEN_THEME}')/g" "$XDG_CONFIG_HOME/nvim/lua/nimai/theme.lua"
+	sed -i "s/^SetColorScheme(.*)/SetColorScheme('${CHOOSEN_THEME}')/g" "$XDG_CONFIG_HOME/nvim/lua/nimai/theme.lua"
+else
+	exit 1
+fi
