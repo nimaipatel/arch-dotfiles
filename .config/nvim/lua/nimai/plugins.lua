@@ -5,6 +5,7 @@ require('packer').startup(function()
     -- theme and looks
     use {'norcalli/nvim-colorizer.lua',config  = function () require('colorizer').setup() end}
     use {'lifepillar/vim-gruvbox8'}
+    use {'dracula/vim', as = 'dracula'}
     -- visual debugger
     use {'puremourning/vimspector'}
     -- fuzzy finder

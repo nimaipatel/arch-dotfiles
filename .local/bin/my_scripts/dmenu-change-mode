@@ -1,7 +1,13 @@
 #!/bin/sh
 
+# To add new themes,
+# add gtk theme to $HOME/.local/share/themes
+# install neovim theme and add it to theme setting function
+# add xresources file to $HOME/.config/X11
+
 THEMES="gruvbox_dark
-gruvbox_light"
+gruvbox_light
+dracula"
 
 if [ -n "$*" ]
 then

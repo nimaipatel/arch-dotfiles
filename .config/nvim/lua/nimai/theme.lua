@@ -20,6 +20,16 @@ function SetColorScheme(colorscheme)
 		    hi TabLine guibg=NONE gui=bold
 		    hi TabLineSel guibg=NONE gui=bold
 		]], true)
+	elseif colorscheme == 'dracula' then
+		vim.cmd('colorscheme dracula')
+		vim.o.background = 'dark'
+		vim.api.nvim_exec([[
+		    hi Normal guibg=#0e1419
+		    hi StatusLine guibg=NONE guifg=#f8f8f2 gui=bold
+		    hi TabLineFill guibg=NONE gui=bold
+		    hi TabLine guibg=NONE gui=bold
+		    hi TabLineSel guibg=NONE gui=bold
+		]], true)
 	end
 end
 
