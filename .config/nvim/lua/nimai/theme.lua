@@ -3,6 +3,7 @@ vim.cmd('syntax on')
 
 function SetColorScheme(colorscheme)
 	if colorscheme == 'gruvbox_dark' then
+		vim.g.gruvbox_italics = 0
 		vim.cmd('colorscheme gruvbox8_hard')
 		vim.o.background = 'dark'
 		vim.api.nvim_exec([[
@@ -12,6 +13,7 @@ function SetColorScheme(colorscheme)
 		    hi TabLineSel guibg=NONE gui=bold
 		]], true)
 	elseif colorscheme == 'gruvbox_light' then
+		vim.g.gruvbox_italics = 0
 		vim.cmd('colorscheme gruvbox8_hard')
 		vim.o.background = 'light'
 		vim.api.nvim_exec([[
