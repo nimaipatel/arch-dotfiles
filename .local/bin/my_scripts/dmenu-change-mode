@@ -20,6 +20,8 @@ if echo "$THEMES" | grep -q "^${CHOOSEN_THEME}$"
 then
 	xrdb "${XDG_CONFIG_HOME}/X11/${CHOOSEN_THEME}"
 
+	xrdb -merge "${XDG_CONFIG_HOME}/X11/common"
+
 	kill -s USR1 $(pidof st) &
 
 	xdotool key "Super+F12" &
