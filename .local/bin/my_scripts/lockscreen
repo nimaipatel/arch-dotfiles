@@ -2,18 +2,27 @@
 
 LOCKSCREEN_FILE="$HOME/.config/lockscreen"
 
-FONT='Iosevka Fixed'
-BLACK='080808'
-RED='ff5454'
-BLUE='80a0ff'
-YELLOW='e3c78a'
-WHITE='b2b2b2'
-GREEN='8cc85f'
-PURPLE='d183e8'
+gethex(){
+	xrdb -query | grep "^*.${1}:" | tail -c 7
+}
+
+getfont() {
+	xrdb -query | grep "^*.font:" | cut -d: -f2 | sed 's/^\s//g;s/\s$//g'
+}
+
+# yes, running grep, cut, sed and tail these many times is cringe
+FONT=$(getfont)
+BLACK=$(gethex color0)
+RED=$(gethex color1)
+BLUE=$(gethex color4)
+YELLOW=$(gethex color3)
+WHITE=$(gethex color15)
+GREEN=$(gethex color2)
+PURPLE=$(gethex color5)
 
 i3lock -i "${LOCKSCREEN_FILE}" \
 --clock \
---radius=130 \
+--radius=150 \
 --timecolor="${BLACK}" \
 --datecolor="${BLACK}" \
 --time-font="${FONT}" \
