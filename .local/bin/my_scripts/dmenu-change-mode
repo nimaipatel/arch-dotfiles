@@ -5,6 +5,14 @@
 # install neovim theme and add it to theme setting function
 # add xresources file to $HOME/.config/X11
 
+gethex(){
+	xrdb -query | grep "^*.${1}:" | tail -c 8
+}
+
+getfont() {
+	xrdb -query | grep "^*.font:" | cut -d: -f2 | sed 's/^\s//g;s/\s$//g'
+}
+
 THEMES="gruvbox_dark
 gruvbox_light
 dracula"
@@ -28,9 +36,13 @@ then
 
 	nvimcmd ":lua SetColorScheme('${CHOOSEN_THEME}')" &
 
+	killall dunst; dunst -font "$(getfont)" -lb "$(gethex '*.color4')" -nb "$(gethex '*.color2')" -cb "$(gethex '*.color1')" -lf "#000000" -nf "#000000" -cf "#000000" -lfr "#000000" -nfr "#000000" -cfr "#000000" &
+ 
 	sed -i "s/^Net\/ThemeName \".*\"/Net\/ThemeName \"${CHOOSEN_THEME}\"/g" "$XDG_CONFIG_HOME/xsettingsd/xsettingsd.conf" && killall xsettingsd ; xsettingsd &
 
 	sed -i "s/^SetColorScheme(.*)/SetColorScheme('${CHOOSEN_THEME}')/g" "$XDG_CONFIG_HOME/nvim/lua/nimai/theme.lua"
+
+	notify-send "Theme set to ${CHOOSEN_THEME}"
 else
 	exit 1
 fi
