@@ -14,12 +14,12 @@ killall dunst ; dunst &
 
 killall mpd ; mpd &
 
-killall unclutter ; unclutter --timeout 3 &
+killall xbanish ; xbanish &
 
 killall flameshot ; flameshot &
 
 killall dwmblocks ; dwmblocks &
 
-dmenu-change-mode gruvbox_dark
+dmenu-change-mode gruvbox_dark &
 
 while type dwm >/dev/null ; do dwm && continue || break ; done
