@@ -10,8 +10,6 @@ set-wallpaper ~/Pictures/wallpapers/ &
 
 redshift -P -O 2700 &
 
-killall dunst ; dunst &
-
 killall mpd ; mpd &
 
 killall xbanish ; xbanish &
