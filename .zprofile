@@ -6,6 +6,7 @@ export BROWSER="firefox"
 export READER="zathura"
 export TERMINAL_FILE_BROWSER="ranger"
 export GUI_FILE_BROWSER="pcmanfm"
+export MANPAGER='nvim +Man!'
 
 # my scripts
 export MY_SCRIPTS="$HOME/.local/bin/my_scripts"
