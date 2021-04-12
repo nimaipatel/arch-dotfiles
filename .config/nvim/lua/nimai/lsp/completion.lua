@@ -1,7 +1,7 @@
 local lspconfig = require('lspconfig')
 local util = lspconfig.util
 local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities.textDocument.completion.completionItem.snippetSupport = true
+-- capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 inoremap('<expr><tab>', 'pumvisible() ? "<c-n>" : "<tab>"')
 inoremap('<expr><s-tab>', 'pumvisible() ? "<c-p>" : "<s-tab>"')
