@@ -17,3 +17,13 @@ dunst.font: Fira Code
 dwm.font: Iosevka:pixelsize=14:antialias=true:autohint=true;JoyPixels:pixelsize=14:antialias=true:autohint=true;
 *.font: Iosevka:pixelsize=18:antialias=true:autohint=true;JoyPixels:pixelsize=16:antialias=true:autohint=true;
 dunst.font: Iosevka
+
+! Iosevka Fixed
+dwm.font: Iosevka Fixed:pixelsize=14:antialias=true:autohint=true;JoyPixels:pixelsize=14:antialias=true:autohint=true;
+*.font: Iosevka Fixed:pixelsize=18:antialias=true:autohint=true;JoyPixels:pixelsize=16:antialias=true:autohint=true;
+dunst.font: Iosevka Fixed
+
+! Monoid
+dwm.font: Monoid:pixelsize=12:antialias=true:autohint=true;JoyPixels:pixelsize=14:antialias=true:autohint=true;
+*.font: Monoid:pixelsize=14:antialias=true:autohint=true;JoyPixels:pixelsize=16:antialias=true:autohint=true;
+dunst.font:Monoid 10
