@@ -1,0 +1,25 @@
+#!/bin/bash
+
+ALLFONTS=$(grep "^! " "${XDG_CONFIG_HOME}/X11/fontprofiles")
+
+if [ -n "$*" ]
+then
+	SELFONT="! ${*}"
+else
+	SELFONT=$(echo "$ALLFONTS" | dmenu -i)
+fi
+
+if echo "$ALLFONTS" | grep -q "$SELFONT"
+then
+	xrdb -merge <(grep "$SELFONT" -A3 "${XDG_CONFIG_HOME}/X11/fontprofiles")
+
+	kill -s USR1 $(pidof st)
+
+	xdotool key "Super+F12"
+
+	restart-dunst
+
+	notify-send "Font set to ${SELFONT}"
+else
+	exit 1
+fi
