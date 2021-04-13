@@ -14,7 +14,6 @@ require('packer').startup(function()
     use {'lewis6991/gitsigns.nvim',requires = {'nvim-lua/plenary.nvim'},config = function() require('gitsigns').setup() end}
     -- key maps
     use {'tpope/vim-surround'}
-    use {'tpope/vim-commentary'}
     use {'tpope/vim-repeat'}
     use {'christoomey/vim-tmux-navigator'}
     -- treesitter
