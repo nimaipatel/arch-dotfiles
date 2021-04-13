@@ -9,9 +9,9 @@ else
 	SELFONT="$(echo "$ALLFONTS" | dmenu -i)"
 fi
 
-if echo "$ALLFONTS" | grep -q "$SELFONT"
+if echo "$ALLFONTS" | grep -q "^${SELFONT}$"
 then
- 	xrdb -merge <(grep "^! $SELFONT" -A3 "${XDG_CONFIG_HOME}/X11/fontprofiles")
+ 	xrdb -merge <(grep "^! ${SELFONT}$" -A3 "${XDG_CONFIG_HOME}/X11/fontprofiles")
  
  	kill -s USR1 $(pidof st)
  
