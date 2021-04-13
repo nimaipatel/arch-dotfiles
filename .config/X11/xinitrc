@@ -18,6 +18,6 @@ killall flameshot ; flameshot &
 
 killall dwmblocks ; dwmblocks &
 
-dmenu-change-mode gruvbox_dark &
+(dmenu-change-font "SF Mono" ; dmenu-change-mode gruvbox_dark) &
 
-while type dwm >/dev/null ; do dwm && continue || break ; done
+dwm
