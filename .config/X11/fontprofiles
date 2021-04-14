@@ -13,15 +13,15 @@ dwm.font: Fira Code:pixelsize=14:antialias=true:autohint=true;JoyPixels:pixelsiz
 *.font: Fira Code:pixelsize=16:antialias=true:autohint=true;JoyPixels:pixelsize=16:antialias=true:autohint=true;
 dunst.font: Fira Code
 
-! Iosevka
-dwm.font: Iosevka:pixelsize=14:antialias=true:autohint=true;JoyPixels:pixelsize=14:antialias=true:autohint=true;
-*.font: Iosevka:pixelsize=18:antialias=true:autohint=true;JoyPixels:pixelsize=16:antialias=true:autohint=true;
-dunst.font: Iosevka
-
 ! Iosevka Fixed
 dwm.font: Iosevka Fixed:pixelsize=14:antialias=true:autohint=true;JoyPixels:pixelsize=14:antialias=true:autohint=true;
 *.font: Iosevka Fixed:pixelsize=18:antialias=true:autohint=true;JoyPixels:pixelsize=16:antialias=true:autohint=true;
 dunst.font: Iosevka Fixed
+
+! Iosevka
+dwm.font: Iosevka:pixelsize=14:antialias=true:autohint=true;JoyPixels:pixelsize=14:antialias=true:autohint=true;
+*.font: Iosevka:pixelsize=18:antialias=true:autohint=true;JoyPixels:pixelsize=16:antialias=true:autohint=true;
+dunst.font: Iosevka
 
 ! Monoid
 dwm.font: Monoid:pixelsize=12:antialias=true:autohint=true;JoyPixels:pixelsize=14:antialias=true:autohint=true;
