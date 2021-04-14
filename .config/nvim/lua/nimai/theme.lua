@@ -30,7 +30,7 @@ function SetColorScheme(colorscheme)
 		    hi StatusLine guibg=NONE guifg=#f8f8f2 gui=bold
 		    hi TabLineFill guibg=NONE gui=bold
 		    hi TabLine guibg=NONE gui=bold
-		    hi TabLineSel guibg=NONE gui=bold
+		    hi TabLineSel guifg=#50fa7b guibg=NONE gui=bold
 		]], true)
 	end
 end
