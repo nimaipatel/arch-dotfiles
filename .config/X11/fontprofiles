@@ -3,6 +3,11 @@ dwm.font: SF Mono:pixelsize=14:antialias=true:autohint=true;JoyPixels:pixelsize=
 *.font: SF Mono:pixelsize=16:antialias=true:autohint=true;JoyPixels:pixelsize=16:antialias=true:autohint=true;
 dunst.font: SF Mono
 
+! SF Mono Ligaturized
+dwm.font: SF Mono Ligaturized:pixelsize=14:antialias=true:autohint=true;JoyPixels:pixelsize=14:antialias=true:autohint=true;
+*.font: SF Mono Ligaturized:pixelsize=16:antialias=true:autohint=true;JoyPixels:pixelsize=16:antialias=true:autohint=true;
+dunst.font: SF Mono Ligaturized
+
 ! Fira Mono
 dwm.font: Fira Mono:pixelsize=14:antialias=true:autohint=true;JoyPixels:pixelsize=14:antialias=true:autohint=true;
 *.font: Fira Mono:pixelsize=16:antialias=true:autohint=true;JoyPixels:pixelsize=16:antialias=true:autohint=true;
