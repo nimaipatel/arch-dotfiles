@@ -22,7 +22,7 @@ then
 
 	kill -s USR1 $(pidof st)
 
-	xdotool key "Super+F12"
+	kill -HUP $(pidof dwm)
 
 	nvimcmd ":lua SetColorScheme('${CHOOSEN_THEME}')"
 
