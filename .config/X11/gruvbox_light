@@ -1,5 +1,6 @@
 ! Gruvbox Xresources palette {{{
 
+name: gruvbox_light
 *.background: #f9f5d7
 *.foreground: #3c3836
 *.color0:  #fdf4c1
