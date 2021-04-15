@@ -28,8 +28,6 @@ then
 
 	restart-dunst
  
-	sed -i "s/^SetColorScheme(.*)/SetColorScheme('${CHOOSEN_THEME}')/g" "$XDG_CONFIG_HOME/nvim/lua/nimai/theme.lua"
-
 	sed -i "s/^Net\/ThemeName \".*\"/Net\/ThemeName \"${CHOOSEN_THEME}\"/g" "$XDG_CONFIG_HOME/xsettingsd/xsettingsd.conf" && killall xsettingsd ; xsettingsd &
 
 	notify-send "Theme set to ${CHOOSEN_THEME}"

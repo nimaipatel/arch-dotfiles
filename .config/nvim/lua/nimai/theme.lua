@@ -35,4 +35,5 @@ function SetColorScheme(colorscheme)
 	end
 end
 
-SetColorScheme('gruvbox_dark')
+local colorscheme_name = io.popen("echo $(xrdb -query | grep '^name:' | cut -d: -f2)"):read("*a"):sub(1,-2)
+SetColorScheme(colorscheme_name)
