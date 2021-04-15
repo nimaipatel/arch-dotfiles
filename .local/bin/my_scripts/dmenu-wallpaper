@@ -1,6 +1,6 @@
 #!/bin/sh
 
-WALLPAPER_DIR="$HOME/Pictures/wallpapers"
+WALLPAPER_DIR="$HOME/pictures/wallpapers"
 [ -d "$1" ] && WALLPAPER_DIR="$1"
 
 NAME=$( find "$WALLPAPER_DIR" -type f -exec basename {} \; | dmenu -p "Select a wallpaper" -l 10 )
