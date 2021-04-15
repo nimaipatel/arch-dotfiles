@@ -6,8 +6,6 @@ require('packer').startup(function()
     use {'norcalli/nvim-colorizer.lua',config  = function () require('colorizer').setup() end}
     use {'lifepillar/vim-gruvbox8'}
     use {'dracula/vim', as = 'dracula'}
-    -- visual debugger
-    use {'puremourning/vimspector'}
     -- fuzzy finder
     use {'nvim-telescope/telescope.nvim',requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}}}
     -- git
@@ -19,7 +17,7 @@ require('packer').startup(function()
     -- treesitter
     use {'nvim-treesitter/nvim-treesitter'}
     use {'nvim-treesitter/nvim-treesitter-textobjects'}
-    -- lsp, autocomplete, snippets
+    -- lsp, autocomplete
     use {'neovim/nvim-lspconfig'}
     use {'nvim-lua/completion-nvim'}
 end)
