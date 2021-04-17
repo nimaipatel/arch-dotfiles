@@ -1,9 +1,17 @@
 #!/bin/sh
 
+gethex(){
+	xrdb -query | grep "^*.${1}:" | tail -c 8
+}
+
+BGCOL=$(gethex '*.background')
+
 WALLPAPER_FILE="$HOME/.config/wallpaper"
 LOCKSCREEN_FILE="$HOME/.config/lockscreen"
 KEYWORD=""
 DISPLAY_RES=$(xdpyinfo | grep dimensions | sed -r 's/^[^0-9]*([0-9]+x[0-9]+).*$/\1/')
+WIDTHBY2=$(( $(echo "$DISPLAY_RES" | cut -d'x' -f1) / 2 ))
+HEIGHTBY2=$(( $(echo "$DISPLAY_RES" | cut -d'x' -f2) / 2 ))
 
 while getopts ":k:" o; do
     case "${o}" in
@@ -30,6 +38,6 @@ if [ -d "$1" ]; then
 fi
 
 convert "${SELECTED_WALL}" -geometry "${DISPLAY_RES}^" -gravity center -crop "${DISPLAY_RES}+0+0" "${WALLPAPER_FILE}"
-convert "${WALLPAPER_FILE}" -filter Gaussian -blur 0x3 "${LOCKSCREEN_FILE}" &
+convert "${WALLPAPER_FILE}" -filter Gaussian -blur 0x3 -gravity center -fill "$BGCOL" -draw "circle ${WIDTHBY2},${HEIGHTBY2} $(( WIDTHBY2 + 150 )),${HEIGHTBY2}" "${LOCKSCREEN_FILE}" &
 display -size "${DISPLAY_RES}" -window root "${WALLPAPER_FILE}"
 notify-send -t 3000 "Wallpaper set to $BASE_NAME"
