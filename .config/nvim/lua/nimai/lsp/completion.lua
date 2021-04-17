@@ -53,25 +53,25 @@ lspconfig.sumneko_lua.setup{
 
 lspconfig.tsserver.setup {
     on_attach = on_attach,
-    root_dir = util.root_pattern("package.json", "tsconfig.json", ".git") or vim.loop.cwd();
+    root_dir = vim.loop.cwd,
     capabilities = capabilities
 }
 
 lspconfig.html.setup {
     on_attach = on_attach,
-    root_dir = util.root_pattern("package.json", "tsconfig.json", ".git") or vim.loop.cwd();
+    root_dir = vim.loop.cwd,
     capabilities = capabilities
 }
 
 lspconfig.cssls.setup {
     on_attach = on_attach,
-    root_dir = util.root_pattern("package.json", "tsconfig.json", ".git") or vim.loop.cwd();
+    root_dir = vim.loop.cwd,
     capabilities = capabilities
 }
 
 lspconfig.hls.setup {
     on_attach = on_attach,
-    root_dir = util.root_pattern("*.cabal", "stack.yaml", "cabal.project", "package.yaml", "hie.yaml", ".git") or vim.loop.cwd(),
+    root_dir = vim.loop.cwd,
     capabilities = capabilities
 }
 

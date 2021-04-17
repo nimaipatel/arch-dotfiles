@@ -56,7 +56,7 @@ lspconfig.efm.setup {
     on_attach = on_attach,
     init_options = {documentFormatting = true},
     settings = {
-        rootMarkers = {".git/"},
+        rootMarkers = {vim.loop.cwd()},
         languages = {
             lua = {luafmt},
             python = {flake8, black, isort, mypy},
