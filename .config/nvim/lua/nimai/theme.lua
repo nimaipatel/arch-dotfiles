@@ -7,30 +7,30 @@ function SetColorScheme(colorscheme)
 		vim.cmd('colorscheme gruvbox8_hard')
 		vim.o.background = 'dark'
 		vim.api.nvim_exec([[
-		    hi StatusLine guibg=NONE guifg=#ebdbb2 gui=bold
-		    hi TabLineFill guibg=NONE gui=bold
-		    hi TabLine guibg=NONE gui=bold
-		    hi TabLineSel guibg=NONE gui=bold
+			hi StatusLine guibg=NONE guifg=#ebdbb2 gui=bold
+			hi TabLineFill guibg=NONE gui=bold
+			hi TabLine guibg=NONE gui=bold
+			hi TabLineSel guibg=NONE gui=bold
 		]], true)
 	elseif colorscheme == 'gruvbox_light' then
 		vim.g.gruvbox_italics = 0
 		vim.cmd('colorscheme gruvbox8_hard')
 		vim.o.background = 'light'
 		vim.api.nvim_exec([[
-		    hi StatusLine guibg=NONE guifg=#3c3836 gui=bold
-		    hi TabLineFill guibg=NONE gui=bold
-		    hi TabLine guibg=NONE gui=bold
-		    hi TabLineSel guibg=NONE gui=bold
+			hi StatusLine guibg=NONE guifg=#3c3836 gui=bold
+			hi TabLineFill guibg=NONE gui=bold
+			hi TabLine guibg=NONE gui=bold
+			hi TabLineSel guibg=NONE gui=bold
 		]], true)
 	elseif colorscheme == 'dracula' then
 		vim.cmd('colorscheme dracula')
 		vim.o.background = 'dark'
 		vim.api.nvim_exec([[
-		    hi Normal guibg=#0e1419
-		    hi StatusLine guibg=NONE guifg=#f8f8f2 gui=bold
-		    hi TabLineFill guibg=NONE gui=bold
-		    hi TabLine guibg=NONE gui=bold
-		    hi TabLineSel guifg=#50fa7b guibg=NONE gui=bold
+			hi Normal guibg=#0e1419
+			hi StatusLine guibg=NONE guifg=#f8f8f2 gui=bold
+			hi TabLineFill guibg=NONE gui=bold
+			hi TabLine guibg=NONE gui=bold
+			hi TabLineSel guifg=#50fa7b guibg=NONE gui=bold
 		]], true)
 	end
 end
