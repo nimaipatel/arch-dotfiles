@@ -53,7 +53,6 @@ local luafmt = {
 }
 
 lspconfig.efm.setup {
-	on_attach = on_attach,
 	init_options = {documentFormatting = true},
 	settings = {
 		rootMarkers = {vim.loop.cwd()},

@@ -1,5 +1,4 @@
 local lspconfig = require('lspconfig')
-local util = lspconfig.util
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 
@@ -47,7 +46,9 @@ lspconfig.clangd.setup{
 
 lspconfig.sumneko_lua.setup{
 	settings = { Lua = { diagnostics = { globals = { 'vim', 'use' } } } },
+	cmd = {"lua-language-server"},
 	on_attach = on_attach,
+	root_dir = vim.loop.cwd,
 	capabilities = capabilities
 }
 
