@@ -2,6 +2,8 @@
 
 name: gruvbox_dark
 *.background: #1d2021
+*.bg: #1d2021
+*.bgUnfocused: #1d2021
 *.foreground: #ebdbb2
 *.color0:  #282828
 *.color1:  #cc241d

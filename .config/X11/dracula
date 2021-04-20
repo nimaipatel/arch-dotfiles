@@ -1,8 +1,10 @@
 ! Dracula Xresources palette {{{
 
 name: dracula
-*.foreground: #f8f8f2
 *.background: #0e1419
+*.bg: #0e1419
+*.bgUnfocused: #0e1419
+*.foreground: #f8f8f2
 *.color0:     #000000
 *.color8:     #4d4d4d
 *.color1:     #ff5555
