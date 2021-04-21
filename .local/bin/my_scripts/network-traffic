@@ -12,7 +12,7 @@ then
 	exit
 fi
 
-printf " %sKiB  %sKiB\\n" \
+printf "🔻 %sKiB 🔺 %sKiB\\n" \
 	"$(( (RXCURR - $(echo "$PREVDATA" | cut -d' ' -f 1)) / 1024 ))" \
 	"$(( (TXCURR - $(echo "$PREVDATA" | cut -d' ' -f 2)) / 1024 ))"
 
