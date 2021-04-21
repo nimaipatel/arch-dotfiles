@@ -8,6 +8,11 @@ dwm.font: SF Mono Ligaturized:pixelsize=14:antialias=true:autohint=true;JoyPixel
 *.font: SF Mono Ligaturized:pixelsize=16:antialias=true:autohint=true;JoyPixels:pixelsize=16:antialias=true:autohint=true;
 dunst.font: SF Mono Ligaturized
 
+! DejaVu Sans Mono
+dwm.font: DejaVu Sans Mono:pixelsize=14:antialias=true:autohint=true;JoyPixels:pixelsize=14:antialias=true:autohint=true;
+*.font: DejaVu Sans Mono:pixelsize=16:antialias=true:autohint=true;JoyPixels:pixelsize=16:antialias=true:autohint=true;
+dunst.font: DejaVu Sans Mono
+
 ! Cascadia Code
 dwm.font: Cascadia Code:pixelsize=14:antialias=true:autohint=true;JoyPixels:pixelsize=14:antialias=true:autohint=true;
 *.font: Cascadia Code:pixelsize=16:antialias=true:autohint=true;JoyPixels:pixelsize=16:antialias=true:autohint=true;
