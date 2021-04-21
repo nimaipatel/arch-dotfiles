@@ -6,10 +6,6 @@ xmodmap ~/.config/X11/Xmodmap &
 
 xset r rate 300 50 &
 
-set-wallpaper ~/Pictures/wallpapers/ &
-
-redshift -P -O 2700 &
-
 killall mpd ; mpd &
 
 killall xbanish ; xbanish &
@@ -19,6 +15,10 @@ killall flameshot ; flameshot &
 killall dwmblocks ; dwmblocks &
 
 (dmenu-change-font "Fantasque Sans Mono" ; dmenu-change-mode gruvbox_dark) &
+
+set-wallpaper ~/Pictures/wallpapers/ &
+
+redshift -P -O 2700 &
 
 picom -b
 
