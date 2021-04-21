@@ -20,4 +20,6 @@ killall dwmblocks ; dwmblocks &
 
 (dmenu-change-font "Fantasque Sans Mono" ; dmenu-change-mode gruvbox_dark) &
 
+picom -b
+
 dwm
