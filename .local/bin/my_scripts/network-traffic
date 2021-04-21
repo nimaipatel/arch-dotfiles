@@ -1,0 +1,19 @@
+#!/bin/sh
+
+LOGFILE="${XDG_CACHE_HOME:-$HOME/.cache}/netlog"
+PREVDATA="$(cat "$LOGFILE")"
+
+RXCURR="$(( $(cat /sys/class/net/*/statistics/rx_bytes | paste -sd '+') ))"
+TXCURR="$(( $(cat /sys/class/net/*/statistics/tx_bytes | paste -sd '+') ))"
+
+if [ ! -e "$LOGFILE" ]
+then
+	echo "$RXCURR $TXCURR" > "$LOGFILE"
+	exit
+fi
+
+printf " %sKiB  %sKiB\\n" \
+	"$(( (RXCURR - $(echo "$PREVDATA" | cut -d' ' -f 1)) / 1024 ))" \
+	"$(( (TXCURR - $(echo "$PREVDATA" | cut -d' ' -f 2)) / 1024 ))"
+
+echo "$RXCURR $TXCURR" > "$LOGFILE"
