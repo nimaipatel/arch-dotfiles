@@ -13,6 +13,11 @@ dwm.font: Liberation Mono:pixelsize=14:antialias=true:autohint=true;JoyPixels:pi
 *.font: Liberation Mono:pixelsize=16:antialias=true:autohint=true;JoyPixels:pixelsize=16:antialias=true:autohint=true;
 dunst.font: Liberation Mono
 
+! JetBrains Mono
+dwm.font: JetBrains Mono:pixelsize=14:antialias=true:autohint=true;JoyPixels:pixelsize=14:antialias=true:autohint=true;
+*.font: JetBrains Mono:pixelsize=16:antialias=true:autohint=true;JoyPixels:pixelsize=16:antialias=true:autohint=true;
+dunst.font: JetBrains Mono
+
 ! DejaVu Sans Mono
 dwm.font: DejaVu Sans Mono:pixelsize=14:antialias=true:autohint=true;JoyPixels:pixelsize=14:antialias=true:autohint=true;
 *.font: DejaVu Sans Mono:pixelsize=16:antialias=true:autohint=true;JoyPixels:pixelsize=16:antialias=true:autohint=true;
