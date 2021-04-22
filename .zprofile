@@ -1,5 +1,4 @@
-# default executables
-export EDITOR="nvim"
+# default executables export EDITOR="nvim"
 export VISUAL="nvim"
 export TERMINAL="st"
 export BROWSER="firefox"
@@ -15,6 +14,7 @@ export MY_SCRIPT_ASSETS="$HOME/.local/share/my_script_assets"
 # PATH variable
 export PATH="${HOME}/.local/share/bin:${PATH}"
 export PATH="${HOME}/.local/bin/my_scripts:${PATH}"
+export PATH="${HOME}/.local/bin/statusbar:${PATH}"
 export PATH="${HOME}/.local/bin:${PATH}"
 
 # en_IN doesn't work as expected
