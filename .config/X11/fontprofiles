@@ -8,6 +8,11 @@ dwm.font: SF Mono Ligaturized:pixelsize=14:antialias=true:autohint=true;JoyPixel
 *.font: SF Mono Ligaturized:pixelsize=16:antialias=true:autohint=true;JoyPixels:pixelsize=16:antialias=true:autohint=true;
 dunst.font: SF Mono Ligaturized
 
+! Liberation Mono
+dwm.font: Liberation Mono:pixelsize=14:antialias=true:autohint=true;JoyPixels:pixelsize=14:antialias=true:autohint=true;
+*.font: Liberation Mono:pixelsize=16:antialias=true:autohint=true;JoyPixels:pixelsize=16:antialias=true:autohint=true;
+dunst.font: Liberation Mono
+
 ! DejaVu Sans Mono
 dwm.font: DejaVu Sans Mono:pixelsize=14:antialias=true:autohint=true;JoyPixels:pixelsize=14:antialias=true:autohint=true;
 *.font: DejaVu Sans Mono:pixelsize=16:antialias=true:autohint=true;JoyPixels:pixelsize=16:antialias=true:autohint=true;
