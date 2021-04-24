@@ -34,6 +34,14 @@ function SetColorScheme(colorscheme)
 			hi TabLine guibg=NONE gui=bold
 			hi TabLineSel guifg=#50fa7b guibg=NONE gui=bold
 		]], true)
+	elseif colorscheme == 'classic' then
+		vim.cmd('colorscheme vividchalk')
+		vim.api.nvim_exec([[
+			hi Normal guibg=Normal guifg=None
+			hi StatusLine guibg=NONE guifg=#ffffff gui=bold
+			hi TabLineFill guibg=NONE gui=bold
+			hi TabLine guibg=NONE gui=bold
+		]], true)
 	end
 end
 
