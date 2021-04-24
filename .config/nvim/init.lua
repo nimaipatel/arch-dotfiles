@@ -6,7 +6,6 @@
 -- ██║██║░╚███║██║░░░██║░░░██╗███████╗╚██████╔╝██║░░██║
 -- ╚═╝╚═╝░░╚══╝╚═╝░░░╚═╝░░░╚═╝╚══════╝░╚═════╝░╚═╝░░╚═╝
 
-require('nimai.plugins')
 require('nimai.utils')
 require('nimai.options')
 require('nimai.mappings')
