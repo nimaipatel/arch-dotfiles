@@ -52,3 +52,7 @@ nnoremap('<a-k>', ':tabmove +1<cr>')
 nnoremap('<c-y>', ':8sp term://zsh <cr>')
 -- turn terminal to normal mode with escape
 nnoremap('<esc>', '<c-\\><c-n>')
+
+nnoremap('<C-p>', '<cmd>Telescope find_files<CR>')
+nnoremap('<space>g', '<cmd>Telescope live_grep<CR>')
+nnoremap('<space>b', '<cmd>Telescope buffers<CR>')
