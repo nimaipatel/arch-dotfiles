@@ -48,3 +48,10 @@ vim.o.listchars = 'tab:→ ,space:·,nbsp:␣,trail:•,eol:¶,precedes:«,exten
 
 -- completion style
 vim.o.completeopt = 'menuone,noinsert,noselect'
+
+-- color highlights for cringe style sheets
+vim.o.termguicolors = true
+require('colorizer').setup()
+
+-- cute signs next to changes in files managed by git
+require('gitsigns').setup()
