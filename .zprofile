@@ -1,7 +1,7 @@
 # default executables export EDITOR="nvim"
 export VISUAL="nvim"
 export TERMINAL="st"
-export BROWSER="firefox"
+export BROWSER="librewolf"
 export READER="zathura"
 export TERMINAL_FILE_BROWSER="ranger"
 export GUI_FILE_BROWSER="pcmanfm"
