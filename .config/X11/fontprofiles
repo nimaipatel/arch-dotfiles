@@ -1,13 +1,3 @@
-! SF Mono
-dwm.font: SF Mono:pixelsize=14:antialias=true:autohint=true;JoyPixels:pixelsize=14:antialias=true:autohint=true;
-*.font: SF Mono:pixelsize=16:antialias=true:autohint=true;JoyPixels:pixelsize=16:antialias=true:autohint=true;
-dunst.font: SF Mono
-
-! SF Mono Ligaturized
-dwm.font: SF Mono Ligaturized:pixelsize=14:antialias=true:autohint=true;JoyPixels:pixelsize=14:antialias=true:autohint=true;
-*.font: SF Mono Ligaturized:pixelsize=16:antialias=true:autohint=true;JoyPixels:pixelsize=16:antialias=true:autohint=true;
-dunst.font: SF Mono Ligaturized
-
 ! Liberation Mono
 dwm.font: Liberation Mono:pixelsize=14:antialias=true:autohint=true;JoyPixels:pixelsize=14:antialias=true:autohint=true;
 *.font: Liberation Mono:pixelsize=16:antialias=true:autohint=true;JoyPixels:pixelsize=16:antialias=true:autohint=true;
@@ -22,11 +12,6 @@ dunst.font: JetBrains Mono
 dwm.font: DejaVu Sans Mono:pixelsize=14:antialias=true:autohint=true;JoyPixels:pixelsize=14:antialias=true:autohint=true;
 *.font: DejaVu Sans Mono:pixelsize=16:antialias=true:autohint=true;JoyPixels:pixelsize=16:antialias=true:autohint=true;
 dunst.font: DejaVu Sans Mono
-
-! Cascadia Code
-dwm.font: Cascadia Code:pixelsize=14:antialias=true:autohint=true;JoyPixels:pixelsize=14:antialias=true:autohint=true;
-*.font: Cascadia Code:pixelsize=16:antialias=true:autohint=true;JoyPixels:pixelsize=16:antialias=true:autohint=true;
-dunst.font: Cascadia Code
 
 ! Fantasque Sans Mono
 dwm.font: Fantasque Sans Mono:pixelsize=16:antialias=true:autohint=true;JoyPixels:pixelsize=14:antialias=true:autohint=true;
