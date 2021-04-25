@@ -55,3 +55,8 @@ require('colorizer').setup()
 
 -- cute signs next to changes in files managed by git
 require('gitsigns').setup()
+
+require('nvim-treesitter.configs').setup {
+	ensure_installed = "maintained",
+	highlight = { enable = true },
+}
