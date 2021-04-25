@@ -14,7 +14,7 @@ killall flameshot ; flameshot &
 
 killall dwmblocks ; dwmblocks &
 
-(dmenu-change-font "Fantasque Sans Mono" ; dmenu-change-mode gruvbox_dark) &
+(dmenu-change-font "Liberation Mono" ; dmenu-change-mode "gruvbox_dark") &
 
 set-wallpaper ~/Pictures/wallpapers/ &
 
