@@ -1,12 +1,18 @@
 # make sure $userclientrc is set to $HOME/.config/X11/xinitrc in /usr/bin/startx script
 
-#export _JAVA_AWT_WM_NONREPARENTING=1 &
-
 xmodmap ~/.config/X11/Xmodmap &
 
 xset r rate 300 50 &
 
+redshift -P -O 2700 &
+
 killall mpd ; mpd &
+
+(dmenu-change-font "Liberation Mono" ; dmenu-change-mode "gruvbox_dark") &
+
+set-wallpaper ~/pictures/wallpapers &
+
+picom &
 
 killall xbanish ; xbanish &
 
@@ -14,12 +20,4 @@ killall flameshot ; flameshot &
 
 killall dwmblocks ; dwmblocks &
 
-(dmenu-change-font "Liberation Mono" ; dmenu-change-mode "gruvbox_dark") &
-
-set-wallpaper ~/Pictures/wallpapers/ &
-
-redshift -P -O 2700 &
-
-picom -b
-
-dwm
+exec dwm
