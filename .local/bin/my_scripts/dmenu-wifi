@@ -1,0 +1,21 @@
+#!/bin/sh
+
+SEL=$(nmcli -get-values SSID device wifi list | dmenu -l 10 -i)
+
+[ -z "$SEL" ] && exit 1
+
+# check if present in list of remembered
+if nmcli -get-values NAME connection show | grep -q "$SEL" ; then
+	if nmcli connection up "$SEL"; then
+		notify-send "Successfully connected to ${SEL} 📶"
+	else
+		notify-send "Couldn't connect to ${SEL} ❎"
+	fi
+else
+	PAS=$(echo "" | dmenu -p "Enter password 🔑")
+	if nmcli device wifi connect "$SEL" password "$PAS"; then
+		notify-send "Successfully connected to ${SEL} 📶"
+	else
+		notify-send "Couldn't connect to ${SEL} ❎"
+	fi
+fi
