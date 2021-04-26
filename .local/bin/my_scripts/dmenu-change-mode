@@ -29,7 +29,7 @@ then
 
 	restart-dunst
  
-	sed -i "s/^Net\/ThemeName \".*\"/Net\/ThemeName \"${CHOOSEN_THEME}\"/g" "$XDG_CONFIG_HOME/xsettingsd/xsettingsd.conf" && killall xsettingsd ; xsettingsd &
+	echo "Net/ThemeName \"${CHOOSEN_THEME}\"" > "$XDG_CONFIG_HOME/xsettingsd/xsettingsd.conf" && killall xsettingsd ; xsettingsd &
 
 	notify-send "Theme set to ${CHOOSEN_THEME}"
 else
