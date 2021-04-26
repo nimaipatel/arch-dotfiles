@@ -6,11 +6,7 @@ PREVDATA="$(cat "$LOGFILE")"
 RXCURR="$(( $(cat /sys/class/net/*/statistics/rx_bytes | paste -sd '+') ))"
 TXCURR="$(( $(cat /sys/class/net/*/statistics/tx_bytes | paste -sd '+') ))"
 
-if [ ! -e "$LOGFILE" ]
-then
-	echo "$RXCURR $TXCURR" > "$LOGFILE"
-	exit
-fi
+[ ! -f "$LOGFILE" ] && echo "$RXCURR $TXCURR" > "$LOGFILE" && exit
 
 printf "🔻 %sKiB 🔺 %sKiB\\n" \
 	"$(( (RXCURR - $(echo "$PREVDATA" | cut -d' ' -f 1)) / 1024 ))" \
