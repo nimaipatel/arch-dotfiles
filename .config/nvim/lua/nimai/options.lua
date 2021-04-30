@@ -31,9 +31,6 @@ vim.o.smartcase = true
 vim.wo.number=true
 vim.wo.relativenumber=true
 
--- show cursorline
-vim.wo.cursorline = true
-
 -- netrw default style
 vim.g.netrw_liststyle = 3
 
