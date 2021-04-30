@@ -10,7 +10,7 @@ imap('<tab>', '<plug>(completion_smart_tab)')
 imap('<s-tab>', '<plug>(completion_smart_s_tab)')
 imap('<c-space>', '<plug>(completion_trigger)')
 
-local on_attach = function(_, bufnr)
+local on_attach = function(client, bufnr)
 	require('completion').on_attach()
 	local function bufnoremap(type, input, output)
 		vim.api.nvim_buf_set_keymap(bufnr, type, input, output, { noremap=true, silent=true })
@@ -28,6 +28,7 @@ local on_attach = function(_, bufnr)
 	bufnoremap('n', '<leader>f', '<cmd>lua vim.lsp.buf.formatting()<cr>')
 	bufnoremap('n', 'H', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<cr>')
 	bufnoremap('n', 'L', '<cmd>lua vim.lsp.buf.hover()<cr>')
+	vim.api.nvim_set_current_dir(client.config.root_dir)
 end
 
 lspconfig.jdtls.setup{
