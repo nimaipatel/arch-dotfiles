@@ -2,8 +2,8 @@
 setopt GLOB_DOTS
 
 # History in cache directory:
-HISTSIZE=10000000
-SAVEHIST=10000000
+export HISTSIZE=10000000
+export SAVEHIST=10000000
 
 # Write to the history file immediately, not when the shell exits.
 setopt INC_APPEND_HISTORY
@@ -38,13 +38,13 @@ zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}' 'r:|[._-]=* r:|=*' 'l:|=* r:
 
 function man() {
 	env \
-		LESS_TERMCAP_md=$(tput bold; tput setaf 2) \
-		LESS_TERMCAP_me=$(tput sgr0) \
-		LESS_TERMCAP_mb=$(tput blink) \
-		LESS_TERMCAP_us=$(tput setaf 4) \
-		LESS_TERMCAP_ue=$(tput sgr0) \
-		LESS_TERMCAP_so=$(tput smso) \
-		LESS_TERMCAP_se=$(tput rmso) \
+		LESS_TERMCAP_md="$(tput bold; tput setaf 2)" \
+		LESS_TERMCAP_me="$(tput sgr0)" \
+		LESS_TERMCAP_mb="$(tput blink)" \
+		LESS_TERMCAP_us="$(tput setaf 4)" \
+		LESS_TERMCAP_ue="$(tput sgr0)" \
+		LESS_TERMCAP_so="$(tput smso)" \
+		LESS_TERMCAP_se="$(tput rmso)" \
 		PAGER="${commands[less]:-$PAGER}" \
 		man "$@"
 }
