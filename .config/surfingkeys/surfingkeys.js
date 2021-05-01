@@ -1,3 +1,5 @@
+// located at 🏠: https://raw.githubusercontent.com/nimaipatel/dotfiles/master/.config/surfingkeys/surfingkeys.js
+
 map('J', 'E')
 map('K', 'R')
 
