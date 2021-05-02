@@ -1,3 +1,6 @@
+# change directory without cd command
+setopt autocd
+
 # include hidden files in tab autocomplete
 setopt GLOB_DOTS
 
