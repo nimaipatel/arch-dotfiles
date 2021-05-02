@@ -31,6 +31,11 @@ local on_attach = function(client, bufnr)
 	vim.api.nvim_set_current_dir(client.config.root_dir)
 end
 
+lspconfig.bashls.setup{
+	on_attach = on_attach,
+	filetypes = { 'sh', 'zsh', 'bash' }
+}
+
 lspconfig.jdtls.setup{
 	on_attach = on_attach,
 }
