@@ -5,9 +5,6 @@ tmap('jj', '<esc>')
 -- toggle whitespace rendering
 nnoremap('<leader>ws', ':set list!<cr>')
 
--- save buffer with control + w
-nnoremap('<c-s>', ':w<cr>')
-
 -- unmap control + z for now
 nnoremap('<c-z>', '')
 

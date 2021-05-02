@@ -34,9 +34,6 @@ zle -N accept-line expand-alias-and-accept-line
 # change directory without cd command
 setopt autocd
 
-# disbable control + s to freeze terminal
-stty stop undef
-
 # terminal swallowing with dwmswallow patch
 [ -n "$DISPLAY" ] && command -v xdo >/dev/null 2>&1 && xdo id > /tmp/term-wid-"$$"
 trap "( rm -f /tmp/term-wid-"$$" )" EXIT HUP
