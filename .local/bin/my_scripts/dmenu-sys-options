@@ -1,30 +1,23 @@
 #!/bin/sh
 
-OPTION=$(echo "Lock
-Exit XServer
-Logout
-Shutdown
-Reboot" | dmenu -i)
+OPTION=$(printf "Lock\nExit XServer\nLogout\nShutdown\nReboot" | dmenu -i)
 
 [ -z "${OPTION}" ] && exit
 
 case "${OPTION}" in
-    'Lock') 
-        lockscreen;;
-    'Exit XServer')
-        pkill xinit;;
-    'Logout')
-        kill -9 -1;;
-    'Shutdown')
-        CONFIRM=$(echo "No
-Yes" |\
-            dmenu -i -p "Are you sure you want to shutdown?")
-        [ "$CONFIRM" = Yes ] && poweroff
-        ;;
-    'Reboot')
-        CONFIRM=$(echo "No
-Yes" |\
-            dmenu -i -p "Are you sure you want to reboot?")
-        [ "$CONFIRM" = Yes ] && reboot
-        ;;
+	'Lock') 
+		lockscreen;;
+	'Exit XServer')
+		pkill xinit;;
+	'Logout')
+		pkill -KILL -u "$USER"
+		;;
+	'Shutdown')
+		CONFIRM=$(printf "No\nYes" | dmenu -i -p "Are you sure you want to shutdown?")
+		[ "$CONFIRM" = Yes ] && poweroff
+		;;
+	'Reboot')
+		CONFIRM=$(printf "No\nYes" | dmenu -i -p "Are you sure you want to reboot?")
+		[ "$CONFIRM" = Yes ] && reboot
+		;;
 esac
