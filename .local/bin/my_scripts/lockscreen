@@ -3,11 +3,14 @@
 LOCKSCREEN_FILE="$HOME/.config/lockscreen"
 
 gethex(){
-	xrdb -query | grep "^*.${1}:" | tail -c 7
+	LINE="$(xrdb -query | grep "^*.${1}:")"
+	echo "${LINE##*	#}"
 }
 
 getfont() {
-	xrdb -query | grep "^*.font:" | cut -d: -f2 | sed 's/^\s//g;s/\s$//g'
+	LINE="$(xrdb -query | grep "^*.font:")"
+	LINE="${LINE##*:	}"
+	echo "${LINE%%:*}"
 }
 
 # yes, running grep, cut, sed and tail these many times is cringe

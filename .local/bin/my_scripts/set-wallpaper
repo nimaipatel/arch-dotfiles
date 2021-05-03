@@ -1,10 +1,7 @@
 #!/bin/sh
 
-gethex(){
-	xrdb -query | grep "^*.${1}:" | tail -c 8
-}
-
-BGCOL=$(gethex '*.background')
+BGCOL="$(xrdb -query | grep "*.background:")"
+BGCOL="${BGCOL##*:	}"
 
 WALLPAPER_FILE="$HOME/.config/wallpaper"
 LOCKSCREEN_FILE="$HOME/.config/lockscreen"

@@ -1,11 +1,13 @@
 #!/bin/sh
 
 gethex(){
-	xrdb -query | grep "^*.${1}:" | tail -c 8
+	LINE="$(xrdb -query | grep "^*.${1}:")"
+	echo "${LINE##*:	}"
 }
 
 getdunstfont() {
-	xrdb -query | grep "dunst.font:" | cut -d: -f2
+	LINE="$(xrdb -query | grep "dunst.font:")"
+	echo "${LINE##*:}"
 }
 
 killall dunst; dunst -font "$(getdunstfont)" -lb "$(gethex '*.color4')" -nb "$(gethex '*.color2')" -cb "$(gethex '*.color1')" -lf "#000000" -nf "#000000" -cf "#000000" -lfr "#000000" -nfr "#000000" -cfr "#000000" &
