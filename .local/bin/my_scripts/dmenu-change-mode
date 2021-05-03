@@ -31,7 +31,7 @@ then
  
 	echo "Net/ThemeName \"${CHOOSEN_THEME}\"" > "$XDG_CONFIG_HOME/xsettingsd/xsettingsd.conf" && killall xsettingsd ; xsettingsd &
 
-	notify-send "Theme set to ${CHOOSEN_THEME}"
+	[ -z "$*" ] && notify-send "Theme set to ${CHOOSEN_THEME}"
 else
 	exit 1
 fi

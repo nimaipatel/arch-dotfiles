@@ -19,7 +19,7 @@ then
  
  	restart-dunst
  
- 	notify-send "Font set to ${SELFONT}"
+ 	[ -z "$*" ] && notify-send "Font set to ${SELFONT}"
 else
 	exit 1
 fi
