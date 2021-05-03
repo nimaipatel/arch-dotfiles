@@ -20,3 +20,5 @@ source "${ZDOTDIR}/nimai/abbreviations.zsh"
 
 # prompt
 source "${ZDOTDIR}/nimai/prompt.zsh"
+
+pfetch

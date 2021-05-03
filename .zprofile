@@ -7,6 +7,9 @@ export TERMINAL_FILE_BROWSER="ranger"
 export GUI_FILE_BROWSER="pcmanfm"
 export MANPAGER='nvim +Man!'
 
+# pfetch config
+export PF_INFO="ascii title os kernel shell editor pkgs uptime memory"
+
 # my scripts
 export MY_SCRIPTS="$HOME/.local/bin/my_scripts"
 export MY_SCRIPT_ASSETS="$HOME/.local/share/my_script_assets"
