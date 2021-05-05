@@ -41,3 +41,6 @@ abbr snvm="source /usr/share/nvm/init-nvm.sh"
 
 # generate random password
 abbr genpas="gpg --armor --gen-random 1 5"
+
+# connect to remembered networks quickly
+abbr nn="nmcli connection up"
