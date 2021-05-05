@@ -9,7 +9,7 @@ name: classic
 *.color1:  #af0000
 *.color2:  #00af00
 *.color3:  #afd700
-*.color4:  #0000ee
+*.color4:  #2e2eee
 *.color5:  #af00af
 *.color6:  #00d7af
 *.color7:  #dcdcdc
