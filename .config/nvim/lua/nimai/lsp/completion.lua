@@ -37,27 +37,33 @@ lspconfig.phpactor.setup {
 }
 
 lspconfig.texlab.setup{
+	root_dir = vim.loop.cwd,
 	on_attach = on_attach,
 }
 
 lspconfig.bashls.setup{
+	root_dir = vim.loop.cwd,
 	on_attach = on_attach,
 	filetypes = { 'sh', 'zsh', 'bash' }
 }
 
 lspconfig.jdtls.setup{
+	root_dir = vim.loop.cwd,
 	on_attach = on_attach,
 }
 
 lspconfig.pyls.setup{
+	root_dir = vim.loop.cwd,
 	on_attach = on_attach,
 }
 
 lspconfig.rust_analyzer.setup{
+	root_dir = vim.loop.cwd,
 	on_attach = on_attach,
 }
 
 lspconfig.clangd.setup{
+	root_dir = vim.loop.cwd,
 	on_attach = on_attach,
 }
 
