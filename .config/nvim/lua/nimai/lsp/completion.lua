@@ -31,6 +31,11 @@ local on_attach = function(client, bufnr)
 	vim.api.nvim_set_current_dir(client.config.root_dir)
 end
 
+lspconfig.phpactor.setup {
+	root_dir = vim.loop.cwd,
+	on_attach = on_attach,
+}
+
 lspconfig.texlab.setup{
 	on_attach = on_attach,
 }
