@@ -1,8 +1,8 @@
 #!/usr/bin/sh
 
-SELECTED_SESSION=$(tmux list-sessions | dmenu -l 5)
-SESSION_NAME=${SELECTED_SESSION%% *}
+SELECTED_SESSION="$(tmux list-sessions | dmenu -l 5)"
+SESSION_NAME="${SELECTED_SESSION%% *}"
 # there will technically be a ':' left at
 # the end  of the string but tmux selects 
 # first match so the script should work
-$TERMINAL -e tmux attach -t ${SESSION_NAME}
+$TERMINAL -e tmux attach -t "${SESSION_NAME}"
