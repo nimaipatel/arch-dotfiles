@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 ALLFONTS=$(grep "^! " "${XDG_CONFIG_HOME}/X11/fontprofiles" | sed 's/^..//g')
 
@@ -11,7 +11,7 @@ fi
 
 if echo "$ALLFONTS" | grep -q "^${SELFONT}$"
 then
- 	xrdb -merge <(grep "^! ${SELFONT}$" -A3 "${XDG_CONFIG_HOME}/X11/fontprofiles")
+	grep "^! ${SELFONT}$" -A3 "${XDG_CONFIG_HOME}/X11/fontprofiles" | xrdb -merge
  
 	# shellcheck disable=SC2046
  	kill -s USR1 $(pidof st)
