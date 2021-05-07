@@ -1,4 +1,4 @@
-#!/usr/bin/sh
+#!/bin/sh
 
 SELECTED_SESSION="$(tmux list-sessions | dmenu -l 5)"
 SESSION_NAME="${SELECTED_SESSION%% *}"

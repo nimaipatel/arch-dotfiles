@@ -1,4 +1,5 @@
-#!/usr/bin/sh
+#!/bin/sh
+
 CRITICAL_LEVEL=20
 XDG_RUNTIME_DIR="/run/user/$(id -u)"
 export XDG_RUNTIME_DIR
