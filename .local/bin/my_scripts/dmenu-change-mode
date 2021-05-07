@@ -21,6 +21,7 @@ if echo "$THEMES" | grep -q "^${CHOOSEN_THEME}$"
 then
 	xrdb -merge "${XDG_CONFIG_HOME}/X11/${CHOOSEN_THEME}"
 
+	# shellcheck disable=SC2046
 	kill -s USR1 $(pidof st)
 
 	xdotool key "Super+F12"
