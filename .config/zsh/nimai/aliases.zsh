@@ -1,5 +1,5 @@
 # manage dotfiles with this
-cfg() { git --git-dir="${HOME}/.cfg/" --work-tree="$HOME" "$@" ; }
+cfg() { git --git-dir="${XDG_CONFIG_HOME}/cfg/.git/" --work-tree="$HOME" "$@" ; }
 
 # swallow aliases
 alias zz="dwmswallow \$WINDOWID && zathura"

@@ -6,7 +6,7 @@ I've tried to put everything I can into `~/.config`
 
 ```
 git init --bare $HOME/.cfg
-cfg() { git --git-dir="${HOME}/.cfg/" --work-tree="$HOME" "$@" ; }
+cfg() { git --git-dir="${XDG_CONFIG_HOME}/cfg/.git/" --work-tree="$HOME" "$@" ; }
 cfg config --local status.showUntrackedFiles no
 cfg remote add origin https://github.com/nimaipatel/dotfiles.git
 cfg pull origin master
