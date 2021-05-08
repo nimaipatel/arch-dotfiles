@@ -44,3 +44,9 @@ abbr genpas="gpg --armor --gen-random 1 5"
 
 # connect to remembered networks quickly
 abbr nn="nmcli connection up"
+
+# I forget these flags every time for downloading albums/playlists with cover art
+abbr ytm="youtube-dl--extract-audio --audio-format mp3 --embed-thumbnail"
+
+# always forget rsync flags to sync media/backups across devices (don't forget trailing slashes!)
+abbr rr="rsync --archive --verbose --dry-run"
