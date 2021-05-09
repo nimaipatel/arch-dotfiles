@@ -5,7 +5,7 @@ I've tried to put everything I can into `~/.config`
 ## On new computer:
 
 ```
-git init --bare $HOME/.cfg
+git init --bare "${XDG_CONFIG_HOME}/cfg/.git/"
 cfg() { git --git-dir="${XDG_CONFIG_HOME}/cfg/.git/" --work-tree="$HOME" "$@" ; }
 cfg config --local status.showUntrackedFiles no
 cfg remote add origin https://github.com/nimaipatel/dotfiles.git
