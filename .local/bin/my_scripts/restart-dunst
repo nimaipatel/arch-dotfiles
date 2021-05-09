@@ -1,12 +1,12 @@
 #!/bin/sh
 
 gethex(){
-	LINE="$(xrdb -query | grep "^*.${1}:")"
+	LINE="$(xrdb -query | grep "^\*\.${1}:")"
 	echo "${LINE##*:	}"
 }
 
 getdunstfont() {
-	LINE="$(xrdb -query | grep "dunst.font:")"
+	LINE="$(xrdb -query | grep "dunst\.font:")"
 	echo "${LINE##*:}"
 }
 

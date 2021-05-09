@@ -3,12 +3,12 @@
 LOCKSCREEN_FILE="$HOME/.config/lockscreen"
 
 gethex(){
-	LINE="$(xrdb -query | grep "^*.${1}:")"
+	LINE="$(xrdb -query | grep "^\*\.${1}:")"
 	echo "${LINE##*	#}"
 }
 
 getfont() {
-	LINE="$(xrdb -query | grep "^*.font:")"
+	LINE="$(xrdb -query | grep "^\*\.font:")"
 	LINE="${LINE##*:	}"
 	echo "${LINE%%:*}"
 }
