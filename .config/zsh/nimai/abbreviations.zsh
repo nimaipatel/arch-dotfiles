@@ -43,7 +43,7 @@ abbr snvm="source /usr/share/nvm/init-nvm.sh"
 abbr genpas="gpg --armor --gen-random 1 5"
 
 # connect to remembered networks quickly
-abbr nn="nmcli connection up"
+abbr nn="nmcli device wifi connect"
 
 # I forget these flags every time for downloading albums/playlists with cover art
 abbr ytm="youtube-dl --extract-audio --audio-format mp3 --embed-thumbnail"
