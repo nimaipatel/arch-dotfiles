@@ -20,7 +20,6 @@ zle -N expand-ealias
 
 # Bind the space key to the expand-alias function above, so that space will expand any expandable aliases
 bindkey ' ' expand-ealias
-bindkey '	' expand-ealias
 bindkey '^ ' magic-space
 bindkey -M isearch " " magic-space
 
