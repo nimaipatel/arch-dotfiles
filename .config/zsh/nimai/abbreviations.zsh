@@ -50,3 +50,10 @@ abbr ytm="youtube-dl --extract-audio --audio-format mp3 --embed-thumbnail"
 
 # always forget rsync flags to sync media/backups across devices (don't forget trailing slashes!)
 abbr rr="rsync --archive --verbose --dry-run"
+
+# create offline archive of websites with wget
+abbr archive="wget --mirror --convert-links --html-extension --show-progress -o wget.log"
+
+# get memory and CPU hogs
+abbr cpu="ps axch -o cmd,%cpu --sort=-%cpu | head"
+abbr mem="ps axch -o cmd,%mem --sort=-%mem | head"
