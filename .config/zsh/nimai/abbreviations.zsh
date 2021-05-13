@@ -57,3 +57,6 @@ abbr archive="wget --mirror --convert-links --html-extension --show-progress -o 
 # get memory and CPU hogs
 abbr cpu="ps axch -o cmd,%cpu --sort=-%cpu | head"
 abbr mem="ps axch -o cmd,%mem --sort=-%mem | head"
+
+# asymmetrically encrypt a single file (for folders, zip them)
+abbr encr="gpg -c --no-symkey-cache --cipher-algo AES256"
