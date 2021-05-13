@@ -1,7 +1,6 @@
 #!/bin/sh
 
 # To add new themes,
-# add gtk theme to $HOME/.local/share/themes
 # install neovim theme and add it to theme setting function
 # add xresources file to $HOME/.config/X11
 
@@ -29,8 +28,8 @@ then
 	nvimcmd ":lua SetColorScheme('${CHOOSEN_THEME}')"
 
 	restart-dunst
- 
-	echo "Net/ThemeName \"${CHOOSEN_THEME}\"" > "$XDG_CONFIG_HOME/xsettingsd/xsettingsd.conf" && killall xsettingsd ; xsettingsd &
+
+	oomox-cli -o "oomox-xresources" -t "${XDG_DATA_HOME}/themes" "/opt/oomox/scripted_colors/xresources/xresources-reverse" && killall xsettingsd ; xsettingsd&
 
 	[ -z "$*" ] && notify-send "Theme set to ${CHOOSEN_THEME}"
 else
