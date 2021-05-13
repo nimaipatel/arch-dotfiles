@@ -7,7 +7,8 @@
 THEMES="gruvbox_dark
 gruvbox_light
 dracula
-classic"
+classic
+moonfly"
 
 if [ -n "$*" ]
 then

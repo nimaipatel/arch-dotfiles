@@ -42,6 +42,14 @@ function SetColorScheme(colorscheme)
 			hi TabLineFill guibg=NONE gui=bold
 			hi TabLine guibg=NONE gui=bold
 		]], true)
+	elseif colorscheme == 'moonfly' then
+		vim.cmd('colorscheme moonfly')
+		vim.api.nvim_exec([[
+			hi Normal guibg=Normal guifg=None
+			hi StatusLine guibg=NONE guifg=#b2b2b2 gui=bold
+			hi TabLineFill guibg=NONE gui=bold
+			hi TabLine guibg=NONE gui=bold
+		]], true)
 	end
 end
 
