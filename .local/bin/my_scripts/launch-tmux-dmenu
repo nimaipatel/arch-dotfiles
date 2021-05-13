@@ -1,6 +1,7 @@
 #!/bin/sh
 
 SELECTED_SESSION="$(tmux list-sessions | dmenu -l 5)"
+[ -z "$SELECTED_SESSION" ] && exit
 SESSION_NAME="${SELECTED_SESSION%% *}"
 # there will technically be a ':' left at
 # the end  of the string but tmux selects 
