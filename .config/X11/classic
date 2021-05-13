@@ -21,6 +21,26 @@ name: classic
 *.color13: #ff00ff
 *.color14: #00ffff
 *.color15: #ffffff
+*background: #000000
+*bg: #000000
+*bgUnfocused: #000000
+*foreground: #dcdcdc
+*color0:  #000000
+*color1:  #af0000
+*color2:  #00af00
+*color3:  #afd700
+*color4:  #2e2eee
+*color5:  #af00af
+*color6:  #00d7af
+*color7:  #dcdcdc
+*color8:  #808080
+*color9:  #ff0000
+*color10: #008000
+*color11: #ffff00
+*color12: #5c5cff
+*color13: #ff00ff
+*color14: #00ffff
+*color15: #ffffff
 
 dmenu.background :    #222222
 dmenu.foreground :    #bbbbbb
