@@ -49,6 +49,16 @@ function SetColorScheme(colorscheme)
 			hi StatusLine guibg=NONE guifg=#b2b2b2 gui=bold
 			hi TabLineFill guibg=NONE gui=bold
 			hi TabLine guibg=NONE gui=bold
+			hi TabLineSel guibg=NONE gui=bold
+		]], true)
+	elseif colorscheme == 'nightfly' then
+		vim.cmd('colorscheme nightfly')
+		vim.api.nvim_exec([[
+			hi Normal guibg=Normal guifg=None
+			hi StatusLine guibg=NONE guifg=#acb4c2 gui=bold
+			hi TabLineFill guibg=NONE gui=bold
+			hi TabLine guibg=NONE gui=bold
+			hi TabLineSel guibg=NONE gui=bold
 		]], true)
 	end
 end
