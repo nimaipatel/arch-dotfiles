@@ -15,7 +15,6 @@ getfont() {
 
 # yes, running grep, cut, sed and tail these many times is cringe
 FONT=$(getfont)
-FGCOL=$(gethex foreground)
 RED=$(gethex color1)
 BLUE=$(gethex color4)
 YELLOW=$(gethex color3)
@@ -26,8 +25,8 @@ PURPLE=$(gethex color5)
 i3lock -i "${LOCKSCREEN_FILE}" \
 --clock \
 --radius=150 \
---timecolor="${FGCOL}" \
---datecolor="${FGCOL}" \
+--timecolor="ffffff" \
+--datecolor="ffffff" \
 --time-font="${FONT}" \
 --date-font="${FONT}" \
 --layout-font="${FONT}" \
