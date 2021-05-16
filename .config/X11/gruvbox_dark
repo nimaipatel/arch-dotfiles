@@ -42,16 +42,16 @@ name: gruvbox_dark
 *color14: #8ec07c
 *color15: #ebdbb2
 
-dmenu.background :    #928374
+dmenu.background :    #1d2021
 dmenu.foreground :    #ebdbb2
 dmenu.selbackground : #b16286
-dmenu.selforeground : #ebdbb2
+dmenu.selforeground : #1d2021
 
-dwm.normbgcolor :         #928374
-dwm.normbordercolor    :  #1d2021
+dwm.normbgcolor :         #1d2021
+dwm.normbordercolor    :  #928374
 dwm.normfgcolor :         #ebdbb2
-dwm.selfgcolor :          #ebdbb2
+dwm.selfgcolor :          #1d2021
 dwm.selbordercolor :      #ebdbb2
-dwm.selbgcolor :          #1d2021
+dwm.selbgcolor :          #689d6a
 
 !}}}
