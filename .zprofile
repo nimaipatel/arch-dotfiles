@@ -1,4 +1,5 @@
-# default executables export EDITOR="nvim"
+# default executables
+export EDITOR="nvim"
 export VISUAL="nvim"
 export TERMINAL="st"
 export BROWSER="brave"
