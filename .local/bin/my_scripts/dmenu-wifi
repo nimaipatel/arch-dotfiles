@@ -1,6 +1,6 @@
 #!/bin/sh
 
-SEL=$(nmcli -get-values SSID device wifi list | dmenu -l 10 -i)
+SEL=$(nmcli -get-values SSID device wifi list | dmenu -l 30 -i)
 
 [ -z "$SEL" ] && exit 1
 
