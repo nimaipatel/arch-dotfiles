@@ -1,0 +1,22 @@
+$include /etc/inputrc
+
+# vi mode for interpreters
+set editing-mode vi
+
+# different cursors for insert and normal mode
+set show-mode-in-prompt on
+set vi-ins-mode-string \1\e[6 q\2
+set vi-cmd-mode-string \1\e[2 q\2
+
+$if mode=vi
+	set keymap vi-command
+	"\e[A": history-search-backward
+	"\e[B": history-search-forward
+	j: history-search-forward
+	k: history-search-backward
+
+	set keymap vi-insert
+	"jj": vi-movement-mode
+	"\e[A": history-search-backward
+	"\e[B": history-search-forward
+$endif
