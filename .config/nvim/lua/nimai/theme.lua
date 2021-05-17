@@ -61,6 +61,11 @@ function SetColorScheme(colorscheme)
 			hi TabLineSel guibg=NONE gui=bold
 		]], true)
 	end
+	vim.api.nvim_exec([[
+		hi GitSignsAdd guifg=green
+		hi GitSignsDelete guifg=red
+		hi GitSignsChange guifg=yellow
+	]], true)
 end
 
 local colorscheme_name = io.popen("echo $(xrdb -query | grep '^name:' | cut -d: -f2)"):read("*a"):sub(1,-2)
