@@ -26,6 +26,7 @@ vim.o.hlsearch = true
 vim.o.incsearch = true
 vim.o.ignorecase = true
 vim.o.smartcase = true
+vim.o.wrapscan = false
 
 -- line default relative number
 vim.wo.number=true
