@@ -19,4 +19,5 @@ $if mode=vi
 	"jj": vi-movement-mode
 	"\e[A": history-search-backward
 	"\e[B": history-search-forward
+	Control-l: clear-screen
 $endif
