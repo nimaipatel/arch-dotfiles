@@ -53,3 +53,5 @@ export GHCUP_INSTALL_BASE_PREFIX="${XDG_DATA_HOME}/ghcup"
 export PYTHONSTARTUP="${XDG_CONFIG_HOME}/python/pythonrc.py"
 export PYENV_ROOT="${XDG_DATA_HOME}/pyenv"
 export RLWRAP_HOME="${XDG_DATA_HOME}/rlwrap"
+
+[ "$(tty)" = "/dev/tty1" ] && ! (pidof dwm) && startx
