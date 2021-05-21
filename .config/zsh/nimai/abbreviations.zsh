@@ -16,8 +16,8 @@ abbr glo="git log --pretty='oneline'"
 abbr glol="git log --graph --oneline --decorate"
 
 # ls abbrevations
-abbr l="ls -A"
-abbr ll="ls -lAh"
+abbr l="ls -Av"
+abbr ll="ls -lAhv"
 
 # tmux abbrevations
 abbr ta="tmux attach -t"
