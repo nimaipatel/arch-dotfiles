@@ -1,12 +1,6 @@
 # manage dotfiles with this
 cfg() { git --git-dir="${XDG_CONFIG_HOME}/cfg/.git/" --work-tree="$HOME" "$@" ; }
 
-# swallow aliases
-alias zz="dwmswallow \$WINDOWID && zathura"
-alias ss="dwmswallow \$WINDOWID && sxiv"
-alias mm="dwmswallow \$WINDOWID && mpv"
-alias yt="dwmswallow \$WINDOWID && ytfzf"
-
 # default flags
 alias mv="mv -iv"
 alias cp="cp -iv"
@@ -20,3 +14,6 @@ alias vi="nvim"
 # wrap interpreters in rlwrap to use inputrc settings
 alias node="NODE_NO_READLINE=1 rlwrap -a node"
 alias ghci="rlwrap -a ghci"
+
+# swallow windows with `sw cmd`
+alias sw="dwmswallow \$WINDOWID && "

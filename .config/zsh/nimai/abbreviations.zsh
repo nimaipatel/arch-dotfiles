@@ -1,3 +1,8 @@
+# swallow abbrevations
+abbr zz="sw zathura"
+abbr ss="sw sxiv"
+abbr mm="sw mpv"
+
 # shorted names
 abbr tp="trash-put"
 
