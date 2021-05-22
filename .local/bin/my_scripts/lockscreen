@@ -3,7 +3,7 @@
 LOCKSCREEN_FILE="$HOME/.config/lockscreen"
 
 gethex(){
-	LINE="$(xrdb -query | grep "^\*\.${1}:")"
+	LINE="$(xrdb -query | grep "^\*${1}:")"
 	echo "${LINE##*	#}"
 }
 

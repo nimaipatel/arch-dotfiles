@@ -1,59 +1,35 @@
-! Dracula Xresources palette {{{
-
 name:nightfly
-*.background:     #011627
-*.bg:     #011627
-*.bgUnfocused:     #011627
-*.foreground:     #acb4c2
-*.cursor:     #9ca1aa
-*.color0:     #1d3b53
-*.color1:     #fc514e
-*.color2:     #a1cd5e
-*.color3:     #e3d18a
-*.color4:     #82aaff
-*.color5:     #c792ea
-*.color6:     #7fdbca
-*.color7:     #a1aab8
-*.color8:     #7c8f8f
-*.color9:     #ff5874
-*.color10:     #21c7a8
-*.color11:     #ecc48d
-*.color12:     #82aaff
-*.color13:     #ae81ff
-*.color14:     #7fdbca
-*.color15:     #d6deeb
-*background:     #011627
-*bg:     #011627
-*bgUnfocused:     #011627
-*foreground:     #acb4c2
-*cursor:     #9ca1aa
-*color0:     #1d3b53
-*color1:     #fc514e
-*color2:     #a1cd5e
-*color3:     #e3d18a
-*color4:     #82aaff
-*color5:     #c792ea
-*color6:     #7fdbca
-*color7:     #a1aab8
-*color8:     #7c8f8f
-*color9:     #ff5874
-*color10:     #21c7a8
-*color11:     #ecc48d
-*color12:     #82aaff
-*color13:     #ae81ff
-*color14:     #7fdbca
-*color15:     #d6deeb
 
-dmenu.background :    #1d3b53
-dmenu.foreground :    #acb4c2
-dmenu.selbackground : #ae81ff
-dmenu.selforeground : #1d3b53
+*background:#011627
+*bg:#011627
+*bgUnfocused:#011627
+*foreground:#acb4c2
 
-dwm.selbgcolor :          #011627
-dwm.normbgcolor :         #1d3b53
-dwm.selfgcolor :          #acb4c2
-dwm.normfgcolor :         #acb4c2
-dwm.selbordercolor :      #acb4c2
-dwm.normbordercolor    :  #1d3b53
+*color0:#1d3b53
+*color1:#fc514e
+*color2:#a1cd5e
+*color3:#e3d18a
+*color4:#82aaff
+*color5:#c792ea
+*color6:#7fdbca
+*color7:#a1aab8
+*color8:#7c8f8f
+*color9:#ff5874
+*color10:#21c7a8
+*color11:#ecc48d
+*color12:#82aaff
+*color13:#ae81ff
+*color14:#7fdbca
+*color15:#d6deeb
 
-!}}}
+dmenu.background:#1d3b53
+dmenu.foreground:#acb4c2
+dmenu.selbackground:#ae81ff
+dmenu.selforeground:#1d3b53
+
+dwm.normbgcolor:#1d3b53
+dwm.normfgcolor:#acb4c2
+dwm.normbordercolor:#1d3b53
+dwm.selbgcolor:#011627
+dwm.selfgcolor:#acb4c2
+dwm.selbordercolor:#acb4c2

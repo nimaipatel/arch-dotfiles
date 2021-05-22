@@ -1,6 +1,6 @@
 #!/bin/sh
 
-BGCOL="$(xrdb -query | grep "\*\.background:")"
+BGCOL="$(xrdb -query | grep "\*background:")"
 BGCOL="${BGCOL##*:	}"
 
 WALLPAPER_FILE="$HOME/.config/wallpaper"

@@ -1,57 +1,35 @@
-! classic Xresources palette {{{
+name:classic
 
-name: classic
-*.background: #000000
-*.bg: #000000
-*.bgUnfocused: #000000
-*.foreground: #dcdcdc
-*.color0:  #000000
-*.color1:  #af0000
-*.color2:  #00af00
-*.color3:  #afd700
-*.color4:  #2e2eee
-*.color5:  #af00af
-*.color6:  #00d7af
-*.color7:  #dcdcdc
-*.color8:  #808080
-*.color9:  #ff0000
-*.color10: #008000
-*.color11: #ffff00
-*.color12: #5c5cff
-*.color13: #ff00ff
-*.color14: #00ffff
-*.color15: #ffffff
-*background: #000000
-*bg: #000000
-*bgUnfocused: #000000
-*foreground: #dcdcdc
-*color0:  #000000
-*color1:  #af0000
-*color2:  #00af00
-*color3:  #afd700
-*color4:  #2e2eee
-*color5:  #af00af
-*color6:  #00d7af
-*color7:  #dcdcdc
-*color8:  #808080
-*color9:  #ff0000
-*color10: #008000
-*color11: #ffff00
-*color12: #5c5cff
-*color13: #ff00ff
-*color14: #00ffff
-*color15: #ffffff
+*background:#000000
+*bg:#000000
+*bgUnfocused:#000000
+*foreground:#dcdcdc
 
-dmenu.background :    #222222
-dmenu.foreground :    #bbbbbb
-dmenu.selbackground : #005577
-dmenu.selforeground : #eeeeee
+*color0:#000000
+*color1:#af0000
+*color2:#00af00
+*color3:#afd700
+*color4:#2e2eee
+*color5:#af00af
+*color6:#00d7af
+*color7:#dcdcdc
+*color8:#808080
+*color9:#ff0000
+*color10:#008000
+*color11:#ffff00
+*color12:#5c5cff
+*color13:#ff00ff
+*color14:#00ffff
+*color15:#ffffff
 
-dwm.normbgcolor :             #222222
-dwm.normbordercolor :         #444444
-dwm.normfgcolor :             #bbbbbb
-dwm.selfgcolor :              #eeeeee
-dwm.selbordercolor :          #eeeeee
-dwm.selbgcolor :              #005577
+dmenu.background:#222222
+dmenu.foreground:#bbbbbb
+dmenu.selbackground:#005577
+dmenu.selforeground:#eeeeee
 
-!}}}
+dwm.normbgcolor:#222222
+dwm.normfgcolor:#bbbbbb
+dwm.normbordercolor:#444444
+dwm.selbgcolor:#005577
+dwm.selfgcolor:#eeeeee
+dwm.selbordercolor:#eeeeee
