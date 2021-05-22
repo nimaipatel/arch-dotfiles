@@ -3,32 +3,19 @@ imap('jj', '<esc>')
 tmap('jj', '<esc>')
 
 -- toggle whitespace rendering
-nnoremap('<leader>ws', ':set list!<cr>')
+nnoremap('<leader>w', ':set list!<cr>')
 
 -- unmap control + z for now
 nnoremap('<c-z>', '')
 
 -- toggle relative and absolute line numbering
-nnoremap('<leader>nb', ':set relativenumber!<cr>')
+nnoremap('<leader>n', ':set relativenumber!<cr>')
 
 -- remove search highlighting with leader + enter
 nnoremap('<leader><cr>', ':nohl<cr>')
 
 -- when jumping to bottom, center the page
 nnoremap('G', 'Gzz')
-
--- Make j and k move to the next row, not file line
-nnoremap('j', 'gj')
-nnoremap('k', 'gk')
-
--- select all in visual line mode
-nnoremap('vA', 'ggVG')
-
--- yank till end of line
-nnoremap('Y', 'y$')
-
--- delete till end of line
-nnoremap('D', 'd$')
 
 -- new tab
 nnoremap('<c-t>', ':tabnew<cr>')
