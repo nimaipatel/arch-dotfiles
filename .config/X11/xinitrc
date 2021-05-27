@@ -12,8 +12,6 @@ picom &
 
 xbanish &
 
-flameshot &
-
 dwmblocks &
 
 (dmenu-change-mode "gruvbox_dark"
