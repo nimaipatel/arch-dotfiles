@@ -1,54 +1,53 @@
 -- space bar is leader key
-vim.g.mapleader=" "
+vim.g.mapleader = " "
 
 -- python path for python pluggins 🤮
-vim.g.python_host_prog='/usr/bin/python'
+vim.g.python_host_prog = '/usr/bin/python'
 
 -- quicker update
-vim.o.updatetime = 50
-vim.w.updatetime = 50
+vim.opt.updatetime = 50
 
 -- new splits to the right and bottom
-vim.o.splitright=true
-vim.o.splitbelow=true
+vim.opt.splitright = true
+vim.opt.splitbelow = true
 
 -- don't wrap lines
-vim.wo.wrap=false
+vim.opt.wrap = false
 
 -- 8 character wide tab for indentation
-vim.o.tabstop = 8 vim.bo.tabstop = 8
-vim.o.shiftwidth = 8 vim.bo.shiftwidth = 8
-vim.o.softtabstop = 8 vim.bo.softtabstop = 8
-vim.o.autoindent = true vim.bo.autoindent = true
+vim.opt.tabstop = 8
+vim.opt.shiftwidth = 8
+vim.opt.softtabstop = 8
+vim.opt.autoindent = true
 
 -- search options
-vim.o.hlsearch = true
-vim.o.incsearch = true
-vim.o.ignorecase = true
-vim.o.smartcase = true
-vim.o.wrapscan = false
+vim.opt.hlsearch = true
+vim.opt.incsearch = true
+vim.opt.ignorecase = true
+vim.opt.smartcase = true
+vim.opt.wrapscan = false
 
 -- line default relative number
-vim.wo.number=true
-vim.wo.relativenumber=true
+vim.opt.number = true
+vim.opt.relativenumber = true
 
 -- netrw default style
 vim.g.netrw_liststyle = 3
 
 -- copy and paste with OS clipboard
-vim.o.clipboard = 'unnamedplus'
+vim.opt.clipboard = 'unnamedplus'
 
 -- always show tabline
-vim.o.showtabline=2
+vim.opt.showtabline = 2
 
 -- whitespace characters
-vim.o.listchars = 'tab:→ ,space:·,nbsp:␣,trail:•,eol:¶,precedes:«,extends:»'
+vim.opt.listchars = 'tab:→ ,space:·,nbsp:␣,trail:•,eol:¶,precedes:«,extends:»'
 
 -- completion style
-vim.o.completeopt = 'menuone,noinsert,noselect'
+vim.opt.completeopt = 'menuone,noinsert,noselect'
 
 -- color highlights for cringe style sheets
-vim.o.termguicolors = true
+vim.opt.termguicolors = true
 require('colorizer').setup()
 
 -- cute signs next to changes in files managed by git

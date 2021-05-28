@@ -1,11 +1,11 @@
-vim.o.termguicolors = true
+vim.opt.termguicolors = true
 vim.cmd('syntax on')
 
 function SetColorScheme(colorscheme)
 	if colorscheme == 'gruvbox_dark' then
 		vim.g.gruvbox_italics = 0
 		vim.cmd('colorscheme gruvbox8_hard')
-		vim.o.background = 'dark'
+		vim.opt.background = 'dark'
 		vim.api.nvim_exec([[
 			hi Normal guibg=Normal guifg=None
 			hi StatusLine guibg=NONE guifg=#ebdbb2 gui=bold
@@ -16,7 +16,7 @@ function SetColorScheme(colorscheme)
 	elseif colorscheme == 'gruvbox_light' then
 		vim.g.gruvbox_italics = 0
 		vim.cmd('colorscheme gruvbox8_hard')
-		vim.o.background = 'light'
+		vim.opt.background = 'light'
 		vim.api.nvim_exec([[
 			hi Normal guibg=Normal guifg=None
 			hi StatusLine guibg=NONE guifg=#3c3836 gui=bold
@@ -26,7 +26,7 @@ function SetColorScheme(colorscheme)
 		]], true)
 	elseif colorscheme == 'dracula' then
 		vim.cmd('colorscheme dracula')
-		vim.o.background = 'dark'
+		vim.opt.background = 'dark'
 		vim.api.nvim_exec([[
 			hi Normal guibg=Normal guifg=None
 			hi StatusLine guibg=NONE guifg=#f8f8f2 gui=bold

@@ -22,5 +22,5 @@ function StatusLine()
 	return sl
 end
 
-vim.o.showmode = false
-vim.o.statusline = StatusLine()
+vim.opt.showmode = false
+vim.opt.statusline = StatusLine()
