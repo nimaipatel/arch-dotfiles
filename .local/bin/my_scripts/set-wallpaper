@@ -11,27 +11,27 @@ WIDTHBY2=$(( $(echo "$DISPLAY_RES" | cut -d'x' -f1) / 2 ))
 HEIGHTBY2=$(( $(echo "$DISPLAY_RES" | cut -d'x' -f2) / 2 ))
 
 while getopts ":k:" o; do
-    case "${o}" in
-        k)
-            KEYWORD="${OPTARG}"
-            ;;
-        *)
-            echo "Wrong usage"
-            ;;
-    esac
+	case "${o}" in
+		k)
+			KEYWORD="${OPTARG}"
+			;;
+		*)
+			echo "Wrong usage"
+			;;
+	esac
 done
 shift $((OPTIND-1))
 
 if [ -f "$1" ]; then
-    BASE_NAME=$( basename "$1" )
-    SELECTED_WALL="${1}"
+	BASE_NAME=$( basename "$1" )
+	SELECTED_WALL="${1}"
 fi
 
 if [ -d "$1" ]; then
-    WALLPAPER_DIR="$1"
-    RANDOM_WALL=$( find "$WALLPAPER_DIR" -name "*.jpg" -o -name "*.png" -type f | grep -i "$KEYWORD" | shuf -n 1 )
-    BASE_NAME=$( basename "$RANDOM_WALL" )
-    SELECTED_WALL="${RANDOM_WALL}"
+	WALLPAPER_DIR="$1"
+	RANDOM_WALL=$( find "$WALLPAPER_DIR" -name "*.jpg" -o -name "*.png" -type f | grep -i "$KEYWORD" | shuf -n 1 )
+	BASE_NAME=$( basename "$RANDOM_WALL" )
+	SELECTED_WALL="${RANDOM_WALL}"
 fi
 
 convert "${SELECTED_WALL}" -geometry "${DISPLAY_RES}^" -gravity center -crop "${DISPLAY_RES}+0+0" "${WALLPAPER_FILE}"
