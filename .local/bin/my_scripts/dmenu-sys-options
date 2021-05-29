@@ -1,14 +1,19 @@
 #!/bin/sh
 
-OPTION=$(printf "Lock\nExit XServer\nLogout\nShutdown\nReboot" | dmenu -i)
+OPTION=$(printf "Lock\nRestart dwm\nExit XServer\nLogout\nShutdown\nReboot" | dmenu -i)
 
 [ -z "${OPTION}" ] && exit
 
 case "${OPTION}" in
 	'Lock') 
-		lockscreen;;
+		lockscreen
+		;;
+	'Restart dwm')
+		kill -HUP $(pidof dwm)
+		;;
 	'Exit XServer')
-		pkill xinit;;
+		pkill xinit
+		;;
 	'Logout')
 		pkill -KILL -u "$USER"
 		;;
