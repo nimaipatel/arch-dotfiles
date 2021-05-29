@@ -36,6 +36,6 @@ fi
 
 convert "${SELECTED_WALL}" -geometry "${DISPLAY_RES}^" -gravity center -crop "${DISPLAY_RES}+0+0" "${WALLPAPER_FILE}"
 convert "${WALLPAPER_FILE}" -filter Gaussian -blur 0x3 -gravity center -fill "$BGCOL" -draw "circle ${WIDTHBY2},${HEIGHTBY2} $(( WIDTHBY2 + 150 )),${HEIGHTBY2}" "${LOCKSCREEN_FILE}" &
-# display -size "${DISPLAY_RES}" -window root "${WALLPAPER_FILE}"
-xwallpaper --zoom "${WALLPAPER_FILE}"
+display -size "${DISPLAY_RES}" -window root "${WALLPAPER_FILE}"
+# xwallpaper --zoom "${WALLPAPER_FILE}"
 notify-send -t 3000 "Wallpaper set to $BASE_NAME"
