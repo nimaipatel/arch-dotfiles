@@ -38,8 +38,11 @@ abbr cdf="cfg diff"
 abbr cpom="cfg push origin master"
 abbr cst="cfg status"
 
-# untar command
-abbr untar="tar -xvf"
+# create and extract zip and tar archives
+abbr tar="bsdtar -cf"
+abbr zip="bsdtar -a -cf"
+abbr untar="bsdtar -xf"
+abbr unzip="bsdtar -xf"
 
 # source nvm script installed via pacman
 abbr snvm="source /usr/share/nvm/init-nvm.sh"
