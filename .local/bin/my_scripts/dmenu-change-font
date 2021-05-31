@@ -11,15 +11,20 @@ fi
 
 if echo "$ALLFONTS" | grep -q "^${SELFONT}$"
 then
+	# merge, to only overwrite colors but preserve font data
 	grep "^! ${SELFONT}$" -A3 "${XDG_CONFIG_HOME}/X11/fontprofiles" | xrdb -merge
  
+	# send USR1 signal to all running st instances
 	# shellcheck disable=SC2046
  	kill -s USR1 $(pidof st)
  
+	# restart dwm using this hack
 	xdotool key "Super+F12"
  
+	# restart dunst, this script internally handles colors from xresources
  	restart-dunst
  
+	# send notification only if command started with dmenu and NOT command-line args
  	[ -z "$*" ] && notify-send "Font set to ${SELFONT}"
 else
 	exit 1
