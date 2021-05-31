@@ -1,6 +1,6 @@
 #!/bin/sh
 
-SELECTED=$(cut -d ';' -f1 "$HOME/.local/share/my_script_assets/emojis" | dmenu -i -l 30 | sed "s/ .*//")
+SELECTED=$(cut -d ';' -f1 "${MY_SCRIPT_ASSETS}/emojis" | dmenu -i -l 30 | sed "s/ .*//")
 
 # Exit if none SELECTED.
 [ -z "$SELECTED" ] && exit

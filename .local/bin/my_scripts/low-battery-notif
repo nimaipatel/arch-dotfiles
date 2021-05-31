@@ -10,6 +10,6 @@ do
 	if [ "$CAPACITY" -le "$CRITICAL_LEVEL" ] && [ "$STATUS" = "Discharging" ]
 	then
 		notify-send "$BATTERY 🔋 is below critical level 😰 plug in your charger🔌!" -u critical
-		paplay "$HOME/.local/share/my_script_assets/Piano.ogg"
+		paplay "${MY_SCRIPT_ASSETS}/Piano.ogg"
 	fi
 done
