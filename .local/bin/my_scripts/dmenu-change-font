@@ -16,8 +16,7 @@ then
 	# shellcheck disable=SC2046
  	kill -s USR1 $(pidof st)
  
-	# shellcheck disable=SC2046
-	kill -HUP $(pidof dwm)
+	xdotool key "Super+F12"
  
  	restart-dunst
  
