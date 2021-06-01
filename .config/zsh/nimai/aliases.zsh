@@ -1,6 +1,3 @@
-# manage dotfiles with this
-cfg() { git --git-dir="${XDG_CONFIG_HOME}/cfg/.git/" --work-tree="$HOME" "$@" ; }
-
 # default flags
 alias mv="mv -iv"
 alias cp="cp -iv"
