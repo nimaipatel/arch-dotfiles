@@ -11,6 +11,9 @@ vim.opt.updatetime = 50
 vim.opt.splitright = true
 vim.opt.splitbelow = true
 
+-- recure into directories to search for files with :find
+vim.opt.path:append('**')
+
 -- don't wrap lines
 vim.opt.wrap = false
 
