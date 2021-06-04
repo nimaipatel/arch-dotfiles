@@ -37,9 +37,6 @@ vim.g.netrw_liststyle = 3
 -- copy and paste with OS clipboard
 vim.opt.clipboard = 'unnamedplus'
 
--- always show tabline
-vim.opt.showtabline = 2
-
 -- whitespace characters
 vim.opt.listchars = 'tab:→ ,space:·,nbsp:␣,trail:•,eol:¶,precedes:«,extends:»'
 
