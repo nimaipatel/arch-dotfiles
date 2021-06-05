@@ -4,6 +4,7 @@ vim.cmd('syntax on')
 function SetColorScheme(colorscheme)
 	if colorscheme == 'gruvbox_dark' then
 		vim.g.gruvbox_italics = 0
+		vim.g.gruvbox_underline = 0
 		vim.cmd('colorscheme gruvbox8_hard')
 		vim.opt.background = 'dark'
 		vim.api.nvim_exec([[
@@ -15,6 +16,7 @@ function SetColorScheme(colorscheme)
 		]], true)
 	elseif colorscheme == 'gruvbox_light' then
 		vim.g.gruvbox_italics = 0
+		vim.g.gruvbox_underline = 0
 		vim.cmd('colorscheme gruvbox8_hard')
 		vim.opt.background = 'light'
 		vim.api.nvim_exec([[
@@ -43,6 +45,7 @@ function SetColorScheme(colorscheme)
 			hi TabLine guibg=NONE gui=bold
 		]], true)
 	elseif colorscheme == 'moonfly' then
+		vim.g.moonflyItalics = 0
 		vim.cmd('colorscheme moonfly')
 		vim.api.nvim_exec([[
 			hi Normal guibg=Normal guifg=None
@@ -52,6 +55,7 @@ function SetColorScheme(colorscheme)
 			hi TabLineSel guibg=NONE gui=bold
 		]], true)
 	elseif colorscheme == 'nightfly' then
+		vim.g.nightflyItalics = 0
 		vim.cmd('colorscheme nightfly')
 		vim.api.nvim_exec([[
 			hi Normal guibg=Normal guifg=None
