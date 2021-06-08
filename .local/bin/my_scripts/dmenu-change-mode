@@ -4,12 +4,7 @@
 # install neovim theme and add it to theme setting function
 # add xresources file to $HOME/.config/X11
 
-THEMES="gruvbox_dark
-gruvbox_light
-dracula
-classic
-moonfly
-nightfly"
+THEMES=$(ls "${XDG_CONFIG_HOME}/X11/themes")
 
 if [ -n "$*" ]
 then
@@ -21,7 +16,7 @@ fi
 if echo "$THEMES" | grep -q "^${CHOOSEN_THEME}$"
 then
 	# merge, to only overwrite colors but preserve font data
-	xrdb -merge "${XDG_CONFIG_HOME}/X11/${CHOOSEN_THEME}"
+	xrdb -merge "${XDG_CONFIG_HOME}/X11/themes/${CHOOSEN_THEME}"
 
 	# send USR1 signal to all running st instances
 	# shellcheck disable=SC2046
