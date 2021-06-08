@@ -4,7 +4,7 @@ xmodmap ~/.config/X11/Xmodmap &
 
 xset r rate 300 50 &
 
-xgamma -rgamma 1.0 -ggamma 0.9 -bgamma 0.7
+xgamma -rgamma 1.0 -ggamma 0.9 -bgamma 0.7 &
 
 mpd &
 
