@@ -1,71 +1,20 @@
 vim.opt.termguicolors = true
 vim.cmd('syntax on')
 
-function SetColorScheme(colorscheme)
-	if colorscheme == 'gruvbox_dark' then
-		vim.g.gruvbox_italics = 0
-		vim.g.gruvbox_underline = 0
+function SetColorScheme(col_name)
+	if col_name == 'gruvbox_dark' then
 		vim.cmd('colorscheme gruvbox8_hard')
 		vim.opt.background = 'dark'
-		vim.api.nvim_exec([[
-			hi Normal guibg=Normal guifg=None
-			hi StatusLine guibg=NONE guifg=#ebdbb2 gui=bold
-			hi TabLineFill guibg=NONE gui=bold
-			hi TabLine guibg=NONE gui=bold
-			hi TabLineSel guibg=NONE gui=bold
-		]], true)
-	elseif colorscheme == 'gruvbox_light' then
-		vim.g.gruvbox_italics = 0
-		vim.g.gruvbox_underline = 0
+	elseif col_name == 'gruvbox_light' then
 		vim.cmd('colorscheme gruvbox8_hard')
 		vim.opt.background = 'light'
-		vim.api.nvim_exec([[
-			hi Normal guibg=Normal guifg=None
-			hi StatusLine guibg=NONE guifg=#3c3836 gui=bold
-			hi TabLineFill guibg=NONE gui=bold
-			hi TabLine guibg=NONE gui=bold
-			hi TabLineSel guibg=NONE gui=bold
-		]], true)
-	elseif colorscheme == 'dracula' then
-		vim.cmd('colorscheme dracula')
-		vim.opt.background = 'dark'
-		vim.api.nvim_exec([[
-			hi Normal guibg=Normal guifg=None
-			hi StatusLine guibg=NONE guifg=#f8f8f2 gui=bold
-			hi TabLineFill guibg=NONE gui=bold
-			hi TabLine guibg=NONE gui=bold
-			hi TabLineSel guifg=#50fa7b guibg=NONE gui=bold
-		]], true)
-	elseif colorscheme == 'classic' then
+	elseif col_name == 'classic' then
 		vim.cmd('colorscheme vividchalk')
-		vim.api.nvim_exec([[
-			hi Normal guibg=Normal guifg=None
-			hi StatusLine guibg=NONE guifg=#ffffff gui=bold
-			hi TabLineFill guibg=NONE gui=bold
-			hi TabLine guibg=NONE gui=bold
-		]], true)
-	elseif colorscheme == 'moonfly' then
-		vim.g.moonflyItalics = 0
-		vim.cmd('colorscheme moonfly')
-		vim.api.nvim_exec([[
-			hi Normal guibg=Normal guifg=None
-			hi StatusLine guibg=NONE guifg=#b2b2b2 gui=bold
-			hi TabLineFill guibg=NONE gui=bold
-			hi TabLine guibg=NONE gui=bold
-			hi TabLineSel guibg=NONE gui=bold
-		]], true)
-	elseif colorscheme == 'nightfly' then
-		vim.g.nightflyItalics = 0
-		vim.cmd('colorscheme nightfly')
-		vim.api.nvim_exec([[
-			hi Normal guibg=Normal guifg=None
-			hi StatusLine guibg=NONE guifg=#acb4c2 gui=bold
-			hi TabLineFill guibg=NONE gui=bold
-			hi TabLine guibg=NONE gui=bold
-			hi TabLineSel guibg=NONE gui=bold
-		]], true)
+	else vim.cmd('colorscheme ' .. col_name )
 	end
 	vim.api.nvim_exec([[
+		hi Normal guibg=Normal guifg=None
+		hi StatusLine guibg=NONE guifg=color15 gui=bold
 		hi GitSignsAdd guifg=green
 		hi GitSignsDelete guifg=red
 		hi GitSignsChange guifg=yellow
