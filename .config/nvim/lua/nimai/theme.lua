@@ -21,5 +21,6 @@ function SetColorScheme(col_name)
 	]], true)
 end
 
-local colorscheme_name = io.popen("echo $(xrdb -query | grep '^name:' | cut -d: -f2)"):read("*a"):sub(1,-2)
-SetColorScheme(colorscheme_name)
+local xrdb_out = io.popen('xrdb -query'):read('*a'):sub(1,-2)
+local col_name = xrdb_out:match('name:%s(.*)')
+SetColorScheme(col_name)
