@@ -8,8 +8,6 @@ xgamma -rgamma 1.0 -ggamma 0.9 -bgamma 0.7 &
 
 mpd &
 
-picom &
-
 xbanish &
 
 dwmblocks &
