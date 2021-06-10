@@ -1,41 +1,11 @@
-local function map(mode, input, output)
-	vim.api.nvim_set_keymap(mode, input, output, {})
-end
+for _, mode in ipairs({'', 'n', 'i', 'v', 't'}) do
+	_G[mode .. 'map'] = function (input, output)
+		vim.api.nvim_set_keymap(mode, input, output, {})
+	end
 
-local function noremap(mode, input, output)
-	vim.api.nvim_set_keymap(mode, input, output, { noremap = true })
-end
-
-function nnoremap(input, output)
-	noremap('n', input, output)
-end
-
-function inoremap(input, output)
-	noremap('i', input, output)
-end
-
-function vnoremap(input, output)
-	noremap('v', input, output)
-end
-
-function tnoremap(input, output)
-	noremap('t', input, output)
-end
-
-function nmap(input, output)
-	map('n', input, output)
-end
-
-function imap(input, output)
-	map('i', input, output)
-end
-
-function vmap(input, output)
-	map('v', input, output)
-end
-
-function tmap(input, output)
-	map('t', input, output)
+	_G[mode .. 'noremap'] = function (input, output)
+		vim.api.nvim_set_keymap(mode, input, output, { noremap = true })
+	end
 end
 
 local globalListenerName = 'globallistenername'
