@@ -1,0 +1,28 @@
+[[item]]
+file = '~/.config/X11/Xresources'
+template = 'xresources'
+subtemplate = 'custom'
+hook = '''xrdb -merge ~/.config/X11/Xresources
+	kill -s USR1 $(pidof st)
+	xdotool key "Super+F12"
+	restart-dunst'''
+rewrite = true
+
+[[item]]
+file = '~/.config/nvim/colors/base16.vim'
+template = 'vim'
+rewrite = true
+hook = 'nvimcmd ":lua RefreshColors()"'
+
+[[item]]
+file = '~/.local/share/themes/FlatColor/colors3'
+template = 'gtk-flatcolor'
+subtemplate = 'gtk-3'
+rewrite = true
+hook = 'killall xsettingsd ; xsettingsd &'
+
+[[item]]
+file = '~/.local/share/themes/FlatColor/colors2'
+template = 'gtk-flatcolor'
+subtemplate = 'gtk-2'
+rewrite = true

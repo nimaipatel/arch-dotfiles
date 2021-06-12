@@ -1,45 +1,15 @@
 #!/bin/sh
 
-# To add new themes,
-# install neovim theme and add it to theme setting function
-# add xresources file to $HOME/.config/X11
-
-THEMES=$(ls "${XDG_CONFIG_HOME}/X11/themes")
+THEMES=$(flavours list | tr ' ' '\n')
 
 if [ -n "$*" ]
 then
 	CHOOSEN_THEME="$*"
 else
-	CHOOSEN_THEME=$(echo "$THEMES" | dmenu)
+	CHOOSEN_THEME=$(echo "$THEMES" | dmenu -i -l 30 -p "Choose theme")
 fi
 
-if echo "$THEMES" | grep -q "^${CHOOSEN_THEME}$"
-then
-	# merge, to only overwrite colors but preserve font data
-	xrdb -merge "${XDG_CONFIG_HOME}/X11/themes/${CHOOSEN_THEME}"
+[ -z "$CHOOSEN_THEME" ] && exit
 
-	# send USR1 signal to all running st instances
-	# shellcheck disable=SC2046
-	kill -s USR1 $(pidof st)
-
-	# restart dwm using this hack
-	xdotool key "Super+F12"
-
-	# send normal mode command to change setting for running neovim instances
-	nvimcmd ":lua SetColorScheme('${CHOOSEN_THEME}')"
-
-	# restart dunst, this script internally handles colors from xresources
-	restart-dunst
-
-	# if theme directory doesn't exist, make it
-	[ ! -d "${XDG_DATA_HOME}/themes/${CHOOSEN_THEME}" ] && oomox-cli -o "${CHOOSEN_THEME}" -t "${XDG_DATA_HOME}/themes" "/opt/oomox/scripted_colors/xresources/xresources-reverse"
-	# link the directory to oomox-xresources
-	ln -sfT "${XDG_DATA_HOME}/themes/${CHOOSEN_THEME}" "${XDG_DATA_HOME}/themes/oomox-xresources"
-	# restart xsettings to reload GTK applications
-	killall xsettingsd ; xsettingsd&
-
-	# send notification only if command started with dmenu and NOT command-line args
-	[ -z "$*" ] && notify-send "Theme set to ${CHOOSEN_THEME}"
-else
-	exit 1
-fi
+# try to apply theme and send notification only if command started with dmenu and NOT command-line args
+flavours apply "$CHOOSEN_THEME" && [ -z "$*" ] && notify-send "Theme set to ${CHOOSEN_THEME}"

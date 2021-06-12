@@ -12,10 +12,10 @@ xbanish &
 
 dwmblocks &
 
-(dmenu-change-mode "gruvbox_dark"
+(dmenu-change-mode "gruvbox-dark-hard"
 
 set-wallpaper ~/pictures/wallpapers
 
-dmenu-change-font "Liberation Mono") &
+dmenu-change-font "DejaVu Sans Mono") &
 
 exec dwm
