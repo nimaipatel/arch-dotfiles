@@ -6,6 +6,7 @@ function RefreshColors()
 		hi GitSignsDelete guifg=red
 		hi GitSignsChange guifg=yellow
 	]], true)
+	vim.g.colors_name = ''
 end
 
 RefreshColors()
