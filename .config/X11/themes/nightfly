@@ -1,8 +1,6 @@
 name:nightfly
 
 *background:#011627
-*bg:#011627
-*bgUnfocused:#011627
 *foreground:#acb4c2
 
 *color0:#1d3b53

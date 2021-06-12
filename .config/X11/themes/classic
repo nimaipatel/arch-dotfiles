@@ -1,8 +1,6 @@
 name:classic
 
 *background:#000000
-*bg:#000000
-*bgUnfocused:#000000
 *foreground:#dcdcdc
 
 *color0:#000000

@@ -1,8 +1,6 @@
 name:moonfly
 
 *background:#080808
-*bg:#080808
-*bgUnfocused:#080808
 *foreground:#b2b2b2
 
 *color0:#323437
