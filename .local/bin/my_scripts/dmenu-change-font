@@ -6,7 +6,7 @@ if [ -n "$*" ]
 then
 	SELFONT="${*}"
 else
-	SELFONT="$(echo "$ALLFONTS" | dmenu -i)"
+	SELFONT="$(echo "$ALLFONTS" | dmenu -l 30 -i)"
 fi
 
 if echo "$ALLFONTS" | grep -q "^${SELFONT}$"

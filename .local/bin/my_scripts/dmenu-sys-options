@@ -1,6 +1,6 @@
 #!/bin/sh
 
-OPTION=$(printf "Lock\nRestart dwm\nExit XServer\nLogout\nShutdown\nReboot" | dmenu -i)
+OPTION=$(printf "Lock\nRestart dwm\nExit XServer\nLogout\nShutdown\nReboot" | dmenu -l 30 -i)
 
 [ -z "${OPTION}" ] && exit
 
