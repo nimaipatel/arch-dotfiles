@@ -46,6 +46,13 @@ vim.opt.listchars = 'tab:→ ,space:·,nbsp:␣,trail:•,eol:¶,precedes:«,ext
 -- completion style
 vim.opt.completeopt = 'menuone,noinsert,noselect'
 
+-- statusline
+vim.opt.showmode = false
+vim.opt.statusline = [[%-t %-m %-r]] ..
+                     [[%{get(b:,'gitsigns_head','')}]] ..
+                     [[ %{get(b:,'gitsigns_status','')}]] ..
+                     [[ %= %y LN %l:%L]]
+
 -- color highlights for cringe style sheets
 vim.opt.termguicolors = true
 require('colorizer').setup()
