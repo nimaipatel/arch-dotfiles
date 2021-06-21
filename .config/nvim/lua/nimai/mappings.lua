@@ -17,8 +17,6 @@ nnoremap('<leader><cr>', ':nohl<cr>')
 -- when jumping to bottom, center the page
 nnoremap('G', 'Gzz')
 
--- spawn zsh shell with control + t
-nnoremap('<c-t>', ':8sp term://zsh <cr>')
 -- turn terminal to normal mode with escape
 nnoremap('<esc>', '<c-\\><c-n>')
 
@@ -33,7 +31,7 @@ snap.register.map({"n"}, {"<c-p>"}, function ()
 	}
 end)
 
-snap.register.map({"n"}, {"<c-f>"}, function ()
+snap.register.map({"n"}, {"<c-t>"}, function ()
 	snap.run {
 		producer = snap.get('producer.ripgrep.vimgrep'),
 		select = snap.get('select.vimgrep').select,
