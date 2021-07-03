@@ -53,6 +53,19 @@ vim.opt.statusline = [[%-t %-m %-r]] ..
                      [[ %{get(b:,'gitsigns_status','')}]] ..
                      [[ %= %y LN %l:%L]]
 
+-- seamless working between nvim and tmux
+require("tmux").setup({
+	copy_sync = {
+		enable = true,
+	},
+	navigation = {
+		enable_default_keybindings = true,
+	},
+	resize = {
+		enable_default_keybindings = true,
+	},
+})
+
 -- color highlights for cringe style sheets
 vim.opt.termguicolors = true
 require('colorizer').setup()
