@@ -56,6 +56,9 @@ abbr nn="nmcli device wifi connect"
 # I forget these flags every time for downloading albums/playlists with cover art
 abbr ytm="youtube-dl --extract-audio --audio-format mp3 --embed-thumbnail --audio-quality 0"
 
+# flags for download videos in best quality
+abbr ytl="youtube-dl -f bestvideo+bestaudio --merge-output-format mkv"
+
 # always forget rsync flags to sync media/backups across devices (don't forget trailing slashes!)
 abbr rr="rsync --archive --verbose --dry-run"
 
