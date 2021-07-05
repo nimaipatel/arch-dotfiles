@@ -20,31 +20,12 @@ nnoremap('G', 'Gzz')
 -- turn terminal to normal mode with escape
 nnoremap('<esc>', '<c-\\><c-n>')
 
-local snap = require('snap')
+-- find files
+nnoremap('<c-p>', ':FZF<cr>')
 
-snap.register.map({"n"}, {"<c-p>"}, function ()
-	snap.run {
-		producer = snap.get('consumer.fzf')(snap.get('producer.ripgrep.file')),
-		select = snap.get('select.file').select,
-		multiselect = snap.get('select.file').multiselect,
-		views = {snap.get('preview.file')}
-	}
-end)
+-- live grep
+nnoremap('<c-t>', ':Rg<cr>')
 
-snap.register.map({"n"}, {"<c-t>"}, function ()
-	snap.run {
-		producer = snap.get('producer.ripgrep.vimgrep'),
-		select = snap.get('select.vimgrep').select,
-		multiselect = snap.get('select.vimgrep').multiselect,
-		views = {snap.get('preview.vimgrep')}
-	}
-end)
+-- switch buffers
+nnoremap('<leader><leader>', ':Buffers<cr>')
 
-snap.register.map({"n"}, {"<leader><leader>"}, function ()
-	snap.run {
-		producer = snap.get('consumer.fzf')(snap.get('producer.vim.buffer')),
-		select = snap.get('select.file').select,
-		multiselect = snap.get('select.file').multiselect,
-		views = {snap.get('preview.file')}
-	}
-end)
