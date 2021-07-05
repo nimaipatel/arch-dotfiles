@@ -56,7 +56,7 @@ vim.opt.statusline = [[%-t %-m %-r]] ..
 -- seamless working between nvim and tmux
 require("tmux").setup({
 	copy_sync = {
-		enable = true,
+		enable = false,
 	},
 	navigation = {
 		enable_default_keybindings = true,
