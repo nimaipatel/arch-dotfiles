@@ -5,8 +5,4 @@ WALLPAPER_DIR="$HOME/pictures/wallpapers"
 
 NAME=$( find "$WALLPAPER_DIR" -type f -exec basename {} \; | dmenu -p "Select a wallpaper" -l 30 )
 
-if [ -z "$NAME" ] ; then
-	exit 
-else
-	set-wallpaper "$WALLPAPER_DIR/$NAME"
-fi
+set-wallpaper "$WALLPAPER_DIR/$NAME"

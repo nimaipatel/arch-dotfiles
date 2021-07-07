@@ -1,15 +1,10 @@
 #!/bin/sh
 
-THEMES=$(flavours list | tr ' ' '\n')
+# list of themes
+THEMES="$(flavours list | tr ' ' '\n')"
 
-if [ -n "$*" ]
-then
-	CHOOSEN_THEME="$*"
-else
-	CHOOSEN_THEME=$(echo "$THEMES" | dmenu -i -l 30 -p "Choose theme")
-fi
-
-[ -z "$CHOOSEN_THEME" ] && exit
+# use command-line arg or get theme using dmenu prompt
+CHOOSEN_THEME=${*:-"$(echo "$THEMES" | dmenu -i -l 30 -p "Choose theme")"}
 
 # try to apply theme and send notification only if command started with dmenu and NOT command-line args
 flavours apply "$CHOOSEN_THEME" && [ -z "$*" ] && notify-send "Theme set to ${CHOOSEN_THEME}"

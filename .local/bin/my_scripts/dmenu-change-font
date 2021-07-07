@@ -1,13 +1,10 @@
 #!/bin/sh
 
+# list of fonts
 ALLFONTS=$(grep "^! " "${XDG_CONFIG_HOME}/X11/fontprofiles" | sed 's/^..//g')
 
-if [ -n "$*" ]
-then
-	SELFONT="${*}"
-else
-	SELFONT="$(echo "$ALLFONTS" | dmenu -l 30 -i)"
-fi
+# use command-line arg or get font using dmenu prompt
+SELFONT=${*:-"$(echo "$ALLFONTS" | dmenu -i -l 30 -p "Select Font")"}
 
 if echo "$ALLFONTS" | grep -q "^${SELFONT}$"
 then

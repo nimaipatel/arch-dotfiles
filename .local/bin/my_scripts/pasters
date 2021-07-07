@@ -1,4 +1,3 @@
 #!/bin/sh
 
-URL="$(curl -X POST -d "$(cat /dev/stdin)" https://paste.rs/)"
-echo "$URL"
+(curl -X POST -d "$(cat /dev/stdin)" https://paste.rs/)
