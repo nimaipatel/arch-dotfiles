@@ -36,6 +36,7 @@ end
 function RefreshColors()
 	vim.api.nvim_exec([[
 		colorscheme base16
+		hi Normal guibg=NONE
 		hi StatusLine guibg=NONE guifg=color15 gui=bold
 		hi StatusLineNC guibg=NONE guifg=color15 gui=bold
 		hi LineNr guibg=NONE
