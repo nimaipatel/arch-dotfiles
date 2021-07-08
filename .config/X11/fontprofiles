@@ -3,11 +3,6 @@ dwm.font: Liberation Mono:pixelsize=13:antialias=true:autohint=true;JoyPixels:pi
 *.font: Liberation Mono:pixelsize=15:antialias=true:autohint=true;JoyPixels:pixelsize=15:antialias=true:autohint=true;
 dunst.font: Liberation Mono
 
-! JetBrains Mono
-dwm.font: JetBrains Mono:pixelsize=13:antialias=true:autohint=true;JoyPixels:pixelsize=13:antialias=true:autohint=true;
-*.font: JetBrains Mono:pixelsize=15:antialias=true:autohint=true;JoyPixels:pixelsize=15:antialias=true:autohint=true;
-dunst.font: JetBrains Mono
-
 ! DejaVu Sans Mono
 dwm.font: DejaVu Sans Mono:pixelsize=13:antialias=true:autohint=true;JoyPixels:pixelsize=13:antialias=true:autohint=true;
 *.font: DejaVu Sans Mono:pixelsize=15:antialias=true:autohint=true;JoyPixels:pixelsize=15:antialias=true:autohint=true;
@@ -17,6 +12,16 @@ dunst.font: DejaVu Sans Mono
 dwm.font: Fantasque Sans Mono:pixelsize=15:antialias=true:autohint=true;JoyPixels:pixelsize=13:antialias=true:autohint=true;
 *.font: Fantasque Sans Mono:pixelsize=17:antialias=true:autohint=true;JoyPixels:pixelsize=15:antialias=true:autohint=true;
 dunst.font: Fantasque Sans Mono
+
+! Cascadia Code
+dwm.font: Cascadia Code:pixelsize=13:antialias=true:autohint=true;JoyPixels:pixelsize=13:antialias=true:autohint=true;
+*.font: Cascadia Code:pixelsize=15:antialias=true:autohint=true;JoyPixels:pixelsize=15:antialias=true:autohint=true;
+dunst.font: Cascadia Code
+
+! JetBrains Mono
+dwm.font: JetBrains Mono:pixelsize=13:antialias=true:autohint=true;JoyPixels:pixelsize=13:antialias=true:autohint=true;
+*.font: JetBrains Mono:pixelsize=15:antialias=true:autohint=true;JoyPixels:pixelsize=15:antialias=true:autohint=true;
+dunst.font: JetBrains Mono
 
 ! Fira Mono
 dwm.font: Fira Mono:pixelsize=13:antialias=true:autohint=true;JoyPixels:pixelsize=13:antialias=true:autohint=true;
