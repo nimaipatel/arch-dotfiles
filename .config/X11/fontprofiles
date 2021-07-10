@@ -1,49 +1,49 @@
 ! Liberation Mono
-dwm.font: Liberation Mono:pixelsize=13:antialias=true:autohint=true;JoyPixels:pixelsize=13:antialias=true:autohint=true;
-*.font: Liberation Mono:pixelsize=15:antialias=true:autohint=true;JoyPixels:pixelsize=15:antialias=true:autohint=true;
+dwm.font: Liberation Mono:pixelsize=12:antialias=true:autohint=true
+*.font: Liberation Mono:pixelsize=14:antialias=true:autohint=true
 dunst.font: Liberation Mono
 
 ! DejaVu Sans Mono
-dwm.font: DejaVu Sans Mono:pixelsize=13:antialias=true:autohint=true;JoyPixels:pixelsize=13:antialias=true:autohint=true;
-*.font: DejaVu Sans Mono:pixelsize=15:antialias=true:autohint=true;JoyPixels:pixelsize=15:antialias=true:autohint=true;
+dwm.font: DejaVu Sans Mono:pixelsize=12:antialias=true:autohint=true
+*.font: DejaVu Sans Mono:pixelsize=14:antialias=true:autohint=true
 dunst.font: DejaVu Sans Mono
 
 ! Fantasque Sans Mono
-dwm.font: Fantasque Sans Mono:pixelsize=15:antialias=true:autohint=true;JoyPixels:pixelsize=13:antialias=true:autohint=true;
-*.font: Fantasque Sans Mono:pixelsize=17:antialias=true:autohint=true;JoyPixels:pixelsize=15:antialias=true:autohint=true;
+dwm.font: Fantasque Sans Mono:pixelsize=14:antialias=true:autohint=true
+*.font: Fantasque Sans Mono:pixelsize=16:antialias=true:autohint=true
 dunst.font: Fantasque Sans Mono
 
 ! Cascadia Code
-dwm.font: Cascadia Code:pixelsize=13:antialias=true:autohint=true;JoyPixels:pixelsize=13:antialias=true:autohint=true;
-*.font: Cascadia Code:pixelsize=15:antialias=true:autohint=true;JoyPixels:pixelsize=15:antialias=true:autohint=true;
+dwm.font: Cascadia Code:pixelsize=12:antialias=true:autohint=true
+*.font: Cascadia Code:pixelsize=14:antialias=true:autohint=true
 dunst.font: Cascadia Code
 
 ! JetBrains Mono
-dwm.font: JetBrains Mono:pixelsize=13:antialias=true:autohint=true;JoyPixels:pixelsize=13:antialias=true:autohint=true;
-*.font: JetBrains Mono:pixelsize=15:antialias=true:autohint=true;JoyPixels:pixelsize=15:antialias=true:autohint=true;
+dwm.font: JetBrains Mono:pixelsize=12:antialias=true:autohint=true
+*.font: JetBrains Mono:pixelsize=14:antialias=true:autohint=true
 dunst.font: JetBrains Mono
 
 ! Fira Mono
-dwm.font: Fira Mono:pixelsize=13:antialias=true:autohint=true;JoyPixels:pixelsize=13:antialias=true:autohint=true;
-*.font: Fira Mono:pixelsize=15:antialias=true:autohint=true;JoyPixels:pixelsize=15:antialias=true:autohint=true;
+dwm.font: Fira Mono:pixelsize=12:antialias=true:autohint=true
+*.font: Fira Mono:pixelsize=14:antialias=true:autohint=true
 dunst.font: Fira Mono
 
 ! Fira Code
-dwm.font: Fira Code:pixelsize=13:antialias=true:autohint=true;JoyPixels:pixelsize=13:antialias=true:autohint=true;
-*.font: Fira Code:pixelsize=15:antialias=true:autohint=true;JoyPixels:pixelsize=15:antialias=true:autohint=true;
+dwm.font: Fira Code:pixelsize=12:antialias=true:autohint=true
+*.font: Fira Code:pixelsize=14:antialias=true:autohint=true
 dunst.font: Fira Code
 
 ! Iosevka Fixed
-dwm.font: Iosevka Fixed:pixelsize=13:antialias=true:autohint=true;JoyPixels:pixelsize=13:antialias=true:autohint=true;
-*.font: Iosevka Fixed:pixelsize=17:antialias=true:autohint=true;JoyPixels:pixelsize=15:antialias=true:autohint=true;
+dwm.font: Iosevka Fixed:pixelsize=12:antialias=true:autohint=true
+*.font: Iosevka Fixed:pixelsize=16:antialias=true:autohint=true
 dunst.font: Iosevka Fixed
 
 ! Iosevka
-dwm.font: Iosevka:pixelsize=13:antialias=true:autohint=true;JoyPixels:pixelsize=13:antialias=true:autohint=true;
-*.font: Iosevka:pixelsize=17:antialias=true:autohint=true;JoyPixels:pixelsize=15:antialias=true:autohint=true;
+dwm.font: Iosevka:pixelsize=12:antialias=true:autohint=true
+*.font: Iosevka:pixelsize=16:antialias=true:autohint=true
 dunst.font: Iosevka
 
 ! Monoid
-dwm.font: Monoid:pixelsize=11:antialias=true:autohint=true;JoyPixels:pixelsize=13:antialias=true:autohint=true;
-*.font: Monoid:pixelsize=13:antialias=true:autohint=true;JoyPixels:pixelsize=15:antialias=true:autohint=true;
+dwm.font: Monoid:pixelsize=10:antialias=true:autohint=true
+*.font: Monoid:pixelsize=12:antialias=true:autohint=true
 dunst.font:Monoid 9
