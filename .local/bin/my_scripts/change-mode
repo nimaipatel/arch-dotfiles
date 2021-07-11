@@ -1,10 +1,30 @@
 #!/bin/sh
 
+# store theme name here
+CACHE_FILE="${XDG_CACHE_HOME:-$HOME/.cache}/x-theme"
 # list of themes
 THEMES="$(flavours list | tr ' ' '\n')"
 
-# use command-line arg or get theme using dmenu prompt
-CHOOSEN_THEME=${*:-"$(echo "$THEMES" | dmenu -i -l 30 -p "Choose theme")"}
+if [ "$1" = "--restore" ] && [ -z "$2" ] ; then
+	# take theme from cache file if `--restore` passed
+	CHOOSEN_THEME=$(cat "$CACHE_FILE" 2>/dev/null)
+elif [ -z "$1" ] ; then
+	# choose theme using dmenu if no args passed
+	CHOOSEN_THEME=$(echo "$THEMES" | dmenu -i -l 30 -p "Choose theme")
+	# exit if nothing choosen
+	[ -z "$CHOOSEN_THEME" ] && exit
+elif [ -n "$1" ] && [ -z "$2" ] ; then
+	# use first arg as theme if passed
+	CHOOSEN_THEME="$1"
+else
+	1>&2 echo "Invalid useage" && exit
+fi
+
+# use gruvbox-dark-hard if theme is invalid
+echo "${THEMES}" | grep "^$CHOOSEN_THEME$" -q || CHOOSEN_THEME="gruvbox-dark-hard"
+
+# write theme to cache file
+echo "$CHOOSEN_THEME" > "$CACHE_FILE"
 
 # try to apply theme and send notification only if command started with dmenu and NOT command-line args
 flavours apply "$CHOOSEN_THEME" && [ -z "$*" ] && notify-send "Theme set to ${CHOOSEN_THEME}"
