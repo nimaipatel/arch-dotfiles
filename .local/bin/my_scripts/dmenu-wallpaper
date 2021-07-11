@@ -3,8 +3,9 @@
 WALLPAPER_DIR="$HOME/pictures/wallpapers"
 [ -d "$1" ] && WALLPAPER_DIR="$1"
 
-NAME=$( find "$WALLPAPER_DIR" -type f -exec basename {} \; | dmenu -p "Select a wallpaper" -l 30 )
+NAME=$( find "$WALLPAPER_DIR" -type f -exec basename {} \; | dmenu -i -p "Select a wallpaper" -l 31 )
 
 [ -z "$NAME" ] && exit
 
 set-wallpaper "$WALLPAPER_DIR/$NAME"
+notify-send -t 3000 "Wallpaper set to $NAME"

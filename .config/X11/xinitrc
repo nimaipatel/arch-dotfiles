@@ -14,7 +14,7 @@ dwmblocks &
 
 (dmenu-change-mode "gruvbox-dark-hard"
 
-set-wallpaper ~/pictures/wallpapers
+set-wallpaper --restore
 
 dmenu-change-font "DejaVu Sans Mono") &
 
