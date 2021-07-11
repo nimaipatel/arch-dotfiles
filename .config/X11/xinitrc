@@ -18,4 +18,6 @@ change-font --restore
 
 set-wallpaper --restore) &
 
+picom &
+
 exec dwm
