@@ -28,18 +28,7 @@ local mypy = {
 	lintFormats = {"%f=%l:%c: %trror: %m", "%f=%l:%c: %tarning: %m", "%f=%l:%c: %tote: %m"}
 }
 
-local prettier = {
-	formatCommand = ([[
-		./node_modules/.bin/prettier
-		${--config-precedence:configPrecedence}
-		${--tab-width:tabWidth}
-		${--single-quote:singleQuote}
-		${--trailing-comma:trailingComma}
-	]]):gsub(
-		"\n",
-		""
-	)
-}
+local prettier = { formatCommand = ("./node_modules/.bin/prettier") }
 
 local eslint = {
 	lintCommand = "./node_modules/.bin/eslint -f unix --stdin",
@@ -47,8 +36,8 @@ local eslint = {
 	lintStdin = true
 }
 
-local luafmt = {
-	formatCommand = "luafmt --stdin",
+local luaformat = {
+	formatCommand = "lua-format",
 	formatStdin = true
 }
 
@@ -57,7 +46,7 @@ lspconfig.efm.setup {
 	settings = {
 		rootMarkers = {vim.loop.cwd()},
 		languages = {
-			lua = {luafmt},
+			lua = {luaformat},
 			python = {flake8, black, isort, mypy},
 			typescript = {prettier, eslint},
 			javascript = {prettier, eslint},
