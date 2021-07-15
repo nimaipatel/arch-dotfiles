@@ -1,9 +1,9 @@
-for _, mode in ipairs({'', 'n', 'i', 'v', 't'}) do
-	_G[mode .. 'map'] = function (input, output)
+for _, mode in ipairs({ '', 'n', 'i', 'v', 't' }) do
+	_G[mode .. 'map'] = function(input, output)
 		vim.api.nvim_set_keymap(mode, input, output, {})
 	end
 
-	_G[mode .. 'noremap'] = function (input, output)
+	_G[mode .. 'noremap'] = function(input, output)
 		vim.api.nvim_set_keymap(mode, input, output, { noremap = true })
 	end
 end
@@ -11,22 +11,22 @@ end
 local globalListenerName = 'globallistenername'
 local autocmdhandlers = {}
 
-_G[globalListenerName] = function (name)
+_G[globalListenerName] = function(name)
 	autocmdhandlers[name]()
 end
 
-function AddEventListener (name, events, cb)
+function AddEventListener(name, events, cb)
 	autocmdhandlers[name] = cb
 	vim.cmd('augroup ' .. name)
 	vim.cmd('autocmd!')
 	for _, v in ipairs(events) do
-		local cmd = 'lua ' .. globalListenerName .. '("' .. name ..'")'
+		local cmd = 'lua ' .. globalListenerName .. '("' .. name .. '")'
 		vim.cmd('au ' .. v .. ' ' .. cmd)
 	end
 	vim.cmd('augroup end')
 end
 
-function RemoveEventListener (name)
+function RemoveEventListener(name)
 	vim.cmd('augroup ' .. name)
 	vim.cmd('autocmd!')
 	vim.cmd('augroup end')

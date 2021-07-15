@@ -1,5 +1,5 @@
 -- space bar is leader key
-vim.g.mapleader = " "
+vim.g.mapleader = ' '
 
 -- python path for python pluggins 🤮
 vim.g.python_host_prog = '/usr/bin/python'
@@ -41,29 +41,23 @@ vim.g.netrw_liststyle = 3
 vim.opt.clipboard = 'unnamedplus'
 
 -- whitespace characters
-vim.opt.listchars = 'tab:→ ,space:·,nbsp:␣,trail:•,eol:¶,precedes:«,extends:»'
+vim.opt.listchars =
+	'tab:→ ,space:·,nbsp:␣,trail:•,eol:¶,precedes:«,extends:»'
 
 -- completion style
 vim.opt.completeopt = 'menuone,noinsert,noselect'
 
 -- statusline
 vim.opt.showmode = false
-vim.opt.statusline = [[%-t %-m %-r]] ..
-                     [[%{get(b:,'gitsigns_head','')}]] ..
-                     [[ %{get(b:,'gitsigns_status','')}]] ..
-                     [[ %= %y LN %l:%L]]
+vim.opt.statusline = [[%-t %-m %-r]] .. [[%{get(b:,'gitsigns_head','')}]] ..
+	                     [[ %{get(b:,'gitsigns_status','')}]] ..
+	                     [[ %= %y LN %l:%L]]
 
 -- seamless working between nvim and tmux
-require("tmux").setup({
-	copy_sync = {
-		enable = false,
-	},
-	navigation = {
-		enable_default_keybindings = true,
-	},
-	resize = {
-		enable_default_keybindings = true,
-	},
+require('tmux').setup({
+	copy_sync = { enable = false },
+	navigation = { enable_default_keybindings = true },
+	resize = { enable_default_keybindings = true }
 })
 
 -- color highlights for cringe style sheets
@@ -74,8 +68,8 @@ require('colorizer').setup()
 require('gitsigns').setup()
 
 require('nvim-treesitter.configs').setup {
-	ensure_installed = "maintained",
-	highlight = { enable = true },
+	ensure_installed = 'maintained',
+	highlight = { enable = true }
 }
 
 -- set base16 colors
