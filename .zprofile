@@ -13,9 +13,9 @@ export MY_SCRIPTS="$HOME/.local/bin/my_scripts"
 export MY_SCRIPT_ASSETS="$HOME/.local/share/my_script_assets"
 
 # PATH variable
-export PATH="${HOME}/.local/share/bin:${PATH}"
 export PATH="${MY_SCRIPTS}:${PATH}"
 export PATH="${HOME}/.local/bin:${PATH}"
+export PATH="${HOME}/.local/share/bin:${PATH}"
 
 # en_IN doesn't work as expected
 export LC_ALL=en_US.UTF-8
