@@ -31,13 +31,6 @@ abbr tksv="tmux kill-server"
 abbr tl="tmux list-sessions"
 abbr ts="tmux new-session -s"
 
-# cfg abbrevations
-abbr ca="cfg add"
-abbr cm="cfg commit -m"
-abbr cdf="cfg diff"
-abbr cpom="cfg push origin master"
-abbr cst="cfg status"
-
 # create and extract zip and tar archives
 abbr tar="bsdtar -cf"
 abbr zip="bsdtar -a -cf"
