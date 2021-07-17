@@ -1,15 +1,27 @@
-# My dotfiles and setup instructions for \*NIX systems
+# My dotfiles for \*NIX systems managed by GNU Stow
 
 I've tried to put everything I can into `~/.config`
 
 ## On new computer:
 
+Clone the repo
 ```
-git init --bare "${XDG_CONFIG_HOME}/cfg/.git/"
-cfg() { git --git-dir="${XDG_CONFIG_HOME}/cfg/.git/" --work-tree="$HOME" "$@" ; }
-cfg config --local status.showUntrackedFiles no
-cfg remote add origin https://github.com/nimaipatel/dotfiles.git
-cfg pull origin master
+git clone https://github.com/nimaipatel/dotfiles ~/.dotfiles
 ```
 
-While pulling in the last step there might be conflicts with existing files on the computer (usually with the .zshrc). In this case, just delete the original file.
+To install all configs:
+```
+./install_dots.sh
+```
+
+To install Arch Linux packages:
+```
+./install_progs.sh
+```
+
+To install any specific configuration -- say, for example, zsh and neovim:
+```
+cd user
+stow zsh -t ~
+stow neovim -t ~
+```
