@@ -1,2 +1,3 @@
 .zcompdump
-user/neovim/.config/nvim/colors/base16.vim
+base16.vim
+ghci_history
