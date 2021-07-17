@@ -26,5 +26,36 @@ echo "${THEMES}" | grep "^$CHOOSEN_THEME$" -q || CHOOSEN_THEME="gruvbox-dark-har
 # write theme to cache file
 echo "$CHOOSEN_THEME" > "$CACHE_FILE"
 
-# try to apply theme and send notification only if command started with dmenu and NOT command-line args
-flavours apply "$CHOOSEN_THEME" && [ -z "$*" ] && notify-send "Theme set to ${CHOOSEN_THEME}"
+# location of color scheme
+THEME_LOC=$(find "$XDG_DATA_HOME/flavours/base16/schemes" -type f | grep "/${CHOOSEN_THEME}\.ya\?ml")
+
+# locations of templates
+XRESOURCES_T="${MY_SCRIPT_ASSETS}/xresources.mustache"
+NEOVIM_T="$XDG_DATA_HOME/flavours/base16/templates/vim/templates/default.mustache" 
+GTK2_T="$XDG_DATA_HOME/flavours/base16/templates/gtk-flatcolor/templates/gtk-2.mustache"
+GTK3_T="$XDG_DATA_HOME/flavours/base16/templates/gtk-flatcolor/templates/gtk-3.mustache"
+
+# generate themes and merge and write at appropriate locations
+flavours build "$THEME_LOC" "$XRESOURCES_T" | xrdb -merge
+mkdir "$XDG_CONFIG_HOME/nvim/colors" ; flavours build "$THEME_LOC" "$NEOVIM_T" > "$XDG_CONFIG_HOME/nvim/colors/base16.vim"
+flavours build "$THEME_LOC" "$GTK2_T" > "$XDG_DATA_HOME/themes/FlatColor/colors2"
+flavours build "$THEME_LOC" "$GTK3_T" > "$XDG_DATA_HOME/themes/FlatColor/colors3"
+
+# send USR1 signal to all running st instances
+# shellcheck disable=SC2046
+kill -s USR1 $(pidof st)
+
+# restart dwm using this hack
+xdotool key "Super+F12"
+
+# restart dunst, this script internally handles colors from xresources
+restart-dunst
+
+# refresh colors for active neovim instances
+nvimcmd ":lua RefreshColors()"
+
+# refresh gtk theme
+killall xsettingsd ; xsettingsd &
+
+# send notification only if command started with dmenu and NOT command-line args
+[ -z "$*" ] && notify-send "Theme set to ${CHOOSEN_THEME}"
