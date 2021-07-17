@@ -1,9 +1,0 @@
-#!/bin/sh
-
-ETHR=$(nmcli -terse -get-values NAME,TYPE connection show --active | grep -i ethernet | cut -d: -f1)
-
-if [ -z "$ETHR" ]; then
-	echo "🌐"
-else
-	echo "❎ $ETHR"
-fi
