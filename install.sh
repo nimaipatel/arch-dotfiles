@@ -1,34 +1,18 @@
 #!/bin/sh
 
-user_progs="
-	dunst
-	git
-	mpd
-	mpv
-	my_scripts
-	ncmpcpp
-	neovim
-	newsboat
-	python
-	ranger
-	readline
-	surfingkeys
-	sxiv
-	tmux
-	X11
-	xsettingsd
-	zathura
-	zsh
-"
+install_user_dots () {
+	cd user || return
+	stow * -t ~
+	cd .. || return
 
-root_progs="
-	pacman
-"
+}
 
-# install program configs in user home folder
-# shellcheck disable=SC2086
-stow $user_progs -t ~
+install_root_dots () {
+	cd root || return
+	sudo stow * -t /
+	cd .. || return
+}
 
-# shellcheck disable=SC2086
-# install system-wide configs in root
-sudo stow $root_progs -t /
+install_user_dots
+
+install_root_dots
