@@ -22,6 +22,6 @@ To install Arch Linux packages:
 To install any specific configuration -- say, for example, zsh and neovim:
 ```
 cd user
-stow zsh -t ~
+stow zoomer-shell -t ~
 stow neovim -t ~
 ```
