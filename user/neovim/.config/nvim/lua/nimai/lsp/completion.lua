@@ -45,7 +45,7 @@ lspconfig.bashls.setup {
 
 lspconfig.jdtls.setup { root_dir = vim.loop.cwd, on_attach = on_attach }
 
-lspconfig.pyls.setup { root_dir = vim.loop.cwd, on_attach = on_attach }
+lspconfig.pylsp.setup { root_dir = vim.loop.cwd, on_attach = on_attach }
 
 lspconfig.rust_analyzer.setup { root_dir = vim.loop.cwd, on_attach = on_attach }
 
