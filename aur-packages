@@ -19,6 +19,7 @@ nodejs-vscode-css-languageserver-bin
 nodejs-vscode-html-languageserver-bin
 paru-bin
 picom-jonaburg-git
+python-lsp-server
 python-pypdf2
 rtl8821ce-dkms-git
 shellcheck-bin
