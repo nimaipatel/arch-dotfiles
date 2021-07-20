@@ -51,3 +51,9 @@ function man() {
 		PAGER="${commands[less]:-$PAGER}" \
 		man "$@"
 }
+
+# syntax highlighting
+source '/usr/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh' 1>/dev/null 2>&1
+
+# auto-suggestions
+source '/usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh' 1>/dev/null 2>&1
