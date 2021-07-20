@@ -1,0 +1,92 @@
+diff --git a/gtk-2.0/gtkrc b/gtk-2.0/gtkrc
+index 37e837a..cf85951 100644
+--- a/gtk-2.0/gtkrc
++++ b/gtk-2.0/gtkrc
+@@ -1,32 +1,6 @@
+ #modded Numix gtkrc
+ 
+-gtk-color-scheme = "bg_color:#131971
+-color0:#131971
+-color1:#9E9BDE
+-color2:#8F91D6
+-color3:#AEB0EA
+-color4:#5E6EDD
+-color5:#8579C5
+-color6:#7A84DF
+-color7:#d8cadf
+-color8:#19229c
+-color9:#b7b1ff
+-color10:#a2a6ff
+-color11:#c0c4ff
+-color12:#657fff
+-color13:#9e88ff
+-color14:#8899ff
+-color15:#fff2ff
+-text_color:#fff2ff
+-selected_bg_color:#7e6ccb
+-selected_fg_color:#fff2ff
+-tooltip_bg_color:#131971
+-tooltip_fg_color:#fff2ff
+-titlebar_bg_color:#131971
+-titlebar_fg_color:#fff2ff
+-menu_bg_color:#131971
+-menu_fg_color:#fff2ff
+-link_color:#7e6ccb"
++include "../colors2"
+ gtk-auto-mnemonics	= 1
+ 
+ # Default Style
+diff --git a/gtk-3.0/gtk.css b/gtk-3.0/gtk.css
+index 21c64c0..fa0c211 100644
+--- a/gtk-3.0/gtk.css
++++ b/gtk-3.0/gtk.css
+@@ -1,13 +1,4 @@
+-
+-/* Default color scheme */
+-@define-color bg_color #131971;
+-@define-color fg_color #fff2ff;
+-@define-color base_color #9E9BDE;
+-@define-color text_color #fff2ff;
+-@define-color selected_bg_color #7e6ccb;
+-@define-color selected_fg_color #fff2ff;
+-@define-color tooltip_bg_color #131971;
+-@define-color tooltip_fg_color #fff2ff;
++@import url("../colors3");
+ 
+ /* colormap actually used by the theme, to be overridden in other css files */
+ @define-color theme_bg_color @bg_color;
+diff --git a/gtk-3.20/gtk.css b/gtk-3.20/gtk.css
+index fd8035f..64041ec 100644
+--- a/gtk-3.20/gtk.css
++++ b/gtk-3.20/gtk.css
+@@ -1,29 +1,4 @@
+-/* Default color scheme */
+-@define-color color0 #131971;
+-@define-color color1 #9E9BDE;
+-@define-color color2 #8F91D6;
+-@define-color color3 #AEB0EA;
+-@define-color color4 #5E6EDD;
+-@define-color color5 #8579C5;
+-@define-color color6 #7A84DF;
+-@define-color color7 #d8cadf;
+-@define-color color8 #19229c;
+-@define-color color9 #b7b1ff;
+-@define-color color10 #a2a6ff;
+-@define-color color11 #c0c4ff;
+-@define-color color12 #657fff;
+-@define-color color13 #9e88ff;
+-@define-color color14 #8899ff;
+-@define-color color15 #fff2ff;
+-@define-color selected_bg_color #7e6ccb;
+-@define-color bg_color mix(@color0, @color15, 0.12);
+-@define-color tooltip_bg_color mix(@color0, @color15, 0.04);
+-@define-color base_color mix(@color0, @color15, 0);
+-@define-color fg_color @color15;
+-@define-color text_color @color15;
+-@define-color text_color_disabled mix(@text_color, @base_color, 0.4);
+-@define-color selected_fg_color @color15;
+-@define-color tooltip_fg_color @color15;
++@import url("../colors3");
+ 
+ /* colormap actually used by the theme, to be overridden in other css files */
+ @define-color theme_bg_color @bg_color;
