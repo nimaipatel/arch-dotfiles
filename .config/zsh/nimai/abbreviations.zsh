@@ -20,6 +20,12 @@ abbr gl="git log"
 abbr glo="git log --pretty='oneline'"
 abbr glol="git log --graph --oneline --decorate"
 
+abbr cst="cfg status"
+abbr ca="cfg add"
+abbr cdf="cfg diff"
+abbr cm="cfg commit -m"
+abbr cpom="cfg push origin master"
+
 # ls abbrevations
 abbr l="ls -Av"
 abbr ll="ls -lAhv"

@@ -3,7 +3,7 @@
 mkdir -p ~/.local/share/nvim/site/pack/plugs/start
 cd ~/.local/share/nvim/site/pack/plugs/start &&
 for i in */ ; do
-	echo "$i"
+	printf "$i: "
 	cd "$i" &&
 	git pull
 	cd .. || continue
