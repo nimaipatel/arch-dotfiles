@@ -20,3 +20,6 @@ source "${ZDOTDIR}/nimai/abbreviations.zsh"
 
 # prompt
 source "${ZDOTDIR}/nimai/prompt.zsh"
+
+# startup text
+source "${ZDOTDIR}/nimai/startup.zsh"
