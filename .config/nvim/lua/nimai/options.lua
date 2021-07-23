@@ -45,7 +45,7 @@ vim.opt.listchars =
 	'tab:→ ,space:·,nbsp:␣,trail:•,eol:¶,precedes:«,extends:»'
 
 -- completion style
-vim.opt.completeopt = 'menuone,noinsert,noselect'
+vim.opt.completeopt = 'menuone,noselect'
 
 -- statusline
 vim.opt.showmode = false
