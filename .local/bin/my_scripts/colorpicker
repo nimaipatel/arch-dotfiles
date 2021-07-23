@@ -1,0 +1,3 @@
+#!/bin/sh
+
+xcolor | xargs -I'{}' notify-send "Color Picker: {}"
