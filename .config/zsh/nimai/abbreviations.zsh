@@ -53,7 +53,7 @@ abbr genpas="gpg --armor --gen-random 1 5"
 abbr nn="nmcli device wifi connect"
 
 # I forget these flags every time for downloading albums/playlists with cover art
-abbr ytm="youtube-dl --extract-audio --audio-format mp3 --embed-thumbnail --audio-quality 0"
+abbr ytm="youtube-dl --extract-audio --audio-format mp3 --embed-thumbnail --add-metadata --audio-quality 0"
 
 # flags for download videos in best quality
 abbr ytl="youtube-dl -f bestvideo+bestaudio --merge-output-format mkv"
