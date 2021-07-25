@@ -1,0 +1,11 @@
+#!/bin/sh
+
+if xrdb -query | grep -q '\*\.ligatures:\s0' ; then
+	echo '*.ligatures: 1' | xrdb -merge
+else
+	echo '*.ligatures: 0' | xrdb -merge
+fi
+
+# send USR1 signal to all running st instances
+# shellcheck disable=SC2046
+kill -s USR1 $(pidof st)

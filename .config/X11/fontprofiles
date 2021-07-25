@@ -23,20 +23,10 @@ dwm.font: JetBrains Mono:pixelsize=12:antialias=true:autohint=true
 *.font: JetBrains Mono:pixelsize=14:antialias=true:autohint=true
 dunst.font: JetBrains Mono
 
-! Fira Mono
-dwm.font: Fira Mono:pixelsize=12:antialias=true:autohint=true
-*.font: Fira Mono:pixelsize=14:antialias=true:autohint=true
-dunst.font: Fira Mono
-
 ! Fira Code
 dwm.font: Fira Code:pixelsize=12:antialias=true:autohint=true
 *.font: Fira Code:pixelsize=14:antialias=true:autohint=true
 dunst.font: Fira Code
-
-! Iosevka Fixed
-dwm.font: Iosevka Fixed:pixelsize=12:antialias=true:autohint=true
-*.font: Iosevka Fixed:pixelsize=16:antialias=true:autohint=true
-dunst.font: Iosevka Fixed
 
 ! Iosevka
 dwm.font: Iosevka:pixelsize=12:antialias=true:autohint=true
