@@ -8,14 +8,14 @@ ALLFONTS=$(grep "^! " "${XDG_CONFIG_HOME}/X11/fontprofiles" | sed 's/^..//g')
 if [ "$1" = "--restore" ] && [ -z "$2" ] ; then
 	# take font from cache file if `--restore` passed
 	CHOOSEN_FONT=$(cat "$CACHE_FILE" 2>/dev/null)
+elif [ -n "$1" ] && [ -z "$2" ] ; then
+	# use first arg as font name
+	CHOOSEN_FONT="$1"
 elif [ -z "$1" ] ; then
 	# choose font using dmenu if no args passed
 	CHOOSEN_FONT=$(echo "$ALLFONTS" | dmenu -i -l 30 -p "Choose font")
 	# exit if nothing choosen
 	[ -z "$CHOOSEN_FONT" ] && exit
-elif [ -n "$1" ] && [ -z "$2" ] ; then
-	# use first arg as font name
-	CHOOSEN_FONT="$1"
 else
 	1>&2 echo "Invalid useage" && exit 1
 fi

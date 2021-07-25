@@ -10,4 +10,8 @@ getdunstfont() {
 	echo "${LINE##*:}"
 }
 
-killall dunst; dunst -font "$(getdunstfont)" -lb "$(gethex '*.color4')" -nb "$(gethex '*.color2')" -cb "$(gethex '*.color1')" -lf "#000000" -nf "#000000" -cf "#000000" -lfr "#000000" -nfr "#000000" -cfr "#000000" &
+killall dunst
+dunst -font "$(getdunstfont)"\
+	-lb "$(gethex '*.color4')" -nb "$(gethex '*.color2')" -cb "$(gethex '*.color1')"\
+	-lf "#000000" -nf "#000000" -cf "#000000"\
+	-lfr "#000000" -nfr "#000000" -cfr "#000000" &
