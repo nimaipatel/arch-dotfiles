@@ -9,6 +9,7 @@ case "${OPTION}" in
 		lockscreen
 		;;
 	'Restart dwm')
+		# shellcheck disable=SC2046
 		kill -HUP $(pidof dwm)
 		;;
 	'Exit XServer')
