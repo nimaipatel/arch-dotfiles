@@ -23,7 +23,11 @@ local check_back_space = function()
 end
 
 _G.tab_complete = function()
-	if vim.fn.pumvisible() == 1 then
+	local nc = vim.api.nvim_eval(
+			   'strcharpart(getline(\'.\')[col(\'.\') - 1:], 0, 1)')
+	if nc == '\'' or nc == '"' or nc == '`' or nc == ')' or nc == ']' or nc == '}' then
+		return t '<right>'
+	elseif vim.fn.pumvisible() == 1 then
 		return t '<C-n>'
 	elseif check_back_space() then
 		return t '<Tab>'
