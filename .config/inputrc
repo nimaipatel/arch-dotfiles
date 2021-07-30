@@ -16,7 +16,6 @@ $if mode=vi
 	k: history-search-backward
 
 	set keymap vi-insert
-	"jj": vi-movement-mode
 	"\e[A": history-search-backward
 	"\e[B": history-search-forward
 	Control-l: clear-screen

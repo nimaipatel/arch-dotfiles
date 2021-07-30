@@ -73,9 +73,6 @@ bindkey "^H" backward-delete-char
 # delete previous line like in regular shell
 bindkey "^U" backward-kill-line
 
-# jj for exiting normal mode
-bindkey jj vi-cmd-mode
-
 # edit shell command in a vim buffer
 autoload edit-command-line; zle -N edit-command-line
 bindkey '^e' edit-command-line
