@@ -9,7 +9,7 @@ if [ "$1" = "--restore" ] && [ -z "$2" ] ; then
 elif [ -n "$1" ] && [ -z "$2" ] ; then
 	SEL="$1"
 elif [ -z "$1" ] ; then
-	find "$HOME/pictures/wallpapers" -type f | shuf | xargs sxiv -t
+	SEL="$(find "$HOME/pictures/wallpapers" -type f | shuf | xargs sxiv -d)"
 else
 	1>&2 echo "Invalid useage" && exit 1
 fi
