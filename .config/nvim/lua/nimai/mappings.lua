@@ -1,7 +1,3 @@
--- use jj to escape to normal mode
-imap('jj', '<esc>')
-tmap('jj', '<esc>')
-
 -- toggle whitespace rendering
 nnoremap('<leader>w', ':set list!<cr>')
 
