@@ -1,6 +1,6 @@
 #!/bin/sh
 
-SELECTED_SESSION="$(tmux list-sessions | dmenu -l 30)"
+SELECTED_SESSION="$(tmux list-sessions | fzfmenu --prompt="Choose a tmux session ")"
 [ -z "$SELECTED_SESSION" ] && exit
 SESSION_NAME="${SELECTED_SESSION%% *}"
 # there will technically be a ':' left at

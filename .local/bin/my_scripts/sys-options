@@ -1,6 +1,6 @@
 #!/bin/sh
 
-OPTION=$(printf "Lock\nRestart dwm\nExit XServer\nLogout\nShutdown\nReboot" | dmenu -l 30 -i)
+OPTION=$(printf "Lock\nRestart dwm\nExit XServer\nLogout\nShutdown\nReboot" | fzfmenu --prompt="System Operations ")
 
 [ -z "${OPTION}" ] && exit
 
@@ -19,11 +19,11 @@ case "${OPTION}" in
 		pkill -KILL -u "$USER"
 		;;
 	'Shutdown')
-		CONFIRM=$(printf "No\nYes" | dmenu -i -p "Are you sure you want to shutdown?")
+		CONFIRM=$(printf "No\nYes" | fzfmenu --prompt="Are you sure you want to shutdown? ")
 		[ "$CONFIRM" = Yes ] && poweroff
 		;;
 	'Reboot')
-		CONFIRM=$(printf "No\nYes" | dmenu -i -p "Are you sure you want to reboot?")
+		CONFIRM=$(printf "No\nYes" | fzfmenu --prompt="Are you sure you want to reboot? ")
 		[ "$CONFIRM" = Yes ] && reboot
 		;;
 esac
