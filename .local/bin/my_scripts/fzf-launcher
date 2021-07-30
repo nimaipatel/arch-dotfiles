@@ -1,0 +1,3 @@
+#!/bin/sh
+
+execs-on-path | fzfmenu | ${SHELL:-"/bin/sh"} &
