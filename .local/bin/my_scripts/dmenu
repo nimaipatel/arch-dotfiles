@@ -1,25 +1,13 @@
-#!/bin/bash
+#!/bin/sh
 
 while getopts "p:" arg ; do
 	case $arg in
 		p)
-			prompt="$OPTARG >>= "
+			prompt="$OPTARG "
 			;;
 		*)
 			;;
 	esac
 done
 
-input=$(mktemp -u --suffix .fzfmenu.input)
-output=$(mktemp -u --suffix .fzfmenu.output)
-mkfifo "$input"
-mkfifo "$output"
-chmod 600 "$input" "$output"
-
-st -g '120x40' -t fzfmenu -c fzfmenu -n fzfmenu\
--e sh -c "cat $input | fzf --prompt=\"$prompt\" --info=inline --layout=reverse $(printf -- " '%s'" | sed "s/^ ''$//") | tee $output" & disown
-
-trap 'kill $! 2>/dev/null; rm -f $input $output' EXIT
-
-cat > "$input"
-cat "$output"
+fzfmenu --prompt="$prompt"

@@ -12,8 +12,8 @@ elif [ -n "$1" ] && [ -z "$2" ] ; then
 	# use first arg as font name
 	CHOOSEN_FONT="$1"
 elif [ -z "$1" ] ; then
-	# choose font using dmenu if no args passed
-	CHOOSEN_FONT=$(echo "$ALLFONTS" | dmenu -i -l 30 -p "Choose font")
+	# choose font using fzfmenu if no args passed
+	CHOOSEN_FONT=$(echo "$ALLFONTS" | fzfmenu --prompt="Choose Font ")
 	# exit if nothing choosen
 	[ -z "$CHOOSEN_FONT" ] && exit
 else
@@ -37,5 +37,5 @@ xdotool key "Super+F12"
 # restart dunst, this script internally handles colors from xresources
 restart-dunst
 
-# send notification only if command started with dmenu and NOT command-line args
+# send notification only if command started with fzfmenu and NOT command-line args
 [ -z "$*" ] && notify-send "Font set to ${CHOOSEN_FONT}"
