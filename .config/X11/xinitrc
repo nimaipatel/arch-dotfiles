@@ -1,6 +1,6 @@
 # make sure $userclientrc is set to $HOME/.config/X11/xinitrc in /usr/bin/startx script
 
-xmodmap ~/.config/X11/Xmodmap &
+big-brain-mappings &
 
 xset r rate 300 50 &
 
