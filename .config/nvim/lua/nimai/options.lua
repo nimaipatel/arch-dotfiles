@@ -47,6 +47,9 @@ vim.opt.listchars =
 -- completion style
 vim.opt.completeopt = 'menuone,noselect'
 
+-- expand environment variables even if they are in braces
+vim.opt.isfname:append('{,}')
+
 -- statusline
 vim.opt.showmode = false
 vim.opt.statusline = [[%-t %-m %-r]] .. [[%{get(b:,'gitsigns_head','')}]] ..

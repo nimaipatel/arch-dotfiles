@@ -1,3 +1,11 @@
+# nimai's
+#     _               _                           __ _ _      
+#    | |__   __ _ ___| |__       _ __  _ __ ___  / _(_) | ___ 
+#    | '_ \ / _` / __| '_ \     | '_ \| '__/ _ \| |_| | |/ _ \
+#   _| |_) | (_| \__ \ | | |    | |_) | | | (_) |  _| | |  __/
+#  (_)_.__/ \__,_|___/_| |_|____| .__/|_|  \___/|_| |_|_|\___|
+#                         |_____|_|                           
+
 # default executables
 export EDITOR="nvim"
 export VISUAL="nvim"
@@ -7,7 +15,20 @@ export READER="zathura"
 export TERMINAL_FILE_BROWSER="ranger"
 export GUI_FILE_BROWSER="pcmanfm"
 export MANPAGER='nvim +Man!'
-export KEYTIMEOUT=1
+
+# colorful man pages
+function man() {
+	env \
+		LESS_TERMCAP_md="$(tput bold; tput setaf 2)" \
+		LESS_TERMCAP_me="$(tput sgr0)" \
+		LESS_TERMCAP_mb="$(tput blink)" \
+		LESS_TERMCAP_us="$(tput setaf 4)" \
+		LESS_TERMCAP_ue="$(tput sgr0)" \
+		LESS_TERMCAP_so="$(tput smso)" \
+		LESS_TERMCAP_se="$(tput rmso)" \
+		PAGER="${commands[less]:-$PAGER}" \
+		man "$@"
+}
 
 # my scripts
 export MY_SCRIPTS="$HOME/.local/bin/my_scripts"
@@ -33,6 +54,7 @@ export LESSHISTFILE="-"
 export WGETRC="${XDG_CONFIG_HOME:-$HOME/.config}/wget/wgetrc"
 export INPUTRC="${XDG_CONFIG_HOME:-$HOME/.config}/inputrc"
 export ZDOTDIR="${XDG_CONFIG_HOME:-$HOME/.config}/zsh"
+export BASH_HOME="${XDG_CONFIG_HOME:-$HOME/.config}/bash"
 export GNUPGHOME="$XDG_DATA_HOME/gnupg"
 export WINEPREFIX="${XDG_DATA_HOME:-$HOME/.local/share}/wineprefixes/default"
 export KODI_DATA="${XDG_DATA_HOME:-$HOME/.local/share}/kodi"
