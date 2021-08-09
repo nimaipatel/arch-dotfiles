@@ -9,6 +9,9 @@
 [url "https://github.com/"]
     insteadOf = gh:
 
+[url "git@github.com:"]
+    insteadOf = ghh:
+
 [url "https://gist.github.com/"]
     insteadOf = gist:
 
