@@ -44,8 +44,7 @@ flavours build "$THEME_LOC" "$GTK3_T" > "$XDG_DATA_HOME/themes/FlatColor/colors3
 flavours build "$THEME_LOC" "$FZF_T" > "$HOME/.local/bin/fzf" && chmod +x "$HOME/.local/bin/fzf" 
 
 # send USR1 signal to all running st instances
-# shellcheck disable=SC2046
-kill -s USR1 $(pidof st)
+pidof st | xargs kill -s USR1
 
 # restart dwm using this hack
 xdotool key "Super+F12"

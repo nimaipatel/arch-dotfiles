@@ -1,7 +1,7 @@
 #!/bin/sh
 
 setxkbmap -layout us
-killall xcape 2>&1 1>/dev/null
+killall xcape 1>/dev/null 2>&1
 xmodmap -e 'clear lock'
 xmodmap -e 'clear control'
 xmodmap -e 'add control = Caps_Lock Control_L Control_R'

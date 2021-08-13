@@ -7,5 +7,4 @@ else
 fi
 
 # send USR1 signal to all running st instances
-# shellcheck disable=SC2046
-kill -s USR1 $(pidof st)
+pidof st | xargs kill -s USR1

@@ -10,7 +10,7 @@ case "${OPTION}" in
 		;;
 	'Restart dwm')
 		# shellcheck disable=SC2046
-		kill -HUP $(pidof dwm)
+		pidof dwm | xargs kill -HUP
 		;;
 	'Exit XServer')
 		pkill xinit

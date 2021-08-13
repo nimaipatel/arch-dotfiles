@@ -28,8 +28,7 @@ echo "$CHOOSEN_FONT" > "$CACHE_FILE"
 grep "^! ${CHOOSEN_FONT}$" -A3 "${XDG_CONFIG_HOME}/X11/fontprofiles" | xrdb -merge
 
 # send USR1 signal to all running st instances
-# shellcheck disable=SC2046
-kill -s USR1 $(pidof st)
+pidof st | xargs kill -s USR1
 
 # restart dwm using this hack
 xdotool key "Super+F12"
