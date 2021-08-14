@@ -11,6 +11,9 @@ $include /etc/inputrc
 # vi mode for interpreters
 set editing-mode vi
 
+# no delay after escape
+set keyseq-timeout 0
+
 # different cursors for insert and normal mode
 set show-mode-in-prompt on
 set vi-ins-mode-string \1\e[6 q\2
