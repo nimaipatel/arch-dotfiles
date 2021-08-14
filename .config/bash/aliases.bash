@@ -42,6 +42,7 @@ alias cdf="cfg diff"
 alias ccm="cfg commit -m"
 alias cm="cfg commit"
 alias cpom="cfg push origin master"
+alias clol="cfg log --graph --oneline --decorate"
 
 # ls aliases
 alias l="ls -Av"
