@@ -6,8 +6,9 @@ gethex(){
 }
 
 getdunstfont() {
-	LINE="$(xrdb -query | grep "dunst\.font:")"
-	echo "${LINE##*:}"
+	LINE="$(xrdb -query | grep "^\*font:")"
+	LINE="${LINE##*:	}"
+	echo "${LINE%%:*}"
 }
 
 killall dunst

@@ -8,7 +8,7 @@ gethex(){
 }
 
 getfont() {
-	LINE="$(xrdb -query | grep "^\*\.font:")"
+	LINE="$(xrdb -query | grep "^\*font:")"
 	LINE="${LINE##*:	}"
 	echo "${LINE%%:*}"
 }

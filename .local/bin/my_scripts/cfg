@@ -1,0 +1,3 @@
+#!/bin/sh
+
+git --git-dir="$HOME/.config/cfg/.git/" --work-tree="$HOME" "$@"

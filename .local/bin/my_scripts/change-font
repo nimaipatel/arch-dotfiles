@@ -3,7 +3,7 @@
 # store font name here
 CACHE_FILE="${XDG_CACHE_HOME:-$HOME/.cache}/x-font"
 # list of fonts
-ALLFONTS=$(grep "^! " "${XDG_CONFIG_HOME}/X11/fontprofiles" | sed 's/^..//g')
+ALLFONTS=$(cut -d: -f1 "${XDG_CONFIG_HOME}/X11/fontprofiles")
 
 if [ "$1" = "--restore" ] && [ -z "$2" ] ; then
 	# take font from cache file if `--restore` passed
@@ -24,8 +24,8 @@ echo "$ALLFONTS" | grep "^${CHOOSEN_FONT}$" -q || CHOOSEN_FONT="DejaVu Sans Mono
 
 echo "$CHOOSEN_FONT" > "$CACHE_FILE"
 
-# merge, to only overwrite colors but preserve font data
-grep "^! ${CHOOSEN_FONT}$" -A3 "${XDG_CONFIG_HOME}/X11/fontprofiles" | xrdb -merge
+# merge so that fonts are overwritten but color data is preserved
+grep "^${CHOOSEN_FONT}:" "${XDG_CONFIG_HOME}/X11/fontprofiles" | xargs -I '{}' echo '*font: {}' | xrdb -merge
 
 # send USR1 signal to all running st instances
 pidof st | xargs kill -s USR1

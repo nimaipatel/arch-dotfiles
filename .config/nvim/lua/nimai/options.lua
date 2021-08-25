@@ -12,7 +12,7 @@ vim.opt.splitright = true
 vim.opt.splitbelow = true
 
 -- recure into directories to search for files with :find
-vim.opt.path:append('**')
+vim.opt.path:append '**'
 
 -- don't wrap lines
 vim.opt.wrap = false
@@ -48,20 +48,14 @@ vim.opt.listchars =
 vim.opt.completeopt = 'menuone,noselect'
 
 -- expand environment variables even if they are in braces
-vim.opt.isfname:append('{,}')
+vim.opt.isfname:append '{,}'
 
 -- statusline
 vim.opt.showmode = false
-vim.opt.statusline = [[%-t %-m %-r]] .. [[%{get(b:,'gitsigns_head','')}]] ..
-	                     [[ %{get(b:,'gitsigns_status','')}]] ..
-	                     [[ %= %y LN %l:%L]]
-
--- seamless working between nvim and tmux
-require('tmux').setup({
-	copy_sync = { enable = false },
-	navigation = { enable_default_keybindings = true },
-	resize = { enable_default_keybindings = true }
-})
+vim.opt.statusline = [[%-t %-m %-r]]
+	.. [[%{get(b:,'gitsigns_head','')}]]
+	.. [[ %{get(b:,'gitsigns_status','')}]]
+	.. [[ %= %y LN %l:%L]]
 
 -- color highlights for cringe style sheets
 vim.opt.termguicolors = true
@@ -72,7 +66,7 @@ require('gitsigns').setup()
 
 require('nvim-treesitter.configs').setup {
 	ensure_installed = 'maintained',
-	highlight = { enable = true }
+	highlight = { enable = true },
 }
 
 -- set base16 colors

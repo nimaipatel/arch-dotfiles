@@ -35,7 +35,6 @@ alias glo="git log --pretty='oneline'"
 alias glol="git log --graph --oneline --decorate"
 
 # for managing dotfiles
-alias cfg='git --git-dir="${XDG_CONFIG_HOME}/cfg/.git/" --work-tree="$HOME"'
 alias cst="cfg status"
 alias ca="cfg add"
 alias cdf="cfg diff"

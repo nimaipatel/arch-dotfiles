@@ -25,16 +25,19 @@ nnoremap('<c-t>', ':Rg<cr>')
 -- switch buffers
 nnoremap('<leader><leader>', ':Buffers<cr>')
 
+inoremap('<c-h>', '<esc><left>a')
+inoremap('<c-l>', '<esc><right>a')
+
 -- place cursor in pairs automatically
 -- LuaFormatter off
-for _, pair in ipairs({
-	{ '\'', '\'' },
-	{ '"' , '"'  },
-	{ '`' , '`'  },
-	{ '(' , ')'  },
-	{ '{' , '}'  },
-	{ '[' , ']'  }
-}) do
+for _, pair in ipairs {
+	{ "'", "'" },
+	{ '"', '"' },
+	{ '`', '`' },
+	{ '(', ')' },
+	{ '{', '}' },
+	{ '[', ']' },
+} do
 	local f_char = pair[1]
 	local s_char = pair[2]
 	inoremap(f_char .. f_char, f_char .. s_char .. '<left>')

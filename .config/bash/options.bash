@@ -21,5 +21,4 @@ export HISTSIZE=10000000
 export SAVEHIST=10000000
 
 # fzf scripts
-source /usr/share/fzf/completion.bash
 source /usr/share/fzf/key-bindings.bash

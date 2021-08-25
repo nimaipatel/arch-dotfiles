@@ -10,11 +10,15 @@
 export EDITOR="nvim"
 export VISUAL="nvim"
 export TERMINAL="st"
-export BROWSER="brave"
+export BROWSER="vieb"
+export NORMIE_BROWSER="brave"
 export READER="zathura"
 export TERMINAL_FILE_BROWSER="ranger"
 export GUI_FILE_BROWSER="pcmanfm"
 export MANPAGER='nvim +Man!'
+
+# fix window-frames in vieb browser
+export VIEB_WINDOW_FRAME=true
 
 # colorful man pages
 function man() {

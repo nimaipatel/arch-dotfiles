@@ -1,0 +1,11 @@
+" Vieb configuration to simulate an incognito mode where all browsing data is
+" deleted after closing session
+set clearcookiesonquit
+set cleardownloadsoncompleted
+set cleardownloadsonquit
+set clearhistoryonquit
+set clearlocalstorageonquit
+set favicons=nocache
+set norestoretabs
+
+" vim: ft=vim
