@@ -25,7 +25,19 @@ nnoremap('<c-t>', '<cmd>lua require("fzf-lua").live_grep()<cr>')
 -- switch buffers
 nnoremap('<c-b>', '<cmd>lua require("fzf-lua").buffers()<cr>')
 
+-- turn on search highlighting when jumping using n
+nnoremap('*', '*:set hlsearch<cr>')
+
+-- turn on search highlighting when jumping using n
+nnoremap('n', 'n:set hlsearch<cr>')
+
+-- turn on search highlighting when jumping using N
+nnoremap('N', 'N:set hlsearch<cr>')
+
+-- control + h is left arrow in insert mode
 inoremap('<c-h>', '<esc><left>a')
+
+-- control + l is right arrow in insert mode
 inoremap('<c-l>', '<esc><right>a')
 
 -- place cursor in pairs automatically

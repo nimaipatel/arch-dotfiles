@@ -15,10 +15,6 @@ AddEventListener('LuaHighlight', { 'TextYankPost *' }, function()
 	require('vim.highlight').on_yank()
 end)
 
-AddEventListener('DisableHighLight', { 'InsertEnter *' }, function()
+AddEventListener('DisableHighLight', { 'InsertEnter,CursorMoved *' }, function()
 	vim.opt.hlsearch = false
-end)
-
-AddEventListener('EnableHighLight', { 'InsertLeave *' }, function()
-	vim.opt.hlsearch = true
 end)
