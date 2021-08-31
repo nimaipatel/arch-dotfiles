@@ -17,13 +17,13 @@ nnoremap('G', 'Gzz')
 nnoremap('<esc>', '<c-\\><c-n>')
 
 -- find files
-nnoremap('<c-p>', ':FZF<cr>')
+nnoremap('<c-p>', '<cmd>lua require("fzf-lua").files()<cr>')
 
 -- live grep
-nnoremap('<c-t>', ':Rg<cr>')
+nnoremap('<c-t>', '<cmd>lua require("fzf-lua").live_grep()<cr>')
 
 -- switch buffers
-nnoremap('<leader><leader>', ':Buffers<cr>')
+nnoremap('<c-b>', '<cmd>lua require("fzf-lua").buffers()<cr>')
 
 inoremap('<c-h>', '<esc><left>a')
 inoremap('<c-l>', '<esc><right>a')
