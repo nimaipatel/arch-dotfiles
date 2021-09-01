@@ -1,10 +1,46 @@
-for _, mode in ipairs { '', 'n', 'i', 'v', 't', 's' } do
-	_G[mode .. 'map'] = function(input, output)
-		vim.api.nvim_set_keymap(mode, input, output, {})
-	end
+local escape_cmd = function(string)
+	return string
+		:gsub("'", "\\'")
+		:gsub('"', '\\"')
+		:gsub('\\[', '\\[')
+		:gsub('\\]', '\\]')
+		:gsub('<', '<lt>')
+end
 
+local bounded_funcs = 'global_bounded_funcs_namespace'
+_G[bounded_funcs] = {}
+for _, mode in ipairs { '', 'n', 'i', 'v', 't', 's' } do
 	_G[mode .. 'noremap'] = function(input, output)
-		vim.api.nvim_set_keymap(mode, input, output, { noremap = true })
+		if type(output) == 'function' then
+			local func_name = mode .. '_' .. input
+			local func_name_escaped = escape_cmd(func_name)
+			_G[bounded_funcs][func_name] = output
+			local lua_cmd = ':lua '
+				.. bounded_funcs
+				.. "['"
+				.. func_name_escaped
+				.. "']()<cr>"
+			vim.api.nvim_set_keymap(
+				mode,
+				input,
+				lua_cmd,
+				{ noremap = true, silent = true }
+			)
+		elseif type(output) == 'string' then
+			vim.api.nvim_set_keymap(
+				mode,
+				input,
+				output,
+				{ noremap = true, silent = true }
+			)
+		else
+			error(
+				mode
+					.. 'noremap'
+					.. ' expects a string or callback',
+				2
+			)
+		end
 	end
 end
 

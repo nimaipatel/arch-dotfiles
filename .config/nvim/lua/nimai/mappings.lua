@@ -17,13 +17,13 @@ nnoremap('G', 'Gzz')
 nnoremap('<esc>', '<c-\\><c-n>')
 
 -- find files
-nnoremap('<c-p>', '<cmd>lua require("fzf-lua").files()<cr>')
+nnoremap('<c-p>', require('fzf-lua').files)
 
 -- live grep
-nnoremap('<c-t>', '<cmd>lua require("fzf-lua").live_grep()<cr>')
+nnoremap('<c-t>', require('fzf-lua').live_grep)
 
 -- switch buffers
-nnoremap('<c-b>', '<cmd>lua require("fzf-lua").buffers()<cr>')
+nnoremap('<c-b>', require('fzf-lua').buffers)
 
 -- turn on search highlighting when jumping using n
 nnoremap('*', '*:set hlsearch<cr>')
