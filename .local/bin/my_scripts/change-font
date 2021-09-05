@@ -3,11 +3,17 @@
 # store font name here
 CACHE_FILE="${XDG_CACHE_HOME:-$HOME/.cache}/x-font"
 # list of fonts
-ALLFONTS=$(cut -d: -f1 "${XDG_CONFIG_HOME}/X11/fontprofiles")
+ALLFONTS=$(fc-list : family)
+# default font used for fallback
+DEFAULT_FONT=$(fc-match monospace : family)
 
 if [ "$1" = "--restore" ] && [ -z "$2" ] ; then
-	# take font from cache file if `--restore` passed
-	CHOOSEN_FONT=$(cat "$CACHE_FILE" 2>/dev/null)
+	# take font from cache file if `--restore` passed or fallback to default
+	if [ -f "$CACHE_FILE" ] ; then
+		CHOOSEN_FONT=$(cat "$CACHE_FILE")
+	else
+		CHOOSEN_FONT=$DEFAULT_FONT
+	fi
 elif [ -n "$1" ] && [ -z "$2" ] ; then
 	# use first arg as font name
 	CHOOSEN_FONT="$1"
@@ -20,12 +26,14 @@ else
 	1>&2 echo "Invalid useage" && exit 1
 fi
 
-echo "$ALLFONTS" | grep "^${CHOOSEN_FONT}$" -q || CHOOSEN_FONT="DejaVu Sans Mono"
+# use default font if unknown font name is passed
+echo "$ALLFONTS" | grep "^${CHOOSEN_FONT}$" -q || CHOOSEN_FONT=$DEFAULT_FONT
 
+# store choosen font in cache file
 echo "$CHOOSEN_FONT" > "$CACHE_FILE"
 
 # merge so that fonts are overwritten but color data is preserved
-grep "^${CHOOSEN_FONT}:" "${XDG_CONFIG_HOME}/X11/fontprofiles" | xargs -I '{}' echo '*font: {}' | xrdb -merge
+echo "*font: ${CHOOSEN_FONT}:pixelsize=14:antialias=true:autohint=true" | xrdb -merge
 
 # send USR1 signal to all running st instances
 pidof st | xargs kill -s USR1
