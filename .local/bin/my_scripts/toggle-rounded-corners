@@ -1,0 +1,19 @@
+#!/bin/sh
+
+cachefile=/dev/shm/corner-radius-status.txt
+
+killall picom
+
+if [ -f "$cachefile" ] ; then
+	status=$(cat "$cachefile")
+	if [ "$status" = FALSE ] ; then
+		echo TRUE > "$cachefile"
+		picom --corner-radius 10 -b
+	else
+		echo FALSE > "$cachefile"
+		picom --corner-radius 0 -b
+	fi
+else
+	echo TRUE > "$cachefile"
+	picom --corner-radius 10 -b
+fi
