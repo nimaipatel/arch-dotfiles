@@ -52,6 +52,9 @@ lspconfig.cssls.setup { root_dir = vim.loop.cwd, capabilities = capabilities }
 
 lspconfig.hls.setup { root_dir = vim.loop.cwd, capabilities = capabilities }
 
+-- let this plugin set up flutter/dart
+require('flutter-tools').setup()
+
 vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(
 	vim.lsp.diagnostic.on_publish_diagnostics,
 	{ virtual_text = false, signs = true, update_in_insert = false }

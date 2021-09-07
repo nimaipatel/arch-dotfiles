@@ -20,6 +20,9 @@ export MANPAGER='nvim +Man!'
 # fix window-frames in vieb browser
 export VIEB_WINDOW_FRAME=true
 
+# fix white screen of death in java awt programs
+export _JAVA_AWT_WM_NONREPARENTING=1
+
 # colorful man pages
 function man() {
 	env \
@@ -37,11 +40,6 @@ function man() {
 # my scripts
 export MY_SCRIPTS="$HOME/.local/bin/my_scripts"
 export MY_SCRIPT_ASSETS="$HOME/.local/share/my_script_assets"
-
-# PATH variable
-export PATH="${MY_SCRIPTS}:${PATH}"
-export PATH="${HOME}/.local/bin:${PATH}"
-export PATH="${HOME}/.local/share/bin:${PATH}"
 
 # en_IN doesn't work as expected
 export LC_ALL=en_US.UTF-8
@@ -65,6 +63,9 @@ export KODI_DATA="${XDG_DATA_HOME:-$HOME/.local/share}/kodi"
 export PASSWORD_STORE_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/password-store"
 export TMUX_TMPDIR="$XDG_RUNTIME_DIR"
 export ANDROID_SDK_HOME="${XDG_CONFIG_HOME:-$HOME/.config}/android"
+export ANDROID_SDK_ROOT="/opt/android-sdk"
+export ANDROID_HOME="/opt/android-sdk"
+export JAVA_HOME=/usr/lib/jvm/java-8-openjdk/
 export CARGO_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/cargo"
 export GOPATH="${XDG_DATA_HOME:-$HOME/.local/share}/go"
 export ANSIBLE_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/ansible/ansible.cfg"
@@ -83,5 +84,12 @@ export CABAL_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/cabal"
 export PYTHONSTARTUP="${XDG_CONFIG_HOME:-$HOME/.config}/python/pythonrc.py"
 export PYENV_ROOT="${XDG_DATA_HOME:-$HOME/.local/share}/pyenv"
 export RLWRAP_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/rlwrap"
+
+# PATH variable
+export PATH="${MY_SCRIPTS}:${PATH}"
+export PATH="${HOME}/.local/bin:${PATH}"
+export PATH="${HOME}/.local/share/bin:${PATH}"
+export PATH="$ANDROID_HOME/emulator:$PATH"
+export PATH="$JAVA_HOME/bin:$PATH"
 
 [ "$(tty)" = "/dev/tty1" ] && ! (pidof dwm) && startx
