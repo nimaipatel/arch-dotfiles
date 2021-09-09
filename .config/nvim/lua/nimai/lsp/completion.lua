@@ -1,3 +1,7 @@
+local lspconfig = require 'lspconfig'
+local cmp = require 'cmp'
+local luasnip = require 'luasnip'
+
 -- define capabilities for language servers
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
@@ -15,7 +19,6 @@ capabilities.textDocument.completion.completionItem.resolveSupport = {
 }
 
 -- individually configure all language servers
-local lspconfig = require 'lspconfig'
 lspconfig.phpactor.setup { root_dir = vim.loop.cwd }
 
 lspconfig.texlab.setup { root_dir = vim.loop.cwd }
@@ -60,9 +63,16 @@ vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(
 	{ virtual_text = false, signs = true, update_in_insert = false }
 )
 
--- setup nvim-cmp for completion and related bindings
-local cmp = require 'cmp'
+-- use luasnip + friendly snippets for snippet
+require('luasnip.loaders.from_vscode').lazy_load()
+
+-- setup nvim-cmp for completion
 cmp.setup {
+	snippet = {
+		expand = function(args)
+			luasnip.lsp_expand(args.body)
+		end,
+	},
 	mapping = {
 		['<C-p>'] = cmp.mapping.select_prev_item(),
 		['<C-n>'] = cmp.mapping.select_next_item(),
@@ -85,6 +95,16 @@ cmp.setup {
 					),
 					'n'
 				)
+			elseif luasnip.expand_or_jumpable() then
+				vim.fn.feedkeys(
+					vim.api.nvim_replace_termcodes(
+						'<Plug>luasnip-expand-or-jump',
+						true,
+						true,
+						true
+					),
+					''
+				)
 			else
 				fallback()
 			end
@@ -100,14 +120,26 @@ cmp.setup {
 					),
 					'n'
 				)
+			elseif luasnip.jumpable(-1) then
+				vim.fn.feedkeys(
+					vim.api.nvim_replace_termcodes(
+						'<Plug>luasnip-jump-prev',
+						true,
+						true,
+						true
+					),
+					''
+				)
 			else
 				fallback()
 			end
 		end,
 	},
+
 	sources = {
 		{ name = 'nvim_lua' },
 		{ name = 'nvim_lsp' },
+		{ name = 'luasnip' },
 		{ name = 'buffer' },
 		{ name = 'path' },
 		{ name = 'calc' },
