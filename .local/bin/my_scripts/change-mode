@@ -36,6 +36,7 @@ GTK2_T="$XDG_DATA_HOME/flavours/base16/templates/gtk-flatcolor/templates/gtk-2.m
 GTK3_T="$XDG_DATA_HOME/flavours/base16/templates/gtk-flatcolor/templates/gtk-3.mustache"
 FZF_T="$XDG_DATA_HOME/my_script_assets/fzf.mustache"
 VIEB_T="$XDG_DATA_HOME/my_script_assets/vieb.mustache"
+EMACS_T="$XDG_DATA_HOME/my_script_assets/emacs.mustache"
 
 # generate themes and merge and write at appropriate locations
 flavours build "$THEME_LOC" "$XRESOURCES_T" | xrdb -merge
@@ -44,6 +45,7 @@ flavours build "$THEME_LOC" "$GTK2_T" > "$XDG_DATA_HOME/themes/FlatColor/colors2
 flavours build "$THEME_LOC" "$GTK3_T" > "$XDG_DATA_HOME/themes/FlatColor/colors3"
 flavours build "$THEME_LOC" "$FZF_T" > "$HOME/.local/bin/fzf" && chmod +x "$HOME/.local/bin/fzf" 
 flavours build "$THEME_LOC" "$VIEB_T" > "$XDG_CONFIG_HOME/Vieb/colors/base16.css"
+flavours build "$THEME_LOC" "$EMACS_T" > "$XDG_CONFIG_HOME/emacs/themes/base16-generated-theme.el"
 
 # send USR1 signal to all running st instances
 pidof st | xargs kill -s USR1
@@ -59,6 +61,9 @@ nvimcmd ":lua RefreshColors()"
 
 # refresh gtk theme
 killall xsettingsd ; xsettingsd &
+
+# refresh emacs
+pidof emacs | xargs kill -s USR1
 
 # send notification only if command started with fzfmenu and NOT command-line args
 [ -z "$*" ] && notify-send "Theme set to ${CHOOSEN_THEME}"

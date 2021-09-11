@@ -1,0 +1,1064 @@
+#+TITLE: Nimai's GNU Emacs configuration
+#+AUTHOR: Nimai Patel
+#+PROPERTY: header-args:emacs-lisp :tangle ./init.el :mkdirp yes
+
+* Table of Contents
+:PROPERTIES:
+:TOC:      :include all
+:END:
+
+:CONTENTS:
+- [[#table-of-contents][Table of Contents]]
+- [[#startup-tuning][Startup Tuning]]
+  - [[#native-comp][Native Comp]]
+  - [[#garbage-collection][Garbage Collection]]
+  - [[#startup-time][Startup Time]]
+- [[#package-management][Package Management]]
+  - [[#setup-package-archives][Setup Package Archives]]
+  - [[#use-package][use-package]]
+- [[#ui-configuration][UI Configuration]]
+  - [[#base16-colorschemes][Base16 Colorschemes]]
+  - [[#fonts][Fonts]]
+  - [[#hot-reload][Hot Reload]]
+  - [[#which-key][Which Key]]
+  - [[#icons][Icons]]
+  - [[#mode-line][Mode Line]]
+  - [[#rainbow-delimeters][Rainbow Delimeters]]
+  - [[#colored-man-pages][Colored Man Pages]]
+  - [[#frames-only][Frames Only]]
+  - [[#other-ui-settings][Other UI Settings]]
+    - [[#cursor][Cursor]]
+    - [[#menu-bars][Menu Bars]]
+    - [[#visible-bell][Visible Bell]]
+    - [[#launch-buffer][Launch Buffer]]
+    - [[#column-and-line-numbers][Column and Line Numbers]]
+- [[#keybindings][Keybindings]]
+  - [[#general][General]]
+  - [[#evil-mode][Evil Mode]]
+    - [[#evil-collection][Evil Collection]]
+    - [[#argument-text-ojects][Argument Text Ojects]]
+    - [[#surround][Surround]]
+    - [[#highlight-on-yank-delete-et-cetera][Highlight on yank, delete, et cetera]]
+    - [[#commenting][Commenting]]
+  - [[#resize-windows][Resize Windows]]
+  - [[#incremental-selection][Incremental Selection]]
+- [[#wild-menu][Wild Menu]]
+  - [[#ivy][Ivy]]
+  - [[#counsel][Counsel]]
+- [[#development][Development]]
+  - [[#projectile][Projectile]]
+  - [[#magit][Magit]]
+  - [[#snippets][Snippets]]
+  - [[#parentheses][Parentheses]]
+  - [[#lsp][LSP]]
+    - [[#lsp-ui][lsp-ui]]
+    - [[#lsp-treemacs][lsp-treemacs]]
+    - [[#lsp-ivy][lsp-ivy]]
+  - [[#company][Company]]
+  - [[#code-formatters][Code Formatters]]
+  - [[#languages][Languages]]
+    - [[#typescript-and-javascript][TypeScript and JavaScript]]
+    - [[#haskell][Haskell]]
+    - [[#dart-and-flutter][Dart and Flutter]]
+    - [[#cc][C/C++]]
+    - [[#python][Python]]
+    - [[#shell][Shell]]
+    - [[#html-and-css][HTML and CSS]]
+- [[#org-mode][Org Mode]]
+  - [[#bullets][Bullets]]
+  - [[#center-org-mode-buffers][Center org-mode buffers]]
+  - [[#evaluate-code][Evaluate Code]]
+  - [[#literate-configuration][Literate Configuration]]
+  - [[#structured-templates][Structured Templates]]
+  - [[#automatically-make-toc][Automatically Make TOC]]
+- [[#rss-feeds][RSS Feeds]]
+- [[#shell-modes][Shell Modes]]
+- [[#file-management][File Management]]
+- [[#miscellaneous][Miscellaneous]]
+  - [[#auto-rever-buffers][Auto Rever Buffers]]
+  - [[#no-littering][No Littering]]
+  - [[#helpful][Helpful]]
+:END:
+
+* Startup Tuning
+** Native Comp
+
+This configuration uses the native compilation + pure GTK build of Emacs. Specifically, I'm using [[https://aur.archlinux.org/packages/emacs-pgtk-native-comp-git/][this PKGBUILD from the AUR]]. The compiler warnings for all the packages are very annoying so I'm shutting them down.
+
+#+begin_src emacs-lisp
+(setq native-comp-async-report-warnings-errors nil)
+#+end_src
+
+** Garbage Collection
+
+We reduce the frequency of garbage collection at launch to increase the startup time.
+
+#+begin_src emacs-lisp
+(setq gc-cons-threshold (* 50 1000 1000))
+#+end_src
+
+** Startup Time
+   
+We print the startup time and number of garbage collections to the =*Messages*= buffer.
+
+#+begin_src emacs-lisp
+(defun np/display-startup-time ()
+  (message "emacs loaded in %s with %d garbage collections."
+    (format "%.2f seconds" (float-time (time-subtract after-init-time before-init-time)))
+      gcs-done))
+
+(add-hook 'emacs-startup-hook #'np/display-startup-time)
+#+end_src
+
+* Package Management
+** Setup Package Archives
+   
+Setup Emacs's builtin package manager, package.el, to work with melpa and org-mode archives. Standard GNU elpa repository has very few packages.
+
+#+begin_src emacs-lisp
+(require 'package)
+(setq package-archives '(("melpa" . "https://melpa.org/packages/")
+                         ("org"   . "https://orgmode.org/elpa/")
+                         ("elpa"  . "https://elpa.gnu.org/packages/")))
+#+end_src
+
+Download packages using =package-refresh-contents= only if they are not available in local archives. We only need this for installing =use-package=.
+
+#+begin_src emacs-lisp
+(package-initialize)
+(unless package-archive-contents
+  (package-refresh-contents))
+#+end_src
+
+** use-package
+
+Set up the use-package macro which allows us to lazy-load elisp packages based on certain predicates.
+
+#+begin_src emacs-lisp
+(unless (package-installed-p 'use-package)
+  (package-install 'use-package))
+(require 'use-package)
+#+end_src
+
+We also make sure it uses =:ensure t= for all packages -- unless specified otherwise -- to make sure we are downloading packages that we dont't have.
+
+#+begin_src emacs-lisp
+(setq use-package-always-ensure t)
+#+end_src
+
+* UI Configuration
+** Base16 Colorschemes
+
+The Base16 color scheme is generated using a mustache template and a color pallete. See the =change-mode= script in my dotfiles for more details.
+
+We first write a function which gets the value of an Xresources variable by parsing the output of =xrdb -q=. The function only works if all your variables are of the form =*varname: value=.  The built-in =x-get-resource= function tokenizes the function call which makes it useless for our purposes.
+
+#+begin_src emacs-lisp
+(defun np/x-get-resource-live (name)
+  "Read the name of a xresources variable from output of `xrdb -q`.
+  This function doesn't cache old values like x-get-resource
+  and instead searches the database again."
+  (shell-command-to-string
+(format "xrdb -q | grep '\*%s' | sed 's/^\*font://g ; s/^[ \t]*//;s/[ \t]*$//'" name)))
+#+end_src
+
+We also add the path where we will be saving the generated theme to ='custom-theme-load-path= so that Emacs can find it.
+
+#+begin_src emacs-lisp
+(add-to-list 'custom-theme-load-path "~/.config/emacs/themes")
+#+end_src
+
+Then we write a function that refreshes our color scheme configuration so that we can use it to hot-reload these settings.
+
+#+begin_src emacs-lisp
+(defun np/set-colors ()
+  "Load colors from generated theme"
+  (interactive)
+  (load-theme 'base16-generated t))
+(np/set-colors)
+#+end_src
+
+** Fonts
+
+We write a function to get just the font name from the output =xrdb -q=, parsing its output as before.
+
+#+begin_src emacs-lisp
+(defun np/get-x-font ()
+  (shell-command-to-string
+    "printf %s \"$(xrdb -q | grep '\*font:' | cut -d: -f2 | sed 's/^\t//g')\""))
+#+end_src
+
+We then write a function that sets all face attributes to the value that we get from =np/get-x-font= and then immediately call the function. This function will also be called when we want to hot-reload font settings from our script.
+
+#+begin_src emacs-lisp
+(defun np/set-font ()
+  (setq np/x-font (np/get-x-font))
+  (set-face-attribute 'default nil
+                      :height 110
+                      :font np/x-font)
+
+  (set-face-attribute 'fixed-pitch nil
+                      :height 110
+                      :font np/x-font)
+
+  (set-face-attribute 'variable-pitch nil
+                      :height 110
+                      :font np/x-font))
+(np/set-font)
+#+end_src
+
+The fonts aren't set properly when using daemon mode, so we fix it by calling our =np/set-font= function after the frame is generated in =emacsclient=.
+
+#+begin_src emacs-lisp
+(if (daemonp)
+  (add-hook 'after-make-frame-functions
+    (lambda (frame)
+      (with-selected-frame frame
+        (np/set-font)))))
+#+end_src
+
+** Hot Reload
+
+We call =np/set-colors= and =np/set-font= when =USR1= is passed to Emacs so we can reload font and color settings from our script.
+
+#+begin_src emacs-lisp
+(defun np/set-colors-and-font ()
+  (interactive)
+  (np/set-colors)
+  (np/set-font))
+
+(define-key special-event-map [sigusr1] 'np/set-colors-and-font)
+#+end_src
+
+** Which Key
+   
+whick-key provides us with a nice UI panel when we are performing key chords to show possible bindings that can complete the chord along with descriptions for them. This provides us with amazing discoverability.
+
+#+begin_src emacs-lisp
+(use-package which-key
+  :init (which-key-mode)
+  :diminish which-key-mode
+  :config
+  (which-key-mode)
+  (setq which-key-idle-delay 0.3))
+#+end_src
+
+** Icons
+
+We install the all-the-icons package for icons in the modeline, selection menus, et cetera for things like filetypes, modes and git branches. Remember to run =all-the-icons-install-fonts= when pulling this config and using it for the first time.
+   
+#+begin_src emacs-lisp
+(use-package all-the-icons)
+#+end_src
+
+We configure ivy-rich and dired to use the icons.
+
+#+begin_src emacs-lisp
+(use-package all-the-icons-ivy-rich
+  :init(all-the-icons-ivy-rich-mode))
+
+(use-package all-the-icons-dired
+  :hook (dired-mode . all-the-icons-dired-mode))
+#+end_src
+   
+** Mode Line
+
+Use the default default mode line from Doom Emacs and only reduce its height a little.
+
+#+begin_src emacs-lisp
+(use-package doom-modeline
+  :init (doom-modeline-mode)
+  :custom ((doom-modeline-height 15)))
+#+end_src
+
+** Rainbow Delimeters
+   
+This minor mode add colors to parentheses in programming modes.
+
+#+begin_src emacs-lisp
+(use-package rainbow-delimiters
+  :hook (prog-mode . rainbow-delimiters-mode))
+#+end_src
+
+** Colored Man Pages
+
+Colorize man pages by setting face attributes. This is theme agnostic to work with above mentioned Base16.
+
+#+begin_src emacs-lisp
+(use-package man
+  :config
+  (set-face-attribute 'Man-overstrike nil :inherit font-lock-type-face :bold t)
+  (set-face-attribute 'Man-underline nil :inherit font-lock-keyword-face :underline t))
+#+end_src
+
+** Frames Only
+
+Only use frames When spawning new Emacs instances. This is used in conjunction with daemon mode and emacsclient. Using Emacs like this makes it play very well with tiling window managers like dwm and xmonad.
+
+#+begin_src emacs-lisp
+(use-package frames-only-mode
+  :init (frames-only-mode))
+#+end_src
+
+** Other UI Settings
+
+*** Cursor
+
+Blink the cursor forever.
+
+#+begin_src emacs-lisp
+(setq blink-cursor-blinks 0)
+#+end_src
+
+*** Menu Bars
+
+First we disable all graphical bar modes from the UI.
+
+#+begin_src emacs-lisp
+(scroll-bar-mode -1)
+(tool-bar-mode -1)
+(tooltip-mode -1)
+(menu-bar-mode -1)
+#+end_src
+
+*** Visible Bell
+
+Now remove that retarded flash that gets triggered everytime the cursor hits the top or bottom of the document.
+
+#+begin_src emacs-lisp
+(setq visible-bell nil)
+#+end_src
+
+*** Launch Buffer
+
+Remove all the noise from the scratch buffer that loads when Emacs starts up.
+
+#+begin_src emacs-lisp
+(setq inhibit-startup-message t
+      inhibit-startup-screen  t
+      initial-scratch-message nil)
+#+end_src 
+
+*** Column and Line Numbers
+
+Add line numbers to the column for programming related modes.
+
+#+begin_src emacs-lisp
+(dolist (mode '(text-mode-hook
+                prog-mode-hook
+                conf-mode-hook))
+  (add-hook mode (lambda () (display-line-numbers-mode 1))))
+#+end_src
+
+Add column number along with line number to the mode line
+
+#+begin_src emacs-lisp
+(column-number-mode)
+#+end_src
+
+Override some modes which derive from the above
+
+#+begin_src emacs-lisp
+(dolist (mode '(org-mode-hook
+                shell-mode-hook))
+  (add-hook mode (lambda () (display-line-numbers-mode 0))))
+#+end_src
+
+* Keybindings
+** General
+   
+We use general.el for managing our bindings and set =SPC= and =C-SPC= to prefix i.e. leader keys.
+
+#+begin_src emacs-lisp
+(use-package general
+  :after evil
+  :config (general-create-definer np/leader-keys
+  :keymaps '(normal insert visual emacs)
+  :prefix "SPC"
+  :global-prefix "C-SPC")
+#+end_src
+
+We define an example binding to open our literate Emacs config file using =SPC e=
+
+#+begin_src emacs-lisp
+(np/leader-keys
+  "e" '(lambda () (interactive)
+    (find-file (expand-file-name "~/.config/emacs/emacs.org")))))
+#+end_src
+
+** Evil Mode
+
+We use evil mode for a vi-like editing experience in text buffers.
+
+#+begin_src emacs-lisp
+(use-package evil
+  :init
+  (setq evil-want-integration t
+        evil-want-keybinding  nil
+        evil-want-C-u-scroll  t)
+  :config
+  (evil-mode 1)
+  (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)
+  (define-key evil-insert-state-map (kbd "C-h") 'evil-delete-backward-char-and-join)
+  (evil-set-initial-state 'messages-buffer-mode 'normal)
+  (evil-set-initial-state 'dashboard-mode 'normal))
+#+end_src
+
+*** Evil Collection
+
+We also use the evil-collection package to to integrate vi-like bindings in other modes not particullarly related to text editing.
+
+#+begin_src emacs-lisp
+(use-package evil-collection
+  :after evil
+  :config
+  (evil-collection-init))
+#+end_src
+
+*** Argument Text Ojects
+
+This adds evil text objects for parameters in C-like languages. Provides nice experience when editing function calls and definitions.
+
+#+begin_src emacs-lisp
+(use-package evil-args
+  :config
+  (define-key evil-inner-text-objects-map "a" 'evil-inner-arg)
+  (define-key evil-outer-text-objects-map "a" 'evil-outer-arg)
+  (define-key evil-normal-state-map "]a" 'evil-forward-arg)
+  (define-key evil-normal-state-map "[a" 'evil-backward-arg))
+#+end_src
+
+*** Surround
+
+We also add the evil-surround package to get vim-surround functionality.
+
+#+begin_src emacs-lisp
+(use-package evil-surround
+  :after evil
+  :config
+  (global-evil-surround-mode 1))
+#+end_src
+
+*** Highlight on yank, delete, et cetera
+
+The evil-googgles package adds visual hints to evil-mode edits
+
+#+begin_src emacs-lisp
+(use-package evil-goggles
+  :config
+  (evil-goggles-mode))
+#+end_src
+
+*** Commenting
+
+Emacs's built-in commenting functionallity isn't always up to the mark. This package adds bindings for more syntax-aware commenting and also adds text text objects for comments on which we can perform actions.
+
+#+begin_src emacs-lisp
+(use-package evil-nerd-commenter
+  :init
+  (setq evilnc-comment-text-object "c")
+  (evilnc-default-hotkeys)
+  :bind ("M-:" . evilnc-comment-or-uncomment-lines))
+#+end_src
+
+** Resize Windows
+
+We create stateful mappings using hydra which basically allows us to add our own custom modes similar to evil modes like =visual=, =insert=, et cetera.
+
+#+begin_src emacs-lisp
+(use-package hydra
+  :defer t)
+#+end_src
+
+As an example we define a hydra which allows us to resize windows panes using pseudo-vim bindings. We also integrate it with which-key.
+
+#+begin_src emacs-lisp
+(defhydra np/window-resize-hydra ()
+  "Hydra to change window size using vi-like bindings"
+  ("h" evil-window-decrease-width)
+  ("j" evil-window-increase-height)
+  ("k" evil-window-decrease-height)
+  ("l" evil-window-increase-width)
+  ("q" nil))
+
+(np/leader-keys
+  "r" '(np/window-resize-hydra/body :which-key "Resize Windows"))
+#+end_src
+
+** Incremental Selection
+
+This allows us to incrementally select parent text objects in the codes AST using =C-==
+
+#+begin_src emacs-lisp
+(use-package expand-region
+  :bind ("C-=" . er/expand-region))
+#+end_src
+
+* Wild Menu
+** Ivy
+
+Ivy enhances the default selection menu's capabilities. Additionally we add some vi-like keybindings for consistent experience with evil-mode.
+
+#+begin_src emacs-lisp
+(use-package ivy
+  :diminish
+  :bind (("C-s" . swiper)
+  :map ivy-minibuffer-map
+  ("TAB" . ivy-alt-done)
+  ("C-l" . ivy-alt-done)
+  ("C-j" . ivy-next-line)
+  ("C-k" . ivy-previous-line)
+  :map ivy-switch-buffer-map
+  ("C-k" . ivy-previous-line)
+  ("C-l" . ivy-done)
+  ("C-d" . ivy-switch-buffer-kill)
+  :map ivy-reverse-i-search-map
+  ("C-k" . ivy-previous-line)
+  ("C-d" . ivy-reverse-i-search-kill))
+  :config
+  (ivy-mode))
+#+end_src
+
+The ivy-rich package adds some helpful information the selection menu itself, for example the description of functions and variables.
+
+#+begin_src emacs-lisp
+(use-package ivy-rich
+  :init (ivy-rich-mode))
+#+end_src
+
+The ivy-prescient package helps put frequently used completion candidates at the top of the selection menu. We also make it persist across sessions We also make it persist across sessions.
+
+#+begin_src emacs-lisp
+(use-package ivy-prescient
+  :after counsel
+  :custom
+  (ivy-prescient-enable-filtering nil)
+  :config
+  (prescient-persist-mode)
+  (ivy-prescient-mode))
+#+end_src
+
+** Counsel
+
+Counsel provides some useful commands through ivy like =counsel-M-x= and =counsel-find-file= which are written to replace the corresponding default functions built into Emacs.
+
+#+begin_src emacs-lisp
+(use-package counsel
+  :bind
+  (:map minibuffer-local-map ("C-r" . 'counsel-minibuffer-history))
+  :custom
+  (counsel-linux-app-format-function #'counsel-linux-app-format-function-name-only)
+  :config
+  (counsel-mode 1))
+#+end_src
+
+* Development
+** Projectile
+
+Projectile is a project management package which works well with git based code bases.
+
+#+begin_src emacs-lisp
+(use-package projectile
+  :diminish projectile-mode
+  :config (projectile-mode)
+  :custom ((projectile-completion-system 'ivy))
+  :bind-keymap
+  ("C-c p" . projectile-command-map)
+  :init
+  (when (file-directory-p "~/dev")
+  (setq projectile-project-search-path '("~/dev")))
+  (setq projectile-switch-project-action #'projectile-dired))
+#+end_src 
+
+Interface with projectile using counsel functions. This has helpgul interfaces for live-grepping using ripgrep and finding files.
+
+#+begin_src emacs-lisp
+(use-package counsel-projectile
+  :after projectile
+  :config (counsel-projectile-mode))
+#+end_src
+
+** Magit
+
+Git user interface built on Emacs.
+
+#+begin_src emacs-lisp
+(use-package magit
+  :commands magit-status)
+#+end_src
+
+** Snippets
+
+We use the yasnippets package which allows us to create programming snippets like in most editors. 
+
+#+begin_src emacs-lisp
+(use-package yasnippet
+  :init
+  (setq yas-verbosity 2)
+  :hook
+  (prog-mode . yas-minor-mode)
+  :config
+  (yas-reload-all))
+#+end_src
+
+Along with that we also use yasnippets-snippets which provides an array of commonly used snippets for popular programming languages and frameworks.
+
+#+begin_src emacs-lisp
+(use-package yasnippet-snippets
+  :after yasnippet)
+#+end_src
+
+** Parentheses
+
+Auto insert and delete parentheses in pairs.
+
+#+begin_src emacs-lisp
+(use-package smartparens
+  :hook
+  (org-mode . smartparens-mode)
+  (prog-mode . smartparens-mode))
+#+end_src
+
+** LSP
+
+Packages for communicating with language servers for various programming languages. The basic lsp-mode package provides sources for completion to other packages like company-mode.
+
+LSP functions are prefixed with =C-l=. We also set up LSP for simple languages like HTML, CSS and the shell.
+
+#+begin_src emacs-lisp
+(defun np/lsp-mode-setup ()
+  (setq lsp-headerline-breadcrumb-segments '(path-up-to-project file symbols))
+  (lsp-headerline-breadcrumb-mode))
+
+(use-package lsp-mode
+  :init (setq lsp-completion-provider :none)
+  :commands (lsp lsp-deferred)
+  :hook (lsp-mode . np/lsp-mode-setup)
+  :init
+  (setq lsp-keymap-prefix "C-l")
+  :config
+  (lsp-enable-which-key-integration t))
+#+end_src
+
+*** lsp-ui
+
+This package adds helpful UI to lsp-mode like floating windows, virtual text, better menus for code-actions, et cetera.
+
+#+begin_src emacs-lisp
+(use-package lsp-ui
+  :hook (lsp-mode . lsp-ui-mode)
+  :custom
+  (lsp-ui-doc-position 'bottom))
+#+end_src
+
+*** lsp-treemacs
+
+Produces almost an AST for the code for in the buffer for easy navigation. Really cool stuff.
+
+#+begin_src emacs-lisp
+(use-package lsp-treemacs
+    :after lsp)
+#+end_src
+
+*** lsp-ivy
+
+Search for workspace symbols using ivy selection menus.
+
+#+begin_src emacs-lisp
+(use-package lsp-ivy
+    :after lsp)
+#+end_src
+
+** Company
+
+company-mode provides completion menus with entries from various sources for different modes.  We set it up to provide completions from the lsp, file paths, et cetera and also integrate it with yasnippets.
+
+#+begin_src emacs-lisp
+(use-package company
+  :init
+  (setq company-backends
+   '((company-capf :with company-yasnippet)
+     (company-files :with company-yasnippet)))
+  :after lsp-mode
+  :hook (lsp-mode . company-mode)
+  :bind (:map company-active-map
+    ("<tab>" . company-complete-selection))
+   (:map lsp-mode-map
+    ("<tab>" . company-indent-or-complete-common))
+  :custom
+  (company-minimum-prefix-length 1)
+  (company-idle-delay 0.0))
+#+end_src
+
+Additonally company-box adds helpful icons to the completion items.
+
+#+begin_src emacs-lisp
+(use-package company-box
+  :hook (company-mode . company-box-mode))
+#+end_src
+
+** Code Formatters
+
+Pre-configured formatting for a variety of programming languages.
+
+#+begin_src emacs-lisp
+(use-package format-all
+  :hook
+  (prog-mode . format-all-mode))
+#+end_src
+
+** Languages
+*** TypeScript and JavaScript
+
+Emacs doesn't have a TypeScript mode so we install the package and also start the langauge server when we enter the mode.
+
+#+begin_src emacs-lisp
+(use-package typescript-mode
+  :mode ("\\.js\\'" "\\.jsx\\'" "\\.ts\\'" "\\.tsx\\'")
+  :hook (typescript-mode . lsp-deferred))
+#+end_src
+
+*** Haskell
+
+Haskell mode isn't built into Emacs either.
+
+#+begin_src emacs-lisp
+(use-package haskell-mode
+  :mode ("\\.hs\\'")
+  :hook (haskell-mode . lsp-deferred))
+#+end_src
+
+Setup lsp-haskell as well.
+
+#+begin_src emacs-lisp
+(use-package lsp-haskell
+  :hook (haskell-mode . lsp-deferred))
+#+end_src
+
+*** Dart and Flutter
+
+Same drill.
+
+#+begin_src emacs-lisp
+(use-package dart-mode
+  :hook (dart-mode . flutter-test-mode))
+#+end_src
+
+#+begin_src emacs-lisp
+(use-package lsp-dart
+  :hook (dart-mode . lsp-deferred))
+#+end_src
+
+We also add additional packages for flutter development.
+
+#+begin_src emacs-lisp
+(use-package flutter
+  :after dart-mode
+  :bind (:map dart-mode-map
+              ("C-M-x" . #'flutter-run-or-hot-reload)))
+
+(use-package flutter-l10n-flycheck
+  :after flutter
+  :config
+  (flutter-l10n-flycheck-setup))
+#+end_src
+
+*** C/C++
+
+Setup ccls.
+
+#+begin_src emacs-lisp
+(use-package ccls
+  :hook
+  (c-mode . lsp-deferred)
+  (c++-mode . lsp-deferred)
+  (objc-mode . lsp-deferred))
+#+end_src
+
+*** Python
+
+Install python mode.
+
+#+begin_src emacs-lisp
+(use-package python-mode
+  :mode ("\\.py\\'")
+  :hook (python-mode . lsp-deferred))
+#+end_src
+
+Additionally, the pipenv package helps the LSP figure out which python binary to use inside projects that use pipenv to mangage the virtual environment.
+
+#+begin_src emacs-lisp
+(use-package pipenv
+  :hook (python-mode . pipenv-mode)
+  :init
+  (setq
+   pipenv-projectile-after-switch-function
+   #'pipenv-projectile-after-switch-extended))
+#+end_src
+   
+*** Shell
+
+sh-mode comes with Emacs, we just enable flycheck and lsp-mode for it.
+
+#+begin_src emacs-lisp
+(use-package sh-mode
+  :ensure nil
+  :hook
+  (sh-mode . lsp-deferred)
+  (sh-mode . flycheck-mode))
+#+end_src
+
+*** HTML and CSS
+
+These modes come built into Emacs too. We just turn on lsp-mode when they start.
+
+#+begin_src emacs-lisp
+(use-package html-mode
+  :ensure nil
+  :hook
+  (html-mode . lsp-deferred))
+
+(use-package css-mode
+  :ensure nil
+  :hook
+  (css-mode . lsp-deferred))
+#+end_src
+
+* Org Mode
+  
+Emacs's flagship pacakge. We change some default icons like collapse indicators and list bullets. Additionally, we also set different font sizes for different heading levels.
+
+Since, we are wrapping text in a 100 character wide column in org-mode, we make evil bindings behave visual-line wise for convenient editing.
+
+#+begin_src emacs-lisp
+(defun np/org-mode-setup ()
+  (evil-local-set-key 'motion "j" 'evil-next-visual-line)
+  (evil-local-set-key 'motion "k" 'evil-previous-visual-line)
+  (evil-local-set-key 'motion "$" 'evil-end-of-visual-line)
+  (evil-local-set-key 'motion "0" 'evil-beginning-of-visual-line)
+  (evil-local-set-key 'motion "^" 'evil-first-non-blank-of-visual-line)
+  (org-indent-mode)
+  (visual-line-mode))
+
+(use-package org
+  :init
+  (setq org-src-strip-leading-and-trailing-blank-lines t
+        org-src-preserve-indentation t)
+  :pin org
+  :commands (org-capture org-agenda)
+  :hook (org-mode . np/org-mode-setup)
+  :config
+  (setq org-ellipsis " ▾")
+  (dolist (face '((org-level-1 . 1.2)
+                  (org-level-2 . 1.1)
+                  (org-level-3 . 1.05)
+                  (org-level-4 . 1.0)
+                  (org-level-5 . 1.1)
+                  (org-level-6 . 1.1)
+                  (org-level-7 . 1.1)
+                  (org-level-8 . 1.1)))))
+#+end_src
+
+** Bullets
+
+Replace asterisks with cute little bullet icons for org-mode headings.
+
+#+begin_src emacs-lisp
+(use-package org-superstar
+  :after org
+  :hook (org-mode . org-superstar-mode)
+  :custom
+  (org-superstar-remove-leading-stars t))
+#+end_src
+
+** Center org-mode buffers
+
+We center org-mode buffers and limit their width to 100 characters for a better document editing experience.
+
+#+begin_src emacs-lisp
+(defun np/org-mode-visual-fill ()
+  (setq visual-fill-column-width 100
+   visual-fill-column-center-text t)
+  (visual-fill-column-mode 1))
+
+(use-package visual-fill-column
+  :hook (org-mode . np/org-mode-visual-fill))
+#+end_src
+
+** Evaluate Code
+
+Run source code blocks for some scripting langauges and print their output within org-mode.
+ 
+#+begin_src emacs-lisp
+(with-eval-after-load 'org
+  (org-babel-do-load-languages
+    'org-babel-load-languages
+    '((emacs-lisp . t)
+      (python     . t)))
+
+  (push '("conf-unix" . conf-unix) org-src-lang-modes))
+#+end_src
+
+** Literate Configuration
+
+Write Emacs configuration in org-mode (this document) and then tangle the elisp source code blocks into init.el.
+
+#+begin_src emacs-lisp
+(defun np/org-babel-tangle-config ()
+  (when (string-equal (file-name-directory (buffer-file-name))
+                      (expand-file-name user-emacs-directory))
+    (let ((org-confirm-babel-evaluate nil))
+      (org-babel-tangle))))
+
+(add-hook 'org-mode-hook (lambda ()
+  (add-hook 'after-save-hook #'np/org-babel-tangle-config)))
+#+end_src
+
+** Structured Templates
+
+Quickly insert source code blocks using shortcuts in org-mode.
+
+#+begin_src emacs-lisp
+  (with-eval-after-load 'org
+    (require 'org-tempo)
+    (add-to-list 'org-structure-template-alist '("sh" . "src shell"))
+    (add-to-list 'org-structure-template-alist '("bash" . "src bash"))
+    (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp"))
+    (add-to-list 'org-structure-template-alist '("ts" . "src typescript"))
+    (add-to-list 'org-structure-template-alist '("js" . "src javascript"))
+    (add-to-list 'org-structure-template-alist '("yaml" . "src yaml"))
+    (add-to-list 'org-structure-template-alist '("json" . "src json"))
+    (add-to-list 'org-structure-template-alist '("py" . "src python")))
+#+end_src
+
+** Automatically Make TOC
+
+Generate or update table of contents on save.
+
+#+begin_src emacs-lisp
+(use-package org-make-toc
+  :after org
+  :hook (org-mode . org-make-toc-mode))
+#+end_src
+
+* RSS Feeds
+
+We use elfeed to view RSS feeds inside Emacs. URLs for feeds that I subscribe to are maintained in the encrypted =~/.config/emacs/elfeed-url.el= file.
+
+#+begin_src emacs-lisp
+(use-package elfeed
+  :init (setq-default elfeed-search-filter "")
+  :commands (elfeed)
+  :bind ("C-x w" . elfeed))
+  :config
+  (load-file "~/.config/emacs/elfeed-urls.el")
+#+end_src
+
+* Shell Modes
+
+We use vterm which is a native terminal emulator implemention which makes it faster than Emacs's builtin =term=.
+
+#+begin_src emacs-lisp
+(use-package vterm
+  :commands vterm
+  :config
+  (setq vterm-max-scrollback 10000))
+#+end_src
+
+multi-vterm allows us to spawn multiple instances of vterm and even manage them project-wise.
+
+#+begin_src emacs-lisp
+(use-package multi-vterm
+  :after vterm)
+#+end_src
+
+* File Management
+
+We use the dired package to manage files and directories.
+
+#+begin_src emacs-lisp
+(use-package dired
+  :ensure nil
+  :commands (dired dired-jump)
+  :bind (("C-x C-j" . dired-jump))
+  :custom ((dired-listing-switches "-agho --group-directories-first"))
+  :config
+  (evil-collection-define-key 'normal 'dired-mode-map
+    "h" 'dired-single-up-directory
+    "l" 'dired-single-buffer))
+#+end_src
+
+We use dired-open so that dired can open various media files in their respective viewers.
+
+#+begin_src emacs-lisp
+(use-package dired-open
+  :after dired
+  :config
+  (setq dired-open-extensions '(("png"  . "sxiv")
+                                ("jpg"  . "sxiv")
+                                ("jpeg" . "sxiv")
+                                ("mp4"  . "mpv")
+                                ("mkv"  . "mpv"))))
+#+end_src
+
+Hide dotfiles and toggle their visibility using dired-hide-dotfiles.
+
+#+begin_src emacs-lisp
+(use-package dired-hide-dotfiles
+  :hook (dired-mode . dired-hide-dotfiles-mode)
+  :config
+  (evil-collection-define-key 'normal 'dired-mode-map
+    "H" 'dired-hide-dotfiles-mode))
+#+end_src
+
+Visit selected directort in current buffer.
+
+#+begin_src emacs-lisp
+(use-package dired-single
+  :commands (dired dired-jump))
+#+end_src
+
+* Miscellaneous
+** Auto Rever Buffers
+
+Mostly to resolve stale dired buffers. Auto revert mode looks for changes to files, and updates them for you.
+
+With these settings, dired buffers are also updated. The last setting makes sure that you're not alerted every time this happens. Which is every time you save something.
+
+#+begin_src emacs-lisp
+(global-auto-revert-mode 1)
+(setq global-auto-revert-non-file-buffers t)
+(setq auto-revert-verbose nil)
+#+end_src
+
+** No Littering
+
+This package makes sure Emacs doesn't pollute directories with swap files (that is what you call them, no?).
+
+#+begin_src emacs-lisp
+(use-package no-littering)
+#+end_src
+
+Use the auto-save folder for managing auto save, et cetera files. This is not set by the no-littering package so we do it ourselves.
+
+#+begin_src emacs-lisp
+(setq auto-save-file-name-transforms
+  `((".*" ,(no-littering-expand-var-file-name "auto-save/") t)))
+#+end_src
+
+** Helpful
+
+Adds helpful information like documentation, source code et cetera for all the describe- functions -- one's called using =C-h=.
+
+#+begin_src emacs-lisp
+(use-package helpful
+  :commands (helpful-callable helpful-variable helpful-command helpful-key)
+  :custom
+  (counsel-describe-function-function #'helpful-callable)
+  (counsel-describe-variable-function #'helpful-variable)
+  :bind
+  ([remap describe-function] . counsel-describe-function)
+  ([remap describe-command] . helpful-command)
+  ([remap describe-variable] . counsel-describe-variable)
+  ([remap describe-key] . helpful-key))
+#+end_src 
