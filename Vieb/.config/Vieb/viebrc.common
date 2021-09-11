@@ -1,0 +1,39 @@
+" blank new tab page
+set suggesttopsites=0
+
+set guifontsize=22
+
+" scroll through suggestions using <C-k> and <C-j>
+enoremap <C-k> <prevSuggestion>
+enoremap <C-j> <nextSuggestion>
+cnoremap <C-k> <prevSuggestion>
+cnoremap <C-j> <nextSuggestion>
+
+" default download directory
+set downloadpath=~/Downloads/
+
+" always ask permission before using hardware and disable clipboard completely
+set permissioncamera=ask
+set permissionmicrophone=ask
+set permissiondisplaycapture=ask
+set permissionmidi=ask
+set permissionfullscreen=ask
+set permissiongeolocation=ask
+
+set searchwords=
+set searchwords+=yt~youtube.com/results?search_query=%s
+set searchwords+=g~www.google.com/search?q=%s
+set searchwords+=d~www.duckduckgo.com/?q=%s
+set searchwords+=s~www.searx.be/search?q=%s
+set searchwords+=aw~https://wiki.archlinux.org/index.php?title=Special:Search&search=%s
+set searchwords+=aur~https://aur.archlinux.org/packages/?K=%s
+set searchwords+=aor~https://www.archlinux.org/packages/?q=%s
+set searchwords+=wiby~https://wiby.me/?q=%s
+set searchwords+=wiki~https://en.wikipedia.org/w/index.php?search=%s
+
+set useragent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.26 Safari/537.36"
+
+" copy text like most browsers in normal mode
+nnoremap <C-c> <p.copyText>
+
+" vim: ft=vim

@@ -1,0 +1,52 @@
+#!/bin/bash
+
+MESG="\
+<b><i>Enter</i></b>  to preview themes
+<b><i>Alt-A</i></b>  to accept the new theme
+<b><i>Escape</i></b> to cancel"
+
+get_index() {
+	item=$1
+	array=$2
+	counter=0
+	for i in $array; do
+		[ "$i" = "$item" ] && echo $counter && return
+		counter=$((counter+1))
+	done
+	echo 0
+}
+
+# store theme name here
+cache_file="${XDG_CACHE_HOME:-$HOME/.cache}/x-theme"
+# list of themes
+mkdir -p ~/.cache/frece/
+frece update ~/.cache/frece/change-mode-rofi.db <(flavours list | tr ' ' '\n' | sed '/^$/d') --purge-old
+themes="$(frece print ~/.cache/frece/change-mode-rofi.db)"
+# store theme in this variable before starting any of this
+actual_current=$(cat "$cache_file")
+
+workdone=0
+while [ $workdone -eq 0 ]; do
+	choosen=$(echo "$themes" | rofi -kb-custom-1 Alt+a -dmenu -p "theme" -selected-row "$(get_index "$choosen" "$themes")" -mesg "$MESG")
+	ret=$?
+	if [ $ret -eq 0 ]; then
+		# Return
+		if [ "$(cat "$cache_file")" != "$choosen" ]; then
+			change-mode "$choosen"
+		fi
+	elif [ $ret -eq 10 ]; then
+		# Alt+a
+		if [ "$(cat "$cache_file")" != "$choosen" ]; then
+			change-mode "$choosen"
+		fi
+		workdone=1
+		frece increment ~/.cache/frece/change-mode-rofi.db "$choosen"
+		notify-send "Theme set to ${choosen}"
+	elif [ $ret -eq 1 ]; then
+		# Escape
+		if [ "$(cat "$cache_file")" != "$actual_current" ]; then
+			change-mode "$actual_current"
+		fi
+		workdone=1
+	fi
+done

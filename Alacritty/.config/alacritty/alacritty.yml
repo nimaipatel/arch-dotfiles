@@ -1,0 +1,18 @@
+env:
+  TERM: xterm-256color
+
+key_bindings:
+  - { key: Return,   mods: Control|Shift, action: SpawnNewInstance }
+
+
+cursor:
+  style:
+    blinking: Always
+  thickness: 0.1
+  vi_mode_style: Block
+
+window:
+  opacity: 0.95
+
+import:
+  - ~/.config/alacritty/alacritty-base16.yml

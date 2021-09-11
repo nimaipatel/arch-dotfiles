@@ -1,9 +1,0 @@
-#!/bin/sh
-
-setxkbmap -layout us
-killall xcape 1>/dev/null 2>&1
-xmodmap -e 'clear lock'
-xmodmap -e 'clear control'
-xmodmap -e 'add control = Caps_Lock Control_L Control_R'
-xmodmap -e 'keycode 66 = Control_L Caps_Lock NoSymbol NoSymbol'
-xcape   -e 'Control_L=Escape'

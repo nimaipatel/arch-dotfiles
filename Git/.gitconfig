@@ -1,0 +1,31 @@
+[url "git@gitlab.com:"]
+	insteadOf = gll:
+
+[url "https://gitlab.com/"]
+	insteadOf = gl:
+
+[url "git@github.com:"]
+	insteadOf = ghh:
+
+[url "https://github.com/"]
+	insteadOf = gh:
+
+[url "https://gist.github.com/"]
+	insteadOf = gist:
+
+[url "https://bitbucket.org/"]
+	insteadOf = bb:
+
+[init]
+	defaultBranch = master
+
+[core]
+	pager = diff-so-fancy | less --tabs=8 -RFX
+
+[user]
+	email = nimai.m.patel@gmail.com
+	name = nimai
+
+[grep]
+	lineNumber=true
+	column=true

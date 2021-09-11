@@ -1,9 +1,0 @@
-#!/bin/bash
-
-if ! [ -f "$XDG_CACHE_HOME/gita-quotes" ] ; then
-	(curl -s https://raw.githubusercontent.com/gita/gita/main/data/translation.json |
-	jq '.[] | select(.lang=="english") | .description' |
-	sed 's/\\n\|\\t//g ; s/\\"/\"/g ; s/[\t ]\+/ /g' > "$XDG_CACHE_HOME/gita-quotes") &
-else
-	 echo -e "\e[1;33m$(shuf -n1 "$XDG_CACHE_HOME/gita-quotes")\e[0m\n"
-fi

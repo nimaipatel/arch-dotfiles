@@ -1,0 +1,9 @@
+#!/bin/bash
+
+frece_db_path=~/.cache/frece/dmenu_run-frece.db
+mkdir -p ~/.cache/frece/
+
+frece update $frece_db_path <(compgen -c) --purge-old
+choosen=$(frece print $frece_db_path | dmenu -p "Run Command")
+frece increment $frece_db_path "$choosen"
+echo "$choosen" | ${SHELL:-"/bin/sh"} &

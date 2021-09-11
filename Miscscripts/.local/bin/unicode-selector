@@ -1,0 +1,17 @@
+#!/bin/bash
+
+frece_db_path=~/.cache/frece/unicode-selector-frece.db
+mkdir -p ~/.cache/frece
+
+frece update $frece_db_path <(cut -d ';' -f1 ~/.local/share/chars/*) --purge-old
+chosen=$(frece print $frece_db_path | dmenu -i -l 30)
+[ -z "$chosen" ] && exit
+frece increment $frece_db_path "$chosen"
+
+chosen=$(echo $chosen | sed "s/ .*//")
+if [ -n "$1" ]; then
+	xdotool type "$chosen"
+else
+	echo "$chosen" | xclip -selection clipboard
+	notify-send "'$chosen' copied to clipboard." &
+fi

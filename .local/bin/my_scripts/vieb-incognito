@@ -1,3 +1,0 @@
-#!/bin/sh
-
-notify-send -t 1000 'Starting Vieb in incognito node' && vieb --datafolder="$HOME/.config/ViebIncognito"

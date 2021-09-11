@@ -1,0 +1,22 @@
+#!/bin/sh
+
+while getopts "p:" arg ; do
+	case $arg in
+		p)
+			prompt="$OPTARG "
+			;;
+		*)
+			;;
+	esac
+done
+
+lines=$(fzfmenu --no-sort --prompt="$prompt" --print-query)
+num_lines=$(echo "$lines" | wc -l)
+
+if [ "$num_lines" -eq 1 ]; then
+	# didn't find anything, print the query
+	echo "$lines"
+elif [ "$num_lines" -eq 2 ]; then
+	# match found
+	echo "$lines" | tail -n1
+fi

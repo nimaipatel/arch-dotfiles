@@ -1,0 +1,96 @@
+super + j
+	bspc node next.local.window --focus
+
+super + k
+	bspc node prev.local.window --focus
+
+XF86MonBrightness{Down,Up}
+	brightnessctl set {1%-,+1%}
+
+super + {_,shift + }{h,j,k,l}
+	bspc node -{f,s} {west,south,north,east}
+
+super + {_,shift + }{1-9,0}
+	bspc {desktop -f,node -d} '^{1-9,10}' --follow
+
+XF86AudioRaiseVolume 
+	pamixer --allow-boost -i 1
+
+XF86AudioLowerVolume 
+	pamixer --allow-boost -d 1
+
+XF86AudioMute 
+	pamixer -t
+
+super + Return
+	$TERMINAL
+
+super + b; super + b
+	$BROWSER --profile-directory=clean
+
+super + b; super + a
+	$BROWSER --profile-directory=google-alt
+
+super + b; super + n
+	$BROWSER --incognito
+
+super + Tab
+	bspc desktop -f last
+
+super + shift + c
+	bspc node -k
+
+super + control + {h,j,k,l}
+	{bspc node -z right -20 0; \
+	 bspc node -z left +20 0, \
+	 bspc node -z top 0 -20; \
+	 bspc node -z bottom 0 +20, \
+	 bspc node -z top 0 +20; \
+	 bspc node -z bottom 0 -20, \
+	 bspc node -z right +20 0; \
+	 bspc node -z left -20 0}
+
+super + d
+	rofi -show run
+
+super + shift + d
+	rofi -show drun
+
+super + p
+	passmenu -i -p "GNU Pass"
+
+super + shift + x
+	sys-options
+
+super + q
+	lockscreen
+
+super + BackSpace
+	if [ "$(bspc config window_gap)" -eq 0 ]; then \
+		bspc config window_gap 10; \
+	else \
+		bspc config window_gap 0; \
+	fi
+
+super + equal
+	bspc config window_gap "$(($(bspc config window_gap) + 1))"
+
+super + minus
+	if [ "$(bspc config window_gap)" -gt 0 ] ; then \
+		bspc config window_gap "$(($(bspc config window_gap) - 1))"; \
+	fi
+
+super + n
+	networkmanager_dmenu -i
+
+super + u
+	rofi -show emoji
+
+super + w
+	rofi -show window
+
+super + c
+	rofi -show calc
+
+super + shift + Return
+	bspc node -s biggest.local

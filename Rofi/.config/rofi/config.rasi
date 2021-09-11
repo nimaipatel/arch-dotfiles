@@ -1,0 +1,14 @@
+configuration {
+    show-icons: true;	
+    icon-theme: "Papirus-Dark";
+    case-sensitive: false;
+    width: 100%;
+    threads: 0;
+    scroll-method: 0;
+    fullscreen: false;
+    run-command: "sh -i -c '{cmd}'";
+    run-shell-command: "alacritty -e sh -i -c '{cmd}'";
+    font: "monospace 18";
+}
+
+@theme "~/.config/rofi/themes/rofi-base16.rasi"

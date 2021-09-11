@@ -1,0 +1,6 @@
+#!/bin/sh
+scrcpy --shortcut-mod=lctrl
+ret=$?
+if [ $ret -ne 0 ]; then
+	notify-send --urgency=critical "😭 Error mirroring phone, please check if phone is connected properly."
+fi

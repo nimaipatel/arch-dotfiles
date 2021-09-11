@@ -1,0 +1,4 @@
+" Vieb configuration for using google
+source ~/.config/Vieb/viebrc.common
+
+" vim: ft=vim

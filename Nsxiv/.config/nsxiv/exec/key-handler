@@ -1,0 +1,36 @@
+#!/bin/sh
+while read file
+do
+    case "$1" in
+        "t")
+            mode=$(printf "light\ndark" | dmenu)
+            flavours generate $mode "${file}" ; change-mode generated &
+            ;;
+        "w")
+            set-wallpaper "${file}" &
+            ;;
+        "r")
+            convert -rotate 90 "$file" "$file"
+            ;;
+        "R")
+            convert -rotate -90 "$file" "$file"
+            ;;
+        "f")
+            convert -flop "$file" "$file"
+            ;;
+        "y")
+            fullpath=$(readlink -f "$file")
+            extension="${fullpath##*.}"
+            [ "$extension" = "jpg" ] && extension=jpeg
+            xclip -selection clipboard -t "image/$extension" "$fullpath" &&
+            notify-send "Image data of \`$file\` copied to clipboard" &
+            ;;
+        "Y")
+            readlink -f "$file" | tr -d '\n' | xclip -selection clipboard &&
+            notify-send "\`$(readlink -f "$file")\` copied to clipboard" &
+            ;;
+        "i")
+            notify-send "File information" "$(mediainfo "$file")"
+            ;;
+    esac
+done

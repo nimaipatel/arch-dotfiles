@@ -1,6 +1,0 @@
-#!/bin/sh
-
-for socket in $(nvr --nostart --serverlist)
-do
-	nvr --nostart --servername "$socket" -cc "$1"
-done

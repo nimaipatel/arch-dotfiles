@@ -1,0 +1,15 @@
+[submodule "dev/dwm"]
+	path = Dwm
+	url = ghh:nimaipatel/dwm
+[submodule "dev/st"]
+	path = St
+	url = ghh:nimaipatel/st
+[submodule "dev/dwmblocks"]
+	path = Dwmblocks
+	url = ghh:nimaipatel/dwmblocks
+[submodule "dev/dmenu"]
+	path = Dmenu
+	url = ghh:nimaipatel/dmenu
+[submodule "slock"]
+	path = Slock
+	url = gll:nimai/slock

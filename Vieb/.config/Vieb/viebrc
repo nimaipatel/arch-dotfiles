@@ -1,0 +1,23 @@
+" common settings for all vieb profiles
+source viebrc.common
+
+" stop annoying popup for permissions on google pages
+set permissionsblocked=google.com~geolocation
+
+" automatically redirect websites to less harmful alternatives
+set redirects=
+
+" don't disable http only sites
+set redirecttohttp
+
+" auto-generated base16 colorscheme
+colorscheme base16
+
+set search=www.searx.be/search?q=%s
+
+set darkreader
+
+nnoremap <space>r <:reloadconfig>
+nnoremap <space>d <:set darkreader!>
+
+" vim: ft=vim

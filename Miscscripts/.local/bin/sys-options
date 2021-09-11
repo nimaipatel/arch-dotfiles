@@ -1,0 +1,23 @@
+#!/bin/sh
+
+OPTION=$(printf "Logout\nPower Off\nRestart\nLock" | dmenu -p "System Operations ")
+
+[ -z "${OPTION}" ] && exit
+
+case "${OPTION}" in
+	"Lock")
+		lockscreen
+		;;
+	"Logout")
+		CONFIRM=$(printf "No\nYes" | dmenu -p "Are you sure you want to logout? ")
+		[ "$CONFIRM" = Yes ] && pkill -u -KILL "$USER"
+		;;
+	"Restart")
+		CONFIRM=$(printf "No\nYes" | dmenu -p "Are you sure you want to reboot? ")
+		[ "$CONFIRM" = Yes ] && reboot
+		;;
+	"Power Off")
+		CONFIRM=$(printf "No\nYes" | dmenu -p "Are you sure you want to shutdown? ")
+		[ "$CONFIRM" = Yes ] && poweroff
+		;;
+esac

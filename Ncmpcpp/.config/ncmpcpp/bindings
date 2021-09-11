@@ -1,0 +1,26 @@
+def_key "j"
+    scroll_down
+
+def_key "k"
+    scroll_up
+
+def_key "h"
+    previous_column
+
+def_key "l"
+    next_column
+
+def_key "G"
+  move_end
+
+def_key "g"
+  move_home
+
+def_key "."
+    show_lyrics
+
+def_key "m"
+  show_media_library
+
+def_key "m"
+  toggle_media_library_columns_mode

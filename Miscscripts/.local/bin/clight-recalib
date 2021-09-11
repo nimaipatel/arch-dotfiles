@@ -1,0 +1,4 @@
+#!/bin/sh
+busctl --expect-reply=false --user call org.clight.clight /org/clight/clight org.clight.clight Capture "bb" false false
+sleep 1
+pkill -RTMIN+1 dwmblocks
