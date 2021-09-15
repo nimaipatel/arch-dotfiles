@@ -12,10 +12,12 @@ set permissionmidi=ask
 set permissionfullscreen=ask
 set permissiongeolocation=ask
 
+" stop annoying popup for permissions on google pages
+set permissionsblocked=google.com~geolocation
+
 " automatically redirect websites to less harmful alternatives
 set redirects=
 set redirects+=https?://(www\.)?google\.com(\.\w+)?/amp/s/amp\.(.*)~https://$3
-set redirects+=^https?://(www\.)?(reddit\.com.*)~https://old.$2
 
 " don't disable http only sites
 set redirecttohttp
