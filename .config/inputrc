@@ -14,6 +14,24 @@ set editing-mode vi
 # no delay after escape
 set keyseq-timeout 0
 
+# case insensitive completion
+set completion-ignore-case on
+
+# treat underscore and hypen as same when tab completing
+set completion-map-case on
+
+# highlight common prefix in suggestions
+set colored-completion-prefix on
+
+# display completions using different colors based on filetype
+set colored-stats on
+
+# don't ask before displaying large number of completion items
+set completion-query-items -1
+
+# disable built-in pager
+set page-completions off
+
 # different cursors for insert and normal mode
 set show-mode-in-prompt on
 set vi-ins-mode-string \1\e[6 q\2
