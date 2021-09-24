@@ -394,7 +394,7 @@ packer.startup(function(use)
                 vim.cmd 'source ~/.config/nvim/base16.lua'
                 require('base16-colorscheme').setup(base16_theme_colors)
                 require('plenary.reload').reload_module('lualine', true)
-                require('lualine').setup { options = { theme = base16_lualine_colors} }
+                require('lualine').setup { options = { theme = base16_lualine_colors } }
                 vim.api.nvim_exec(
                     [[
 		            hi GitSignsAdd guifg=green
