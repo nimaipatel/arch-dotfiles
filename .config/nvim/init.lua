@@ -155,7 +155,13 @@ local base16_config = function()
 end
 
 local lualine_config = function()
-    require('lualine').setup { options = { theme = base16_lualine_colors } }
+    require('lualine').setup {
+        options = {
+            section_separators = { left = '', right = '' },
+            component_separators = { left = '', right = '' },
+            theme = base16_lualine_colors,
+        },
+    }
 end
 
 local bufferline_config = function()
