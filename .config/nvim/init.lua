@@ -142,7 +142,41 @@ if fn.empty(fn.glob(install_path)) > 0 then
     vim.cmd 'packadd packer.nvim'
 end
 
+local base16_config = function()
+    require('base16-colorscheme').setup(base16_theme_colors)
+    vim.api.nvim_exec(
+        [[
+		            hi GitSignsAdd guifg=green
+		            hi GitSignsDelete guifg=red
+		            hi GitSignsChange guifg=yellow
+	            ]],
+        true
+    )
+end
+
+local lualine_config = function()
+    require('lualine').setup { options = { theme = base16_lualine_colors } }
+end
+
+local bufferline_config = function()
+    vim.opt.termguicolors = true
+    require('bufferline').setup {}
+end
+
+local source_colors = function()
+    vim.cmd 'source ~/.config/nvim/base16.lua'
+end
+
+_G['RefreshColors'] = function()
+    source_colors()
+    base16_config()
+    lualine_config()
+    bufferline_config()
+end
+
 local packer = require 'packer'
+
+source_colors()
 
 packer.startup(function(use)
     use 'wbthomason/packer.nvim'
@@ -389,10 +423,8 @@ packer.startup(function(use)
 
                 formatting = {
                     format = function(entry, vim_item)
-                        -- fancy icons and a name of kind
                         vim_item.kind = require('lspkind').presets.default[vim_item.kind] .. ' ' .. vim_item.kind
 
-                        -- set a name for each source
                         vim_item.menu = ({
                             buffer = '[Buffer]',
                             nvim_lsp = '[LSP]',
@@ -409,24 +441,18 @@ packer.startup(function(use)
 
     use {
         'RRethy/nvim-base16',
-        requires = 'shadmansaleh/lualine.nvim',
-        config = function()
-            _G['RefreshColors'] = function()
-                vim.cmd 'source ~/.config/nvim/base16.lua'
-                require('base16-colorscheme').setup(base16_theme_colors)
-                require('lualine').setup { options = { theme = base16_lualine_colors } }
-                require('bufferline').setup {}
-                vim.api.nvim_exec(
-                    [[
-		            hi GitSignsAdd guifg=green
-		            hi GitSignsDelete guifg=red
-		            hi GitSignsChange guifg=yellow
-	            ]],
-                    true
-                )
-            end
-            RefreshColors()
-        end,
+        config = base16_config,
+    }
+
+    use {
+        'shadmansaleh/lualine.nvim',
+        config = lualine_config,
+    }
+
+    use {
+        'akinsho/bufferline.nvim',
+        requires = 'kyazdani42/nvim-web-devicons',
+        config = bufferline_config,
     }
 
     use {
@@ -469,15 +495,6 @@ packer.startup(function(use)
             nnoremap('<c-p>', builtin.find_files)
             nnoremap('<c-t>', builtin.live_grep)
             nnoremap('<c-b>', builtin.buffers)
-        end,
-    }
-
-    use {
-        'akinsho/bufferline.nvim',
-        requires = 'kyazdani42/nvim-web-devicons',
-        config = function()
-            vim.opt.termguicolors = true
-            require('bufferline').setup {}
         end,
     }
 end)
