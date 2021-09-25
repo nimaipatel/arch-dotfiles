@@ -182,20 +182,22 @@ packer.startup(function(use)
         config = function()
             local capabilities = vim.lsp.protocol.make_client_capabilities()
             local lspconfig = require 'lspconfig'
+            local builtins = require 'telescope.builtin'
 
             nnoremap(']d', vim.lsp.diagnostic.goto_next)
             nnoremap('[d', vim.lsp.diagnostic.goto_prev)
             nnoremap('gD', vim.lsp.buf.declaration)
-            nnoremap('gd', vim.lsp.buf.definition)
-            nnoremap('gr', vim.lsp.buf.references)
             nnoremap('gs', vim.lsp.buf.signature_help)
-            nnoremap('<leader>af', vim.lsp.buf.code_action)
-            nnoremap('gi', vim.lsp.buf.implementation)
-            nnoremap('gt', vim.lsp.buf.type_definition)
             nnoremap('<leader>rn', vim.lsp.buf.rename)
             nnoremap('<leader>f', vim.lsp.buf.formatting)
             nnoremap('H', vim.lsp.diagnostic.show_line_diagnostics)
             nnoremap('L', vim.lsp.buf.hover)
+
+            nnoremap('gd', builtins.lsp_definitions)
+            nnoremap('gr', builtins.lsp_references)
+            nnoremap('<leader>af', builtins.lsp_code_actions)
+            nnoremap('gi', builtins.lsp_implementations)
+            nnoremap('gt', builtins.lsp_type_definitions)
 
             capabilities.textDocument.completion.completionItem.snippetSupport = true
             capabilities.textDocument.completion.completionItem.preselectSupport = true
@@ -464,9 +466,9 @@ packer.startup(function(use)
                 },
             }
             require('telescope').load_extension 'fzf'
-            local builtins = require 'telescope.builtin'
-            nnoremap('<c-p>', builtins.find_files)
-            nnoremap('<c-t>', builtins.live_grep)
+            local builtin = require 'telescope.builtin'
+            nnoremap('<c-p>', builtin.find_files)
+            nnoremap('<c-t>', builtin.live_grep)
         end,
     }
 end)
