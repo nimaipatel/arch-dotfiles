@@ -388,12 +388,11 @@ packer.startup(function(use)
 
     use {
         'RRethy/nvim-base16',
-        requires = 'hoob3rt/lualine.nvim',
+        requires = 'shadmansaleh/lualine.nvim',
         config = function()
             _G['RefreshColors'] = function()
                 vim.cmd 'source ~/.config/nvim/base16.lua'
                 require('base16-colorscheme').setup(base16_theme_colors)
-                require('plenary.reload').reload_module('lualine', true)
                 require('lualine').setup { options = { theme = base16_lualine_colors } }
                 vim.api.nvim_exec(
                     [[
