@@ -479,13 +479,16 @@ packer.startup(function(use)
         end,
     }
 
-    use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
-
     use {
         'nvim-telescope/telescope.nvim',
-        requires = 'kyazdani42/nvim-web-devicons',
+        requires = {
+            'kyazdani42/nvim-web-devicons',
+            { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' },
+        },
         config = function()
-            require('telescope').setup {
+            local telescope = require 'telescope'
+            local builtin = require 'telescope.builtin'
+            telescope.setup {
                 defaults = require('telescope.themes').get_ivy(),
                 extensions = {
                     fzf = {
@@ -496,8 +499,7 @@ packer.startup(function(use)
                     },
                 },
             }
-            require('telescope').load_extension 'fzf'
-            local builtin = require 'telescope.builtin'
+            telescope.load_extension 'fzf'
             nnoremap('<c-p>', builtin.find_files)
             nnoremap('<c-t>', builtin.live_grep)
             nnoremap('<c-b>', builtin.buffers)
