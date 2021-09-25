@@ -32,6 +32,7 @@ THEME_LOC=$(find "$XDG_DATA_HOME/flavours/base16/schemes" -type f | grep "/${CHO
 # locations of templates
 XRESOURCES_T="${MY_SCRIPT_ASSETS}/xresources.mustache"
 NEOVIM_T="${MY_SCRIPT_ASSETS}/neovim.mustache"
+TMUX_T="$XDG_DATA_HOME/flavours/base16/templates/tmux/templates/default.mustache"
 GTK2_T="$XDG_DATA_HOME/flavours/base16/templates/gtk-flatcolor/templates/gtk-2.mustache"
 GTK3_T="$XDG_DATA_HOME/flavours/base16/templates/gtk-flatcolor/templates/gtk-3.mustache"
 FZF_T="$XDG_DATA_HOME/my_script_assets/fzf.mustache"
@@ -41,6 +42,7 @@ EMACS_T="$XDG_DATA_HOME/my_script_assets/emacs.mustache"
 # generate themes and merge and write at appropriate locations
 flavours build "$THEME_LOC" "$XRESOURCES_T" | xrdb -merge
 mkdir "$XDG_CONFIG_HOME/nvim/colors" ; flavours build "$THEME_LOC" "$NEOVIM_T" > "$XDG_CONFIG_HOME/nvim/base16.lua"
+mkdir "$XDG_CONFIG_HOME/tmux" ; flavours build "$THEME_LOC" "$TMUX_T" > "$XDG_CONFIG_HOME/tmux/base16.tmux"
 flavours build "$THEME_LOC" "$GTK2_T" > "$XDG_DATA_HOME/themes/FlatColor/colors2"
 flavours build "$THEME_LOC" "$GTK3_T" > "$XDG_DATA_HOME/themes/FlatColor/colors3"
 flavours build "$THEME_LOC" "$FZF_T" > "$HOME/.local/bin/fzf" && chmod +x "$HOME/.local/bin/fzf" 
@@ -58,6 +60,9 @@ restart-dunst
 
 # refresh colors for active neovim instances
 nvimcmd ":lua RefreshColors()"
+
+# refresh tmux statusline
+tmux source-file "$XDG_CONFIG_HOME/tmux/base16.tmux"
 
 # refresh gtk theme
 killall xsettingsd ; xsettingsd &
