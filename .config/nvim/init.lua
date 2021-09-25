@@ -229,7 +229,7 @@ packer.startup(function(use)
             lspconfig.clangd.setup { root_dir = vim.loop.cwd }
 
             lspconfig.sumneko_lua.setup {
-                settings = { Lua = { diagnostics = { globals = { 'vim', 'use' } } } },
+                settings = { Lua = { diagnostics = { enable = false } } },
                 cmd = { 'lua-language-server' },
                 root_dir = vim.loop.cwd,
                 capabilities = capabilities,
@@ -290,12 +290,14 @@ packer.startup(function(use)
 
             local luaformat = { formatCommand = 'stylua -', formatStdin = true }
 
+            local luacheck = { lintCommand = 'luacheck - --formatter plain', lintStdin = true}
+
             lspconfig.efm.setup {
                 init_options = { documentFormatting = true },
                 settings = {
                     rootMarkers = { vim.loop.cwd() },
                     languages = {
-                        lua = { luaformat },
+                        lua = { luaformat, luacheck },
                         python = { flake8, black, isort, mypy },
                         typescript = { prettier, eslint },
                         javascript = { prettier, eslint },
@@ -340,7 +342,6 @@ packer.startup(function(use)
         config = function()
             local cmp = require 'cmp'
             local luasnip = require 'luasnip'
-            local lspkind = require 'lspkind'
             cmp.setup {
                 snippet = {
                     expand = function(args)
