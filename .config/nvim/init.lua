@@ -120,9 +120,6 @@ nnoremap('<c-z>', '')
 -- toggle relative and absolute line numbering
 nnoremap('<leader>n', ':set relativenumber!<cr>')
 
--- remove search highlighting with leader + enter
-nnoremap('<leader><cr>', ':nohl<cr>')
-
 -- when jumping to bottom, center the page
 nnoremap('G', 'Gzz')
 
@@ -290,7 +287,7 @@ packer.startup(function(use)
 
             local luaformat = { formatCommand = 'stylua -', formatStdin = true }
 
-            local luacheck = { lintCommand = 'luacheck - --formatter plain', lintStdin = true}
+            local luacheck = { lintCommand = 'luacheck - --formatter plain', lintStdin = true }
 
             lspconfig.efm.setup {
                 init_options = { documentFormatting = true },
@@ -418,6 +415,7 @@ packer.startup(function(use)
                 vim.cmd 'source ~/.config/nvim/base16.lua'
                 require('base16-colorscheme').setup(base16_theme_colors)
                 require('lualine').setup { options = { theme = base16_lualine_colors } }
+                require('bufferline').setup {}
                 vim.api.nvim_exec(
                     [[
 		            hi GitSignsAdd guifg=green
@@ -470,6 +468,16 @@ packer.startup(function(use)
             local builtin = require 'telescope.builtin'
             nnoremap('<c-p>', builtin.find_files)
             nnoremap('<c-t>', builtin.live_grep)
+            nnoremap('<c-b>', builtin.buffers)
+        end,
+    }
+
+    use {
+        'akinsho/bufferline.nvim',
+        requires = 'kyazdani42/nvim-web-devicons',
+        config = function()
+            vim.opt.termguicolors = true
+            require('bufferline').setup {}
         end,
     }
 end)
