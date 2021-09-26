@@ -537,6 +537,32 @@ packer.startup(function(use)
     }
 
     use {
+        'abecodes/tabout.nvim',
+        config = function()
+            require('tabout').setup {
+                tabkey = '<Tab>',
+                backwards_tabkey = '<S-Tab>',
+                act_as_tab = true,
+                act_as_shift_tab = false,
+                enable_backwards = true,
+                completion = true,
+                tabouts = {
+                    { open = "'", close = "'" },
+                    { open = '"', close = '"' },
+                    { open = '`', close = '`' },
+                    { open = '(', close = ')' },
+                    { open = '[', close = ']' },
+                    { open = '{', close = '}' },
+                },
+                ignore_beginning = true,
+                exclude = {},
+            }
+        end,
+        wants = { 'nvim-treesitter' },
+        after = { 'nvim-cmp' },
+    }
+
+    use {
         'windwp/nvim-ts-autotag',
         config = function()
             require('nvim-ts-autotag').setup()
