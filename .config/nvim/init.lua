@@ -362,6 +362,14 @@ packer.startup(function(use)
     }
 
     use {
+        'kosayoda/nvim-lightbulb',
+        config = function()
+            local lightbulb = require('nvim-lightbulb').update_lightbulb
+            AddEventListener('lightbulb', { 'CursorHold,CursorHoldI *' }, lightbulb)
+        end,
+    }
+
+    use {
         'hrsh7th/nvim-cmp',
         requires = {
             'hrsh7th/nvim-cmp',
@@ -443,6 +451,13 @@ packer.startup(function(use)
                 },
             }
         end,
+    }
+
+    use {
+        'ray-x/lsp_signature.nvim',
+        config = function ()
+            require 'lsp_signature'.setup()
+        end
     }
 
     use {
