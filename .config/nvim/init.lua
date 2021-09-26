@@ -601,4 +601,25 @@ packer.startup(function(use)
             nnoremap('<c-b>', builtin.buffers)
         end,
     }
+
+    use {
+        'aserowy/tmux.nvim',
+        config = function()
+            require('tmux').setup {
+                copy_sync = {
+                    enable = true,
+                    redirect_to_clipboard = true,
+                    sync_deletes = true,
+
+                },
+                navigation = {
+                    enable_default_keybindings = true,
+                    persist_zoom = true,
+                },
+                resize = {
+                    enable_default_keybindings = true,
+                },
+            }
+        end,
+    }
 end)
