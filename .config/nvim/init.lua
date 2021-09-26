@@ -11,6 +11,8 @@ vim.opt.updatetime = 50
 vim.opt.splitright = true
 vim.opt.splitbelow = true
 
+vim.opt.termguicolors = true
+
 -- recure into directories to search for files with :find
 vim.opt.path:append '**'
 
@@ -165,7 +167,6 @@ local lualine_config = function()
 end
 
 local bufferline_config = function()
-    vim.opt.termguicolors = true
     require('bufferline').setup {}
 end
 
@@ -200,6 +201,13 @@ packer.startup(function(use)
         requires = 'nvim-lua/plenary.nvim',
         config = function()
             require('gitsigns').setup()
+        end,
+    }
+
+    use {
+        'norcalli/nvim-colorizer.lua',
+        config = function()
+            require('colorizer').setup ()
         end,
     }
 
