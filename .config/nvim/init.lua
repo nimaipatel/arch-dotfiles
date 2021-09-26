@@ -537,6 +537,13 @@ packer.startup(function(use)
     }
 
     use {
+        'windwp/nvim-ts-autotag',
+        config = function()
+            require('nvim-ts-autotag').setup()
+        end,
+    }
+
+    use {
         'nvim-telescope/telescope.nvim',
         requires = {
             'kyazdani42/nvim-web-devicons',
