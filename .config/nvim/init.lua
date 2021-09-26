@@ -205,11 +205,37 @@ packer.startup(function(use)
 
     use {
         'nvim-treesitter/nvim-treesitter',
+        requires = {
+            'nvim-treesitter/nvim-treesitter-textobjects',
+        },
         run = ':TSUpdate',
         config = function()
             require('nvim-treesitter.configs').setup {
                 ensure_installed = 'maintained',
                 highlight = { enable = true },
+                textobjects = {
+                    select = {
+                        enable = true,
+
+                        lookahead = true,
+
+                        keymaps = {
+                            ['af'] = '@function.outer',
+                            ['if'] = '@function.inner',
+                            ['ac'] = '@class.outer',
+                            ['ic'] = '@class.inner',
+                            ['ak'] = '@comment.outer',
+                            ['ik'] = '@comment.inner',
+
+                            ['iF'] = {
+                                python = '(function_definition) @function',
+                                cpp = '(function_definition) @function',
+                                c = '(function_definition) @function',
+                                java = '(method_declaration) @function',
+                            },
+                        },
+                    },
+                },
             }
         end,
     }
@@ -455,9 +481,9 @@ packer.startup(function(use)
 
     use {
         'ray-x/lsp_signature.nvim',
-        config = function ()
-            require 'lsp_signature'.setup()
-        end
+        config = function()
+            require('lsp_signature').setup()
+        end,
     }
 
     use {
