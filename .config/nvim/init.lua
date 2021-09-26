@@ -207,7 +207,15 @@ packer.startup(function(use)
     use {
         'norcalli/nvim-colorizer.lua',
         config = function()
-            require('colorizer').setup ()
+            require('colorizer').setup()
+        end,
+    }
+
+    use {
+        'ahmedkhalf/project.nvim',
+        config = function()
+            require('project_nvim').setup {}
+            require('telescope').load_extension 'projects'
         end,
     }
 
