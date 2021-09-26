@@ -223,6 +223,7 @@ packer.startup(function(use)
         'nvim-treesitter/nvim-treesitter',
         requires = {
             'nvim-treesitter/nvim-treesitter-textobjects',
+            'p00f/nvim-ts-rainbow',
         },
         run = ':TSUpdate',
         config = function()
@@ -251,6 +252,11 @@ packer.startup(function(use)
                             },
                         },
                     },
+                },
+                rainbow = {
+                    enable = true,
+                    extended_mode = true,
+                    max_file_lines = nil,
                 },
             }
         end,
