@@ -94,3 +94,20 @@ super + c
 
 super + shift + Return
 	bspc node -s biggest.local
+
+super + a; super + {n,e,g}
+	sleep 0.2 ;\
+	xdotool type --clearmodifiers \
+	{'Nimai Patel',\
+	 'nimai.m.patel@gmail.com',\
+	 'https://github.com/nimaipatel'};\
+	xdotool keyup super
+
+super + a; super + {d,t,w,s}
+	sleep 0.2 ;\
+	xdotool type --clearmodifiers \
+	{"$(date +%d/%m/%Y)",\
+	 "$(date +%I:%M%p)",\
+	 "$(date +%A)",\
+	 "$(date)"};\
+	xdotool keyup super

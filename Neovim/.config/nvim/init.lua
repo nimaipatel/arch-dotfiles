@@ -555,7 +555,9 @@ packer.startup(function(use)
         end,
     }
 
-    -- remove
+    use 'baskerville/vim-sxhkdrc'
+    use 'fladson/vim-kitty'
+
     use 'svban/YankAssassin.vim'
 
     use 'wbthomason/packer.nvim'
@@ -988,6 +990,18 @@ packer.startup(function(use)
 
             require('clangd_extensions').setup {
                 server = base_config,
+                extensions = {
+                    inlay_hints = {
+                        parameter_hints_prefix = '  ',
+                        other_hints_prefix = '  ',
+                    },
+                    memory_usage = {
+                        border = 'rounded',
+                    },
+                    symbol_info = {
+                        border = 'rounded',
+                    },
+                },
             }
 
             local null_ls = require 'null-ls'
@@ -1063,13 +1077,19 @@ packer.startup(function(use)
         end,
     }
 
+    use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
+    use { 'tzachar/fuzzy.nvim' }
+
     use {
         'hrsh7th/nvim-cmp',
         requires = {
             'hrsh7th/cmp-nvim-lua',
             'hrsh7th/cmp-nvim-lsp',
-            'hrsh7th/cmp-buffer',
+            'tzachar/cmp-fuzzy-buffer',
             'hrsh7th/cmp-path',
+
+            'https://github.com/hrsh7th/cmp-cmdline',
+            'dmitmel/cmp-cmdline-history',
 
             'saadparwaiz1/cmp_luasnip',
             'L3MON4D3/LuaSnip',
@@ -1084,9 +1104,13 @@ packer.startup(function(use)
             require('luasnip.loaders.from_vscode').lazy_load()
 
             cmp.setup {
+                sources = {
+                    { name = 'nvim_lua' },
+                    { name = 'nvim_lsp' },
+                    { name = 'calc' },
+                },
                 window = {
                     completion = {
-                        autocomplete = false,
                         border = 'rounded',
                         winhighlight = 'Normal:Normal,FloatBorder:Normal',
                         scrollbar = '║',
@@ -1151,19 +1175,35 @@ packer.startup(function(use)
                 },
             }
 
+            local fuzzy_buffer = {
+                name = 'fuzzy_buffer',
+                option = {
+                    get_bufnrs = function()
+                        local bufs = {}
+                        for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+                            local buftype = vim.api.nvim_buf_get_option(buf, 'buftype')
+                            if buftype ~= 'nofile' and buftype ~= 'prompt' then
+                                bufs[#bufs + 1] = buf
+                            end
+                        end
+                        return bufs
+                    end,
+                },
+            }
+
             local wk = require 'which-key'
 
             require('legendary').setup()
             wk.register({
                 ['<C-n>'] = {
                     function()
-                        cmp.complete { config = { sources = { { name = 'buffer' } } } }
+                        cmp.complete { config = { sources = { fuzzy_buffer } } }
                     end,
                     'Buffer completion',
                 },
                 ['<C-p>'] = {
                     function()
-                        cmp.complete { config = { sources = { { name = 'buffer' } } } }
+                        cmp.complete { config = { sources = { fuzzy_buffer } } }
                     end,
                     'Buffer completion',
                 },
@@ -1197,6 +1237,38 @@ packer.startup(function(use)
             }, {
                 prefix = '',
                 mode = 'i',
+            })
+
+            vim.api.nvim_set_keymap('c', '<C-j>', '<down>', { noremap = true })
+            vim.api.nvim_set_keymap('c', '<C-k>', '<up>', { noremap = true })
+
+            local cmp = require 'cmp'
+
+            for _, cmd_type in ipairs { ':', '/', '?', '@' } do
+                cmp.setup.cmdline(cmd_type, {
+                    sources = {
+                        { name = 'cmdline_history' },
+                    },
+                })
+            end
+
+            require('cmp').setup.cmdline('/', {
+                mapping = cmp.mapping.preset.cmdline(),
+                sources = {
+                    fuzzy_buffer,
+                },
+            })
+            require('cmp').setup.cmdline('?', {
+                mapping = cmp.mapping.preset.cmdline(),
+                sources = {
+                    fuzzy_buffer,
+                },
+            })
+            require('cmp').setup.cmdline(':', {
+                mapping = cmp.mapping.preset.cmdline(),
+                sources = {
+                    { name = 'cmdline' },
+                },
             })
         end,
     }
@@ -1243,6 +1315,11 @@ packer.startup(function(use)
             end
 
             require('cokeline').setup {
+                buffers = {
+                    filter_valid = function(buffer)
+                        return buffer.type ~= 'quickfix'
+                    end,
+                },
                 default_hl = {
                     fg = cokeline_fg,
                     bg = cokeline_bg,
@@ -1261,13 +1338,9 @@ packer.startup(function(use)
 
                 components = {
                     {
-                        text = function(buffer)
-                            return (buffer.is_focused or buffer.is_first) and '' or ''
-                        end,
+                        text = '',
                         fg = cokeline_bg,
-                        bg = function(buffer)
-                            return buffer.is_first and get_hex('Normal', 'bg') or BASE16_COLORS.base01
-                        end,
+                        bg = get_hex('Normal', 'bg'),
                     },
                     {
                         text = function(buffer)
@@ -1313,13 +1386,9 @@ packer.startup(function(use)
                         truncation = { priority = 1 },
                     },
                     {
-                        text = function(buffer)
-                            return (buffer.is_focused or buffer.is_last) and '' or ''
-                        end,
+                        text = '',
                         fg = cokeline_bg,
-                        bg = function(buffer)
-                            return buffer.is_last and get_hex('Normal', 'bg') or BASE16_COLORS.base01
-                        end,
+                        bg = get_hex('Normal', 'bg'),
                     },
                 },
             }
@@ -1380,55 +1449,6 @@ packer.startup(function(use)
     }
 
     use {
-        'gelguy/wilder.nvim',
-        keys = { ':', '/', '?' },
-        requires = { 'romgrk/fzy-lua-native', run = 'make' },
-        config = function()
-            local wilder = require 'wilder'
-            wilder.setup { modes = { ':', '/', '?' } }
-
-            vim.api.nvim_set_keymap('c', '<C-j>', '<down>', { noremap = true })
-            vim.api.nvim_set_keymap('c', '<C-k>', '<up>', { noremap = true })
-
-            wilder.set_option('use_python_remote_plugin', 0)
-
-            wilder.set_option('pipeline', {
-                wilder.branch(
-                    wilder.cmdline_pipeline {
-                        fuzzy = 1,
-                        fuzzy_filter = wilder.lua_fzy_filter(),
-                    },
-                    wilder.vim_search_pipeline()
-                ),
-            })
-
-            local popupmenu_renderer = wilder.popupmenu_renderer(wilder.popupmenu_border_theme {
-                border = 'rounded',
-                highlights = {
-                    default = 'Normal',
-                },
-                highlighter = wilder.lua_fzy_filter(),
-                left = {
-                    ' ',
-                    wilder.popupmenu_devicons(),
-                },
-                right = {
-                    ' ',
-                    wilder.popupmenu_scrollbar(),
-                },
-                min_width = '100%',
-                min_height = '50%',
-                reverse = 0,
-            })
-
-            wilder.set_option('renderer', popupmenu_renderer)
-
-            vim.api.nvim_set_keymap('c', '<C-n>', '<TAB>', { silent = true })
-            vim.api.nvim_set_keymap('c', '<C-p>', '<S-TAB>', { silent = true })
-        end,
-    }
-
-    use {
         'nvim-telescope/telescope.nvim',
         tag = '0.1.0',
         requires = {
@@ -1441,15 +1461,13 @@ packer.startup(function(use)
             local builtin = require 'telescope.builtin'
             local actions = require 'telescope.actions'
             telescope.setup {
-                defaults = themes.get_ivy {
-                    prompt_prefix = '   ',
+                defaults = {
+                    prompt_prefix = '  ',
                     selection_caret = '  ',
                     entry_prefix = '  ',
                     sorting_strategy = 'ascending',
                     layout_config = {
-                        bottom_pane = {
-                            height = 0.50,
-                        },
+                        prompt_position = 'top',
                     },
                     mappings = {
                         i = {

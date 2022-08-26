@@ -1,75 +1,26 @@
-function instant-zsh-pre() {
-  zmodload zsh/terminfo
+#!/usr/bin/zsh
 
-  (( ${+terminfo[cuu]} && ${+terminfo[ed]} && ${+terminfo[sc]} && ${+terminfo[rc]} )) || return 0
+# make c-s and c-q useable
+stty -ixon
+# use beam shape cursor on startup and for every new prompt
+echo -ne '\e[5 q'
+preexec() { echo -ne '\e[5 q' ;}
+# instant prompt
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+# don't souce abbrevs automatically
+export ABBR_AUTOLOAD=0
 
-  unsetopt localoptions prompt_cr prompt_sp
-
-  () {
-    emulate -L zsh
-
-    local eol_mark=${PROMPT_EOL_MARK-"%B%S%#%s%b"}
-    local -i fill=COLUMNS
-
-    () {
-      local COLUMNS=1024
-      local -i x y=$#1 m
-      if (( y )); then
-        while (( ${${(%):-$1%$y(l.1.0)}[-1]} )); do
-          echo $y
-          x=y
-          (( y *= 2 ));
-        done
-        local xy
-        while (( y > x + 1 )); do
-          m=$(( x + (y - x) / 2 ))
-          typeset ${${(%):-$1%$m(l.x.y)}[-1]}=$m
-        done
-      fi
-      (( fill -= x ))
-    } $eol_mark
-
-    print -r ${(%):-$eol_mark${(pl.$fill.. .)}$'\r'%b%k%f%E}$'\n\n\n\n\n\n\n\n\n'
-    echoti cuu 10
-    print -rn -- ${terminfo[sc]}${(%)1}
-
-    _clear-loading-prompt() {
-      unsetopt localoptions
-      setopt prompt_cr prompt_sp
-      () {
-        emulate -L zsh
-        print -rn -- $terminfo[rc]$terminfo[sgr0]$terminfo[ed]
-        unfunction _clear-loading-prompt
-        precmd_functions=(${(@)precmd_functions:#_clear-loading-prompt})
-      }
-    }
-    precmd_functions=($precmd_functions _clear-loading-prompt)
-  } "$@"
-}
-
-function instant-zsh-post() {
-  emulate -L zsh
-  if (( ${+precmd_functions} && ${+precmd_functions[(I)_clear-loading-prompt]} )); then
-    precmd_functions=(${(@)precmd_functions:#_clear-loading-prompt} _clear-loading-prompt)
-  fi
-}
-
-
-# `instant-zsh-pre` and `instant-zsh-post` functions are taken from instant-zsh.zsh
-# (link: https://gist.github.com/romkatv/8b318a610dc302bdbe1487bb1847ad99/)
-# NOTE: if you change/update the prompt then replace argument of
-# instant-zsh-pre with output of `echo $PROMPT`
-instant-zsh-pre "%B%F{green}%f%F{black}%K{green}%n%k%f%F{green}%f%F{yellow} at %f%F{blue}%f%F{black}%K{blue}%m%k%f%F{blue}%f%F{yellow} in %f%F{magenta}%f%K{magenta}%F{black}%(5~|%-1~/.../%3~|%4~)%f%k%F{magenta}%f${vcs_info_msg_0_}
-%F{yellow}ૐ %f %b"
-
-
-# source plugins
+source ~/.zplug/init.zsh
+zplug romkatv/powerlevel10k, as:theme, depth:1
+zplug zsh-users/zsh-autosuggestions, depth:1
+zplug hlissner/zsh-autopair, depth:1
+zplug zdharma-continuum/fast-syntax-highlighting, depth:1
+zplug zsh-users/zsh-history-substring-search, depth:1
+zplug olets/zsh-abbr, depth:1
 source '/usr/share/fzf/key-bindings.zsh'
-source '/usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh'
-source '/usr/share/zsh/plugins/zsh-autopair/autopair.zsh'
-source '/usr/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh'
-source '/usr/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh'
-ABBR_AUTOLOAD=0 source '/usr/share/zsh/plugins/zsh-abbr/zsh-abbr.plugin.zsh'
+zplug load
 
 # vi mode
 bindkey -v
@@ -97,10 +48,6 @@ zle-line-init() {
     echo -ne "\e[5 q"
 }
 zle -N zle-line-init
-
-# use beam shape cursor on startup and for every new prompt
-echo -ne '\e[5 q'
-preexec() { echo -ne '\e[5 q' ;}
 
 # vim-surround
 autoload -Uz surround
@@ -205,54 +152,9 @@ export HISTFILE=$HOME/.zsh_history
 export HISTSIZE=10000000
 export SAVEHIST=10000000
 
-# disable c-s and c-q for freezing and unfreezing terminal
-stty -ixon
-
 # man pages
-export MANPAGER='nvim +Man!'
 export MANWIDTH=80
  
-setopt PROMPT_SUBST
-
-PROMPT=''
-PROMPT+='%B'
-
-PROMPT+='%F{green}%f'
-PROMPT+='%F{black}%K{green}%n%k%f'
-PROMPT+='%F{green}%f'
-
-PROMPT+='%F{yellow} at %f'
-PROMPT+='%F{blue}%f'
-PROMPT+='%F{black}%K{blue}%m%k%f'
-PROMPT+='%F{blue}%f'
-
-PROMPT+='%F{yellow} in %f'
-PROMPT+='%F{magenta}%f'
-PROMPT+='%K{magenta}%F{black}' PROMPT+='%(5~|%-1~/.../%3~|%4~)' PROMPT+='%f%k'
-PROMPT+='%F{magenta}%f'
-
-autoload -Uz vcs_info
-precmd() { vcs_info }
-git_prompt=''
-git_prompt+='%F{yellow} on %f'
-git_prompt+='%F{cyan}%f'
-git_prompt+='%K{cyan}%F{black}%b%f%k'
-git_prompt+='%F{cyan}%f'
-zstyle ':vcs_info:git:*' formats "$git_prompt"
-PROMPT+='${vcs_info_msg_0_}'
-
-eyes=".\n^\n*"
-nose="_\n-\n~"
-seleyes=$(echo $eyes               | shuf | head -n1)
-selnose=$(echo $nose               | shuf | head -n1)
-selcol=$(echo {1..6} | tr ' ' '\n' | shuf | head -n1)
-PROMPT+=" %F{$selcol}($seleyes$selnose$seleyes)%f"
-
-PROMPT+=$'\n'
-PROMPT+='%F{yellow}ૐ %f'
-PROMPT+=' '
-PROMPT+='%b'
-
 alias mv="mv -iv"
 alias cp="cp -iv"
 alias ls="ls --color=tty"
@@ -329,4 +231,5 @@ abbr -g g '| grep'
 
 unalias abbr
 
-instant-zsh-post
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

@@ -1,7 +1,7 @@
 # default executables
 export EDITOR="nvim"
 export VISUAL="nvim"
-export TERMINAL="alacritty"
+export TERMINAL="kitty"
 export BROWSER="brave"
 export READER="zathura"
 
@@ -10,20 +10,6 @@ export VIEB_WINDOW_FRAME=true
 
 # fix white screen of death in java awt programs
 export _JAVA_AWT_WM_NONREPARENTING=1
-
-# colorful man pages
-function man() {
-  env \
-    LESS_TERMCAP_md="$(tput bold; tput setaf 2)" \
-    LESS_TERMCAP_me="$(tput sgr0)" \
-    LESS_TERMCAP_mb="$(tput blink)" \
-    LESS_TERMCAP_us="$(tput setaf 4)" \
-    LESS_TERMCAP_ue="$(tput sgr0)" \
-    LESS_TERMCAP_so="$(tput smso)" \
-    LESS_TERMCAP_se="$(tput rmso)" \
-    PAGER="${commands[less]:-$PAGER}" \
-    man "$@"
-}
 
 # my scripts
 export MY_SCRIPTS="$HOME/.local/bin/my_scripts"

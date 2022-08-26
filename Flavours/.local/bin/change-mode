@@ -34,6 +34,7 @@ XMONAD_T=~/.config/flavours/xmonad.mustache
 POLYBAR_T=~/.config/flavours/polybar.mustache
 ROFI_T=~/.local/share/flavours/base16/templates/rofi/templates/default.mustache
 ALACRITTY_T=~/.local/share/flavours/base16/templates/alacritty/templates/default.mustache
+KITTY_T=~/.local/share/flavours/base16/templates/kitty/templates/default-256.mustache
 NEOVIM_T=~/.config/flavours/neovim.mustache
 VIEB_T=~/.config/flavours/vieb.mustache
 BSPWM_T=~/.config/flavours/bspwm.mustache
@@ -44,12 +45,14 @@ flavours build "$THEME_LOC" "$GTK2_T" >"$XDG_DATA_HOME/themes/FlatColor/colors2"
 flavours build "$THEME_LOC" "$GTK3_T" >"$XDG_DATA_HOME/themes/FlatColor/colors3"
 flavours build "$THEME_LOC" "$DUNST_T" >"$XDG_CONFIG_HOME/dunst/dunstrc"
 flavours build "$THEME_LOC" "$ZATHURA_T" >"$XDG_CONFIG_HOME/zathura/zathurarc"
-flavours build "$THEME_LOC" "$XMONAD_T" > ~/.xmonad/lib/Colors.hs
+flavours build "$THEME_LOC" "$XMONAD_T" >~/.xmonad/lib/Colors.hs
 flavours build "$THEME_LOC" "$POLYBAR_T" | xrdb -merge
-flavours build "$THEME_LOC" "$ROFI_T" > ~/.config/rofi/themes/rofi-base16.rasi
-flavours build "$THEME_LOC" "$ALACRITTY_T" > ~/.config/alacritty/alacritty-base16.yml
-flavours build "$THEME_LOC" "$NEOVIM_T" > ~/.config/nvim/base16.lua
-flavours build "$THEME_LOC" "$VIEB_T" > ~/.config/Vieb/colors/base16.css
+flavours build "$THEME_LOC" "$ROFI_T" >~/.config/rofi/themes/rofi-base16.rasi
+flavours build "$THEME_LOC" "$ALACRITTY_T" >~/.config/alacritty/alacritty-base16.yml
+flavours build "$THEME_LOC" "$KITTY_T" >~/.config/kitty/base16.conf
+flavours build "$THEME_LOC" "$NEOVIM_T" >~/.config/nvim/base16.lua
+cp ~/.config/nvim/base16.lua ~/.config/awesome/base16.lua
+flavours build "$THEME_LOC" "$VIEB_T" >~/.config/Vieb/colors/base16.css
 flavours build "$THEME_LOC" "$BSPWM_T" | sh
 
 # send USR1 signal to all running st instances
@@ -66,6 +69,10 @@ if pidof polybar 1>/dev/null 2>&1; then
 	polybar-msg cmd restart
 fi
 
+if pidof kitty 1>/dev/null 2>&1; then
+	pidof kitty | xargs kill -s USR1
+fi
+
 if pgrep xmonad 1>/dev/null 2>&1; then
 	xmonad --recompile && xmonad --restart
 fi
@@ -74,8 +81,15 @@ if pidof nvim 1>/dev/null 2>&1; then
 	kill -s USR1 $(pidof nvim)
 fi
 
+if pidof awesome 1>/dev/null 2>&1; then
+	awesome-client <~/.config/awesome/base16.lua
+	awesome-client <~/.config/awesome/beautiful_init.lua
+fi
+
 # restore font and restart dunst
-killall dunst; dunst &
+killall dunst
+dunst &
 
 # refresh gtk theme
-killall xsettingsd; xsettingsd &
+killall xsettingsd
+xsettingsd &
