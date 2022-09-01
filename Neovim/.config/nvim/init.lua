@@ -201,12 +201,12 @@ packer.startup(function(use)
             require('legendary').setup()
             require('which-key').register({
                 name = 'google keep',
-                ['<C-k>'] = { ':GkeepToggle<cr>', 'toggle google keep' },
-                ['<C-n>'] = { ':GkeepNew<cr>', 'new google keep' },
-                ['<C-r>'] = { ':GkeepRefresh<cr>', 'refresh google keep' },
-                ['<C-c>'] = { ':GkeepCheck<cr>', 'toggle checkbox' },
+                k = { ':GkeepToggle<cr>', 'toggle google keep' },
+                n = { ':GkeepNew<cr>', 'new google keep' },
+                r = { ':GkeepRefresh<cr>', 'refresh google keep' },
+                c = { ':GkeepCheck<cr>', 'toggle checkbox' },
             }, {
-                prefix = '<C-c><C-k>',
+                prefix = '<leader>k',
             })
         end,
     }
@@ -483,15 +483,15 @@ packer.startup(function(use)
 
             require('legendary').setup()
             wk.register({
-                ['<C-q>'] = { ':cclose<CR>', 'close quickfix if open' },
-                ['<C-l>'] = { ':lclose<CR>', 'close location if open' },
-                ['<C-w>'] = { ':set list!<CR>', 'Toggle whitespace' },
-                ['<C-r>'] = { ':set wrap!<CR>', 'Toggle line wrapping' },
-                ['<C-s>'] = { ':set spell!<CR>', 'Toggle spell check' },
-                ['<C-n>'] = { ':set relativenumber!<CR>', 'Toggle relative line numbers' },
-                ['<C-c>'] = { t [[:call append(line('.'), '')<CR>j]], 'Insert black line' },
-                ['<C-e>'] = { t ':cd ~/.config/nvim | e init.lua <cr>', 'Edit neovim config' },
-                ['<C-p>'] = {
+                name = 'misc',
+                q = { ':cclose<CR>', 'close quickfix if open' },
+                l = { ':lclose<CR>', 'close location if open' },
+                w = { ':set list!<CR>', 'Toggle whitespace' },
+                r = { ':set wrap!<CR>', 'Toggle line wrapping' },
+                s = { ':set spell!<CR>', 'Toggle spell check' },
+                n = { ':set relativenumber!<CR>', 'Toggle relative line numbers' },
+                e = { t ':cd ~/.config/nvim | e init.lua <cr>', 'Edit neovim config' },
+                c = {
                     function()
                         vim.notify 'Re-compiling neovim config'
                         vim.cmd [[:source ~/.config/nvim/init.lua]]
@@ -500,7 +500,7 @@ packer.startup(function(use)
                     'Re-compile neovim config',
                 },
             }, {
-                prefix = '<C-c>',
+                prefix = '<leader>c',
             })
 
             require('legendary').setup()
@@ -539,17 +539,17 @@ packer.startup(function(use)
             require('legendary').setup()
             require('which-key').register({
                 name = 'code runner',
-                ['<C-x>'] = { ':SnipRun<CR>', 'execute code' },
-                ['<C-k>'] = { ':SnipReset<CR>', 'kill execution' },
-                ['<C-c>'] = { ':SnipClose<CR>', 'clear all output' },
+                x = { ':SnipRun<CR>', 'execute code' },
+                k = { ':SnipReset<CR>', 'kill execution' },
+                c = { ':SnipClose<CR>', 'clear all output' },
             }, {
-                prefix = '<C-c><C-x>',
+                prefix = '<leader>x',
             })
             require('which-key').register({
                 name = 'code runner',
-                ['<C-x>'] = { ':SnipRun<CR>', 'execute code' },
+                x = { ':SnipRun<CR>', 'execute code' },
             }, {
-                prefix = '<C-c><C-x>',
+                prefix = '<leader>x',
                 mode = 'v',
             })
         end,
@@ -581,11 +581,11 @@ packer.startup(function(use)
             require('legendary').setup()
             require('which-key').register({
                 name = 'git',
-                ['<C-g>'] = { ':Git ', 'prompt' },
-                ['<C-c>'] = { ':Git commit ', 'Commit' },
-                ['<C-s>'] = { ':Git status<CR>', 'Commit' },
+                g = { ':Git ', 'prompt' },
+                c = { ':Git commit ', 'Commit' },
+                s = { ':Git status<CR>', 'Commit' },
             }, {
-                prefix = '<C-c><C-g>',
+                prefix = '<leader>g',
                 silent = false,
             })
         end,
@@ -608,13 +608,14 @@ packer.startup(function(use)
             }
             require('legendary').setup()
             wk.register({
-                ['<C-s>'] = {
+                name = 'hunks',
+                s = {
                     function()
                         gitsigns.stage_hunk { vim.fn.line '.', vim.fn.line 'v' }
                     end,
                     'Stage hunk',
                 },
-                ['<C-r>'] = {
+                r = {
                     function()
                         gitsigns.reset_hunk { vim.fn.line '.', vim.fn.line 'v' }
                     end,
@@ -622,30 +623,38 @@ packer.startup(function(use)
                 },
             }, {
                 mode = 'v',
-                prefix = '<C-h>',
+                prefix = '<leader>h',
             })
             require('legendary').setup()
             wk.register({
-                mode = 'hunks',
-                ['<C-s>'] = { gitsigns.stage_hunk, 'Stage hunk' },
-                ['<C-u>'] = { gitsigns.undo_stage_hunk, 'Undo stage hunk' },
-                ['<C-r>'] = { gitsigns.reset_hunk, 'Reset hunk' },
-                ['R'] = { gitsigns.reset_buffer, 'Reset buffer' },
-                ['<C-o>'] = { gitsigns.preview_hunk, 'Preview hunk' },
-                ['<C-b>'] = {
+                h = { actions.prev_hunk, 'Previous hunk' },
+            }, {
+                prefix = '[',
+            })
+            wk.register({
+                h = { actions.next_hunk, 'Previous hunk' },
+            }, {
+                prefix = ']',
+            })
+            wk.register({
+                name = 'hunks',
+                s = { gitsigns.stage_hunk, 'Stage hunk' },
+                u = { gitsigns.undo_stage_hunk, 'Undo stage hunk' },
+                r = { gitsigns.reset_hunk, 'Reset hunk' },
+                R = { gitsigns.reset_buffer, 'Reset buffer' },
+                o = { gitsigns.preview_hunk, 'Preview hunk' },
+                b = {
                     function()
                         gitsigns.blame_line(true)
                     end,
                     'Blame line',
                 },
-                ['S'] = { gitsigns.stage_buffer, 'Stage buffer' },
-                ['U'] = { gitsigns.reset_buffer_index, 'Reset buffer index' },
-                ['<C-n>'] = { actions.next_hunk, 'Next hunk' },
-                ['<C-p>'] = { actions.prev_hunk, 'Previous hunk' },
-                ['<C-q>'] = { ':Gitsigns setqflist<CR>', 'Quickfix list' },
-                ['<C-l>'] = { ':Gitsigns setloclist<CR>', 'Location list' },
+                S = { gitsigns.stage_buffer, 'Stage buffer' },
+                U = { gitsigns.reset_buffer_index, 'Reset buffer index' },
+                q = { ':Gitsigns setqflist<CR>', 'Quickfix list' },
+                l = { ':Gitsigns setloclist<CR>', 'Location list' },
             }, {
-                prefix = '<C-h>',
+                prefix = '<leader>h',
             })
         end,
     }
@@ -677,9 +686,9 @@ packer.startup(function(use)
             require('nvim-tree').setup {}
             require('legendary').setup()
             require('which-key').register({
-                ['<C-f>'] = { ':NvimTreeToggle<CR>', 'Toggle file explorer' },
+                e = { ':NvimTreeToggle<CR>', 'Toggle file explorer' },
             }, {
-                prefix = '<C-f>',
+                prefix = '<leader>e',
             })
         end,
     }
@@ -776,9 +785,9 @@ packer.startup(function(use)
         setup = function()
             require('legendary').setup()
             require('which-key').register({
-                ['K'] = { ':DocsViewToggle<CR>', 'Docs' },
+                K = { ':DocsViewToggle<CR>', 'Docs' },
             }, {
-                prefix = '<C-l>',
+                prefix = '<leader>l',
             })
         end,
         config = function()
@@ -794,14 +803,14 @@ packer.startup(function(use)
             require('lsp_lines').setup()
             require('legendary').setup()
             require('which-key').register({
-                ['<C-d>'] = {
+                d = {
                     function()
                         local current = vim.diagnostic.config().virtual_lines
                         vim.diagnostic.config { virtual_lines = not current }
                     end,
                     'toggle virtual diagnostics',
                 },
-            }, { prefix = '<C-l>' })
+            }, { prefix = '<leader>l' })
         end,
     }
 
@@ -852,7 +861,7 @@ packer.startup(function(use)
             local on_attach = function(_, buffer)
                 require('legendary').setup()
                 require('which-key').register({
-                    ['gd'] = { vim.lsp.buf.definition, 'Go to definition' },
+                    gd = { vim.lsp.buf.definition, 'Go to definition' },
                 }, { buffer = buffer })
 
                 require('legendary').setup()
@@ -863,10 +872,7 @@ packer.startup(function(use)
                 require('legendary').setup()
                 require('which-key').register({
                     name = 'LSP',
-                    ['<C-n>'] = { vim.diagnostic.goto_next, 'Next diagnostic' },
-                    ['<C-p>'] = { vim.diagnostic.goto_prev, 'Previous diagnostic' },
-
-                    ['<C-f>'] = {
+                    f = {
                         function()
                             vim.lsp.buf.format {
                                 async = true,
@@ -884,24 +890,20 @@ packer.startup(function(use)
                         'Format',
                     },
 
-                    ['<C-h>'] = { vim.lsp.buf.hover, 'Hover' },
-
-                    ['<C-k>'] = { vim.lsp.buf.rename, 'Rename' },
-
-                    ['<C-l>'] = { vim.lsp.buf.definition, 'Definitions' },
-                    ['<C-t>'] = { vim.lsp.buf.type_definition, 'Type definitions' },
-                    ['<C-r>'] = { vim.lsp.buf.references, 'References' },
-                    ['<C-i>'] = { vim.lsp.buf.implementation, 'Implementations' },
-
-                    ['<C-c>'] = { vim.lsp.buf.code_action, 'Code actions' },
-
-                    ['<C-s>'] = {
+                    h = { vim.lsp.buf.hover, 'Hover' },
+                    k = { vim.lsp.buf.rename, 'Rename' },
+                    l = { vim.lsp.buf.definition, 'Definitions' },
+                    t = { vim.lsp.buf.type_definition, 'Type definitions' },
+                    r = { vim.lsp.buf.references, 'References' },
+                    i = { vim.lsp.buf.implementation, 'Implementations' },
+                    c = { vim.lsp.buf.code_action, 'Code actions' },
+                    s = {
                         name = 'symbols',
-                        ['<C-d>'] = { vim.lsp.buf.document_symbol, 'Document' },
-                        ['<C-w>'] = { vim.lsp.buf.workspace_symbol, 'Workspace' },
+                        d = { vim.lsp.buf.document_symbol, 'Document' },
+                        w = { vim.lsp.buf.workspace_symbol, 'Workspace' },
                     },
                 }, {
-                    prefix = '<C-l>',
+                    prefix = '<leader>l',
                     buffer = buffer,
                 })
             end
@@ -1047,14 +1049,21 @@ packer.startup(function(use)
             diaglist.init {}
             require('legendary').setup()
             require('which-key').register({
-                name = 'LSP',
-                ['<C-d>'] = {
-                    name = 'diagnostics',
-                    ['<C-q>'] = { diaglist.open_all_diagnostics, 'send all diagnostics to quickfix' },
-                    ['<C-l>'] = { diaglist.open_buffer_diagnostics, 'send buffer diagnostics to quickfix' },
-                },
+                d = { vim.diagnostic.goto_prev, 'Previous diagnostic' },
             }, {
-                prefix = '<C-c>',
+                prefix = '[',
+            })
+            require('which-key').register({
+                d = { vim.diagnostic.goto_next, 'Next diagnostic' },
+            }, {
+                prefix = ']',
+            })
+            require('which-key').register({
+                name = 'diagnostics',
+                q = { diaglist.open_all_diagnostics, 'send all diagnostics to quickfix' },
+                l = { diaglist.open_buffer_diagnostics, 'send buffer diagnostics to quickfix' },
+            }, {
+                prefix = '<leader>d',
             })
         end,
     }
@@ -1242,8 +1251,6 @@ packer.startup(function(use)
             vim.api.nvim_set_keymap('c', '<C-j>', '<down>', { noremap = true })
             vim.api.nvim_set_keymap('c', '<C-k>', '<up>', { noremap = true })
 
-            local cmp = require 'cmp'
-
             for _, cmd_type in ipairs { ':', '/', '?', '@' } do
                 cmp.setup.cmdline(cmd_type, {
                     sources = {
@@ -1361,16 +1368,15 @@ packer.startup(function(use)
 
                     {
                         text = function(buffer)
-                            return (
-                                buffer.diagnostics.errors ~= 0
-                                and U.SEVERITY_SIGNS.ERROR .. ' ' .. buffer.diagnostics.errors
-                            )
-                                or (buffer.diagnostics.warnings ~= 0 and U.SEVERITY_SIGNS.WARN .. ' ' .. buffer.diagnostics.warnings)
+                            local d = buffer.diagnostics
+                            return (d.errors ~= 0 and U.SEVERITY_SIGNS.ERROR .. ' ' .. d.errors)
+                                or (d.warnings ~= 0 and U.SEVERITY_SIGNS.WARN .. ' ' .. d.warnings)
                                 or ''
                         end,
                         fg = function(buffer)
-                            return (buffer.diagnostics.errors ~= 0 and get_hex('DiagnosticError', 'fg'))
-                                or (buffer.diagnostics.warnings ~= 0 and get_hex('DiagnosticWarn', 'fg'))
+                            local d = buffer.diagnostics
+                            return (d.errors ~= 0 and get_hex('DiagnosticError', 'fg'))
+                                or (d.warnings ~= 0 and get_hex('DiagnosticWarn', 'fg'))
                                 or nil
                         end,
                         truncation = { priority = 1 },
@@ -1406,20 +1412,30 @@ packer.startup(function(use)
             local wk = require 'which-key'
             require('legendary').setup()
             wk.register({
-                ['<C-b>'] = { telescope.buffers, 'Switch buffers' },
+                b = { telescope.buffers, 'Switch buffers' },
             }, {
-                prefix = '<C-b>',
+                prefix = '<leader>b',
+            })
+
+            require('legendary').setup()
+            wk.register({
+                b = { '<Plug>(cokeline-focus-prev)', 'Previous buffer' },
+            }, {
+                prefix = '[',
+            })
+            wk.register({
+                b = { '<Plug>(cokeline-focus-next)', 'Next buffer' },
+            }, {
+                prefix = ']',
             })
 
             require('legendary').setup()
             wk.register({
                 name = 'buffers',
-                ['<C-d>'] = { ':Bdelete<CR>', 'Close buffer' },
-                ['<C-n>'] = { '<Plug>(cokeline-focus-next)', 'Next buffer' },
-                ['<C-p>'] = { '<Plug>(cokeline-focus-prev)', 'Previous buffer' },
-                ['<C-l>'] = { '<Plug>(cokeline-switch-next)', 'Switch with next buffer' },
-                ['<C-h>'] = { '<Plug>(cokeline-switch-prev)', 'Switch with previous buffer' },
-            }, { prefix = '<C-b>' })
+                d = { ':Bdelete<CR>', 'Close buffer' },
+                l = { '<Plug>(cokeline-switch-next)', 'Switch with next buffer' },
+                h = { '<Plug>(cokeline-switch-prev)', 'Switch with previous buffer' },
+            }, { prefix = '<leader>b' })
 
             require('legendary').setup()
             wk.register({
@@ -1457,7 +1473,6 @@ packer.startup(function(use)
         },
         config = function()
             local telescope = require 'telescope'
-            local themes = require 'telescope.themes'
             local builtin = require 'telescope.builtin'
             local actions = require 'telescope.actions'
             telescope.setup {
@@ -1491,12 +1506,12 @@ packer.startup(function(use)
             require('legendary').setup()
             require('which-key').register({
                 name = 'find files',
-                ['<C-p>'] = { builtin.find_files, 'Find files' },
-                ['<C-g>'] = { builtin.git_files, 'Git files' },
-                ['<C-o>'] = { builtin.oldfiles, 'Recent files' },
-                ['<C-r>'] = { builtin.resume, 'Resume previous' },
+                f = { builtin.find_files, 'Find files' },
+                g = { builtin.git_files, 'Git files' },
+                o = { builtin.oldfiles, 'Recent files' },
+                r = { builtin.resume, 'Resume previous' },
             }, {
-                prefix = '<C-p>',
+                prefix = '<leader>f',
             })
 
             require('legendary').setup()
@@ -1509,10 +1524,10 @@ packer.startup(function(use)
             require('legendary').setup()
             require('which-key').register({
                 name = 'string match',
-                ['<C-t>'] = { builtin.live_grep, 'Live grep' },
-                ['<C-s>'] = { builtin.current_buffer_fuzzy_find, 'Buffer lines' },
+                t = { builtin.live_grep, 'Live grep' },
+                s = { builtin.current_buffer_fuzzy_find, 'Buffer lines' },
             }, {
-                prefix = '<C-t>',
+                prefix = '<leader>t',
             })
         end,
     }
