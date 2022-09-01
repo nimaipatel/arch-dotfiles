@@ -4,7 +4,7 @@ local xresources = require 'beautiful.xresources'
 local dpi = xresources.apply_dpi
 
 local lain = require 'lain'
-local bling = require 'bling'
+local markup = lain.util.markup
 
 -- Standard awesome library
 local gears = require 'gears'
@@ -212,55 +212,6 @@ local playerctl_widget = wibox.widget {
     },
 }
 
--- Get Song Info
-local playerctl = bling.signal.playerctl.lib()
-
-local play_icon = '/usr/share/icons/Papirus-Light/24x24/categories/spotify.svg'
-local pause_icon = '/usr/share/icons/Papirus-Dark/24x24/panel/spotify-indicator.svg'
-
-playerctl:connect_signal('playback_status', function(_, playing, player_name)
-    if playing then
-        spotify_icon:set_image(gears.surface.load(play_icon))
-    else
-        spotify_icon:set_image(gears.surface.load(pause_icon))
-    end
-end)
-
-playerctl:connect_signal('metadata', function(_, title, artist, album_path, album, new, player_name)
-    playerctl_art_widget:set_image(gears.surface.load_uncached(album_path))
-    playerctl_name_widget:set_markup_silently(player_name)
-    playerctl_title_widget:set_markup_silently(title)
-    playerctl_artist_widget:set_markup_silently(artist)
-end)
-
-playerctl_widget:connect_signal('button::press', function(_, _, _, button)
-    if button == 1 then
-        playerctl:play_pause()
-    end
-end)
-
-local function cpu_perc_to_bar(perc)
-    if perc > 80 then
-        return '█'
-    elseif perc > 70 then
-        return '█'
-    elseif perc > 60 then
-        return '▇'
-    elseif perc > 50 then
-        return '▆'
-    elseif perc > 40 then
-        return '▅'
-    elseif perc > 30 then
-        return '▄'
-    elseif perc > 20 then
-        return '▃'
-    elseif perc > 10 then
-        return '▂'
-    else
-        return '▁'
-    end
-end
-
 awful.screen.connect_for_each_screen(function(s)
     -- Each screen has its own tag table.
     awful.tag(
@@ -363,12 +314,44 @@ awful.screen.connect_for_each_screen(function(s)
             spacing = 10,
             lain.widget.cpu {
                 settings = function()
-                    local map = cpu_perc_to_bar
+                    local map = function(perc)
+                        local ret
+                        if perc > 80 then
+                            ret = '█'
+                        elseif perc > 70 then
+                            ret = '█'
+                        elseif perc > 60 then
+                            ret = '▇'
+                        elseif perc > 50 then
+                            ret = '▆'
+                        elseif perc > 40 then
+                            ret = '▅'
+                        elseif perc > 30 then
+                            ret = '▄'
+                        elseif perc > 20 then
+                            ret = '▃'
+                        elseif perc > 10 then
+                            ret = '▂'
+                        else
+                            ret = '▁'
+                        end
+                        local fg = markup.fg.color
+                        if perc > 70 then
+                            ret = fg(BASE16_COLORS.base08, ret)
+                        elseif perc > 20 then
+                            ret = fg(BASE16_COLORS.base0A, ret)
+                        else
+                            ret = fg(BASE16_COLORS.base0B, ret)
+                        end
+                        return ret
+                    end
+
                     local fmt = 'CPU '
                     fmt = fmt .. map(cpu_now[0].usage)
                     fmt = fmt .. map(cpu_now[1].usage)
                     fmt = fmt .. map(cpu_now[2].usage)
                     fmt = fmt .. map(cpu_now[3].usage)
+
                     widget:set_markup(fmt)
                 end,
             },
@@ -389,10 +372,51 @@ awful.screen.connect_for_each_screen(function(s)
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
             lain.widget.bat {
+                timeout = 1,
                 battery = 'BAT1',
                 ac = 'ACAD',
                 settings = function()
-                    widget:set_markup(bat_now.status .. ' ' .. bat_now.perc .. '% ')
+                    local map = function(bat)
+                        local fg = markup.fg.color
+                        local perc = bat.perc
+                        local ret
+                        if perc > 90 then
+                            ret = ''
+                        elseif perc > 80 then
+                            ret = ''
+                        elseif perc > 70 then
+                            ret = ''
+                        elseif perc > 60 then
+                            ret = ''
+                        elseif perc > 50 then
+                            ret = ''
+                        elseif perc > 40 then
+                            ret = ''
+                        elseif perc > 30 then
+                            ret = ''
+                        elseif perc > 20 then
+                            ret = ''
+                        elseif perc > 10 then
+                            ret = ''
+                        else
+                            ret = ''
+                        end
+
+                        if perc > 70 then
+                            ret = fg(BASE16_COLORS.base0B, ret)
+                        elseif perc > 20 then
+                            ret = fg(BASE16_COLORS.base0A, ret)
+                        else
+                            ret = fg(BASE16_COLORS.base08, ret)
+                        end
+
+                        if bat.status == 'Charging' then
+                            ret = fg(BASE16_COLORS.base0A, ' ') .. ret
+                        end
+
+                        return ret
+                    end
+                    widget:set_markup(map(bat_now) .. ' ' .. bat_now.perc .. '% ')
                 end,
             },
         },
@@ -410,14 +434,26 @@ root.buttons(gears.table.join(
 ))
 -- }}}
 
-local pulsemixer = bling.module.scratchpad {
-    command = terminal .. ' --class pulsemixer -e pulsemixer',
-    rule = { instance = 'pulsemixer' },
-    sticky = true,
-    autoclose = true,
-    floating = true,
-    geometry = { x = 360, y = 90, height = 900, width = 1200 },
-    reapply = true,
+local pulsemixer = lain.util.quake {
+    app = terminal,
+    extra = '-e pulsemixer',
+    name = 'pulsemixer',
+    argname = '--class %s',
+    width = 0.5,
+    height = 0.75,
+    horiz = 'center',
+    vert = 'center',
+}
+
+local gkeep = lain.util.quake {
+    app = terminal,
+    extra = '-e nvim -c GkeepOpen',
+    name = 'gkeep',
+    argname = '--class %s',
+    width = 0.5,
+    height = 0.75,
+    horiz = 'center',
+    vert = 'center',
 }
 
 -- {{{ Key bindings
@@ -475,6 +511,10 @@ local globalkeys = gears.table.join(
     -- Standard program
     awful.key({ modkey }, 'b', function(c)
         pulsemixer:toggle()
+    end, { description = 'toggle pulsemixer', group = 'awesome' }),
+
+    awful.key({ modkey }, 'g', function(c)
+        gkeep:toggle()
     end, { description = 'toggle pulsemixer', group = 'awesome' }),
 
     awful.key({ modkey }, 'Return', function()

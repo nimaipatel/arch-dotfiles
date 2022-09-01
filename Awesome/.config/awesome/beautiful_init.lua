@@ -60,5 +60,3 @@ b.border_focus = b.bg_focus
 b.border_marked = b.base08
 
 b.systray_icon_spacing = dpi(10)
-
-return BASE16_COLORS.base0A
