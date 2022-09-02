@@ -160,8 +160,6 @@ alias cp="cp -iv"
 alias ls="ls --color=tty"
 alias diff="diff --color"
 alias grep="grep --color=auto --exclude-dir={.bzr,CVS,.git,.hg,.svn,.idea,.tox}"
-alias vi="nvim"
-alias vim="nvim"
 
 alias mew="setsid -f"
 
@@ -177,6 +175,9 @@ alias mem="ps axch -o cmd,%mem --sort=-%mem | head"
 alias abbr='abbr -S --quiet'
 
 alias get_idf='. $HOME/esp/esp-idf/export.sh'
+
+abbr vi="nvim"
+abbr vim="nvim"
 
 abbr sz="sw zathura"
 abbr sv="sw nsxiv"

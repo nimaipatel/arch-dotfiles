@@ -4,8 +4,4 @@ globals = {
   "screen",
   "client",
   "awesome",
-  "terminal",
-  "editor",
-  "editor_cmd",
-  "modkey",
 }

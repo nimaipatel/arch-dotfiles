@@ -14,9 +14,11 @@ require 'awful.autofocus'
 local wibox = require 'wibox'
 local beautiful = require 'beautiful'
 local naughty = require 'naughty'
-local menubar = require 'menubar'
 local hotkeys_popup = require 'awful.hotkeys_popup'
 require 'awful.hotkeys_popup.keys'
+
+local modalbind = require 'modalbind'
+modalbind.init()
 
 if awesome.startup_errors then
     naughty.notify {
@@ -47,11 +49,10 @@ end
 require 'base16'
 require 'beautiful_init'
 
-terminal = os.getenv 'TERMINAL' or 'kitty'
-editor = os.getenv 'EDITOR' or 'nvim'
-editor_cmd = terminal .. ' -e ' .. editor
-
-modkey = 'Mod4'
+local terminal = os.getenv 'TERMINAL' or 'kitty'
+local editor = os.getenv 'EDITOR' or 'nvim'
+local editor_cmd = terminal .. ' -e ' .. editor
+local modkey = 'Mod4'
 
 awful.layout.layouts = {
     awful.layout.suit.tile,
@@ -75,8 +76,6 @@ local myawesomemenu = {
             hotkeys_popup.show_help(nil, awful.screen.focused())
         end,
     },
-    { 'manual', terminal .. ' -e man awesome' },
-    { 'edit config', editor_cmd .. ' ' .. awesome.conffile },
     { 'restart', awesome.restart },
     {
         'quit',
@@ -95,17 +94,15 @@ local mymainmenu = awful.menu {
         {
             '&office suite',
             {
-                { 'open writer', 'lowriter' },
-                { 'open impress', 'loimpress' },
-                { 'open calc', 'localc' },
+                { 'open &writer', 'libreoffice --writer' },
+                { 'open &impress', 'libreoffice --impress' },
+                { 'open &calc', 'libreoffice --calc' },
             },
         },
     },
 }
 
 local mylauncher = awful.widget.launcher { image = beautiful.awesome_icon, menu = mymainmenu }
-
-menubar.utils.terminal = terminal -- Set the terminal for applications that require it
 
 local mytextclock = wibox.widget.textclock('%A %d %B, %Y %I:%M%p ', 10)
 
@@ -475,21 +472,19 @@ local globalkeys = gears.table.join(
     end, { description = 'go back', group = 'client' }),
 
     -- Standard program
-    key({ modkey }, 'b', function()
+    key({ modkey }, 'v', function()
         pulsemixer:toggle()
-    end, { description = 'toggle pulsemixer', group = 'awesome' }),
+    end, { description = 'toggle pulsemixer', group = 'launcher' }),
 
     key({ modkey }, 'g', function()
         gkeep:toggle()
-    end, { description = 'toggle pulsemixer', group = 'awesome' }),
+    end, { description = 'toggle google keep window', group = 'launcher' }),
 
     key({ modkey }, 'Return', function()
         awful.spawn(terminal)
     end, { description = 'open a terminal', group = 'launcher' }),
 
     key({ modkey, 'Control' }, 'r', awesome.restart, { description = 'reload awesome', group = 'awesome' }),
-
-    key({ modkey, 'Shift' }, 'q', awesome.quit, { description = 'quit awesome', group = 'awesome' }),
 
     key({ modkey }, 'l', function()
         awful.tag.incmwfact(0.05)
@@ -543,12 +538,7 @@ local globalkeys = gears.table.join(
             exe_callback = awful.util.eval,
             history_path = awful.util.get_cache_dir() .. '/history_eval',
         }
-    end, { description = 'lua execute prompt', group = 'awesome' }),
-
-    -- Menubar
-    key({ modkey }, 'p', function()
-        menubar.show()
-    end, { description = 'show the menubar', group = 'launcher' })
+    end, { description = 'lua execute prompt', group = 'awesome' })
 )
 
 local clientkeys = gears.table.join(
@@ -581,8 +571,6 @@ local clientkeys = gears.table.join(
     end, { description = 'toggle keep on top', group = 'client' }),
 
     key({ modkey }, 'n', function(c)
-        -- The client currently has the input focus, so it cannot be
-        -- minimized, since minimized clients can't have the focus.
         c.minimized = true
     end, { description = 'minimize', group = 'client' }),
 
@@ -648,6 +636,36 @@ for i = 1, 9 do
         end, { description = 'toggle focused client on tag #' .. i, group = 'tag' })
     )
 end
+
+local abbreviation = function(str)
+    local template = [[sh -c 'sleep 0.2 ; xdotool type --clearmodifiers "%s" ; xdotool keyup super']]
+    return function()
+        awful.util.spawn(string.format(template, str))
+    end
+end
+
+-- abbreviations
+globalkeys = gears.table.join(
+    globalkeys,
+    -- Move client to tag.
+    key({ modkey }, 'a', function()
+        modalbind.grab {
+            keymap = {
+                { 'separator', 'Details' },
+                { 'n', abbreviation 'Nimai Patel', 'name' },
+                { 'e', abbreviation 'nimai.m.patel@gmail.com', 'email' },
+                { 'g', abbreviation 'https://www.github.com/nimaipatel', 'github' },
+                { 'separator', 'Dates' },
+                { 'd', abbreviation '$(date +%d/%m/%Y)', 'date in dd/mm/yyyy format' },
+                { 't', abbreviation '$(date +%I:%M%p)', 'time in h:m:[AM/PM] format' },
+                { 'w', abbreviation '$(date +%A)', 'day of the week' },
+                { 's', abbreviation '$(date)', 'output of unix date command' },
+            },
+            name = 'abbreviations',
+            stay_in_mode = false,
+        }
+    end)
+)
 
 local clientbuttons = gears.table.join(
     awful.button({}, 1, function(c)

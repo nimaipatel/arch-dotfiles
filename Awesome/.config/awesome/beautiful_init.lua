@@ -60,3 +60,10 @@ b.border_focus = b.bg_focus
 b.border_marked = b.base08
 
 b.systray_icon_spacing = dpi(10)
+
+
+b.modalbind_font = b.font
+b.modebox_fg = b.fg_normal
+b.modebox_bg = b.bg_normal
+b.modebox_border = b.border_normal
+b.modebox_border_width = 5
