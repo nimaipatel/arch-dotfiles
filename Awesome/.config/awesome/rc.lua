@@ -17,9 +17,6 @@ local naughty = require 'naughty'
 local hotkeys_popup = require 'awful.hotkeys_popup'
 require 'awful.hotkeys_popup.keys'
 
-local modalbind = require 'modalbind'
-modalbind.init()
-
 if awesome.startup_errors then
     naughty.notify {
         preset = naughty.config.presets.critical,
@@ -49,6 +46,10 @@ end
 require 'base16'
 require 'beautiful_init'
 
+local modalbind = require 'modalbind'
+modalbind.init()
+modalbind.hide_default_options()
+
 local terminal = os.getenv 'TERMINAL' or 'kitty'
 local editor = os.getenv 'EDITOR' or 'nvim'
 local editor_cmd = terminal .. ' -e ' .. editor
@@ -59,14 +60,91 @@ awful.layout.layouts = {
     awful.layout.suit.tile.left,
     awful.layout.suit.tile.bottom,
     awful.layout.suit.tile.top,
-    awful.layout.suit.floating,
     awful.layout.suit.fair,
     awful.layout.suit.fair.horizontal,
-    awful.layout.suit.spiral,
-    awful.layout.suit.spiral.dwindle,
-    awful.layout.suit.max,
-    awful.layout.suit.max.fullscreen,
-    awful.layout.suit.magnifier,
+    awful.layout.suit.floating,
+}
+
+local layoutmenu = {
+    {
+        '&Tile',
+        {
+            {
+                '&Right',
+                function()
+                    awful.layout.set(awful.layout.suit.tile)
+                end,
+            },
+            {
+                '&Left',
+                function()
+                    awful.layout.set(awful.layout.suit.tile.left)
+                end,
+            },
+            {
+                '&Bottom',
+                function()
+                    awful.layout.set(awful.layout.suit.tile.bottom)
+                end,
+            },
+            {
+                '&Top',
+                function()
+                    awful.layout.set(awful.layout.suit.tile.top)
+                end,
+            },
+        },
+    },
+    {
+        '&Fair',
+        {
+            {
+                '&Vertical',
+                function()
+                    awful.layout.set(awful.layout.suit.fair)
+                end,
+            },
+            {
+                '&Horizontal',
+                function()
+                    awful.layout.set(awful.layout.suit.fair.horizontal)
+                end,
+            },
+        },
+    },
+    {
+        'F&loating',
+        function()
+            awful.layout.set(awful.layout.suit.floating)
+        end,
+    },
+}
+
+local sysopts = {
+    {
+        '&Restart',
+        function()
+            awful.util.spawn 'reboot'
+        end,
+    },
+    {
+        'L&ogout',
+        function()
+            awful.util.spawn('pkill -u -KILL ' .. os.getenv 'USER')
+        end,
+    },
+    {
+        '&Lock',
+        function()
+            awful.util.spawn 'slock'
+        end,
+    },
+    {
+        '&Power Off',
+        function()
+            awful.util.spawn 'poweroff'
+        end,
+    },
 }
 
 local myawesomemenu = {
@@ -87,16 +165,17 @@ local myawesomemenu = {
 
 local mymainmenu = awful.menu {
     items = {
-        { '&awesome', myawesomemenu, beautiful.awesome_icon },
-        { 'open &terminal', terminal },
-        { 'open &editor', editor_cmd },
-        { 'open &browser', os.getenv 'BROWSER' },
+        { '&Awesome', myawesomemenu, beautiful.awesome_icon },
+        { '&System', sysopts },
+        { '&Terminal', terminal },
+        { '&Editor', editor_cmd },
+        { '&Browser', os.getenv 'BROWSER' },
         {
-            '&office suite',
+            '&Office Suite',
             {
-                { 'open &writer', 'libreoffice --writer' },
-                { 'open &impress', 'libreoffice --impress' },
-                { 'open &calc', 'libreoffice --calc' },
+                { '&Writer', 'libreoffice --writer' },
+                { '&Impress', 'libreoffice --impress' },
+                { '&Calc', 'libreoffice --calc' },
             },
         },
     },
@@ -250,11 +329,11 @@ local wifi_widget = awful.widget.watch(
     [[nmcli -get-values IN-USE,SSID,SIGNAL device wifi list]],
     5,
     function(widget, stdout)
-        widget:set_text 'no internet'
+        widget:set_text '睊'
         for line in stdout:gmatch '[^\r\n]+' do
             if line:match '^*:' then
                 local ssid, power = line:match [[^*:(.+):(.+)]]
-                widget:set_text('ssid: ' .. ssid .. ' power: ' .. power .. '%')
+                widget:set_text('直  ' .. ssid .. ' ' .. power .. '%')
             end
         end
     end
@@ -275,16 +354,7 @@ awful.screen.connect_for_each_screen(function(s)
     s.mylayoutbox = awful.widget.layoutbox(s)
     s.mylayoutbox:buttons(gears.table.join(
         awful.button({}, 1, function()
-            awful.layout.inc(1)
-        end),
-        awful.button({}, 3, function()
-            awful.layout.inc(-1)
-        end),
-        awful.button({}, 4, function()
-            awful.layout.inc(1)
-        end),
-        awful.button({}, 5, function()
-            awful.layout.inc(-1)
+            awful.menu (layoutmenu):show()
         end)
     ))
     -- Create a taglist widget
@@ -359,7 +429,7 @@ awful.screen.connect_for_each_screen(function(s)
         layout = wibox.layout.align.horizontal,
         { -- Left widgets
             layout = wibox.layout.fixed.horizontal,
-            spacing = 10,
+            spacing = dpi(30),
             lain.widget.cpu {
                 settings = function()
                     local map = function(perc)
@@ -408,11 +478,6 @@ awful.screen.connect_for_each_screen(function(s)
                     widget:set_markup('MEM ' .. mem_now.perc .. '%') --luacheck: ignore
                 end,
             },
-            lain.widget.fs {
-                settings = function()
-                    widget:set_markup('root: ' .. fs_now['/'].percentage .. '% used') --luacheck: ignore
-                end,
-            },
         },
         { -- Right widgets
             valign = 'center',
@@ -422,7 +487,7 @@ awful.screen.connect_for_each_screen(function(s)
         },
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
-            spacing = dpi(10),
+            spacing = dpi(30),
             wifi_widget,
             lain.widget.bat {
                 timeout = 1,
@@ -513,11 +578,27 @@ local gkeep = lain.util.quake {
 local globalkeys = gears.table.join(
     key({ modkey }, '=', function()
         lain.util.useless_gaps_resize(1)
-    end, { description = 'increment useless gaps', group = 'tag' }),
+    end, { description = 'increment useless gaps', group = 'gaps' }),
 
     key({ modkey }, '-', function()
         lain.util.useless_gaps_resize(-1)
-    end, { description = 'decrement useless gaps', group = 'tag' }),
+    end, { description = 'decrement useless gaps', group = 'gaps' }),
+
+    key({ modkey }, 'p', function()
+        awful.util.spawn 'passmenu -i -p Passwords'
+    end, { description = 'select password', group = 'menus' }),
+
+    key({ modkey }, 'u', function()
+        awful.util.spawn 'rofi -show emoji'
+    end, { description = 'select emojis', group = 'menus' }),
+
+    key({ modkey }, 'd', function()
+        awful.util.spawn 'rofi -show drun'
+    end, { description = 'run desktop apps', group = 'menus' }),
+
+    key({ modkey }, 'r', function()
+        awful.util.spawn 'rofi -show run'
+    end, { description = 'run command', group = 'menus' }),
 
     key({}, 'XF86MonBrightnessDown', function()
         awful.util.spawn 'brightnessctl set 10%-'
@@ -563,8 +644,6 @@ local globalkeys = gears.table.join(
     key({ modkey, 'Control' }, 'k', function()
         awful.screen.focus_relative(-1)
     end, { description = 'focus the previous screen', group = 'screen' }),
-
-    key({ modkey }, 'u', awful.client.urgent.jumpto, { description = 'jump to urgent client', group = 'client' }),
 
     key({ modkey }, 'Tab', function()
         awful.client.focus.history.previous()
@@ -628,11 +707,6 @@ local globalkeys = gears.table.join(
         end
     end, { description = 'restore minimized', group = 'client' }),
 
-    -- Prompt
-    key({ modkey }, 'r', function()
-        awful.screen.focused().mypromptbox:run()
-    end, { description = 'run prompt', group = 'launcher' }),
-
     key({ modkey }, 'x', function()
         awful.prompt.run {
             prompt = 'Run Lua code: ',
@@ -660,7 +734,7 @@ local clientkeys = gears.table.join(
         { description = 'toggle floating', group = 'client' }
     ),
 
-    key({ modkey, 'Control' }, 'Return', function(c)
+    key({ modkey, 'Shift' }, 'Return', function(c)
         c:swap(awful.client.getmaster())
     end, { description = 'move to master', group = 'client' }),
 
@@ -769,6 +843,63 @@ globalkeys = gears.table.join(
     end)
 )
 
+-- playerctl
+globalkeys = gears.table.join(
+    globalkeys,
+    -- Move client to tag.
+    key({ modkey }, 'b', function()
+        modalbind.grab {
+            keymap = {
+                {
+                    'p',
+                    function()
+                        awful.util.spawn 'playerctl --player=spotify play-pause'
+                    end,
+                    'play-pause',
+                },
+                {
+                    'k',
+                    function()
+                        awful.util.spawn 'playerctl --player=spotify next'
+                    end,
+                    'next song',
+                },
+                {
+                    'j',
+                    function()
+                        awful.util.spawn 'playerctl --player=spotify previous'
+                    end,
+                    'previous song',
+                },
+                { 'separator', 'Loop Settings' },
+                {
+                    'o',
+                    function()
+                        awful.util.spawn 'playerctl --player=spotify loop none'
+                    end,
+                    'no loop',
+                },
+                {
+                    't',
+                    function()
+                        awful.util.spawn 'playerctl --player=spotify loop track'
+                    end,
+                    'loop track',
+                },
+                {
+                    'p',
+                    function()
+                        awful.util.spawn 'playerctl --player=spotify loop playlist'
+                    end,
+                    'loop playlist',
+                },
+            },
+            name = 'spotify controls',
+            stay_in_mode = true,
+        }
+    end)
+)
+
 local clientbuttons = gears.table.join(
     awful.button({}, 1, function(c)
         c:emit_signal('request::activate', 'mouse_click', { raise = true })
@@ -857,7 +988,8 @@ awful.rules.rules = {
     { rule = { instance = 'brave-browser' }, properties = { tag = ' ૨ ' } },
     { rule = { instance = 'libreoffice' }, properties = { tag = ' ૩ ' } },
     { rule = { instance = 'soffice' }, properties = { tag = ' ૩ ' } },
-    { rule = { instance = 'scrcpy' }, properties = { tag = ' ૯ ' } },
+    { rule = { instance = 'whatsapp-nativefier-d40211' }, properties = { tag =  ' ૫ '} },
+    { rule = { instance = 'scrcpy' }, properties = { floating = true, tag = ' ૯ ' } },
 
     -- Add titlebars to normal clients and dialogs
     { rule_any = { type = { 'normal', 'dialog' } }, properties = { titlebars_enabled = true } },

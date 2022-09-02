@@ -65,5 +65,8 @@ b.systray_icon_spacing = dpi(10)
 b.modalbind_font = b.font
 b.modebox_fg = b.fg_normal
 b.modebox_bg = b.bg_normal
-b.modebox_border = b.border_normal
+b.modebox_border = b.border_focus
 b.modebox_border_width = 5
+
+b.menu_border_color = b.border_focus
+b.menu_border_width = 2
