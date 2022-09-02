@@ -352,11 +352,9 @@ awful.screen.connect_for_each_screen(function(s)
     -- Create an imagebox widget which will contain an icon indicating which layout we're using.
     -- We need one layoutbox per screen.
     s.mylayoutbox = awful.widget.layoutbox(s)
-    s.mylayoutbox:buttons(gears.table.join(
-        awful.button({}, 1, function()
-            awful.menu (layoutmenu):show()
-        end)
-    ))
+    s.mylayoutbox:buttons(gears.table.join(awful.button({}, 1, function()
+        awful.menu(layoutmenu):show()
+    end)))
     -- Create a taglist widget
     s.mytaglist = awful.widget.taglist {
         screen = s,
@@ -691,14 +689,6 @@ local globalkeys = gears.table.join(
         awful.tag.incncol(-1, nil, true)
     end, { description = 'decrease the number of columns', group = 'layout' }),
 
-    key({ modkey }, 'space', function()
-        awful.layout.inc(1)
-    end, { description = 'select next', group = 'layout' }),
-
-    key({ modkey, 'Shift' }, 'space', function()
-        awful.layout.inc(-1)
-    end, { description = 'select previous', group = 'layout' }),
-
     key({ modkey, 'Control' }, 'n', function()
         local c = awful.client.restore()
         -- Focus restored client
@@ -900,6 +890,70 @@ globalkeys = gears.table.join(
     end)
 )
 
+globalkeys = gears.table.join(
+    globalkeys,
+    -- Move client to tag.
+    key({ modkey }, 'space', function()
+        modalbind.grab {
+            keymap = {
+                {
+                    'f',
+                    function()
+                        awful.layout.set(awful.layout.suit.fair)
+                    end,
+                    'floating',
+                },
+                { 'separator', 'Tile' },
+                {
+                    'r',
+                    function()
+                        awful.layout.set(awful.layout.suit.tile)
+                    end,
+                    'tile with right stack',
+                },
+                {
+                    'b',
+                    function()
+                        awful.layout.set(awful.layout.suit.tile.bottom)
+                    end,
+                    'tile with bottom stack',
+                },
+                {
+                    'l',
+                    function()
+                        awful.layout.set(awful.layout.suit.tile.left)
+                    end,
+                    'tile with left stack',
+                },
+                {
+                    't',
+                    function()
+                        awful.layout.set(awful.layout.suit.tile.top)
+                    end,
+                    'tile with top stack',
+                },
+                { 'separator', 'Fair' },
+                {
+                    'h',
+                    function()
+                        awful.layout.set(awful.layout.suit.fair.horizontal)
+                    end,
+                    'horizontally fair',
+                },
+                {
+                    'v',
+                    function()
+                        awful.layout.set(awful.layout.suit.fair)
+                    end,
+                    'vertically fair',
+                },
+            },
+            name = 'layouts',
+            stay_in_mode = true,
+        }
+    end)
+)
+
 local clientbuttons = gears.table.join(
     awful.button({}, 1, function(c)
         c:emit_signal('request::activate', 'mouse_click', { raise = true })
@@ -988,7 +1042,7 @@ awful.rules.rules = {
     { rule = { instance = 'brave-browser' }, properties = { tag = ' ૨ ' } },
     { rule = { instance = 'libreoffice' }, properties = { tag = ' ૩ ' } },
     { rule = { instance = 'soffice' }, properties = { tag = ' ૩ ' } },
-    { rule = { instance = 'whatsapp-nativefier-d40211' }, properties = { tag =  ' ૫ '} },
+    { rule = { instance = 'whatsapp-nativefier-d40211' }, properties = { tag = ' ૫ ' } },
     { rule = { instance = 'scrcpy' }, properties = { floating = true, tag = ' ૯ ' } },
 
     -- Add titlebars to normal clients and dialogs
