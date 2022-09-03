@@ -65,7 +65,7 @@ awful.layout.layouts = {
     awful.layout.suit.floating,
 }
 
-local layoutmenu = {
+local layoutmenu = awful.menu {
     {
         '&Tile',
         {
@@ -353,7 +353,7 @@ awful.screen.connect_for_each_screen(function(s)
     -- We need one layoutbox per screen.
     s.mylayoutbox = awful.widget.layoutbox(s)
     s.mylayoutbox:buttons(gears.table.join(awful.button({}, 1, function()
-        awful.menu(layoutmenu):show()
+        layoutmenu:show()
     end)))
     -- Create a taglist widget
     s.mytaglist = awful.widget.taglist {
