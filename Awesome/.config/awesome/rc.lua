@@ -627,16 +627,22 @@ local globalkeys = gears.table.join(
         lain.util.useless_gaps_resize(-1)
     end, { description = 'decrement useless gaps', group = 'gaps' }),
 
+    key({ modkey }, 'c', function()
+        awful.util.spawn 'rofi -show calc'
+    end, { description = 'calculator', group = 'launcher' }),
+
     key({ modkey }, 'p', function()
         awful.util.spawn 'passmenu -i -p Passwords'
     end, { description = 'select password', group = 'menus' }),
 
-    key({ modkey }, 'u', function()
+    key({ modkey }, 'e', function()
         awful.util.spawn 'rofi -show emoji'
     end, { description = 'select emojis', group = 'menus' }),
 
+    awful.key({ modkey }, 'u', awful.client.urgent.jumpto, { description = 'jump to urgent client', group = 'client' }),
+
     key({ modkey }, 'd', function()
-        awful.util.spawn 'rofi -show drun'
+        awful.util.spawn 'rofi -show drun -show-icons'
     end, { description = 'run desktop apps', group = 'menus' }),
 
     key({ modkey }, 'r', function()
@@ -886,14 +892,14 @@ globalkeys = gears.table.join(
                 {
                     'b',
                     function()
-                        awful.util.spawn (os.getenv ('BROWSER'))
+                        awful.util.spawn(os.getenv 'BROWSER')
                     end,
                     'loop track',
                 },
                 {
                     'n',
                     function()
-                        awful.util.spawn (os.getenv ('BROWSER') .. ' --incognito')
+                        awful.util.spawn(os.getenv 'BROWSER' .. ' --incognito')
                     end,
                     'loop playlist',
                 },

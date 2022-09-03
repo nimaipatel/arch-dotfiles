@@ -1,5 +1,4 @@
 configuration {
-    show-icons: true;	
     icon-theme: "Papirus-Dark";
     case-sensitive: false;
     width: 100%;
