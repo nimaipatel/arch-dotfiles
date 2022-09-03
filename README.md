@@ -1,16 +1,13 @@
 # Dotfiles managed by GNU Stow
 
 Programs and configs that I use on a daily basis:
-- Zsh
+- Awesome
 - Neovim
-- Dwm
-- Dwmblocks
-- St
-- Fzfmenu (dmenu alternative that wraps fzf)
+- Kitty
+- Zsh
 - Slock
-- Tmux
 - Git
-- Vieb
+- Brave
 - Flavours
 - Fontconfig
 - Gnupg
@@ -42,7 +39,7 @@ cd ~ && git clone https://www.github.com/nimaipatel/dotfiles --recurse-submodule
 
 Install configs for programs that I use regularly:
 ```sh
-cd ~/dotfiles && stow Bash Vim Git Chromium Fzfmenu Flavours Fontconfig Gnupg Haskell Mimeapps Miscscripts Mpd Mpv Ncmpcpp Newsboat Nsxiv Paru Readline Tmux X Xsettingsd --adopt
+cd ~/dotfiles && stow Awesome Neovim Kitty Zsh Slock Git Brave Flavours Fontconfig Gnupg Haskell Mimeapps Miscscripts Mpd Mpv Ncmpcpp Newsboat Nsxiv Paru Readline X Xsettingsd --adopt
 ```
 
 Install dwm, st, dwmblocks and slock:
