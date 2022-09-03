@@ -181,8 +181,6 @@ local mymainmenu = awful.menu {
     },
 }
 
-local mylauncher = awful.widget.launcher { image = beautiful.awesome_icon, menu = mymainmenu }
-
 local mytextclock = wibox.widget.textclock('%A %d %B, %Y %I:%M%p ', 10)
 
 -- Create a wibox for each screen and add it
@@ -339,6 +337,45 @@ local wifi_widget = awful.widget.watch(
     end
 )
 
+local brightness_widget = wibox.widget {
+    {
+        {
+            image = gears.color.recolor_image(gears.filesystem.get_configuration_dir() .. 'bulb.svg', 'yellow'),
+            resize = true,
+            widget = wibox.widget.imagebox,
+        },
+        valign = 'center',
+        layout = wibox.container.place,
+    },
+    max_value = 100,
+    thickness = 2,
+    start_angle = 4.71238898, -- 2pi*3/4
+    paddings = 4,
+    widget = wibox.container.arcchart,
+    set_value = function(self, value)
+        self:set_value(value)
+    end,
+}
+
+local change_brightness = function(change)
+    local change_cmd
+    if change < 0 then
+        change_cmd = 'brightnessctl set ' .. -change .. '-%'
+    else
+        change_cmd = 'brightnessctl set +' .. change .. '%'
+    end
+    awful.spawn.easy_async(change_cmd, function()
+        awful.spawn.easy_async('brightnessctl get', function(curr_abs)
+            curr_abs = curr_abs:match '%d+'
+            awful.spawn.easy_async('brightnessctl max', function(max)
+                max = max:match '%d+'
+                brightness_widget:set_value((curr_abs * 100) / max)
+            end)
+        end)
+    end)
+end
+change_brightness(0)
+
 awful.screen.connect_for_each_screen(function(s)
     -- Each screen has its own tag table.
     awful.tag(
@@ -373,7 +410,7 @@ awful.screen.connect_for_each_screen(function(s)
                 {
                     {
                         widget = wibox.container.margin,
-                        margins = dpi(3),
+                        margins = dpi(2),
                         {
                             { widget = wibox.widget.imagebox, id = 'icon_role' },
                             id = 'icon_margin_role',
@@ -485,6 +522,11 @@ awful.screen.connect_for_each_screen(function(s)
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
             spacing = dpi(30),
+            {
+                widget = wibox.container.margin,
+                margins = dpi(3),
+                brightness_widget,
+            },
             wifi_widget,
             lain.widget.bat {
                 timeout = 1,
@@ -598,11 +640,11 @@ local globalkeys = gears.table.join(
     end, { description = 'run command', group = 'menus' }),
 
     key({}, 'XF86MonBrightnessDown', function()
-        awful.util.spawn 'brightnessctl set 10%-'
+        change_brightness(-5)
     end),
 
     key({}, 'XF86MonBrightnessUp', function()
-        awful.util.spawn 'brightnessctl set +10%'
+        change_brightness(5)
     end),
 
     key({ modkey }, 's', hotkeys_popup.show_help, { description = 'show help', group = 'awesome' }),

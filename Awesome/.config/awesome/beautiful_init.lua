@@ -34,7 +34,7 @@ b.titlebar_maximized_button_focus_active = maximized_btn
 b.titlebar_maximized_button_normal_inactive = maximized_btn
 b.titlebar_maximized_button_focus_inactive = maximized_btn
 
-b.font = 'monospace 16'
+b.font = 'monospace 18'
 b.hotkeys_font = b.font
 b.hotkeys_description_font = b.font
 b.menu_font = b.font
