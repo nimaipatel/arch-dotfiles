@@ -283,7 +283,7 @@ end)
 local play_icon = '/usr/share/icons/Papirus-Light/24x24/categories/spotify.svg'
 local pause_icon = '/usr/share/icons/Papirus-Dark/24x24/panel/spotify-indicator.svg'
 
-local _spotify_icon = awful.widget.watch( --luacheck: ignore
+awful.widget.watch(
     [[playerctl --player=spotify status]],
     1,
     function(widget, stdout, stderr, exitreason, exitcode) --luacheck: ignore
@@ -301,7 +301,7 @@ local _spotify_icon = awful.widget.watch( --luacheck: ignore
     end
 )
 
-local _spotify_artist_title = awful.widget.watch( --luacheck: ignore
+awful.widget.watch( --luacheck: ignore
     [[playerctl --player=spotify metadata]],
     1,
     function(widget, stdout, stderr, exitreason, exitcode) --luacheck: ignore
@@ -333,7 +333,7 @@ local wifi_widget = awful.widget.watch(
         for line in stdout:gmatch '[^\r\n]+' do
             if line:match '^*:' then
                 local ssid, power = line:match [[^*:(.+):(.+)]]
-                widget:set_text('直  ' .. ssid .. ' ' .. power .. '%')
+                widget:set_text('直 ' .. ssid .. ' ' .. power .. '%')
             end
         end
     end
@@ -393,8 +393,8 @@ awful.screen.connect_for_each_screen(function(s)
     }
 
     -- Create the wibox
-    s.topwibox = awful.wibar { height = dpi(25), position = 'top', screen = s }
-    s.bottomwibox = awful.wibar { height = dpi(25), position = 'bottom', screen = s }
+    s.topwibox = awful.wibar { height = dpi(30), position = 'top', screen = s }
+    s.bottomwibox = awful.wibar { height = dpi(30), position = 'bottom', screen = s }
 
     -- Add widgets to the wibox
     s.topwibox:setup {
@@ -402,7 +402,7 @@ awful.screen.connect_for_each_screen(function(s)
         { -- Left widgets
             layout = wibox.layout.fixed.horizontal,
             spacing = 10,
-            mylauncher,
+            s.mylayoutbox,
             s.mytaglist,
             s.mypromptbox,
         },
@@ -420,7 +420,6 @@ awful.screen.connect_for_each_screen(function(s)
                 wibox.widget.systray(),
             },
             mytextclock,
-            s.mylayoutbox,
         },
     }
     s.bottomwibox:setup {
