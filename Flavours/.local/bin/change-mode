@@ -82,8 +82,7 @@ if pidof nvim 1>/dev/null 2>&1; then
 fi
 
 if pidof awesome 1>/dev/null 2>&1; then
-	awesome-client <~/.config/awesome/base16.lua
-	awesome-client <~/.config/awesome/beautiful_init.lua
+	awesome-client 'awesome.restart()'
 fi
 
 # restore font and restart dunst

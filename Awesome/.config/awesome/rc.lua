@@ -340,17 +340,21 @@ local wifi_widget = awful.widget.watch(
 local brightness_widget = wibox.widget {
     {
         {
-            image = gears.color.recolor_image(gears.filesystem.get_configuration_dir() .. 'bulb.svg', 'yellow'),
+            image = gears.color.recolor_image(
+                gears.filesystem.get_configuration_dir() .. 'brightness.svg',
+                BASE16_COLORS.base09
+            ),
             resize = true,
             widget = wibox.widget.imagebox,
         },
         valign = 'center',
         layout = wibox.container.place,
     },
+    colors = { BASE16_COLORS.base0A },
     max_value = 100,
     thickness = 2,
     start_angle = 4.71238898, -- 2pi*3/4
-    paddings = 4,
+    paddings = 2,
     widget = wibox.container.arcchart,
     set_value = function(self, value)
         self:set_value(value)
