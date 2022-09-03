@@ -651,8 +651,6 @@ local globalkeys = gears.table.join(
         change_brightness(5)
     end),
 
-    key({ modkey }, 's', hotkeys_popup.show_help, { description = 'show help', group = 'awesome' }),
-
     key({ modkey }, 'Left', awful.tag.viewprev, { description = 'view previous', group = 'tag' }),
 
     key({ modkey }, 'Right', awful.tag.viewnext, { description = 'view next', group = 'tag' }),
@@ -878,11 +876,39 @@ globalkeys = gears.table.join(
     end)
 )
 
--- playerctl
+-- browser
 globalkeys = gears.table.join(
     globalkeys,
     -- Move client to tag.
     key({ modkey }, 'b', function()
+        modalbind.grab {
+            keymap = {
+                {
+                    'b',
+                    function()
+                        awful.util.spawn (os.getenv ('BROWSER'))
+                    end,
+                    'loop track',
+                },
+                {
+                    'n',
+                    function()
+                        awful.util.spawn (os.getenv ('BROWSER') .. ' --incognito')
+                    end,
+                    'loop playlist',
+                },
+            },
+            name = 'Browser',
+            stay_in_mode = false,
+        }
+    end)
+)
+
+-- spotify
+globalkeys = gears.table.join(
+    globalkeys,
+    -- Move client to tag.
+    key({ modkey }, 's', function()
         modalbind.grab {
             keymap = {
                 {
@@ -929,7 +955,7 @@ globalkeys = gears.table.join(
                     'loop playlist',
                 },
             },
-            name = 'spotify controls',
+            name = 'Spotify Controls',
             stay_in_mode = true,
         }
     end)
