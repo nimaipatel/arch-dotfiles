@@ -230,6 +230,8 @@ abbr -g x '| xargs'
 
 abbr -g g '| grep'
 
+abbr i="unset HISTFILE"
+
 unalias abbr
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
