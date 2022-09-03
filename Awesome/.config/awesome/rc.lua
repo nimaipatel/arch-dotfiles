@@ -380,7 +380,7 @@ local change_brightness = function(change)
 end
 change_brightness(0)
 
-awful.screen.connect_for_each_screen(function(s)
+for s in screen do
     -- Each screen has its own tag table.
     awful.tag(
         { ' ૧ ', ' ૨ ', ' ૩ ', ' ૪ ', ' ૫ ', ' ૬ ', ' ૭ ', ' ૮ ', ' ૯ ' },
@@ -582,7 +582,7 @@ awful.screen.connect_for_each_screen(function(s)
             },
         },
     }
-end)
+end
 -- }}}
 
 -- {{{ Mouse bindings
@@ -1087,6 +1087,7 @@ awful.rules.rules = {
     { rule = { instance = 'brave-browser' }, properties = { tag = ' ૨ ' } },
     { rule = { instance = 'libreoffice' }, properties = { tag = ' ૩ ' } },
     { rule = { instance = 'soffice' }, properties = { tag = ' ૩ ' } },
+    { rule = { class = 'Spotify' }, properties = { tag = ' ૪ ' } },
     { rule = { instance = 'whatsapp-nativefier-d40211' }, properties = { tag = ' ૫ ' } },
     { rule = { instance = 'scrcpy' }, properties = { floating = true, tag = ' ૯ ' } },
 
@@ -1192,5 +1193,75 @@ client.connect_signal('focus', function(c)
 end)
 client.connect_signal('unfocus', function(c)
     c.border_color = beautiful.border_normal
+end)
+
+awesome.connect_signal('exit', function(reason_restart)
+    if not reason_restart then
+        return
+    end
+
+    local file = io.open('/tmp/awesomewm-last-selected-tags', 'w+')
+
+    for s in screen do
+        file:write(s.selected_tag.index, '\n')
+    end
+
+    file:close()
+end)
+
+awesome.connect_signal('startup', function()
+    local file = io.open('/tmp/awesomewm-last-selected-tags', 'r')
+    if not file then
+        return
+    end
+
+    local selected_tags = {}
+
+    for line in file:lines() do
+        table.insert(selected_tags, tonumber(line))
+    end
+
+    for s in screen do
+        local i = selected_tags[s.index]
+        local t = s.tags[i]
+        t:view_only()
+    end
+
+    file:close()
+end)
+
+local spawn_whatsapp = function()
+    local is_whatsapp_active = false
+    for _, c in ipairs(client.get()) do
+        if c.instance:match '^whatsapp%-nativefier' then
+            is_whatsapp_active = true
+            break
+        end
+    end
+    if not is_whatsapp_active then
+        awful.util.spawn 'whatsapp-nativefier'
+    end
+end
+
+local spawn_spotify = function()
+    awful.spawn.easy_async('pidof spotify', function(out, err, reason, code) --luacheck: no unused args
+        if code ~= 0 then
+            awful.util.spawn 'spotify-launcher'
+        end
+    end)
+end
+
+awesome.connect_signal('startup', function()
+    spawn_spotify()
+    spawn_whatsapp()
+end)
+
+client.connect_signal('manage', function(c)
+    if c.class == nil then
+        c.minimized = true
+        c:connect_signal('property::class', function()
+            awful.rules.apply(c)
+        end)
+    end
 end)
 -- }}}
