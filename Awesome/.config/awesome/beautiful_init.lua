@@ -70,3 +70,26 @@ b.modebox_border_width = 5
 
 b.menu_border_color = b.border_focus
 b.menu_border_width = 2
+
+local layouts = {
+    'layout_fairh',
+    'layout_fairv',
+    'layout_floating ',
+    'layout_magnifier',
+    'layout_max',
+    'layout_fullscreen',
+    'layout_tilebottom',
+    'layout_tileleft  ',
+    'layout_tile',
+    'layout_tiletop',
+    'layout_spiral ',
+    'layout_dwindle',
+    'layout_cornernw',
+    'layout_cornerne',
+    'layout_cornersw',
+    'layout_cornerse',
+}
+
+for _, layout in ipairs(layouts) do
+    b[layout] = gears.color.recolor_image(b[layout], b.base04)
+end
