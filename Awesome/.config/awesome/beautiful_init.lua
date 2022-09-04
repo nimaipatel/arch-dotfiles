@@ -1,3 +1,4 @@
+require 'base16'
 local b = require 'beautiful'
 local gears = require 'gears'
 local xresources = require 'beautiful.xresources'
@@ -60,7 +61,6 @@ b.border_focus = b.bg_focus
 b.border_marked = b.base08
 
 b.systray_icon_spacing = dpi(10)
-
 
 b.modalbind_font = b.font
 b.modebox_fg = b.fg_normal

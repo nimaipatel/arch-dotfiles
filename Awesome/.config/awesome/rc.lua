@@ -1,10 +1,14 @@
 pcall(require, 'luarocks.loader')
 
+require 'beautiful_init'
+
 local xresources = require 'beautiful.xresources'
 local dpi = xresources.apply_dpi
 
 local lain = require 'lain'
 local markup = lain.util.markup
+local wifi_widget = require 'widgets.nmcli'
+local brightnessctl_widget = require 'widgets.brightnessctl'
 
 -- Standard awesome library
 local gears = require 'gears'
@@ -42,9 +46,6 @@ do
         in_error = false
     end)
 end
-
-require 'base16'
-require 'beautiful_init'
 
 local modalbind = require 'modalbind'
 modalbind.init()
@@ -240,146 +241,6 @@ end
 
 screen.connect_signal('property::geometry', set_wallpaper)
 
-local spotify_widget = wibox.widget {
-    {
-        id = 'artist',
-        font = beautiful.font,
-        widget = wibox.widget.textbox,
-        align = 'right',
-        forced_width = 300,
-    },
-    {
-        id = 'icon',
-        widget = wibox.widget.imagebox,
-    },
-    {
-        layout = wibox.container.scroll.horizontal,
-        max_size = 300,
-        forced_width = 300,
-        step_function = wibox.container.scroll.step_functions.waiting_nonlinear_back_and_forth,
-        speed = 40,
-        {
-            id = 'title',
-            font = beautiful.font,
-            widget = wibox.widget.textbox,
-        },
-    },
-    layout = wibox.layout.fixed.horizontal,
-    spacing = 10,
-}
-
-spotify_widget:connect_signal('button::press', function(_, _, _, button)
-    if button == 1 then
-        awful.spawn('playerctl --player=spotify play-pause', false) -- left click
-    elseif button == 4 then
-        awful.spawn('playerctl --player=spotify next', false) -- scroll up
-    elseif button == 5 then
-        awful.spawn('playerctl --player=spotify previous', false) -- scroll down
-    end
-end)
-
-local play_icon = '/usr/share/icons/Papirus-Light/24x24/categories/spotify.svg'
-local pause_icon = '/usr/share/icons/Papirus-Dark/24x24/panel/spotify-indicator.svg'
-
-awful.widget.watch(
-    [[playerctl --player=spotify status]],
-    1,
-    function(widget, stdout, stderr, exitreason, exitcode) --luacheck: ignore
-        if exitcode ~= 0 then
-            spotify_widget:get_children_by_id('icon')[1]:set_visible(false)
-            return
-        end
-        spotify_widget:get_children_by_id('icon')[1]:set_visible(true)
-        local line = stdout:match '[^\r\n]+'
-        if line == 'Playing' then
-            spotify_widget:get_children_by_id('icon')[1]:set_image(play_icon)
-        elseif line == 'Paused' then
-            spotify_widget:get_children_by_id('icon')[1]:set_image(pause_icon)
-        end
-    end
-)
-
-awful.widget.watch( --luacheck: ignore
-    [[playerctl --player=spotify metadata]],
-    1,
-    function(widget, stdout, stderr, exitreason, exitcode) --luacheck: ignore
-        if exitcode ~= 0 then
-            spotify_widget:get_children_by_id('artist')[1]:set_markup ''
-            spotify_widget:get_children_by_id('title')[1]:set_markup ''
-            return
-        end
-        local artist, title
-        for line in stdout:gmatch '[^\r\n]+' do
-            local _
-            if line:match 'spotify xesam:artist' then
-                _, artist = line:match 'spotify xesam:artist( +)(.+)'
-            end
-            if line:match 'spotify xesam:title' then
-                _, title = line:match 'spotify xesam:title( +)(.+)'
-            end
-        end
-        spotify_widget:get_children_by_id('artist')[1]:set_markup(artist)
-        spotify_widget:get_children_by_id('title')[1]:set_markup(title)
-    end
-)
-
-local wifi_widget = awful.widget.watch(
-    [[nmcli -get-values IN-USE,SSID,SIGNAL device wifi list]],
-    5,
-    function(widget, stdout)
-        widget:set_text '睊'
-        for line in stdout:gmatch '[^\r\n]+' do
-            if line:match '^*:' then
-                local ssid, power = line:match [[^*:(.+):(.+)]]
-                widget:set_text('直 ' .. ssid .. ' ' .. power .. '%')
-            end
-        end
-    end
-)
-
-local brightness_widget = wibox.widget {
-    {
-        {
-            image = gears.color.recolor_image(
-                gears.filesystem.get_configuration_dir() .. 'brightness.svg',
-                BASE16_COLORS.base09
-            ),
-            resize = true,
-            widget = wibox.widget.imagebox,
-        },
-        valign = 'center',
-        layout = wibox.container.place,
-    },
-    colors = { BASE16_COLORS.base0A },
-    max_value = 100,
-    thickness = 2,
-    start_angle = 4.71238898, -- 2pi*3/4
-    paddings = 2,
-    widget = wibox.container.arcchart,
-    set_value = function(self, value)
-        self:set_value(value)
-    end,
-}
-
-local change_brightness = function(change)
-    local change_cmd
-    if change < 0 then
-        change_cmd = 'brightnessctl set ' .. -change .. '-%'
-    else
-        change_cmd = 'brightnessctl set +' .. change .. '%'
-    end
-    awful.spawn.easy_async(change_cmd, function()
-        awful.spawn.easy_async('brightnessctl get', function(curr_abs)
-            curr_abs = curr_abs:match '%d+'
-            awful.spawn.easy_async('brightnessctl max', function(max)
-                max = max:match '%d+'
-                brightness_widget:set_value((curr_abs * 100) / max)
-            end)
-        end)
-    end)
-end
-change_brightness(0)
-
 for s in screen do
     -- Each screen has its own tag table.
     awful.tag(
@@ -388,10 +249,7 @@ for s in screen do
         awful.layout.layouts[1]
     )
 
-    -- Create a promptbox for each screen
     s.mypromptbox = awful.widget.prompt()
-    -- Create an imagebox widget which will contain an icon indicating which layout we're using.
-    -- We need one layoutbox per screen.
     s.mylayoutbox = awful.widget.layoutbox(s)
     s.mylayoutbox:buttons(gears.table.join(awful.button({}, 1, function()
         layoutmenu:show()
@@ -521,7 +379,6 @@ for s in screen do
             valign = 'center',
             halign = 'center',
             layout = wibox.container.place,
-            spotify_widget,
         },
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
@@ -529,7 +386,7 @@ for s in screen do
             {
                 widget = wibox.container.margin,
                 margins = dpi(3),
-                brightness_widget,
+                brightnessctl_widget,
             },
             wifi_widget,
             lain.widget.bat {
@@ -650,11 +507,11 @@ local globalkeys = gears.table.join(
     end, { description = 'run command', group = 'menus' }),
 
     key({}, 'XF86MonBrightnessDown', function()
-        change_brightness(-5)
+        brightnessctl_widget:change_value(-5)
     end),
 
     key({}, 'XF86MonBrightnessUp', function()
-        change_brightness(5)
+        brightnessctl_widget:change_value(5)
     end),
 
     key({ modkey }, 'Left', awful.tag.viewprev, { description = 'view previous', group = 'tag' }),
@@ -671,7 +528,7 @@ local globalkeys = gears.table.join(
         awful.client.focus.byidx(-1)
     end, { description = 'focus previous by index', group = 'client' }),
 
-    key({ modkey }, 'w', function()
+    key({ modkey }, 'r', function()
         mymainmenu:show()
     end, { description = 'show main menu', group = 'awesome' }),
 
@@ -1262,31 +1119,7 @@ awesome.connect_signal('startup', function()
     file:close()
 end)
 
-local spawn_whatsapp = function()
-    local is_whatsapp_active = false
-    for _, c in ipairs(client.get()) do
-        if c.instance:match '^whatsapp%-nativefier' then
-            is_whatsapp_active = true
-            break
-        end
-    end
-    if not is_whatsapp_active then
-        awful.util.spawn 'whatsapp-nativefier'
-    end
-end
-
-local spawn_spotify = function()
-    awful.spawn.easy_async('pidof spotify', function(out, err, reason, code) --luacheck: no unused args
-        if code ~= 0 then
-            awful.util.spawn 'spotify-launcher'
-        end
-    end)
-end
-
-awesome.connect_signal('startup', function()
-    spawn_spotify()
-    spawn_whatsapp()
-end)
+require 'autostart'
 
 client.connect_signal('manage', function(c)
     if c.class == nil then
