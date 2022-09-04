@@ -449,7 +449,7 @@ local globalkeys = gears.table.join(
     end, { description = 'calculator', group = 'launcher' }),
 
     key({ modkey }, 'p', function()
-        awful.util.spawn 'passmenu -i -p Passwords'
+        awful.util.spawn 'passmenu -i -p '
     end, { description = 'select password', group = 'menus' }),
 
     key({ modkey }, 'e', function()
