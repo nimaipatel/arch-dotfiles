@@ -5,7 +5,7 @@ local beautiful = require 'beautiful'
 local play_icon = '/usr/share/icons/Papirus-Light/24x24/categories/spotify.svg'
 local pause_icon = '/usr/share/icons/Papirus-Dark/24x24/panel/spotify-indicator.svg'
 
-local widget = wibox.widget {
+local spotify_widget = wibox.widget {
     {
         id = 'artist',
         font = beautiful.font,
@@ -33,7 +33,7 @@ local widget = wibox.widget {
     spacing = 10,
 }
 
-widget:connect_signal('button::press', function(_, _, _, button)
+spotify_widget:connect_signal('button::press', function(_, _, _, button)
     if button == 1 then
         awful.spawn('playerctl --player=spotify play-pause', false) -- left click
     elseif button == 4 then
@@ -85,4 +85,4 @@ awful.widget.watch( --luacheck: ignore
     end
 )
 
-return widget
+return spotify_widget

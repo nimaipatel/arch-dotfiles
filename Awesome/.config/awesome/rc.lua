@@ -7,7 +7,7 @@ local dpi = xresources.apply_dpi
 
 local lain = require 'lain'
 local markup = lain.util.markup
-local wifi_widget = require 'widgets.nmcli'
+local nmcli_widget = require 'widgets.nmcli'
 local brightnessctl_widget = require 'widgets.brightnessctl'
 
 -- Standard awesome library
@@ -18,7 +18,7 @@ require 'awful.autofocus'
 local wibox = require 'wibox'
 local beautiful = require 'beautiful'
 local naughty = require 'naughty'
-local hotkeys_popup = require("awful.hotkeys_popup")
+local hotkeys_popup = require 'awful.hotkeys_popup'
 require 'awful.hotkeys_popup.keys'
 
 if awesome.startup_errors then
@@ -214,7 +214,7 @@ for s in screen do
     s.mypromptbox = awful.widget.prompt()
     s.mylayoutbox = awful.widget.layoutbox(s)
     s.mylayoutbox:buttons(gears.table.join(awful.button({}, 1, function()
-        layoutmenu:toggle()
+        layoutmenu:toggle { coords = { x = 0, y = 0 } }
     end)))
     -- Create a taglist widget
     s.mytaglist = awful.widget.taglist {
@@ -350,7 +350,7 @@ for s in screen do
                 margins = dpi(3),
                 brightnessctl_widget,
             },
-            wifi_widget,
+            nmcli_widget,
             lain.widget.bat {
                 timeout = 1,
                 battery = 'BAT1',
@@ -414,7 +414,8 @@ root.buttons(gears.table.join(
 ))
 -- }}}
 
-local pulsemixer = lain.util.quake {
+local pulsemixer = nil
+pulsemixer = lain.util.quake {
     app = terminal,
     extra = '-e pulsemixer',
     name = 'pulsemixer',
@@ -423,9 +424,38 @@ local pulsemixer = lain.util.quake {
     height = 0.75,
     horiz = 'center',
     vert = 'center',
+    settings = function(c)
+        c:keys(gears.table.join(
+            c:keys(),
+            key({ 'Any' }, 'q', function()
+                pulsemixer:toggle()
+            end)
+        ))
+    end,
 }
 
-local gkeep = lain.util.quake {
+local spotify = nil
+spotify = lain.util.quake {
+    app = terminal,
+    extra = '-e spt',
+    name = 'spt',
+    argname = '--class %s',
+    width = 0.5,
+    height = 0.75,
+    horiz = 'center',
+    vert = 'center',
+    settings = function(c)
+        c:keys(gears.table.join(
+            c:keys(),
+            key({ 'Any' }, 'q', function()
+                spotify:toggle()
+            end)
+        ))
+    end,
+}
+
+local gkeep = nil
+gkeep = lain.util.quake {
     app = terminal,
     extra = '-e nvim -c GkeepOpen',
     name = 'gkeep',
@@ -434,6 +464,14 @@ local gkeep = lain.util.quake {
     height = 0.75,
     horiz = 'center',
     vert = 'center',
+    settings = function(c)
+        c:keys(gears.table.join(
+            c:keys(),
+            key({ 'Any' }, 'q', function()
+                gkeep:toggle()
+            end)
+        ))
+    end,
 }
 
 -- {{{ Key bindings
@@ -461,11 +499,15 @@ local globalkeys = gears.table.join(
     awful.key({ modkey }, 'u', awful.client.urgent.jumpto, { description = 'jump to urgent client', group = 'client' }),
 
     key({ modkey }, 'd', function()
-        awful.util.spawn 'rofi -show drun -show-icons'
+        awful.util.spawn 'rofi -show drun -show-icons -display-drun ::'
     end, { description = 'run desktop apps', group = 'menus' }),
 
+    key({ modkey }, 'w', function()
+        awful.util.spawn [[wifimenu]]
+    end, { description = 'configure wifi network', group = 'menus' }),
+
     key({ modkey }, 'r', function()
-        awful.util.spawn 'rofi -show run'
+        awful.util.spawn 'rofi -show run -display-run ::'
     end, { description = 'run command', group = 'menus' }),
 
     key({}, 'XF86MonBrightnessDown', function()
@@ -527,7 +569,11 @@ local globalkeys = gears.table.join(
         gkeep:toggle()
     end, { description = 'toggle google keep window', group = 'launcher' }),
 
-    awful.key({ modkey }, 'q', hotkeys_popup.show_help, { description = 'show help', group = 'awesome' }),
+    key({ modkey }, 's', function()
+        spotify:toggle()
+    end, { description = 'toggle spotify', group = 'launcher' }),
+
+    awful.key({ modkey }, 'F1', hotkeys_popup.show_help, { description = 'show help', group = 'awesome' }),
 
     key({ modkey }, 'Return', function()
         awful.spawn(terminal)
@@ -699,91 +745,6 @@ globalkeys = gears.table.join(
             },
             name = 'abbreviations',
             stay_in_mode = false,
-        }
-    end)
-)
-
--- browser
-globalkeys = gears.table.join(
-    globalkeys,
-    -- Move client to tag.
-    key({ modkey }, 'b', function()
-        modalbind.grab {
-            keymap = {
-                {
-                    'b',
-                    function()
-                        awful.util.spawn(os.getenv 'BROWSER')
-                    end,
-                    'loop track',
-                },
-                {
-                    'n',
-                    function()
-                        awful.util.spawn(os.getenv 'BROWSER' .. ' --incognito')
-                    end,
-                    'loop playlist',
-                },
-            },
-            name = 'Browser',
-            stay_in_mode = false,
-        }
-    end)
-)
-
--- spotify
-globalkeys = gears.table.join(
-    globalkeys,
-    -- Move client to tag.
-    key({ modkey }, 's', function()
-        modalbind.grab {
-            keymap = {
-                {
-                    'p',
-                    function()
-                        awful.util.spawn 'playerctl --player=spotify play-pause'
-                    end,
-                    'play-pause',
-                },
-                {
-                    'k',
-                    function()
-                        awful.util.spawn 'playerctl --player=spotify next'
-                    end,
-                    'next song',
-                },
-                {
-                    'j',
-                    function()
-                        awful.util.spawn 'playerctl --player=spotify previous'
-                    end,
-                    'previous song',
-                },
-                { 'separator', 'Loop Settings' },
-                {
-                    'o',
-                    function()
-                        awful.util.spawn 'playerctl --player=spotify loop none'
-                    end,
-                    'no loop',
-                },
-                {
-                    't',
-                    function()
-                        awful.util.spawn 'playerctl --player=spotify loop track'
-                    end,
-                    'loop track',
-                },
-                {
-                    'p',
-                    function()
-                        awful.util.spawn 'playerctl --player=spotify loop playlist'
-                    end,
-                    'loop playlist',
-                },
-            },
-            name = 'Spotify Controls',
-            stay_in_mode = true,
         }
     end)
 )

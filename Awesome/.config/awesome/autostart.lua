@@ -1,27 +1,38 @@
 local awful = require 'awful'
+local spawn = awful.util.spawn
 
-local spawn_whatsapp = function()
-    local is_whatsapp_active = false
-    for _, c in ipairs(client.get()) do
-        if c.instance:match '^whatsapp%-nativefier' then
-            is_whatsapp_active = true
-            break
+-- execute `cmd` only if `predicate` returns false or failure (non-zero exit)
+local spawn_once = function(cmd, predicate)
+    if type(predicate) == 'string' then
+        awful.spawn.easy_async(predicate, function(out, err, reason, code) --luacheck: no unused args
+            if code ~= 0 then
+                awful.util.spawn(cmd)
+            end
+        end)
+    elseif type(predicate) == 'function' then
+        if predicate() == false then
+            awful.util.spawn(cmd)
         end
     end
-    if not is_whatsapp_active then
-        awful.util.spawn 'whatsapp-nativefier'
-    end
-end
-
-local spawn_spotify = function()
-    awful.spawn.easy_async('pidof spotify', function(out, err, reason, code) --luacheck: no unused args
-        if code ~= 0 then
-            awful.util.spawn 'spotify-launcher'
-        end
-    end)
 end
 
 awesome.connect_signal('startup', function()
-    spawn_spotify()
-    spawn_whatsapp()
+    spawn 'setxkbmap -option ctrl:nocaps'
+    spawn 'xcape -e "Control_L=Escape"'
+    spawn 'xset r rate 300 50'
+    spawn 'xgamma -rgamma 1.0 -ggamma 0.9 -bgamma 0.4'
+    spawn_once('unclutter', 'pidof unclutter')
+    spawn_once('clight --no-auto-recalib', 'pidof clight')
+    spawn_once('picom', 'pidof picom')
+    spawn_once(os.getenv 'BROWSER', 'pidof ' .. os.getenv 'BROWSER')
+    spawn_once('spotify-launcher', 'pidof spotify')
+    spawn_once('whatsapp-nativefier', function()
+        for _, c in ipairs(client.get()) do
+            if c.instance:match '^whatsapp%-nativefier' then
+                return true
+            end
+        end
+        return false
+    end)
+    spawn_once('buckle', 'pidof buckle')
 end)
