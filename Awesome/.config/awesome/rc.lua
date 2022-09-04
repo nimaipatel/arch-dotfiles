@@ -18,6 +18,7 @@ require 'awful.autofocus'
 local wibox = require 'wibox'
 local beautiful = require 'beautiful'
 local naughty = require 'naughty'
+local hotkeys_popup = require("awful.hotkeys_popup")
 require 'awful.hotkeys_popup.keys'
 
 if awesome.startup_errors then
@@ -525,6 +526,8 @@ local globalkeys = gears.table.join(
     key({ modkey }, 'g', function()
         gkeep:toggle()
     end, { description = 'toggle google keep window', group = 'launcher' }),
+
+    awful.key({ modkey }, 'q', hotkeys_popup.show_help, { description = 'show help', group = 'awesome' }),
 
     key({ modkey }, 'Return', function()
         awful.spawn(terminal)
