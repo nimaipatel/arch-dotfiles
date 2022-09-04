@@ -55,7 +55,7 @@ b.fg_urgent = b.base00
 b.fg_minimize = b.base00
 
 b.useless_gap = dpi(5)
-b.border_width = dpi(1)
+b.border_width = dpi(0)
 b.border_normal = b.bg_normal
 b.border_focus = b.bg_focus
 b.border_marked = b.base08

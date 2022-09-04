@@ -9,6 +9,7 @@ local lain = require 'lain'
 local markup = lain.util.markup
 local nmcli_widget = require 'widgets.nmcli'
 local brightnessctl_widget = require 'widgets.brightnessctl'
+local cpu_bars_widget = require 'widgets.cpu_bars'
 local util = require 'util'
 
 -- Standard awesome library
@@ -275,49 +276,7 @@ for s in screen do
         { -- Left widgets
             layout = wibox.layout.fixed.horizontal,
             spacing = dpi(30),
-            lain.widget.cpu {
-                settings = function()
-                    local map = function(perc)
-                        local ret
-                        if perc > 80 then
-                            ret = '█'
-                        elseif perc > 70 then
-                            ret = '█'
-                        elseif perc > 60 then
-                            ret = '▇'
-                        elseif perc > 50 then
-                            ret = '▆'
-                        elseif perc > 40 then
-                            ret = '▅'
-                        elseif perc > 30 then
-                            ret = '▄'
-                        elseif perc > 20 then
-                            ret = '▃'
-                        elseif perc > 10 then
-                            ret = '▂'
-                        else
-                            ret = '▁'
-                        end
-                        local fg = markup.fg.color
-                        if perc > 70 then
-                            ret = fg(BASE16_COLORS.base08, ret)
-                        elseif perc > 20 then
-                            ret = fg(BASE16_COLORS.base0A, ret)
-                        else
-                            ret = fg(BASE16_COLORS.base0B, ret)
-                        end
-                        return ret
-                    end
-
-                    local fmt = 'CPU '
-                    fmt = fmt .. map(cpu_now[0].usage) --luacheck: ignore
-                    fmt = fmt .. map(cpu_now[1].usage) --luacheck: ignore
-                    fmt = fmt .. map(cpu_now[2].usage) --luacheck: ignore
-                    fmt = fmt .. map(cpu_now[3].usage) --luacheck: ignore
-
-                    widget:set_markup(fmt) --luacheck: ignore
-                end,
-            },
+            cpu_bars_widget,
             lain.widget.mem {
                 settings = function()
                     widget:set_markup('MEM ' .. mem_now.perc .. '%') --luacheck: ignore
