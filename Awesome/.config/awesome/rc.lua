@@ -18,7 +18,6 @@ require 'awful.autofocus'
 local wibox = require 'wibox'
 local beautiful = require 'beautiful'
 local naughty = require 'naughty'
-local hotkeys_popup = require 'awful.hotkeys_popup'
 require 'awful.hotkeys_popup.keys'
 
 if awesome.startup_errors then
@@ -122,51 +121,14 @@ local layoutmenu = awful.menu {
 }
 
 local sysopts = {
-    {
-        '&Restart',
-        function()
-            awful.util.spawn 'reboot'
-        end,
-    },
-    {
-        'L&ogout',
-        function()
-            awful.util.spawn('pkill -u -KILL ' .. os.getenv 'USER')
-        end,
-    },
-    {
-        '&Lock',
-        function()
-            awful.util.spawn 'slock'
-        end,
-    },
-    {
-        '&Power Off',
-        function()
-            awful.util.spawn 'poweroff'
-        end,
-    },
-}
-
-local myawesomemenu = {
-    {
-        'hotkeys',
-        function()
-            hotkeys_popup.show_help(nil, awful.screen.focused())
-        end,
-    },
-    { 'restart', awesome.restart },
-    {
-        'quit',
-        function()
-            awesome.quit()
-        end,
-    },
+    { '&Restart', 'reboot' },
+    { 'L&ogout', 'pkill -u -KILL ' .. os.getenv 'USER' },
+    { '&Lock', 'slock' },
+    { '&Power Off', 'poweroff' },
 }
 
 local mymainmenu = awful.menu {
     items = {
-        { '&Awesome', myawesomemenu, beautiful.awesome_icon },
         { '&System', sysopts },
         { '&Terminal', terminal },
         { '&Editor', editor_cmd },
@@ -184,7 +146,6 @@ local mymainmenu = awful.menu {
 
 local mytextclock = wibox.widget.textclock('%A %d %B, %Y %I:%M%p ', 10)
 
--- Create a wibox for each screen and add it
 local taglist_buttons = gears.table.join(
     awful.button({}, 1, function(t)
         t:view_only()
@@ -252,7 +213,7 @@ for s in screen do
     s.mypromptbox = awful.widget.prompt()
     s.mylayoutbox = awful.widget.layoutbox(s)
     s.mylayoutbox:buttons(gears.table.join(awful.button({}, 1, function()
-        layoutmenu:show()
+        layoutmenu:toggle()
     end)))
     -- Create a taglist widget
     s.mytaglist = awful.widget.taglist {
@@ -528,8 +489,8 @@ local globalkeys = gears.table.join(
         awful.client.focus.byidx(-1)
     end, { description = 'focus previous by index', group = 'client' }),
 
-    key({ modkey }, 'r', function()
-        mymainmenu:show()
+    key({ modkey }, 'z', function()
+        mymainmenu:toggle { coords = { x = 0, y = 0 } }
     end, { description = 'show main menu', group = 'awesome' }),
 
     -- Layout manipulation
@@ -828,63 +789,7 @@ globalkeys = gears.table.join(
     globalkeys,
     -- Move client to tag.
     key({ modkey }, 'space', function()
-        modalbind.grab {
-            keymap = {
-                {
-                    'f',
-                    function()
-                        awful.layout.set(awful.layout.suit.fair)
-                    end,
-                    'floating',
-                },
-                { 'separator', 'Tile' },
-                {
-                    'r',
-                    function()
-                        awful.layout.set(awful.layout.suit.tile)
-                    end,
-                    'tile with right stack',
-                },
-                {
-                    'b',
-                    function()
-                        awful.layout.set(awful.layout.suit.tile.bottom)
-                    end,
-                    'tile with bottom stack',
-                },
-                {
-                    'l',
-                    function()
-                        awful.layout.set(awful.layout.suit.tile.left)
-                    end,
-                    'tile with left stack',
-                },
-                {
-                    't',
-                    function()
-                        awful.layout.set(awful.layout.suit.tile.top)
-                    end,
-                    'tile with top stack',
-                },
-                { 'separator', 'Fair' },
-                {
-                    'h',
-                    function()
-                        awful.layout.set(awful.layout.suit.fair.horizontal)
-                    end,
-                    'horizontally fair',
-                },
-                {
-                    'v',
-                    function()
-                        awful.layout.set(awful.layout.suit.fair)
-                    end,
-                    'vertically fair',
-                },
-            },
-            name = 'layouts',
-            stay_in_mode = true,
-        }
+        layoutmenu:toggle { coords = { x = 0, y = 0 } }
     end)
 )
 
