@@ -345,11 +345,7 @@ for s in screen do
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
             spacing = dpi(30),
-            {
-                widget = wibox.container.margin,
-                margins = dpi(3),
-                brightnessctl_widget,
-            },
+            brightnessctl_widget,
             nmcli_widget,
             lain.widget.bat {
                 timeout = 1,

@@ -3,7 +3,32 @@ local gears = require 'gears'
 local awful = require 'awful'
 
 local brightness_widget = wibox.widget {
+    layout = wibox.layout.fixed.horizontal,
     {
+        {
+
+            widget = wibox.container.place,
+            valign = 'center',
+            halign = 'center',
+            {
+                widget = wibox.container.margin,
+                margins = 5,
+                {
+                    id = 'arc',
+                    colors = { BASE16_COLORS.base0A },
+                    forced_height = 18,
+                    forced_width = 18,
+                    max_value = 100,
+                    thickness = 100,
+                    start_angle = 4.71238898, -- 2pi*3/4
+                    paddings = 2,
+                    widget = wibox.container.arcchart,
+                    set_value = function(self, value)
+                        self:set_value(value)
+                    end,
+                },
+            },
+        },
         {
             image = gears.color.recolor_image(
                 gears.filesystem.get_configuration_dir() .. 'assets/brightness.svg',
@@ -12,16 +37,16 @@ local brightness_widget = wibox.widget {
             resize = true,
             widget = wibox.widget.imagebox,
         },
-        valign = 'center',
-        layout = wibox.container.place,
+        layout = wibox.layout.stack,
     },
-    colors = { BASE16_COLORS.base0A },
-    max_value = 100,
-    thickness = 2,
-    start_angle = 4.71238898, -- 2pi*3/4
-    paddings = 2,
-    widget = wibox.container.arcchart,
+    {
+        id = 'text',
+        widget = wibox.widget.textbox,
+    },
+    spacing = 10,
     change_value = function(self, change)
+        local arc = self:get_children_by_id('arc')[1]
+        local textbox = self:get_children_by_id('text')[1]
         local change_cmd
         if change < 0 then
             change_cmd = 'brightnessctl set ' .. -change .. '-%'
@@ -33,12 +58,15 @@ local brightness_widget = wibox.widget {
                 curr_abs = curr_abs:match '%d+'
                 awful.spawn.easy_async('brightnessctl max', function(max)
                     max = max:match '%d+'
-                    self:set_value((curr_abs * 100) / max)
+                    local perc = math.floor(curr_abs * 100 / max)
+                    arc:set_value(perc)
+                    textbox:set_markup(perc .. '%')
                 end)
             end)
         end)
     end,
 }
+
 brightness_widget:change_value(0)
 
 return brightness_widget
