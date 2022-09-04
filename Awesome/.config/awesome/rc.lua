@@ -9,6 +9,7 @@ local lain = require 'lain'
 local markup = lain.util.markup
 local nmcli_widget = require 'widgets.nmcli'
 local brightnessctl_widget = require 'widgets.brightnessctl'
+local util = require 'util'
 
 -- Standard awesome library
 local gears = require 'gears'
@@ -188,20 +189,6 @@ local tasklist_buttons = gears.table.join(
         awful.client.focus.byidx(-1)
     end)
 )
-
-local function set_wallpaper(s)
-    -- Wallpaper
-    if beautiful.wallpaper then
-        local wallpaper = beautiful.wallpaper
-        -- If wallpaper is a function, call it with the screen
-        if type(wallpaper) == 'function' then
-            wallpaper = wallpaper(s)
-        end
-        gears.wallpaper.maximized(wallpaper, s, true)
-    end
-end
-
-screen.connect_signal('property::geometry', set_wallpaper)
 
 for s in screen do
     -- Each screen has its own tag table.
@@ -410,8 +397,7 @@ root.buttons(gears.table.join(
 ))
 -- }}}
 
-local pulsemixer = nil
-pulsemixer = lain.util.quake {
+local pulsemixer = lain.util.quake {
     app = terminal,
     extra = '-e pulsemixer',
     name = 'pulsemixer',
@@ -420,18 +406,9 @@ pulsemixer = lain.util.quake {
     height = 0.75,
     horiz = 'center',
     vert = 'center',
-    settings = function(c)
-        c:keys(gears.table.join(
-            c:keys(),
-            key({ 'Any' }, 'q', function()
-                pulsemixer:toggle()
-            end)
-        ))
-    end,
 }
 
-local spotify = nil
-spotify = lain.util.quake {
+local spotify = lain.util.quake {
     app = terminal,
     extra = '-e spt',
     name = 'spt',
@@ -440,18 +417,9 @@ spotify = lain.util.quake {
     height = 0.75,
     horiz = 'center',
     vert = 'center',
-    settings = function(c)
-        c:keys(gears.table.join(
-            c:keys(),
-            key({ 'Any' }, 'q', function()
-                spotify:toggle()
-            end)
-        ))
-    end,
 }
 
-local gkeep = nil
-gkeep = lain.util.quake {
+local gkeep = lain.util.quake {
     app = terminal,
     extra = '-e nvim -c GkeepOpen',
     name = 'gkeep',
@@ -460,25 +428,21 @@ gkeep = lain.util.quake {
     height = 0.75,
     horiz = 'center',
     vert = 'center',
-    settings = function(c)
-        c:keys(gears.table.join(
-            c:keys(),
-            key({ 'Any' }, 'q', function()
-                gkeep:toggle()
-            end)
-        ))
-    end,
 }
 
 -- {{{ Key bindings
 local globalkeys = gears.table.join(
     key({ modkey }, '=', function()
-        lain.util.useless_gaps_resize(1)
+        util.useless_gaps_resize(1)
     end, { description = 'increment useless gaps', group = 'gaps' }),
 
     key({ modkey }, '-', function()
-        lain.util.useless_gaps_resize(-1)
+        util.useless_gaps_resize(-1)
     end, { description = 'decrement useless gaps', group = 'gaps' }),
+
+    key({ modkey }, '0', function()
+        util.useless_gaps_resize()
+    end, { description = 'reset gaps', group = 'gaps' }),
 
     key({ modkey }, 'c', function()
         awful.util.spawn 'rofi -show calc'
