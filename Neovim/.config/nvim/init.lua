@@ -1506,7 +1506,15 @@ packer.startup(function(use)
             require('legendary').setup()
             require('which-key').register({
                 name = 'find files',
-                f = { builtin.find_files, 'Find files' },
+                f = {
+                    function()
+                        builtin.find_files {
+                            hidden = true,
+                            follow = true,
+                        }
+                    end,
+                    'Find files',
+                },
                 g = { builtin.git_files, 'Git files' },
                 o = { builtin.oldfiles, 'Recent files' },
                 r = { builtin.resume, 'Resume previous' },

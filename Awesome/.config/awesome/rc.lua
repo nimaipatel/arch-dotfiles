@@ -456,7 +456,7 @@ local globalkeys = gears.table.join(
         awful.util.spawn 'rofi -show emoji'
     end, { description = 'select emojis', group = 'menus' }),
 
-    awful.key({ modkey }, 'u', awful.client.urgent.jumpto, { description = 'jump to urgent client', group = 'client' }),
+    key({ modkey }, 'u', awful.client.urgent.jumpto, { description = 'jump to urgent client', group = 'client' }),
 
     key({ modkey }, 'd', function()
         awful.util.spawn 'rofi -show drun -show-icons -display-drun ::'
