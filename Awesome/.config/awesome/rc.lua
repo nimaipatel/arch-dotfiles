@@ -356,17 +356,6 @@ root.buttons(gears.table.join(
 ))
 -- }}}
 
-local pulsemixer = lain.util.quake {
-    app = terminal,
-    extra = '-e pulsemixer',
-    name = 'pulsemixer',
-    argname = '--class %s',
-    width = 0.5,
-    height = 0.75,
-    horiz = 'center',
-    vert = 'center',
-}
-
 local spotify = lain.util.quake {
     app = terminal,
     extra = '-e spt',
@@ -437,6 +426,14 @@ local globalkeys = gears.table.join(
         brightnessctl_widget:change_value(5)
     end),
 
+    key({}, 'XF86AudioRaiseVolume', function()
+        awful.util.spawn(gears.filesystem.get_configuration_dir() .. '/assets/vol.py +0.05')
+    end),
+
+    key({}, 'XF86AudioLowerVolume', function()
+        awful.util.spawn(gears.filesystem.get_configuration_dir() .. '/assets/vol.py -0.05')
+    end),
+
     key({ modkey }, 'Left', awful.tag.viewprev, { description = 'view previous', group = 'tag' }),
 
     key({ modkey }, 'Right', awful.tag.viewnext, { description = 'view next', group = 'tag' }),
@@ -478,11 +475,6 @@ local globalkeys = gears.table.join(
             client.focus:raise()
         end
     end, { description = 'go back', group = 'client' }),
-
-    -- Standard program
-    key({ modkey }, 'v', function()
-        pulsemixer:toggle()
-    end, { description = 'toggle pulsemixer', group = 'launcher' }),
 
     key({ modkey }, 'g', function()
         gkeep:toggle()
