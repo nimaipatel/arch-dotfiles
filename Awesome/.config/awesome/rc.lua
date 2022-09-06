@@ -10,6 +10,7 @@ local markup = lain.util.markup
 local nmcli_widget = require 'widgets.nmcli'
 local brightnessctl_widget = require 'widgets.brightnessctl'
 local cpu_bars_widget = require 'widgets.cpu_bars'
+local memory_widget = require 'widgets.memory'
 local util = require 'util'
 
 -- Standard awesome library
@@ -277,11 +278,7 @@ for s in screen do
             layout = wibox.layout.fixed.horizontal,
             spacing = dpi(30),
             cpu_bars_widget,
-            lain.widget.mem {
-                settings = function()
-                    widget:set_markup('MEM ' .. mem_now.perc .. '%') --luacheck: ignore
-                end,
-            },
+            memory_widget,
         },
         { -- Right widgets
             valign = 'center',
@@ -424,6 +421,10 @@ local globalkeys = gears.table.join(
 
     key({}, 'XF86MonBrightnessUp', function()
         brightnessctl_widget:change_value(5)
+    end),
+
+    key({}, 'XF86AudioMute', function()
+        awful.util.spawn(gears.filesystem.get_configuration_dir() .. '/assets/vol_mute.py')
     end),
 
     key({}, 'XF86AudioRaiseVolume', function()

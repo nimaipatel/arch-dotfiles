@@ -101,12 +101,16 @@ end
 
 cpu_bars_widget = wibox.widget {
     layout = wibox.layout.fixed.horizontal,
-    spacing = 1,
+    spacing = 8,
     {
         widget = wibox.widget.textbox,
-        text = 'CPU ',
+        text = 'CPU',
     },
-    table.unpack(bars),
+    {
+        spacing = 1,
+        layout = wibox.layout.fixed.horizontal,
+        table.unpack(bars),
+    },
 }
 
 return cpu_bars_widget

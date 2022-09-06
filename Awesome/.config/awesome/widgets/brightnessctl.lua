@@ -43,7 +43,7 @@ local brightness_widget = wibox.widget {
         id = 'text',
         widget = wibox.widget.textbox,
     },
-    spacing = 10,
+    spacing = 8,
     change_value = function(self, change)
         local arc = self:get_children_by_id('arc')[1]
         local textbox = self:get_children_by_id('text')[1]
