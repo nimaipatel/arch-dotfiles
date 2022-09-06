@@ -289,54 +289,6 @@ for s in screen do
             spacing = dpi(30),
             brightnessctl_widget,
             nm_widget,
-            lain.widget.bat {
-                timeout = 1,
-                battery = 'BAT1',
-                ac = 'ACAD',
-                settings = function()
-                    local map = function(bat)
-                        local fg = markup.fg.color
-                        local perc = bat.perc
-                        local ret
-                        if perc > 90 then
-                            ret = ''
-                        elseif perc > 80 then
-                            ret = ''
-                        elseif perc > 70 then
-                            ret = ''
-                        elseif perc > 60 then
-                            ret = ''
-                        elseif perc > 50 then
-                            ret = ''
-                        elseif perc > 40 then
-                            ret = ''
-                        elseif perc > 30 then
-                            ret = ''
-                        elseif perc > 20 then
-                            ret = ''
-                        elseif perc > 10 then
-                            ret = ''
-                        else
-                            ret = ''
-                        end
-
-                        if perc > 70 then
-                            ret = fg(BASE16_COLORS.base0B, ret)
-                        elseif perc > 20 then
-                            ret = fg(BASE16_COLORS.base0A, ret)
-                        else
-                            ret = fg(BASE16_COLORS.base08, ret)
-                        end
-
-                        if bat.status == 'Charging' then
-                            ret = fg(BASE16_COLORS.base0A, ' ') .. ret
-                        end
-
-                        return ret
-                    end
-                    widget:set_markup(map(bat_now) .. ' ' .. bat_now.perc .. '% ') --luacheck: ignore
-                end,
-            },
         },
     }
 end
