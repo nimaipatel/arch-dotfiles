@@ -6,8 +6,7 @@ local xresources = require 'beautiful.xresources'
 local dpi = xresources.apply_dpi
 
 local lain = require 'lain'
-local markup = lain.util.markup
-local nmcli_widget = require 'widgets.nmcli'
+local nm_widget = require 'widgets.nmcli'
 local brightnessctl_widget = require 'widgets.brightnessctl'
 local cpu_bars_widget = require 'widgets.cpu_bars'
 local memory_widget = require 'widgets.memory'
@@ -289,7 +288,7 @@ for s in screen do
             layout = wibox.layout.fixed.horizontal,
             spacing = dpi(30),
             brightnessctl_widget,
-            nmcli_widget,
+            nm_widget,
             lain.widget.bat {
                 timeout = 1,
                 battery = 'BAT1',
