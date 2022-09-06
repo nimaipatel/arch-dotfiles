@@ -1429,6 +1429,19 @@ packer.startup(function(use)
                 prefix = ']',
             })
 
+            require('legendary').bind_keymaps {
+                {
+                    '<C-n>',
+                    '<Plug>(cokeline-focus-next)',
+                    description = 'Next buffer',
+                },
+                {
+                    '<C-p>',
+                    '<Plug>(cokeline-focus-prev)',
+                    description = 'Previous buffer',
+                },
+            }
+
             require('legendary').setup()
             wk.register({
                 name = 'buffers',
