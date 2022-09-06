@@ -1,6 +1,7 @@
 local wibox = require 'wibox'
 local gears = require 'gears'
 local awful = require 'awful'
+local beautiful = require 'beautiful'
 
 local brightness_widget = wibox.widget {
     layout = wibox.layout.fixed.horizontal,
@@ -15,7 +16,7 @@ local brightness_widget = wibox.widget {
                 margins = 5,
                 {
                     id = 'arc',
-                    colors = { BASE16_COLORS.base0A },
+                    colors = { beautiful.base0A },
                     forced_height = 18,
                     forced_width = 18,
                     max_value = 100,
@@ -23,16 +24,13 @@ local brightness_widget = wibox.widget {
                     start_angle = 4.71238898, -- 2pi*3/4
                     paddings = 2,
                     widget = wibox.container.arcchart,
-                    set_value = function(self, value)
-                        self:set_value(value)
-                    end,
                 },
             },
         },
         {
             image = gears.color.recolor_image(
                 gears.filesystem.get_configuration_dir() .. 'assets/brightness.svg',
-                BASE16_COLORS.base09
+                beautiful.base09
             ),
             resize = true,
             widget = wibox.widget.imagebox,
