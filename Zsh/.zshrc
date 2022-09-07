@@ -14,6 +14,8 @@ export ABBR_AUTOLOAD=0
 
 source ~/.zplug/init.zsh
 zplug romkatv/powerlevel10k, as:theme, depth:1
+zplug romkatv/zsh-defer, as:theme, depth:1
+zplug plugins/colored-man-pages, from:oh-my-zsh
 zplug zsh-users/zsh-autosuggestions, depth:1
 zplug hlissner/zsh-autopair, depth:1
 zplug zdharma-continuum/fast-syntax-highlighting, depth:1

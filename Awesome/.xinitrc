@@ -7,8 +7,5 @@ if [ -d /etc/X11/xinit/xinitrc.d ] ; then
   unset f
 fi
 
-(
-  change-mode --restore
-  set-wallpaper --restore
-) &
-exec awesome
+change-mode --restore
+exec awesome >> ~/.cache/awesome/stdout 2>> ~/.cache/awesome/stderr

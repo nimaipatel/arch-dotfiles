@@ -18,8 +18,11 @@ for i in inputs:
         initial = pulse.volume_get_all_chans(i)
         break
 
+final = initial + change
 for i in inputs:
     if i.proplist["node.name"] != "buckle":
-        pulse.volume_set_all_chans(i, initial + change)
+        pulse.volume_set_all_chans(i, final)
+
+print(final)
 
 pulse.close()

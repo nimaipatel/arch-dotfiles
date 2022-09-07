@@ -309,25 +309,25 @@ packer.startup(function(use)
             require('legendary').bind_keymaps {
                 {
                     '<A-j>',
-                    ':cnext<CR> zz :set cursorline<CR>',
+                    '<Plug>(qf_qf_next)',
                     description = 'Goto next quick-fix list item',
                     mode = { 'n' },
                 },
                 {
                     '<A-k>',
-                    ':cprevious<CR> zz :set cursorline<CR>',
+                    '<Plug>(qf_qf_previous)',
                     description = 'Goto previous quick-fix list item',
                     mode = { 'n' },
                 },
                 {
                     '<C-j>',
-                    ':lnext<CR> zz :set cursorline<CR>',
+                    '<Plug>(qf_loc_next)',
                     description = 'Goto next location list item',
                     mode = { 'n' },
                 },
                 {
                     '<C-k>',
-                    ':lprevious<CR>     zz :set cursorline<CR>',
+                    '<Plug>(qf_loc_previous)',
                     description = 'Goto previous location list item',
                     mode = { 'n' },
                 },
@@ -484,8 +484,8 @@ packer.startup(function(use)
             require('legendary').setup()
             wk.register({
                 name = 'misc',
-                q = { ':cclose<CR>', 'close quickfix if open' },
-                l = { ':lclose<CR>', 'close location if open' },
+                q = { '<Plug>(qf_qf_toggle)', 'toggle quickfix' },
+                l = { '<Plug>(qf_loc_toggle)', 'toggle location' },
                 w = { ':set list!<CR>', 'Toggle whitespace' },
                 r = { ':set wrap!<CR>', 'Toggle line wrapping' },
                 s = { ':set spell!<CR>', 'Toggle spell check' },
@@ -764,6 +764,8 @@ packer.startup(function(use)
         end,
     }
 
+    use { 'romainl/vim-qf' }
+
     use {
         'https://gitlab.com/yorickpeterse/nvim-pqf',
         config = function()
@@ -810,7 +812,7 @@ packer.startup(function(use)
                     end,
                     'toggle virtual diagnostics',
                 },
-            }, { prefix = '<leader>l' })
+            }, { prefix = '<leader>d' })
         end,
     }
 
@@ -1443,6 +1445,10 @@ packer.startup(function(use)
             }
 
             require('legendary').setup()
+            wk.register({
+                q = { ':Bdelete<CR>', 'Close buffer' },
+            }, { prefix = '<leader>' })
+
             wk.register({
                 name = 'buffers',
                 d = { ':Bdelete<CR>', 'Close buffer' },

@@ -377,15 +377,12 @@ local globalkeys = gears.table.join(
     end),
 
     key({}, 'XF86AudioMute', function()
-        awful.util.spawn(gears.filesystem.get_configuration_dir() .. '/assets/vol_mute.py')
     end),
 
     key({}, 'XF86AudioRaiseVolume', function()
-        awful.util.spawn(gears.filesystem.get_configuration_dir() .. '/assets/vol.py +0.05')
     end),
 
     key({}, 'XF86AudioLowerVolume', function()
-        awful.util.spawn(gears.filesystem.get_configuration_dir() .. '/assets/vol.py -0.05')
     end),
 
     key({ modkey }, 'Left', awful.tag.viewprev, { description = 'view previous', group = 'tag' }),
