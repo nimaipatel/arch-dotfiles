@@ -10,6 +10,7 @@ local nm_widget = require 'widgets.nmcli'
 local brightnessctl_widget = require 'widgets.brightnessctl'
 local cpu_bars_widget = require 'widgets.cpu_bars'
 local memory_widget = require 'widgets.memory'
+local battery_widget = require 'widgets.battery'
 local util = require 'util'
 
 -- Standard awesome library
@@ -289,6 +290,7 @@ for s in screen do
             spacing = dpi(30),
             brightnessctl_widget,
             nm_widget,
+            battery_widget,
         },
     }
 end
