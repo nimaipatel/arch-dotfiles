@@ -11,6 +11,7 @@ local brightnessctl_widget = require 'widgets.brightnessctl'
 local cpu_bars_widget = require 'widgets.cpu_bars'
 local memory_widget = require 'widgets.memory'
 local battery_widget = require 'widgets.battery'
+local pipewire_widget = require 'widgets.pipewire'
 local util = require 'util'
 
 -- Standard awesome library
@@ -288,6 +289,7 @@ for s in screen do
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
             spacing = dpi(30),
+            pipewire_widget,
             brightnessctl_widget,
             nm_widget,
             battery_widget,
@@ -377,12 +379,15 @@ local globalkeys = gears.table.join(
     end),
 
     key({}, 'XF86AudioMute', function()
+        pipewire_widget:mute()
     end),
 
     key({}, 'XF86AudioRaiseVolume', function()
+        pipewire_widget:change(5)
     end),
 
     key({}, 'XF86AudioLowerVolume', function()
+        pipewire_widget:change(-5)
     end),
 
     key({ modkey }, 'Left', awful.tag.viewprev, { description = 'view previous', group = 'tag' }),

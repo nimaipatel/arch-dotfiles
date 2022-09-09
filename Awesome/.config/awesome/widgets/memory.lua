@@ -1,6 +1,5 @@
 local wibox = require 'wibox'
 local gears = require 'gears'
-local naughty = require 'naughty'
 local floor = math.floor
 local beautiful = require 'beautiful'
 
