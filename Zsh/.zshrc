@@ -13,6 +13,7 @@ fi
 export ABBR_AUTOLOAD=0
 
 source ~/.zplug/init.zsh
+zplug jeffreytse/zsh-vi-mode
 zplug romkatv/powerlevel10k, as:theme, depth:1
 zplug romkatv/zsh-defer, depth:1
 zplug plugins/colored-man-pages, from:oh-my-zsh
@@ -24,88 +25,6 @@ zplug olets/zsh-abbr, depth:1
 source '/usr/share/fzf/key-bindings.zsh'
 zplug load
 
-# vi mode
-bindkey -v
-
-# change cursor shape quickly
-export KEYTIMEOUT=1
-
-# change cursor shape for different vi modes.
-function zle-keymap-select {
-  if [[ ${KEYMAP} == vicmd ]] ||
-     [[ $1 = 'block' ]]; then
-    echo -ne '\e[1 q'
-  elif [[ ${KEYMAP} == main ]] ||
-       [[ ${KEYMAP} == viins ]] ||
-       [[ ${KEYMAP} = '' ]] ||
-       [[ $1 = 'beam' ]]; then
-    echo -ne '\e[5 q'
-  fi
-}
-zle -N zle-keymap-select
-
-# start in insert mode
-zle-line-init() {
-    zle -K viins
-    echo -ne "\e[5 q"
-}
-zle -N zle-line-init
-
-# vim-surround
-autoload -Uz surround
-zle -N delete-surround surround
-zle -N add-surround surround
-zle -N change-surround surround
-bindkey -a cs change-surround
-bindkey -a ds delete-surround
-bindkey -a ys add-surround
-bindkey -M visual S add-surround
-
-# visually select quoted and bracketed text
-autoload -U select-quoted
-zle -N select-quoted
-autoload -U select-bracketed
-zle -N select-bracketed
-for m in visual viopp; do
-  for c in {a,i}{\',\",\`}; do
-    bindkey -M $m $c select-quoted
-  done
-  for c in {a,i}${(s..)^:-'()[]{}<>bB'}; do
-    bindkey -M $m $c select-bracketed
-  done
-done
-
-# make backspace work like in vim, unlike traditional vi
-bindkey "^?" backward-delete-char
-
-# make forward-word behave like in bash
-autoload -U select-word-style
-select-word-style bash
-
-WORDCHARS='*?_-~=&;!#$%^'
-
-# emacs bindings in insert mode for rsi
-bindkey "^H" backward-delete-char
-bindkey "^W" backward-kill-word
-bindkey "^A" beginning-of-line
-bindkey "^E" end-of-line
-bindkey "^B" backward-char
-bindkey "^F" forward-char
-bindkey 'b' backward-word
-bindkey 'f' forward-word
-bindkey "^K" kill-line
-bindkey "^L" clear-screen
-bindkey "^U" kill-whole-line
-bindkey "^Y" yank
-
-# edit shell command in $EDITOR buffer
-autoload edit-command-line; zle -N edit-command-line
-bindkey -M vicmd '^e' edit-command-line
-
-# substring search in normal mode using j and k
-bindkey -M vicmd 'k' history-substring-search-up
-bindkey -M vicmd 'j' history-substring-search-down
-
 autoload -Uz compinit && compinit
 # highlight selected option in tab completion
 zstyle ':completion:*' menu select
@@ -114,12 +33,8 @@ zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}' 'r:|[._-]=* r:|=*' 'l:|=* r:
 
 # vim like autocomplete
 zmodload zsh/complist
-bindkey '^n' expand-or-complete
-bindkey '^p' reverse-menu-complete
-bindkey -M menuselect '^h' vi-backward-char
-bindkey -M menuselect '^k' vi-up-line-or-history
-bindkey -M menuselect '^l' vi-forward-char
-bindkey -M menuselect '^j' vi-down-line-or-history
+
+WORDCHARS='*?_~&;!#$%^'
 
 # change directory without cd command
 setopt autocd
