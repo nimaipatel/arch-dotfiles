@@ -25,15 +25,5 @@ awesome.connect_signal('startup', function()
     spawn_once('unclutter', 'pidof unclutter')
     spawn_once('clight --no-auto-recalib', 'pidof clight')
     spawn_once('picom', 'pidof picom')
-    spawn_once(os.getenv 'BROWSER', 'pidof ' .. os.getenv 'BROWSER')
-    spawn_once('spotify-launcher', 'pidof spotify')
-    spawn_once('whatsapp-nativefier', function()
-        for _, c in ipairs(client.get()) do
-            if c.instance:match '^whatsapp%-nativefier' then
-                return true
-            end
-        end
-        return false
-    end)
     spawn_once('buckle', 'pidof buckle')
 end)
