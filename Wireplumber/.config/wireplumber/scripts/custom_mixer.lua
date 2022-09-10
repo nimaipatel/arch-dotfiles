@@ -10,7 +10,8 @@ local om = ObjectManager {
   Interest {
     type = "node",
     Constraint { "media.class", "matches", "*Stream*" },
-    Constraint { "node.name", "not-equals", "buckle" }
+    Constraint { "node.name", "not-equals", "buckle" },
+    Constraint { "node.name", "not-equals", "Mechvibes" },
   }
 }
 
