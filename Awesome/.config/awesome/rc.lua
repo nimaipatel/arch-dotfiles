@@ -12,6 +12,7 @@ local cpu_bars_widget = require 'widgets.cpu_bars'
 local memory_widget = require 'widgets.memory'
 local battery_widget = require 'widgets.battery'
 local pipewire_widget = require 'widgets.pipewire'
+local spotify_widget = require 'widgets.spotify'
 local util = require 'util'
 
 -- Standard awesome library
@@ -285,6 +286,7 @@ for s in screen do
             valign = 'center',
             halign = 'center',
             layout = wibox.container.place,
+            spotify_widget,
         },
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
@@ -332,6 +334,17 @@ local gkeep = lain.util.quake {
 
 -- {{{ Key bindings
 local globalkeys = gears.table.join(
+    key({ modkey }, 'b', function()
+        for _, c in ipairs(client.get()) do
+            if c.class:match '^Brave%-browser' then
+                c:jump_to()
+                return
+            end
+        end
+        -- urgent tags are automatically focused in this config
+        awful.util.spawn 'brave'
+    end),
+
     key({ modkey }, '=', function()
         util.useless_gaps_resize(1)
     end, { description = 'increment useless gaps', group = 'gaps' }),
@@ -376,6 +389,18 @@ local globalkeys = gears.table.join(
 
     key({}, 'XF86MonBrightnessUp', function()
         brightnessctl_widget:change_value(5)
+    end),
+
+    key({}, 'XF86AudioNext', function()
+        awful.util.spawn 'playerctl next'
+    end),
+
+    key({}, 'XF86AudioPrev', function()
+        awful.util.spawn 'playerctl previous'
+    end),
+
+    key({}, 'XF86AudioPlay', function()
+        awful.util.spawn 'playerctl play-pause'
     end),
 
     key({}, 'XF86AudioMute', function()
@@ -865,5 +890,10 @@ client.connect_signal('manage', function(c)
             awful.rules.apply(c)
         end)
     end
+end)
+
+client.connect_signal('property::urgent', function(c)
+    c.minimized = false
+    c:jump_to()
 end)
 -- }}}
