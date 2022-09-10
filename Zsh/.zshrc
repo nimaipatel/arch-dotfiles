@@ -82,6 +82,8 @@ bindkey "^?" backward-delete-char
 autoload -U select-word-style
 select-word-style bash
 
+WORDCHARS='*?_-~=&;!#$%^'
+
 # emacs bindings in insert mode for rsi
 bindkey "^H" backward-delete-char
 bindkey "^W" backward-kill-word
