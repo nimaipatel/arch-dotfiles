@@ -25,6 +25,24 @@ zplug olets/zsh-abbr, depth:1
 source '/usr/share/fzf/key-bindings.zsh'
 zplug load
 
+function custom-bindings() {
+    zvm_bindkey viins "^[[A" history-substring-search-up
+    zvm_bindkey viins "^[[B" history-substring-search-down
+    zvm_bindkey viins "^P" history-substring-search-up
+    zvm_bindkey viins "^N" history-substring-search-down
+    zvm_bindkey viins "^R" fzf-history-widget
+    zvm_bindkey vicmd "^[[A" history-substring-search-up
+    zvm_bindkey vicmd "^[[B" history-substring-search-down
+    zvm_bindkey vicmd "k" history-substring-search-up
+    zvm_bindkey vicmd "j" history-substring-search-down
+    zvm_bindkey vicmd "^P" history-substring-search-up
+    zvm_bindkey vicmd "^N" history-substring-search-down
+}
+
+zvm_after_init_commands+=(custom-bindings)
+
+ZVM_LINE_INIT_MODE=$ZVM_MODE_INSERT
+
 autoload -Uz compinit && compinit
 # highlight selected option in tab completion
 zstyle ':completion:*' menu select
