@@ -26,6 +26,8 @@ source '/usr/share/fzf/key-bindings.zsh'
 zplug load
 
 function custom-bindings() {
+    zvm_bindkey viins "b" backward-word
+    zvm_bindkey viins "f" forward-word
     zvm_bindkey viins "^[[A" history-substring-search-up
     zvm_bindkey viins "^[[B" history-substring-search-down
     zvm_bindkey viins "^P" history-substring-search-up
