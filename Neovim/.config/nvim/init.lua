@@ -592,6 +592,36 @@ packer.startup(function(use)
     }
 
     use {
+        'sindrets/diffview.nvim',
+        requires = 'nvim-lua/plenary.nvim',
+        config = function()
+            vim.opt.fillchars:append 'diff:╱'
+
+            require('legendary').bind_command {
+                'DiffviewToggle',
+                function()
+                    local view = require('diffview.lib').get_current_view()
+
+                    if view then
+                        vim.cmd 'DiffviewClose'
+                    else
+                        vim.cmd 'DiffviewOpen'
+                    end
+                end,
+                description = 'Toggle diff view',
+            }
+
+            require('legendary').setup()
+            require('which-key').register({
+                d = { ':DiffviewToggle<CR>', 'toggle diff view' },
+            }, {
+                prefix = '<leader>g',
+                silent = false,
+            })
+        end,
+    }
+
+    use {
         'lewis6991/gitsigns.nvim',
         requires = 'nvim-lua/plenary.nvim',
         config = function()
