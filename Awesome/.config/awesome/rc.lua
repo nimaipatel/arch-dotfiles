@@ -5,7 +5,6 @@ require 'beautiful_init'
 local xresources = require 'beautiful.xresources'
 local dpi = xresources.apply_dpi
 
-local lain = require 'lain'
 local nm_widget = require 'widgets.nmcli'
 local brightnessctl_widget = require 'widgets.brightnessctl'
 local cpu_bars_widget = require 'widgets.cpu_bars'
@@ -51,10 +50,6 @@ do
     end)
 end
 
-local modalbind = require 'modalbind'
-modalbind.init()
-modalbind.hide_default_options()
-
 local terminal = os.getenv 'TERMINAL' or 'kitty'
 local editor = os.getenv 'EDITOR' or 'nvim'
 local editor_cmd = terminal .. ' -e ' .. editor
@@ -68,6 +63,23 @@ awful.layout.layouts = {
     awful.layout.suit.fair,
     awful.layout.suit.fair.horizontal,
     awful.layout.suit.floating,
+}
+
+local abbreviation = function(str)
+    local template = [[sh -c 'sleep 0.2 ; xdotool type --clearmodifiers "%s" ; xdotool keyup super']]
+    return function()
+        awful.util.spawn(string.format(template, str))
+    end
+end
+
+local abb_menu = awful.menu {
+    { '&name', abbreviation 'Nimai Patel' },
+    { '&email', abbreviation 'nimai.m.patel@gmail.com' },
+    { '&github', abbreviation 'https://www.github.com/nimaipatel' },
+    { '&date in dd/mm/yyyy', abbreviation '$(date +%d/%m/%Y)' },
+    { '&time in h:m:[AM/PM]', abbreviation '$(date +%I:%M%p)' },
+    { 'day of the &week', abbreviation '$(date +%A)' },
+    { '&unix date', abbreviation '$(date)' },
 }
 
 local layoutmenu = awful.menu {
@@ -617,33 +629,12 @@ for i = 1, 9 do
     )
 end
 
-local abbreviation = function(str)
-    local template = [[sh -c 'sleep 0.2 ; xdotool type --clearmodifiers "%s" ; xdotool keyup super']]
-    return function()
-        awful.util.spawn(string.format(template, str))
-    end
-end
-
 -- abbreviations
 globalkeys = gears.table.join(
     globalkeys,
     -- Move client to tag.
     key({ modkey }, 'a', function()
-        modalbind.grab {
-            keymap = {
-                { 'separator', 'Details' },
-                { 'n', abbreviation 'Nimai Patel', 'name' },
-                { 'e', abbreviation 'nimai.m.patel@gmail.com', 'email' },
-                { 'g', abbreviation 'https://www.github.com/nimaipatel', 'github' },
-                { 'separator', 'Dates' },
-                { 'd', abbreviation '$(date +%d/%m/%Y)', 'date in dd/mm/yyyy format' },
-                { 't', abbreviation '$(date +%I:%M%p)', 'time in h:m:[AM/PM] format' },
-                { 'w', abbreviation '$(date +%A)', 'day of the week' },
-                { 's', abbreviation '$(date)', 'output of unix date command' },
-            },
-            name = 'abbreviations',
-            stay_in_mode = false,
-        }
+        abb_menu:toggle { coords = { x = 0, y = 0 } }
     end)
 )
 
