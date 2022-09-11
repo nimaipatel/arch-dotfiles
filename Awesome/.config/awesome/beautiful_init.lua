@@ -38,11 +38,12 @@ b.menu_height = 30
 b.menu_width = 300
 b.useless_gap = 10
 
-b.bg_normal = b.base00
-b.bg_focus = b.base00
-b.bg_urgent = b.base08
-b.bg_minimize = b.base0A
-b.bg_systray = b.bg_normal
+-- BF ==> 75% opacity
+b.bg_normal = b.base01 .. 'BF'
+b.bg_focus = b.base00 .. 'BF'
+b.bg_urgent = b.base08 .. 'BF'
+b.bg_minimize = b.base0A .. 'BF'
+b.bg_systray = b.bg_normal .. 'BF'
 
 b.fg_normal = b.base07
 b.fg_focus = b.base07

@@ -308,17 +308,6 @@ root.buttons(gears.table.join(
 ))
 -- }}}
 
-local spotify = lain.util.quake {
-    app = terminal,
-    extra = '-e spt',
-    name = 'spt',
-    argname = '--class %s',
-    width = 0.5,
-    height = 0.75,
-    horiz = 'center',
-    vert = 'center',
-}
-
 local gkeep = lain.util.quake {
     app = terminal,
     extra = '-e nvim -c GkeepOpen',
@@ -474,7 +463,15 @@ local globalkeys = gears.table.join(
     end, { description = 'toggle google keep window', group = 'launcher' }),
 
     key({ modkey }, 's', function()
-        spotify:toggle()
+        for _, c in ipairs(client.get()) do
+            if c.class:match 'Spotify' then
+                c:jump_to()
+                return
+            end
+        end
+        awful.spawn('spotify-launcher', {
+            tag = ' ૪ ',
+        })
     end, { description = 'toggle spotify', group = 'launcher' }),
 
     awful.key({ modkey }, 'F1', hotkeys_popup.show_help, { description = 'show help', group = 'awesome' }),
