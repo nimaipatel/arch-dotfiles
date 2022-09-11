@@ -308,17 +308,6 @@ root.buttons(gears.table.join(
 ))
 -- }}}
 
-local gkeep = lain.util.quake {
-    app = terminal,
-    extra = '-e nvim -c GkeepOpen',
-    name = 'gkeep',
-    argname = '--class %s',
-    width = 0.5,
-    height = 0.75,
-    horiz = 'center',
-    vert = 'center',
-}
-
 -- {{{ Key bindings
 local globalkeys = gears.table.join(
     key({ modkey }, 'v', function()
@@ -459,7 +448,15 @@ local globalkeys = gears.table.join(
     end, { description = 'go back', group = 'client' }),
 
     key({ modkey }, 'g', function()
-        gkeep:toggle()
+        for _, c in ipairs(client.get()) do
+            if c.class:match 'Google Keep' then
+                c:jump_to()
+                return
+            end
+        end
+        awful.spawn([[kitty --class 'Google Keep' -e nvim -c GkeepOpen]], {
+            tag = ' ૬ ',
+        })
     end, { description = 'toggle google keep window', group = 'launcher' }),
 
     key({ modkey }, 's', function()
