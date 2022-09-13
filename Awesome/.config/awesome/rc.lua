@@ -322,7 +322,19 @@ root.buttons(gears.table.join(
 
 -- {{{ Key bindings
 local globalkeys = gears.table.join(
-    key({ modkey }, 'v', function()
+    key({ modkey }, 't', function()
+        for _, c in ipairs(client.get()) do
+            if c.class:match 'kitty' and (not c.name:match 'nvim') then
+                c:jump_to()
+                return
+            end
+        end
+        awful.spawn('kitty', {
+            tag = ' ૧ ',
+        })
+    end),
+
+    key({ modkey }, 'e', function()
         for _, c in ipairs(client.get()) do
             if c.class:match 'kitty' and c.name:match 'nvim' then
                 c:jump_to()
@@ -367,19 +379,13 @@ local globalkeys = gears.table.join(
         awful.util.spawn 'passmenu -i -p '
     end, { description = 'select password', group = 'menus' }),
 
-    key({ modkey }, 'e', function()
+    key({ modkey }, 'u', function()
         awful.util.spawn 'rofi -show emoji'
     end, { description = 'select emojis', group = 'menus' }),
-
-    key({ modkey }, 'u', awful.client.urgent.jumpto, { description = 'jump to urgent client', group = 'client' }),
 
     key({ modkey }, 'd', function()
         awful.util.spawn 'rofi -show drun -show-icons -display-drun ::'
     end, { description = 'run desktop apps', group = 'menus' }),
-
-    key({ modkey }, 'w', function()
-        awful.util.spawn [[wifimenu]]
-    end, { description = 'configure wifi network', group = 'menus' }),
 
     key({ modkey }, 'r', function()
         awful.util.spawn 'rofi -show run -display-run ::'
@@ -557,10 +563,6 @@ local clientkeys = gears.table.join(
     key({ modkey }, 'o', function(c)
         c:move_to_screen()
     end, { description = 'move to screen', group = 'client' }),
-
-    key({ modkey }, 't', function(c)
-        c.ontop = not c.ontop
-    end, { description = 'toggle keep on top', group = 'client' }),
 
     key({ modkey }, 'n', function(c)
         c.minimized = true
