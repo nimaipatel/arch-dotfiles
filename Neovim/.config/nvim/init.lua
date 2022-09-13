@@ -1570,6 +1570,19 @@ packer.startup(function(use)
             }, {
                 prefix = '<leader>f',
             })
+            require('which-key').register({
+                ['<leader>'] = {
+                    function()
+                        builtin.find_files {
+                            hidden = true,
+                            follow = true,
+                        }
+                    end,
+                    'Find files',
+                },
+            }, {
+                prefix = '<leader>',
+            })
 
             require('legendary').setup()
             require('which-key').register({
