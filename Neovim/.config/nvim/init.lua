@@ -165,10 +165,17 @@ U.lualine_config = function()
             theme = base16_lualine_colors,
         },
         sections = {
-            lualine_b = {
-                'branch',
-                'diff',
+            lualine_a = { 'mode' },
+            lualine_b = { 'branch', 'diff' },
+            lualine_c = {
+                'filename',
+                function()
+                    return require('nvim-lightbulb').get_status_text()
+                end,
             },
+            lualine_x = { 'encoding', 'fileformat', 'filetype' },
+            lualine_y = { 'progress' },
+            lualine_z = { 'location' },
         },
     }
 
@@ -940,9 +947,9 @@ packer.startup(function(use)
                 })
             end
 
-            for type, icon in pairs(U.SEVERITY_SIGNS) do
+            for type, _ in pairs(U.SEVERITY_SIGNS) do
                 local hl = 'DiagnosticSign' .. type:lower():gsub('^%l', string.upper)
-                vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+                vim.fn.sign_define(hl, { text = '', texthl = hl, numhl = hl })
             end
 
             local function table_merge(t1, t2)
@@ -1103,6 +1110,10 @@ packer.startup(function(use)
     use {
         'kosayoda/nvim-lightbulb',
         config = function()
+            require('nvim-lightbulb').setup {
+                sign = { enabled = false },
+                status_text = { enabled = true },
+            }
             vim.fn.sign_define('LightBulbSign', { text = U.SEVERITY_SIGNS.HINT, texthl = 'LspDiagnosticsDefaultHint' })
             require('legendary').bind_autocmds {
                 name = 'LightBulb',
