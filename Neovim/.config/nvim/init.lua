@@ -160,8 +160,8 @@ U.lualine_config = function()
 
     require('lualine').setup {
         options = {
-            section_separators = { left = '', right = '' },
-            component_separators = { left = '', right = '' },
+            section_separators = { left = '', right = '' },
+            component_separators = { left = '', right = '' },
             theme = base16_lualine_colors,
         },
         sections = {
@@ -466,7 +466,7 @@ packer.startup(function(use)
                     scroll_down = 'n',
                     scroll_up = 'p',
                 },
-                window = { border = 'rounded' },
+                window = { border = 'single' },
 
                 plugins = {
                     presets = {
@@ -789,7 +789,7 @@ packer.startup(function(use)
         'https://github.com/williamboman/mason.nvim',
         config = function()
             require('mason').setup {
-                ui = { border = 'rounded' },
+                ui = { border = 'single' },
             }
         end,
     }
@@ -875,7 +875,7 @@ packer.startup(function(use)
                 virtual_text = false,
                 float = {
                     show_header = false,
-                    border = 'rounded',
+                    border = 'single',
                     format = function(diagnostic)
                         for _, name in ipairs(vim.diagnostic.severity) do
                             if diagnostic.severity == vim.diagnostic.severity[name] then
@@ -1030,10 +1030,10 @@ packer.startup(function(use)
                         other_hints_prefix = '  ',
                     },
                     memory_usage = {
-                        border = 'rounded',
+                        border = 'single',
                     },
                     symbol_info = {
-                        border = 'rounded',
+                        border = 'single',
                     },
                 },
             }
@@ -1152,13 +1152,12 @@ packer.startup(function(use)
                 },
                 window = {
                     completion = {
-                        border = 'rounded',
+                        border = 'single',
                         winhighlight = 'Normal:Normal,FloatBorder:Normal',
-                        scrollbar = '║',
                     },
                     documentation = {
                         winhighlight = 'Normal:Normal,FloatBorder:Normal',
-                        border = 'rounded',
+                        border = 'single',
                     },
                 },
                 snippet = {
@@ -1377,11 +1376,6 @@ packer.startup(function(use)
 
                 components = {
                     {
-                        text = '',
-                        fg = cokeline_bg,
-                        bg = get_hex('Normal', 'bg'),
-                    },
-                    {
                         text = function(buffer)
                             return ' ' .. buffer.devicon.icon .. ' '
                         end,
@@ -1422,11 +1416,6 @@ packer.startup(function(use)
                         end,
                         delete_buffer_on_left_click = true,
                         truncation = { priority = 1 },
-                    },
-                    {
-                        text = '',
-                        fg = cokeline_bg,
-                        bg = get_hex('Normal', 'bg'),
                     },
                 },
             }
@@ -1526,6 +1515,7 @@ packer.startup(function(use)
             local actions = require 'telescope.actions'
             telescope.setup {
                 defaults = {
+                    borderchars = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
                     prompt_prefix = '  ',
                     selection_caret = '  ',
                     entry_prefix = '  ',
@@ -1595,6 +1585,7 @@ packer.startup(function(use)
             require('which-key').register({
                 name = 'string match',
                 t = { builtin.live_grep, 'Live grep' },
+                c = { builtin.grep_string, 'Grep for string under cursor' },
                 s = { builtin.current_buffer_fuzzy_find, 'Buffer lines' },
             }, {
                 prefix = '<leader>t',
