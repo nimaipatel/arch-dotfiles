@@ -359,6 +359,10 @@ local globalkeys = gears.table.join(
         })
     end),
 
+    awful.key({ modkey }, 'Delete', function()
+        naughty.destroy_all_notifications()
+    end),
+
     key({ modkey }, '=', function()
         util.useless_gaps_resize(1)
     end, { description = 'increment useless gaps', group = 'gaps' }),

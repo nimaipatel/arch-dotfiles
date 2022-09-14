@@ -14,4 +14,4 @@ choosen=$(frece print $frece_db_path | dmenu -p "Choose Theme")
 [ -z $choosen ] && exit
 frece increment $frece_db_path "$choosen"
 change-mode "$choosen"
-notify-send "Theme set to $choosen"
+sleep 2 && notify-send "Flavours" "Theme set to $choosen"

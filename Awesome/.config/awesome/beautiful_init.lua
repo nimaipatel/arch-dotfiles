@@ -1,82 +1,83 @@
 require 'base16'
-local b = require 'beautiful'
-local n = require 'naughty'
+local beautiful = require 'beautiful'
+local naughty = require 'naughty'
 local gears = require 'gears'
 local xresources = require 'beautiful.xresources'
 local dpi = xresources.apply_dpi
 
-b.init(gears.filesystem.get_themes_dir() .. 'default/theme.lua')
+beautiful.init(gears.filesystem.get_themes_dir() .. 'default/theme.lua')
 
 for key, value in pairs(_G.BASE16_COLORS) do
-    b[key] = value
+    beautiful[key] = value
 end
 
 local circle = function(color)
     return gears.surface.load_from_shape(20, 20, gears.shape.circle, color)
 end
 
-local unfocused_button = circle(b.base02)
+local unfocused_button = circle(beautiful.base02)
 
-local close_btn = circle(b.base08)
-b.titlebar_close_button_normal = unfocused_button
-b.titlebar_close_button_focus = close_btn
+local close_btn = circle(beautiful.base08)
+beautiful.titlebar_close_button_normal = unfocused_button
+beautiful.titlebar_close_button_focus = close_btn
 
-local minimize_btn = circle(b.base0A)
-b.titlebar_minimize_button_normal = unfocused_button
-b.titlebar_minimize_button_focus = minimize_btn
+local minimize_btn = circle(beautiful.base0A)
+beautiful.titlebar_minimize_button_normal = unfocused_button
+beautiful.titlebar_minimize_button_focus = minimize_btn
 
-local maximized_btn = circle(b.base0B)
-b.titlebar_maximized_button_normal_active = unfocused_button
-b.titlebar_maximized_button_focus_active = maximized_btn
-b.titlebar_maximized_button_normal_inactive = unfocused_button
-b.titlebar_maximized_button_focus_inactive = maximized_btn
+local maximized_btn = circle(beautiful.base0B)
+beautiful.titlebar_maximized_button_normal_active = unfocused_button
+beautiful.titlebar_maximized_button_focus_active = maximized_btn
+beautiful.titlebar_maximized_button_normal_inactive = unfocused_button
+beautiful.titlebar_maximized_button_focus_inactive = maximized_btn
 
-b.font = 'sans-serif 14'
-b.hotkeys_font = b.font
-b.hotkeys_description_font = b.font
-b.menu_font = b.font
-b.menu_height = 30
-b.menu_width = 300
-b.useless_gap = 10
+beautiful.font = 'sans-serif 14'
+beautiful.hotkeys_font = beautiful.font
+beautiful.hotkeys_description_font = beautiful.font
+beautiful.menu_font = beautiful.font
+beautiful.menu_height = 30
+beautiful.menu_width = 300
+beautiful.useless_gap = 10
 
 -- BF ==> 75% opacity
-b.bg_normal = b.base01 .. 'BF'
-b.bg_focus = b.base00 .. 'BF'
-b.bg_urgent = b.base08 .. 'BF'
-b.bg_minimize = b.base0A .. 'BF'
-b.bg_systray = b.bg_normal .. 'BF'
+beautiful.bg_normal = beautiful.base01 .. 'BF'
+beautiful.bg_focus = beautiful.base00 .. 'BF'
+beautiful.bg_urgent = beautiful.base08 .. 'BF'
+beautiful.bg_minimize = beautiful.base0A .. 'BF'
+beautiful.bg_systray = beautiful.bg_normal .. 'BF'
 
-b.fg_normal = b.base07
-b.fg_focus = b.base07
-b.fg_urgent = b.base00
-b.fg_minimize = b.base00
+beautiful.fg_normal = beautiful.base07
+beautiful.fg_focus = beautiful.base07
+beautiful.fg_urgent = beautiful.base00
+beautiful.fg_minimize = beautiful.base00
 
-b.useless_gap = dpi(5)
-b.border_width = dpi(0)
-b.border_normal = b.bg_normal
-b.border_focus = b.bg_focus
-b.border_marked = b.base08
+beautiful.useless_gap = dpi(5)
+beautiful.border_width = dpi(0)
+beautiful.border_normal = beautiful.bg_normal
+beautiful.border_focus = beautiful.bg_focus
+beautiful.border_marked = beautiful.base08
 
-b.systray_icon_spacing = dpi(10)
+beautiful.systray_icon_spacing = dpi(10)
 
-b.modalbind_font = b.font
-b.modebox_fg = b.fg_normal
-b.modebox_bg = b.bg_normal
-b.modebox_border = b.border_focus
-b.modebox_border_width = 5
+beautiful.modalbind_font = beautiful.font
+beautiful.modebox_fg = beautiful.fg_normal
+beautiful.modebox_bg = beautiful.bg_normal
+beautiful.modebox_border = beautiful.border_focus
+beautiful.modebox_border_width = 5
 
-b.menu_border_color = b.border_focus
-b.menu_border_width = 2
+beautiful.menu_border_color = beautiful.border_focus
+beautiful.menu_border_width = 2
 
-n.config.padding = dpi(50)
-n.config.spacing = dpi(10)
-n.config.defaults.position = 'bottom_right'
-n.config.presets.low.fg = b.base00
-n.config.presets.normal.fg = b.base07
-n.config.presets.critical.fg = b.base00
-n.config.presets.low.bg = b.base0B
-n.config.presets.normal.bg = b.base03
-n.config.presets.critical.bg = b.base08
+naughty.config.padding = dpi(50)
+naughty.config.spacing = dpi(10)
+naughty.config.defaults.margin = dpi(16)
+naughty.config.defaults.position = 'bottom_right'
+naughty.config.presets.low.fg = beautiful.base00
+naughty.config.presets.normal.fg = beautiful.base07
+naughty.config.presets.critical.fg = beautiful.base00
+naughty.config.presets.low.bg = beautiful.base0B
+naughty.config.presets.normal.bg = beautiful.base03
+naughty.config.presets.critical.bg = beautiful.base08
 
 local layouts = {
     'layout_fairh',
@@ -98,5 +99,5 @@ local layouts = {
 }
 
 for _, layout in ipairs(layouts) do
-    b[layout] = gears.color.recolor_image(b[layout], b.base04)
+    beautiful[layout] = gears.color.recolor_image(beautiful[layout], beautiful.base04)
 end
