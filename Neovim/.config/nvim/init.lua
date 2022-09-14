@@ -1,3 +1,4 @@
+local is_gnu_linux = (not not vim.fn.system('uname'):match 'Linux')
 -- space bar is leader key
 vim.g.mapleader = ' '
 
@@ -247,7 +248,7 @@ packer.startup(function(use)
 
     use {
         'rcarriga/nvim-notify',
-        disable = true,
+        disable = is_gnu_linux,
         config = function()
             local notify = require 'notify'
             vim.notify = notify
