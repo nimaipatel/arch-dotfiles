@@ -150,6 +150,15 @@ local mymainmenu = awful.menu {
         { '&Terminal', terminal },
         { '&Editor', editor_cmd },
         { '&Browser', os.getenv 'BROWSER' },
+        { '&Calculator', 'rofi -show calc' },
+        {
+            '&Utilities',
+            {
+                { '&Color Picker', 'colorpicker' },
+                { '&Passwords', 'passmenu -i -p ' },
+                { '&Emoji Selector', 'rof -show emoji' },
+            },
+        },
         {
             '&Office Suite',
             {
@@ -375,24 +384,14 @@ local globalkeys = gears.table.join(
         util.useless_gaps_resize()
     end, { description = 'reset gaps', group = 'gaps' }),
 
-    key({ modkey }, 'c', function()
-        awful.util.spawn 'rofi -show calc'
-    end, { description = 'calculator', group = 'launcher' }),
-
-    key({ modkey }, 'p', function()
-        awful.util.spawn 'passmenu -i -p '
-    end, { description = 'select password', group = 'menus' }),
-
-    key({ modkey }, 'u', function()
-        awful.util.spawn 'rofi -show emoji'
-    end, { description = 'select emojis', group = 'menus' }),
-
-    key({ modkey }, 'd', function()
+    -- Mod4 + Control + Escape is actually mapped to to just Mod4 using xcape
+    -- see autostart.lua
+    key({ modkey, 'Control' }, 'Escape', function()
         awful.util.spawn 'rofi -show drun -show-icons -display-drun ::'
     end, { description = 'run desktop apps', group = 'menus' }),
 
     key({ modkey }, 'r', function()
-        awful.util.spawn 'rofi -show run -display-run ::'
+        awful.util.spawn 'rofi -show run show-icons -display-run ::'
     end, { description = 'run command', group = 'menus' }),
 
     key({}, 'XF86MonBrightnessDown', function()

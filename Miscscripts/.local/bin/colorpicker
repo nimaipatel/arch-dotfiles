@@ -1,3 +1,4 @@
 #!/bin/sh
 
-xcolor | xargs -I'{}' notify-send "Color Picker: {}"
+col=$(xcolor)
+notify-send --expire-time=0 "xcolor" "Color Picker: <span background='${col}'>   </span> ${col}"

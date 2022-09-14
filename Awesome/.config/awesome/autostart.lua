@@ -20,6 +20,7 @@ awesome.connect_signal('startup', function()
     spawn 'setxkbmap -option ctrl:nocaps'
     spawn 'killall xcape'
     spawn 'xcape -e "Control_L=Escape"'
+    spawn [[xcape -e 'Super_L=Super_L|Control_L|Escape']]
     spawn 'xset r rate 300 50'
     spawn 'xgamma -rgamma 1.0 -ggamma 0.9 -bgamma 0.4'
     spawn_once('unclutter', 'pidof unclutter')

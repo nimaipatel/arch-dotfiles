@@ -240,9 +240,9 @@ packer.startup(function(use)
 
     use {
         'simrat39/desktop-notify.nvim',
-        config = function ()
-            require("desktop-notify").override_vim_notify()
-        end
+        config = function()
+            require('desktop-notify').override_vim_notify()
+        end,
     }
 
     use {
