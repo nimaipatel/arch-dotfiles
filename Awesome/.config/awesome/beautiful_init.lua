@@ -1,5 +1,6 @@
 require 'base16'
 local b = require 'beautiful'
+local n = require 'naughty'
 local gears = require 'gears'
 local xresources = require 'beautiful.xresources'
 local dpi = xresources.apply_dpi
@@ -66,6 +67,16 @@ b.modebox_border_width = 5
 
 b.menu_border_color = b.border_focus
 b.menu_border_width = 2
+
+n.config.padding = dpi(50)
+n.config.spacing = dpi(10)
+n.config.defaults.position = 'bottom_right'
+n.config.presets.low.fg = b.base00
+n.config.presets.normal.fg = b.base07
+n.config.presets.critical.fg = b.base00
+n.config.presets.low.bg = b.base0B
+n.config.presets.normal.bg = b.base03
+n.config.presets.critical.bg = b.base08
 
 local layouts = {
     'layout_fairh',

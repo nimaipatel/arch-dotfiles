@@ -239,7 +239,15 @@ packer.startup(function(use)
     }
 
     use {
+        'simrat39/desktop-notify.nvim',
+        config = function ()
+            require("desktop-notify").override_vim_notify()
+        end
+    }
+
+    use {
         'rcarriga/nvim-notify',
+        disable = true,
         config = function()
             local notify = require 'notify'
             vim.notify = notify
