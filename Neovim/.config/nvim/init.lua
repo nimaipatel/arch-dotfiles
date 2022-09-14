@@ -1,4 +1,6 @@
+-- check if we are in GNU/Linux
 local is_gnu_linux = (not not vim.fn.system('uname'):match 'Linux')
+
 -- space bar is leader key
 vim.g.mapleader = ' '
 
@@ -265,6 +267,83 @@ packer.startup(function(use)
                 stages = 'slide',
                 timeout = 5000,
             }
+        end,
+    }
+
+    use {
+        'monaqa/dial.nvim',
+        config = function()
+            local augend = require 'dial.augend'
+            require('dial.config').augends:register_group {
+                default = {
+                    augend.integer.alias.decimal,
+                    augend.integer.alias.hex,
+                    augend.constant.new { elements = { 'true', 'false' } },
+                    augend.constant.new { elements = { 'True', 'False' } },
+                    augend.constant.new {
+                        elements = {
+                            'Sunday',
+                            'Monday',
+                            'Tuesday',
+                            'Wednesday',
+                            'Thursday',
+                            'Friday',
+                            'Saturday',
+                        },
+                    },
+                    augend.constant.new {
+                        elements = {
+                            'sunday',
+                            'monday',
+                            'tuesday',
+                            'wednesday',
+                            'thursday',
+                            'friday',
+                            'saturday',
+                        },
+                    },
+                    augend.constant.new {
+                        elements = {
+                            'January',
+                            'February',
+                            'March',
+                            'April',
+                            'May',
+                            'June',
+                            'July',
+                            'August',
+                            'September',
+                            'October',
+                            'November',
+                            'December',
+                        },
+                    },
+                    augend.constant.new {
+                        elements = {
+                            'january',
+                            'february',
+                            'march',
+                            'april',
+                            'may',
+                            'june',
+                            'july',
+                            'august',
+                            'september',
+                            'october',
+                            'november',
+                            'december',
+                        },
+                    },
+
+                    augend.date.alias['%d/%m/%Y'],
+                },
+            }
+            vim.api.nvim_set_keymap('n', '<C-a>', require('dial.map').inc_normal(), { noremap = true })
+            vim.api.nvim_set_keymap('n', '<C-x>', require('dial.map').dec_normal(), { noremap = true })
+            vim.api.nvim_set_keymap('v', '<C-a>', require('dial.map').inc_visual(), { noremap = true })
+            vim.api.nvim_set_keymap('v', '<C-x>', require('dial.map').dec_visual(), { noremap = true })
+            vim.api.nvim_set_keymap('v', 'g<C-a>', require('dial.map').inc_gvisual(), { noremap = true })
+            vim.api.nvim_set_keymap('v', 'g<C-x>', require('dial.map').dec_gvisual(), { noremap = true })
         end,
     }
 
