@@ -155,8 +155,18 @@ local mymainmenu = awful.menu {
             '&Utilities',
             {
                 { '&Color Picker', 'colorpicker' },
-                { '&Passwords', 'passmenu -i -p ' },
-                { '&Emoji Selector', 'rof -show emoji' },
+                {
+                    '&Passwords',
+                    function()
+                        awful.spawn.with_shell 'sleep 0.1 ; passmenu -i -p '
+                    end,
+                },
+                {
+                    '&Emoji Selector',
+                    function()
+                        awful.spawn.with_shell 'sleep 0.1 ; rofi -show emoji'
+                    end,
+                },
             },
         },
         {
