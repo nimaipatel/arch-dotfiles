@@ -1683,7 +1683,16 @@ packer.startup(function(use)
             require('legendary').setup()
             require('which-key').register({
                 name = 'string match',
-                t = { builtin.live_grep, 'Live grep' },
+                t = {
+                    function()
+                        builtin.live_grep {
+                            additional_args = function()
+                                return { '--follow' }
+                            end,
+                        }
+                    end,
+                    'Live grep',
+                },
                 c = { builtin.grep_string, 'Grep for string under cursor' },
                 s = { builtin.current_buffer_fuzzy_find, 'Buffer lines' },
             }, {
