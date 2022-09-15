@@ -650,6 +650,13 @@ packer.startup(function(use)
         end,
     }
 
+    use {
+        'glacambre/firenvim',
+        run = function()
+            vim.fn['firenvim#install'](1)
+        end,
+    }
+
     use 'baskerville/vim-sxhkdrc'
     use 'fladson/vim-kitty'
 

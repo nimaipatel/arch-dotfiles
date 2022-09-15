@@ -397,12 +397,8 @@ local globalkeys = gears.table.join(
     -- Mod4 + Control + Escape is actually mapped to to just Mod4 using xcape
     -- see autostart.lua
     key({ modkey, 'Control' }, 'Escape', function()
-        awful.util.spawn 'rofi -show drun -show-icons -display-drun ::'
+        awful.util.spawn 'rofi -show run -display-run ::'
     end, { description = 'run desktop apps', group = 'menus' }),
-
-    key({ modkey }, 'r', function()
-        awful.util.spawn 'rofi -show run show-icons -display-run ::'
-    end, { description = 'run command', group = 'menus' }),
 
     key({}, 'XF86MonBrightnessDown', function()
         brightnessctl_widget:change_value(-5)

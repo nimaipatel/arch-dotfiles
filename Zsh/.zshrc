@@ -22,6 +22,7 @@ zplug hlissner/zsh-autopair, depth:1
 zplug zdharma-continuum/fast-syntax-highlighting, depth:1
 zplug zsh-users/zsh-history-substring-search, depth:1
 zplug olets/zsh-abbr, depth:1
+zplug marzocchi/zsh-notify
 source '/usr/share/fzf/key-bindings.zsh'
 zplug load
 
