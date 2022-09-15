@@ -1669,6 +1669,16 @@ packer.startup(function(use)
                     end,
                     'Find files',
                 },
+                ['/'] = {
+                    function()
+                        builtin.live_grep {
+                            additional_args = function()
+                                return { '--follow' }
+                            end,
+                        }
+                    end,
+                    'Live grep',
+                },
             }, {
                 prefix = '<leader>',
             })
