@@ -24,6 +24,7 @@ local naughty = require 'naughty'
 local hotkeys_popup = require 'awful.hotkeys_popup'
 require 'awful.hotkeys_popup.keys'
 
+local TAGS = { ' ૧ ', ' ૨ ', ' ૩ ', ' ૪ ', ' ૫ ', ' ૬ ', ' ૭ ', ' ૮ ', ' ૯ ' }
 if awesome.startup_errors then
     naughty.notify {
         preset = naughty.config.presets.critical,
@@ -226,11 +227,7 @@ local tasklist_buttons = gears.table.join(
 
 for s in screen do
     -- Each screen has its own tag table.
-    awful.tag(
-        { ' ૧ ', ' ૨ ', ' ૩ ', ' ૪ ', ' ૫ ', ' ૬ ', ' ૭ ', ' ૮ ', ' ૯ ' },
-        s,
-        awful.layout.layouts[1]
-    )
+    awful.tag(TAGS, s, awful.layout.layouts[1])
 
     s.mypromptbox = awful.widget.prompt()
     s.mylayoutbox = awful.widget.layoutbox(s)
@@ -349,7 +346,7 @@ local globalkeys = gears.table.join(
             end
         end
         awful.spawn('kitty', {
-            tag = ' ૧ ',
+            tag = TAGS[1],
         })
     end),
 
@@ -361,7 +358,7 @@ local globalkeys = gears.table.join(
             end
         end
         awful.spawn('kitty -e nvim', {
-            tag = ' ૧ ',
+            tag = TAGS[1],
         })
     end),
 
@@ -374,7 +371,7 @@ local globalkeys = gears.table.join(
         end
         -- urgent tags are automatically focused in this config
         awful.spawn('brave', {
-            tag = ' ૨ ',
+            tag = TAGS[2],
         })
     end),
 
@@ -482,7 +479,7 @@ local globalkeys = gears.table.join(
             end
         end
         awful.spawn([[kitty --class 'Google Keep' -e nvim -c GkeepOpen]], {
-            tag = ' ૬ ',
+            tag = TAGS[6],
         })
     end, { description = 'toggle google keep window', group = 'launcher' }),
 
@@ -494,7 +491,7 @@ local globalkeys = gears.table.join(
             end
         end
         awful.spawn('spotify-launcher', {
-            tag = ' ૪ ',
+            tag = TAGS[4],
         })
     end, { description = 'toggle spotify', group = 'launcher' }),
 
@@ -743,12 +740,12 @@ awful.rules.rules = {
         properties = { floating = true },
     },
 
-    { rule = { instance = 'brave-browser' }, properties = { tag = ' ૨ ' } },
-    { rule = { instance = 'libreoffice' }, properties = { tag = ' ૩ ' } },
-    { rule = { instance = 'soffice' }, properties = { tag = ' ૩ ' } },
-    { rule = { class = 'Spotify' }, properties = { tag = ' ૪ ' } },
-    { rule = { instance = 'whatsapp-nativefier-d40211' }, properties = { tag = ' ૫ ' } },
-    { rule = { instance = 'scrcpy' }, properties = { floating = true, tag = ' ૯ ' } },
+    { rule = { instance = 'brave-browser' }, properties = { tag = TAGS[2] } },
+    { rule = { instance = 'libreoffice' }, properties = { tag = TAGS[3] } },
+    { rule = { instance = 'soffice' }, properties = { tag = TAGS[3] } },
+    { rule = { class = 'Spotify' }, properties = { tag = TAGS[4] } },
+    { rule = { instance = 'whatsapp-nativefier-d40211' }, properties = { tag = TAGS[5] } },
+    { rule = { instance = 'scrcpy' }, properties = { floating = true, tag = TAGS[9] } },
 
     -- Add titlebars to normal clients and dialogs
     { rule_any = { type = { 'normal', 'dialog' } }, properties = { titlebars_enabled = true } },
