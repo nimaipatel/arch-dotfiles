@@ -1124,13 +1124,13 @@ packer.startup(function(use)
                 lsp = base_config,
             }
 
-
             -- for IDF use with this .clangd file in project root:
             --[[
                 CompileFlags:
                   Add: [-mlong-calls, -isysroot=/home/nimai/.espressif/tools/xtensa-esp32-elf/esp-2021r2-patch3-8.4.0/xtensa-esp32-elf/bin/xtensa-esp32-elf-gcc]
                   Remove: [-fno-tree-switch-conversion, -mtext-section-literals, -mlongcalls, -fstrict-volatile-bitfields]
-            ]]--
+            ]]
+            --
             require('clangd_extensions').setup {
                 server = {
                     root_dir = lspconfig.util.root_pattern('build/compile_commands.json', '.git'),
