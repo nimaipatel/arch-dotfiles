@@ -869,12 +869,12 @@ client.connect_signal('request::titlebars', function(c)
         },
         {
             widget = wibox.container.margin,
-            margins = dpi(2),
-
-            { -- Left
-                awful.titlebar.widget.iconwidget(c),
-                buttons = buttons,
-                layout = wibox.layout.fixed.horizontal,
+            margins = dpi(5),
+            {
+                spacing = dpi(10),
+                awful.titlebar.widget.stickybutton(c),
+                awful.titlebar.widget.ontopbutton(c),
+                layout = wibox.layout.fixed.horizontal(),
             },
         },
 
