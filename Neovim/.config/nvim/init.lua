@@ -1555,7 +1555,7 @@ packer.startup(function(use)
                     },
                     {
                         text = function(buffer)
-                            return buffer.is_modified and '   ' or '   '
+                            return buffer.is_modified and '  ' or '  '
                         end,
                         fg = function(buffer)
                             return buffer.is_modified and vim.g.terminal_color_2 or vim.g.terminal_color_7
@@ -1661,7 +1661,7 @@ packer.startup(function(use)
             local actions = require 'telescope.actions'
             telescope.setup {
                 defaults = {
-                    prompt_prefix = '  ',
+                    prompt_prefix = '  ',
                     selection_caret = '  ',
                     entry_prefix = '  ',
                     sorting_strategy = 'ascending',

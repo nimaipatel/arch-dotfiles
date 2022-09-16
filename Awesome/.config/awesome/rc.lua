@@ -92,26 +92,31 @@ local layoutmenu = awful.menu {
                 function()
                     awful.layout.set(awful.layout.suit.tile)
                 end,
+                beautiful.layout_tile,
             },
             {
                 '&Left',
                 function()
                     awful.layout.set(awful.layout.suit.tile.left)
                 end,
+                beautiful.layout_tileleft,
             },
             {
                 '&Bottom',
                 function()
                     awful.layout.set(awful.layout.suit.tile.bottom)
                 end,
+                beautiful.layout_tilebottom,
             },
             {
                 '&Top',
                 function()
                     awful.layout.set(awful.layout.suit.tile.top)
                 end,
+                beautiful.layout_tiletop,
             },
         },
+        beautiful.layout_tile,
     },
     {
         '&Fair',
@@ -121,40 +126,44 @@ local layoutmenu = awful.menu {
                 function()
                     awful.layout.set(awful.layout.suit.fair)
                 end,
+                beautiful.layout_fairv,
             },
             {
                 '&Horizontal',
                 function()
                     awful.layout.set(awful.layout.suit.fair.horizontal)
                 end,
+                beautiful.layout_fairh,
             },
         },
+        beautiful.layout_fairv,
     },
     {
         'F&loating',
         function()
             awful.layout.set(awful.layout.suit.floating)
         end,
+        beautiful.layout_floating,
     },
 }
 
 local sysopts = {
-    { '&Restart', 'reboot' },
-    { 'L&ogout', 'pkill -u -KILL ' .. os.getenv 'USER' },
-    { '&Lock', 'slock' },
-    { '&Power Off', 'poweroff' },
+    { ' &Restart', 'reboot' },
+    { ' L&ogout', 'pkill -u -KILL ' .. os.getenv 'USER' },
+    { ' &Lock', 'slock' },
+    { ' &Power Off', 'poweroff' },
 }
 
 local mymainmenu = awful.menu {
     items = {
-        { '&System', sysopts },
-        { '&Terminal', terminal },
+        { ' &System', sysopts },
+        { ' &Terminal', terminal },
         {
-            'Customi&ze',
+            ' Customi&ze',
             {
-                { '&Color Scheme', 'change-mode-dmenu' },
+                { ' &Color Scheme', 'change-mode-dmenu' },
                 {
-                    '&Opacity',
+                    ' &Opacity',
                     function()
                         awful.prompt.run {
                             prompt = 'Set opacity (current value is ' .. (OPACITY * 100) .. '%' .. '): ',
@@ -175,24 +184,29 @@ local mymainmenu = awful.menu {
                         }
                     end,
                 },
-                { '&Wallpaper', 'set-wallpaper' },
+                { ' &Wallpaper', 'set-wallpaper' },
             },
         },
-        { '&Editor', editor_cmd },
-        { '&Browser', os.getenv 'BROWSER' },
-        { '&Calculator', 'rofi -show calc' },
+        { ' &Editor', editor_cmd },
+        { ' &Browser', os.getenv 'BROWSER' },
         {
-            '&Utilities',
+            ' &Calculator',
+            function()
+                awful.spawn.with_shell 'sleep 0.1 ; rofi -show calc'
+            end,
+        },
+        {
+            ' &Utilities',
             {
-                { '&Color Picker', 'colorpicker' },
+                { ' &Color Picker', 'colorpicker' },
                 {
-                    '&Passwords',
+                    ' &Passwords',
                     function()
-                        awful.spawn.with_shell 'sleep 0.1 ; passmenu -i -p '
+                        awful.spawn.with_shell 'sleep 0.1 ; passmenu -i -p  '
                     end,
                 },
                 {
-                    '&Emoji Selector',
+                    ' &Emoji Selector',
                     function()
                         awful.spawn.with_shell 'sleep 0.1 ; rofi -show emoji'
                     end,
@@ -200,11 +214,11 @@ local mymainmenu = awful.menu {
             },
         },
         {
-            '&Office Suite',
+            ' &Office Suite',
             {
-                { '&Writer', 'libreoffice --writer' },
-                { '&Impress', 'libreoffice --impress' },
-                { '&Calc', 'libreoffice --calc' },
+                { ' &Writer', 'libreoffice --writer' },
+                { ' &Impress', 'libreoffice --impress' },
+                { ' &Calc', 'libreoffice --calc' },
             },
         },
     },
@@ -432,7 +446,7 @@ local globalkeys = gears.table.join(
     -- Mod4 + Control + Escape is actually mapped to to just Mod4 using xcape
     -- see autostart.lua
     key({ modkey, 'Control' }, 'Escape', function()
-        awful.util.spawn 'rofi -show run -display-run ::'
+        awful.util.spawn 'rofi -show run -display-run '
     end, { description = 'run desktop apps', group = 'menus' }),
 
     key({}, 'XF86MonBrightnessDown', function()
