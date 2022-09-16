@@ -1125,7 +1125,17 @@ packer.startup(function(use)
             }
 
             require('clangd_extensions').setup {
-                server = base_config,
+                server = {
+                    root_dir = lspconfig.util.root_pattern('build/compile_commands.json', '.git'),
+                    capabilities = capabilities,
+                    on_attach = on_attach,
+                    cmd = {
+                        'clangd',
+                        '--background-index',
+                        '--query-driver=/home/nimai/.espressif/tools/xtensa-esp32-elf/esp-2021r2-patch3-8.4.0/xtensa-esp32-elf/bin/xtensa-esp32-elf-gcc',
+                    },
+                },
+
                 extensions = {
                     inlay_hints = {
                         parameter_hints_prefix = '  ',
