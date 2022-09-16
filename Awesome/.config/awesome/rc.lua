@@ -330,8 +330,9 @@ for s in screen do
             s.mypromptbox,
         },
         { -- Right widgets
-            layout = wibox.layout.flex.horizontal,
-            spacing = 10,
+            layout = wibox.container.place,
+            valign = 'center',
+            halign = 'center',
             s.mytasklist,
         },
         { -- Right widgets

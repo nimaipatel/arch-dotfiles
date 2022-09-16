@@ -48,8 +48,8 @@ beautiful.bg_urgent = beautiful.base08 .. opacity_hex
 beautiful.bg_minimize = beautiful.base0A .. opacity_hex
 beautiful.bg_systray = beautiful.bg_normal .. opacity_hex
 
-beautiful.tasklist_bg_normal = beautiful.base01
-beautiful.tasklist_bg_focus = beautiful.base02
+beautiful.tasklist_bg_normal = beautiful.base01 .. opacity
+beautiful.tasklist_bg_focus = beautiful.base04
 beautiful.tasklist_bg_urgent = beautiful.base08
 beautiful.tasklist_bg_minimize = beautiful.base0A
 
