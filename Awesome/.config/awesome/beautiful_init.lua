@@ -21,7 +21,7 @@ local close_btn = circle(beautiful.base08)
 beautiful.titlebar_close_button_normal = unfocused_button
 beautiful.titlebar_close_button_focus = close_btn
 
-local minimize_btn = circle(beautiful.base0A)
+local minimize_btn = circle(beautiful.base0C)
 beautiful.titlebar_minimize_button_normal = unfocused_button
 beautiful.titlebar_minimize_button_focus = minimize_btn
 
@@ -43,7 +43,7 @@ beautiful.useless_gap = 10
 beautiful.bg_normal = beautiful.base01 .. 'BF'
 beautiful.bg_focus = beautiful.base00 .. 'BF'
 beautiful.bg_urgent = beautiful.base08 .. 'BF'
-beautiful.bg_minimize = beautiful.base0A .. 'BF'
+beautiful.bg_minimize = beautiful.base0C .. 'BF'
 beautiful.bg_systray = beautiful.bg_normal .. 'BF'
 
 beautiful.fg_normal = beautiful.base07
