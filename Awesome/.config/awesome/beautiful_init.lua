@@ -1,4 +1,6 @@
 require 'base16'
+require 'opacity'
+local opacity = _G['OPACITY']
 local beautiful = require 'beautiful'
 local naughty = require 'naughty'
 local gears = require 'gears'
@@ -39,12 +41,12 @@ beautiful.menu_height = 30
 beautiful.menu_width = 300
 beautiful.useless_gap = 10
 
--- BF ==> 75% opacity
-beautiful.bg_normal = beautiful.base01 .. 'BF'
-beautiful.bg_focus = beautiful.base00 .. 'BF'
-beautiful.bg_urgent = beautiful.base08 .. 'BF'
-beautiful.bg_minimize = beautiful.base0C .. 'BF'
-beautiful.bg_systray = beautiful.bg_normal .. 'BF'
+local opacity_hex = string.format('%x', math.floor(opacity * 255))
+beautiful.bg_normal = beautiful.base01 .. opacity_hex
+beautiful.bg_focus = beautiful.base00 .. opacity_hex
+beautiful.bg_urgent = beautiful.base08 .. opacity_hex
+beautiful.bg_minimize = beautiful.base0C .. opacity_hex
+beautiful.bg_systray = beautiful.bg_normal .. opacity_hex
 
 beautiful.fg_normal = beautiful.base07
 beautiful.fg_focus = beautiful.base07

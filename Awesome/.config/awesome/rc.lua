@@ -149,6 +149,35 @@ local mymainmenu = awful.menu {
     items = {
         { '&System', sysopts },
         { '&Terminal', terminal },
+        {
+            'Customi&ze',
+            {
+                { '&Color Scheme', 'change-mode-dmenu' },
+                {
+                    '&Opacity',
+                    function()
+                        awful.prompt.run {
+                            prompt = 'Set opacity (current value is ' .. (OPACITY * 100) .. '%' .. '): ',
+                            textbox = awful.screen.focused().mypromptbox.widget,
+                            exe_callback = function(input)
+                                input = tonumber(input)
+                                if not input then
+                                    return
+                                end
+                                if input < 0 or input > 100 then
+                                    return
+                                end
+                                if input > 1 then
+                                    input = input / 100
+                                end
+                                awful.spawn('change-opacity ' .. input)
+                            end,
+                        }
+                    end,
+                },
+                { '&Wallpaper', 'set-wallpaper' },
+            },
+        },
         { '&Editor', editor_cmd },
         { '&Browser', os.getenv 'BROWSER' },
         { '&Calculator', 'rofi -show calc' },
