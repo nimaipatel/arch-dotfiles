@@ -23,7 +23,7 @@ local close_btn = circle(beautiful.base08)
 beautiful.titlebar_close_button_normal = unfocused_button
 beautiful.titlebar_close_button_focus = close_btn
 
-local minimize_btn = circle(beautiful.base0C)
+local minimize_btn = circle(beautiful.base0A)
 beautiful.titlebar_minimize_button_normal = unfocused_button
 beautiful.titlebar_minimize_button_focus = minimize_btn
 
@@ -45,8 +45,13 @@ local opacity_hex = string.format('%x', math.floor(opacity * 255))
 beautiful.bg_normal = beautiful.base01 .. opacity_hex
 beautiful.bg_focus = beautiful.base00 .. opacity_hex
 beautiful.bg_urgent = beautiful.base08 .. opacity_hex
-beautiful.bg_minimize = beautiful.base0C .. opacity_hex
+beautiful.bg_minimize = beautiful.base0A .. opacity_hex
 beautiful.bg_systray = beautiful.bg_normal .. opacity_hex
+
+beautiful.tasklist_bg_normal = beautiful.base01
+beautiful.tasklist_bg_focus = beautiful.base02
+beautiful.tasklist_bg_urgent = beautiful.base08
+beautiful.tasklist_bg_minimize = beautiful.base0A
 
 beautiful.fg_normal = beautiful.base07
 beautiful.fg_focus = beautiful.base07

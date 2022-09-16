@@ -289,28 +289,29 @@ for s in screen do
         screen = s,
         filter = awful.widget.tasklist.filter.currenttags,
         buttons = tasklist_buttons,
+        layout = {
+            layout = wibox.layout.fixed.horizontal,
+        },
         widget_template = {
             {
-                nil,
-                {
-                    {
-                        widget = wibox.container.margin,
-                        margins = dpi(2),
-                        {
-                            { widget = wibox.widget.imagebox, id = 'icon_role' },
-                            id = 'icon_margin_role',
-                            left = 4,
-                            widget = wibox.container.margin,
-                        },
-                    },
-
-                    layout = wibox.layout.fixed.horizontal,
-                },
-                expand = 'outside',
-                layout = wibox.layout.align.horizontal,
+                wibox.widget.base.make_widget(),
+                id = 'background_role',
+                widget = wibox.container.background,
             },
-            id = 'background_role',
-            widget = wibox.container.background,
+            {
+                {
+                    id = 'clienticon',
+                    widget = awful.widget.clienticon,
+                },
+                margins = 5,
+                widget = wibox.container.margin,
+            },
+            nil,
+            create_callback = function(self, c, index, objects) --luacheck: no unused args
+                self:get_children_by_id('clienticon')[1].client = c
+            end,
+            forced_width = 30,
+            layout = wibox.layout.stack,
         },
     }
 
@@ -944,6 +945,9 @@ client.connect_signal('manage', function(c)
         c.minimized = true
         c:connect_signal('property::class', function()
             awful.rules.apply(c)
+            if c.class == 'Spotify' then
+                awful.spawn 'xseticon -name Spotify /usr/share/icons/hicolor/32x32/apps/spotify-launcher.png'
+            end
         end)
     end
 end)
