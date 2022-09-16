@@ -1165,7 +1165,6 @@ packer.startup(function(use)
                     null_ls.builtins.formatting.black,
 
                     -- shell
-                    null_ls.builtins.diagnostics.shellcheck,
                     null_ls.builtins.formatting.shfmt,
 
                     -- zsh
