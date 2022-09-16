@@ -62,11 +62,11 @@ end
 U = {}
 
 U.SEVERITY_SIGNS = {
-    ERROR = '',
-    WARN = '',
-    INFO = '',
-    HINT = '',
-    DEBUG = '',
+    ERROR = '',
+    WARN = '',
+    INFO = '',
+    HINT = '',
+    DEBUG = '',
     TRACE = '✎',
 }
 
@@ -1213,7 +1213,10 @@ packer.startup(function(use)
         config = function()
             require('nvim-lightbulb').setup {
                 sign = { enabled = false },
-                status_text = { enabled = true },
+                status_text = {
+                    text = U.SEVERITY_SIGNS.HINT .. '  [Code Action]',
+                    enabled = true,
+                },
             }
             vim.fn.sign_define('LightBulbSign', { text = U.SEVERITY_SIGNS.HINT, texthl = 'LspDiagnosticsDefaultHint' })
             require('legendary').bind_autocmds {
@@ -1538,8 +1541,8 @@ packer.startup(function(use)
                     {
                         text = function(buffer)
                             local d = buffer.diagnostics
-                            return (d.errors ~= 0 and U.SEVERITY_SIGNS.ERROR .. ' ' .. d.errors)
-                                or (d.warnings ~= 0 and U.SEVERITY_SIGNS.WARN .. ' ' .. d.warnings)
+                            return (d.errors ~= 0 and U.SEVERITY_SIGNS.ERROR .. '  ' .. d.errors)
+                                or (d.warnings ~= 0 and U.SEVERITY_SIGNS.WARN .. '  ' .. d.warnings)
                                 or ''
                         end,
                         fg = function(buffer)
