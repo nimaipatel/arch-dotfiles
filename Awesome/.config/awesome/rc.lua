@@ -350,6 +350,15 @@ local globalkeys = gears.table.join(
         })
     end),
 
+    -- this one's for messaging applications. C stands for "chat"?
+    key({ modkey }, 'c', function()
+        local screen = awful.screen.focused()
+        local tag = screen.tags[5]
+        if tag then
+            tag:view_only()
+        end
+    end),
+
     key({ modkey }, 'e', function()
         for _, c in ipairs(client.get()) do
             if c.class:match 'kitty' and c.name:match 'nvim' then
