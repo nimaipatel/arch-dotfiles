@@ -163,8 +163,8 @@ U.lualine_config = function()
 
     require('lualine').setup {
         options = {
-            section_separators = { left = '', right = '' },
-            component_separators = { left = '', right = '' },
+            section_separators = { left = '', right = '' },
+            component_separators = { left = '', right = '' },
             theme = base16_lualine_colors,
         },
         sections = {
@@ -561,7 +561,7 @@ packer.startup(function(use)
                     scroll_down = 'n',
                     scroll_up = 'p',
                 },
-                window = { border = 'single' },
+                window = { border = 'rounded' },
 
                 plugins = {
                     presets = {
@@ -891,7 +891,7 @@ packer.startup(function(use)
         'https://github.com/williamboman/mason.nvim',
         config = function()
             require('mason').setup {
-                ui = { border = 'single' },
+                ui = { border = 'rounded' },
             }
         end,
     }
@@ -977,7 +977,7 @@ packer.startup(function(use)
                 virtual_text = false,
                 float = {
                     show_header = false,
-                    border = 'single',
+                    border = 'rounded',
                     format = function(diagnostic)
                         for _, name in ipairs(vim.diagnostic.severity) do
                             if diagnostic.severity == vim.diagnostic.severity[name] then
@@ -1149,10 +1149,10 @@ packer.startup(function(use)
                         other_hints_prefix = '  ',
                     },
                     memory_usage = {
-                        border = 'single',
+                        border = 'rounded',
                     },
                     symbol_info = {
-                        border = 'single',
+                        border = 'rounded',
                     },
                 },
             }
@@ -1274,12 +1274,12 @@ packer.startup(function(use)
                 },
                 window = {
                     completion = {
-                        border = 'single',
+                        border = 'rounded',
                         winhighlight = 'Normal:Normal,FloatBorder:Normal',
                     },
                     documentation = {
                         winhighlight = 'Normal:Normal,FloatBorder:Normal',
-                        border = 'single',
+                        border = 'rounded',
                     },
                 },
                 snippet = {
@@ -1562,7 +1562,7 @@ packer.startup(function(use)
                     },
                     {
                         text = function(buffer)
-                            return buffer.is_modified and '  ' or '  '
+                            return buffer.is_modified and '   ' or '   '
                         end,
                         fg = function(buffer)
                             return buffer.is_modified and vim.g.terminal_color_2 or vim.g.terminal_color_7
@@ -1668,7 +1668,6 @@ packer.startup(function(use)
             local actions = require 'telescope.actions'
             telescope.setup {
                 defaults = {
-                    borderchars = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
                     prompt_prefix = '  ',
                     selection_caret = '  ',
                     entry_prefix = '  ',
