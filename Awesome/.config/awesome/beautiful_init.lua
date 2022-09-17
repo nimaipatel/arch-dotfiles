@@ -39,7 +39,6 @@ beautiful.hotkeys_description_font = beautiful.font
 beautiful.menu_font = beautiful.font
 beautiful.menu_height = 30
 beautiful.menu_width = 300
-beautiful.useless_gap = 10
 
 local opacity_hex = string.format('%x', math.floor(opacity * 255))
 beautiful.bg_normal = beautiful.base01 .. opacity_hex
@@ -58,7 +57,7 @@ beautiful.fg_focus = beautiful.base07
 beautiful.fg_urgent = beautiful.base00
 beautiful.fg_minimize = beautiful.base00
 
-beautiful.useless_gap = dpi(5)
+beautiful.useless_gap = dpi(20)
 beautiful.border_width = dpi(0)
 beautiful.border_normal = beautiful.bg_normal
 beautiful.border_focus = beautiful.bg_focus
