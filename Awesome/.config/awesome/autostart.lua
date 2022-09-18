@@ -1,17 +1,17 @@
 local awful = require 'awful'
-local spawn = awful.util.spawn
+local spawn = awful.spawn
 
 -- execute `cmd` only if `predicate` returns false or failure (non-zero exit)
 local spawn_once = function(cmd, predicate)
     if type(predicate) == 'string' then
         awful.spawn.easy_async(predicate, function(out, err, reason, code) --luacheck: no unused args
             if code ~= 0 then
-                awful.util.spawn(cmd)
+                spawn(cmd)
             end
         end)
     elseif type(predicate) == 'function' then
         if predicate() == false then
-            awful.util.spawn(cmd)
+            spawn(cmd)
         end
     end
 end
