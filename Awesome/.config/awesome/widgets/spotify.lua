@@ -1,4 +1,5 @@
 local awful = require 'awful'
+local gears = require 'gears'
 local wibox = require 'wibox'
 local beautiful = require 'beautiful'
 
@@ -43,35 +44,29 @@ spotify_widget:connect_signal('button::press', function(_, _, _, button)
     end
 end)
 
-awful.widget.watch(
-    [[playerctl --player=spotify status]],
-    1,
-    function(widget, stdout, stderr, exitreason, exitcode) --luacheck: ignore
-        if exitcode ~= 0 then
-            widget:get_children_by_id('icon')[1]:set_visible(false)
+local main_loop = function()
+    awful.spawn.easy_async([[playerctl --player=spotify status]], function(out, err, reason, code) --luacheck: ignore
+        if code ~= 0 then
+            spotify_widget:get_children_by_id('icon')[1]:set_visible(false)
             return
         end
-        widget:get_children_by_id('icon')[1]:set_visible(true)
-        local line = stdout:match '[^\r\n]+'
+        spotify_widget:get_children_by_id('icon')[1]:set_visible(true)
+        local line = out:match '[^\r\n]+'
         if line == 'Playing' then
-            widget:get_children_by_id('icon')[1]:set_image(play_icon)
+            spotify_widget:get_children_by_id('icon')[1]:set_image(play_icon)
         elseif line == 'Paused' then
-            widget:get_children_by_id('icon')[1]:set_image(pause_icon)
+            spotify_widget:get_children_by_id('icon')[1]:set_image(pause_icon)
         end
-    end
-)
+    end)
 
-awful.widget.watch( --luacheck: ignore
-    [[playerctl --player=spotify metadata]],
-    1,
-    function(widget, stdout, stderr, exitreason, exitcode) --luacheck: ignore
-        if exitcode ~= 0 then
-            widget:get_children_by_id('artist')[1]:set_markup ''
-            widget:get_children_by_id('title')[1]:set_markup ''
+    awful.spawn.easy_async([[playerctl --player=spotify metadata]], function(out, err, reason, code) --luacheck: ignore
+        if code ~= 0 then
+            spotify_widget:get_children_by_id('artist')[1]:set_markup ''
+            spotify_widget:get_children_by_id('title')[1]:set_markup ''
             return
         end
         local artist, title
-        for line in stdout:gmatch '[^\r\n]+' do
+        for line in out:gmatch '[^\r\n]+' do
             local _
             if line:match 'spotify xesam:artist' then
                 _, artist = line:match 'spotify xesam:artist( +)(.+)'
@@ -80,9 +75,16 @@ awful.widget.watch( --luacheck: ignore
                 _, title = line:match 'spotify xesam:title( +)(.+)'
             end
         end
-        widget:get_children_by_id('artist')[1]:set_markup(artist)
-        widget:get_children_by_id('title')[1]:set_markup(title)
-    end
-)
+        spotify_widget:get_children_by_id('artist')[1]:set_markup(artist)
+        spotify_widget:get_children_by_id('title')[1]:set_markup(title)
+    end)
+end
+
+gears.timer {
+    timeout = 1,
+    call_now = true,
+    autostart = true,
+    callback = main_loop,
+}
 
 return spotify_widget

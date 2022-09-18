@@ -11,6 +11,7 @@ local cpu_bars_widget = require 'widgets.cpu_bars'
 local memory_widget = require 'widgets.memory'
 local battery_widget = require 'widgets.battery'
 local pipewire_widget = require 'widgets.pipewire'
+local spotify_widget = require 'widgets.spotify'
 local util = require 'util'
 
 -- Standard awesome library
@@ -363,6 +364,7 @@ for s in screen do
             valign = 'center',
             halign = 'center',
             layout = wibox.container.place,
+            spotify_widget,
         },
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
