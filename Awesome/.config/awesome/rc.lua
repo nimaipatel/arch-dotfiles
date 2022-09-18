@@ -83,7 +83,7 @@ local abb_menu = awful.menu {
     { '&unix date', abbreviation '$(date)' },
 }
 
-local layoutmenu = awful.menu {
+local layoutmenu = {
     {
         '&Tile',
         {
@@ -221,6 +221,10 @@ local mymainmenu = awful.menu {
                 { ' &Calc', 'libreoffice --calc' },
             },
         },
+        {
+            ' &Layouts',
+            layoutmenu,
+        },
     },
 }
 
@@ -275,7 +279,7 @@ for s in screen do
     s.mypromptbox = awful.widget.prompt()
     s.mylayoutbox = awful.widget.layoutbox(s)
     s.mylayoutbox:buttons(gears.table.join(awful.button({}, 1, function()
-        layoutmenu:toggle { coords = { x = 0, y = 0 } }
+        mymainmenu:toggle { coords = { x = 0, y = 0 } }
     end)))
     -- Create a taglist widget
     s.mytaglist = awful.widget.taglist {
@@ -498,7 +502,7 @@ local globalkeys = gears.table.join(
         awful.client.focus.byidx(-1)
     end, { description = 'focus previous by index', group = 'client' }),
 
-    key({ modkey }, 'z', function()
+    key({ modkey }, 'space', function()
         mymainmenu:toggle { coords = { x = 0, y = 0 } }
     end, { description = 'show main menu', group = 'awesome' }),
 
@@ -698,14 +702,6 @@ globalkeys = gears.table.join(
     -- Move client to tag.
     key({ modkey }, 'a', function()
         abb_menu:toggle { coords = { x = 0, y = 0 } }
-    end)
-)
-
-globalkeys = gears.table.join(
-    globalkeys,
-    -- Move client to tag.
-    key({ modkey }, 'space', function()
-        layoutmenu:toggle { coords = { x = 0, y = 0 } }
     end)
 )
 
