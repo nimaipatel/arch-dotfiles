@@ -322,22 +322,22 @@ for s in screen do
     -- Add widgets to the wibox
     s.topwibox:setup {
         layout = wibox.layout.align.horizontal,
+        spacing = dpi(30),
         { -- Left widgets
             layout = wibox.layout.fixed.horizontal,
-            spacing = 10,
+            spacing = dpi(30),
             s.mylayoutbox,
             s.mytaglist,
             s.mypromptbox,
         },
         { -- Right widgets
-            layout = wibox.container.place,
-            valign = 'center',
-            halign = 'center',
+            layout = wibox.layout.fixed.horizontal,
+            spacing = dpi(30),
             s.mytasklist,
         },
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
-            spacing = 10,
+            spacing = dpi(30),
             {
                 widget = wibox.container.margin,
                 margins = dpi(3),
@@ -348,6 +348,7 @@ for s in screen do
     }
     s.bottomwibox:setup {
         layout = wibox.layout.align.horizontal,
+        spacing = dpi(30),
         { -- Left widgets
             layout = wibox.layout.fixed.horizontal,
             spacing = dpi(30),
