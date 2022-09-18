@@ -160,7 +160,7 @@ local mymainmenu = awful.menu {
         { ' &System', sysopts },
         { ' &Terminal', terminal },
         {
-            ' Customi&ze',
+            ' &Customize',
             {
                 { ' &Color Scheme', 'change-mode-dmenu' },
                 {
@@ -191,14 +191,14 @@ local mymainmenu = awful.menu {
         { ' &Editor', editor_cmd },
         { ' &Browser', os.getenv 'BROWSER' },
         {
-            ' &Calculator',
-            function()
-                awful.spawn.with_shell 'sleep 0.1 ; rofi -show calc'
-            end,
-        },
-        {
             ' &Utilities',
             {
+                {
+                    ' Calculato&r',
+                    function()
+                        awful.spawn.with_shell 'sleep 0.1 ; rofi -show calc'
+                    end,
+                },
                 { ' &Color Picker', 'colorpicker' },
                 {
                     ' &Passwords',
@@ -558,10 +558,6 @@ local globalkeys = gears.table.join(
 
     awful.key({ modkey }, 'F1', hotkeys_popup.show_help, { description = 'show help', group = 'awesome' }),
 
-    key({ modkey }, 'Return', function()
-        awful.spawn(terminal)
-    end, { description = 'open a terminal', group = 'launcher' }),
-
     key({ modkey, 'Control' }, 'r', awesome.restart, { description = 'reload awesome', group = 'awesome' }),
 
     key({ modkey }, 'l', function()
@@ -623,7 +619,7 @@ local clientkeys = gears.table.join(
         { description = 'toggle floating', group = 'client' }
     ),
 
-    key({ modkey, 'Shift' }, 'Return', function(c)
+    key({ modkey }, 'Return', function(c)
         c:swap(awful.client.getmaster())
     end, { description = 'move to master', group = 'client' }),
 
@@ -956,4 +952,17 @@ client.connect_signal('property::urgent', function(c)
     c.minimized = false
     c:jump_to()
 end)
+
+math.randomseed(os.time())
+gears.timer {
+    timeout = 5 * 60,
+    call_now = true,
+    autostart = true,
+    callback = function()
+        local nice = string.format('%04d', math.random(1, 305))
+        local f_name = os.getenv 'HOME' .. '/Pictures/new-wallpapers/' .. nice .. '.jpg'
+        gears.wallpaper.maximized(f_name)
+    end,
+}
+
 -- }}}
