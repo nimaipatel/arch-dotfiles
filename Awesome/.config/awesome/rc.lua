@@ -335,7 +335,7 @@ for s in screen do
             s.mytaglist,
             s.mypromptbox,
         },
-        { -- Right widgets
+        { -- Center widgets
             layout = wibox.layout.fixed.horizontal,
             spacing = dpi(30),
             s.mytasklist,
@@ -359,8 +359,9 @@ for s in screen do
             spacing = dpi(30),
             cpu_bars_widget,
             memory_widget,
+            battery_widget,
         },
-        { -- Right widgets
+        { -- Center widgets
             valign = 'center',
             halign = 'center',
             layout = wibox.container.place,
@@ -372,7 +373,6 @@ for s in screen do
             pipewire_widget,
             brightnessctl_widget,
             nm_widget,
-            battery_widget,
         },
     }
 end
