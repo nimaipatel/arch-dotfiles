@@ -41,7 +41,7 @@ beautiful.menu_height = 30
 beautiful.menu_width = 300
 
 local opacity_hex = string.format('%x', math.floor(opacity * 255))
-beautiful.bg_normal = beautiful.base01 .. opacity_hex
+beautiful.bg_normal = beautiful.base00 .. opacity_hex
 beautiful.bg_focus = beautiful.base00 .. opacity_hex
 beautiful.bg_urgent = beautiful.base08 .. opacity_hex
 beautiful.bg_minimize = beautiful.base0A .. opacity_hex
