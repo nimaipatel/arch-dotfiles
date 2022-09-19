@@ -1131,8 +1131,18 @@ packer.startup(function(use)
                   Remove: [-fno-tree-switch-conversion, -mtext-section-literals, -mlongcalls, -fstrict-volatile-bitfields]
             ]]
             --
+            local clangd_config = {
+                cmd = {
+                    'clangd',
+                    '--background-index',
+                    '--suggest-missing-includes',
+                    '--clang-tidy',
+                    '--header-insertion=iwyu',
+                },
+            }
+            table_merge(clangd_config, base_config)
             require('clangd_extensions').setup {
-                server = base_config,
+                server = clangd_config,
                 extensions = {
                     inlay_hints = {
                         parameter_hints_prefix = '  ',
