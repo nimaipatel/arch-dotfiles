@@ -1011,7 +1011,7 @@ packer.startup(function(use)
                             vim.lsp.buf.format {
                                 async = true,
                                 filter = function(formatter)
-                                    local disabled_formatters = { 'tsserver', 'sumneko_lua' }
+                                    local disabled_formatters = { 'tsserver', 'sumneko_lua', 'html', 'cssls' }
                                     for _, disabled in ipairs(disabled_formatters) do
                                         if formatter.name == disabled then
                                             return false
