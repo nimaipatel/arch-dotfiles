@@ -52,9 +52,6 @@ do
     end)
 end
 
-local terminal = os.getenv 'TERMINAL' or 'kitty'
-local editor = os.getenv 'EDITOR' or 'nvim'
-local editor_cmd = terminal .. ' -e ' .. editor
 local modkey = 'Mod4'
 
 awful.layout.layouts = {
@@ -158,7 +155,7 @@ local sysopts = {
 local mymainmenu = awful.menu {
     items = {
         { ' &System', sysopts },
-        { ' &Terminal', terminal },
+        { ' &Terminal', 'kitty --single-instance' },
         {
             ' &Customize',
             {
@@ -397,7 +394,7 @@ local globalkeys = gears.table.join(
                 return
             end
         end
-        awful.spawn('kitty', {
+        awful.spawn('kitty --single-instance', {
             tag = TAGS[1],
         })
     end),
@@ -418,7 +415,7 @@ local globalkeys = gears.table.join(
                 return
             end
         end
-        awful.spawn('kitty -e nvim', {
+        awful.spawn('kitty --single-instance -e nvim', {
             tag = TAGS[1],
         })
     end),
@@ -539,7 +536,7 @@ local globalkeys = gears.table.join(
                 return
             end
         end
-        awful.spawn([[kitty --class 'Google Keep' -e nvim -c GkeepOpen]], {
+        awful.spawn([[kitty --single-instance --class 'Google Keep' -e nvim -c GkeepOpen]], {
             tag = TAGS[6],
         })
     end, { description = 'toggle google keep window', group = 'launcher' }),
