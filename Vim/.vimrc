@@ -1,6 +1,3 @@
-set notermguicolors
-set t_Co=16
-
 let &t_SI.="\e[5 q" "SI = INSERT mode
 let &t_SR.="\e[4 q" "SR = REPLACE mode
 let &t_EI.="\e[1 q" "EI = NORMAL mode (ELSE)
@@ -25,9 +22,7 @@ set hlsearch
 
 set completeopt=menu,preview,longest,noinsert
 
-colorscheme koehler
-hi Statusline ctermbg=blue ctermfg=black
-hi StatuslineNC ctermbg=darkgray ctermfg=white
+colorscheme habamax
 hi LineNr ctermfg=darkgray
 hi EndOfBuffer ctermfg=darkgray
 hi ModeMsg ctermbg=black
