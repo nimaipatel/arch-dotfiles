@@ -185,7 +185,7 @@ local mymainmenu = awful.menu {
                 { ' &Wallpaper', 'set-wallpaper' },
             },
         },
-        { ' &Editor', editor_cmd },
+        { ' &Editor', 'kitty --single-instance -e nvim' },
         { ' &Browser', os.getenv 'BROWSER' },
         {
             ' &Utilities',
@@ -904,10 +904,14 @@ awesome.connect_signal('exit', function(reason_restart)
     local file = io.open('/tmp/awesomewm-last-selected-tags', 'w+')
 
     for s in screen do
-        file:write(s.selected_tag.index, '\n')
+        if file then
+            file:write(s.selected_tag.index, '\n')
+        end
     end
 
-    file:close()
+    if file then
+        file:close()
+    end
 end)
 
 awesome.connect_signal('startup', function()

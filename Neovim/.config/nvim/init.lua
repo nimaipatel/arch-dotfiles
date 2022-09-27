@@ -1011,7 +1011,7 @@ packer.startup(function(use)
                             vim.lsp.buf.format {
                                 async = true,
                                 filter = function(formatter)
-                                    local disabled_formatters = { 'tsserver', 'sumneko_lua', 'html', 'cssls' }
+                                    local disabled_formatters = { 'tsserver', 'html', 'cssls' }
                                     for _, disabled in ipairs(disabled_formatters) do
                                         if formatter.name == disabled then
                                             return false
@@ -1090,7 +1090,6 @@ packer.startup(function(use)
                 pylsp = {},
                 rust_analyzer = {},
                 sumneko_lua = {
-                    settings = { Lua = { diagnostics = { enable = false } } },
                     cmd = { 'lua-language-server' },
                 },
                 tsserver = {},
@@ -1173,10 +1172,6 @@ packer.startup(function(use)
                     -- javascript and family
                     null_ls.builtins.formatting.prettier,
                     null_ls.builtins.diagnostics.eslint,
-
-                    -- lua
-                    null_ls.builtins.diagnostics.luacheck,
-                    null_ls.builtins.formatting.stylua,
 
                     -- Makefiles
                     null_ls.builtins.diagnostics.checkmake,
