@@ -823,9 +823,15 @@ client.connect_signal('request::titlebars', function(c)
             c:emit_signal('request::activate', 'titlebar', { raise = true })
             -- WILL EXECUTE THIS ON DOUBLE CLICK
             if double_click_event_handler() then
-                c.floating = not c.floating
+                c.floating = false
                 c:raise()
             else
+                local old = c:geometry()
+                c.floating = true
+                local new = c:geometry()
+                new.x = old.x
+                new.y = old.y
+                c:geometry(new)
                 awful.mouse.client.move(c)
             end
         end),
@@ -967,3 +973,4 @@ gears.timer {
 }
 
 -- }}}
+--
