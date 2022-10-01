@@ -962,7 +962,7 @@ end)
 
 math.randomseed(os.time())
 gears.timer {
-    timeout = 30 * 60,
+    timeout = 5 * 60,
     call_now = true,
     autostart = true,
     callback = function()

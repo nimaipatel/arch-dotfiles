@@ -41,6 +41,9 @@ vim.opt.completeopt = 'menuone,noselect'
 -- expand environment variables even if they are in braces
 vim.opt.isfname:append '{,}'
 
+-- cringe
+vim.opt.mouse = 'a'
+
 vim.cmd [[xnoremap <EXPR> v (mode() ==# 'v' ? "\<C-V>" : mode() ==# 'V' ? 'v' : 'V')]]
 
 vim.cmd [[inoremap , ,<C-g>u]]
