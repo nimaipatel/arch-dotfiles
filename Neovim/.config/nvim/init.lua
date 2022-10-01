@@ -7,6 +7,9 @@ vim.g.mapleader = ' '
 -- quicker update
 vim.opt.updatetime = 50
 
+-- whoaaa
+vim.opt.cmdheight = 0
+
 -- fix space for signs
 vim.opt.signcolumn = 'yes'
 
@@ -969,6 +972,7 @@ packer.startup(function(use)
             },
             { 'akinsho/flutter-tools.nvim' },
             { 'p00f/clangd_extensions.nvim' },
+            { 'simrat39/rust-tools.nvim' },
         },
 
         config = function()
@@ -1091,7 +1095,6 @@ packer.startup(function(use)
                 bashls = { filetypes = { 'sh', 'zsh', 'bash' } },
                 jdtls = {},
                 pylsp = {},
-                rust_analyzer = {},
                 sumneko_lua = {
                     cmd = { 'lua-language-server' },
                 },
@@ -1158,6 +1161,16 @@ packer.startup(function(use)
                     },
                 },
             }
+
+            require('rust-tools').setup({
+                server = base_config,
+                tools = {
+                    inlay_hints = {
+                        parameter_hints_prefix = '  ',
+                        other_hints_prefix = '  ',
+                    },
+                },
+            })
 
             local null_ls = require 'null-ls'
             null_ls.setup {
