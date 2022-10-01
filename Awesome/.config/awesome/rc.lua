@@ -966,9 +966,16 @@ gears.timer {
     call_now = true,
     autostart = true,
     callback = function()
-        local nice = string.format('%04d', math.random(1, 305))
-        local f_name = os.getenv 'HOME' .. '/Pictures/new-wallpapers/' .. nice .. '.jpg'
-        gears.wallpaper.maximized(f_name)
+        local dir = '/home/nimai/Pictures/new-wallpapers/'
+        awful.spawn.easy_async('ls -A ' .. dir, function(out)
+            local files = {}
+            for line in out:gmatch('[^\r\n]+') do
+                table.insert(files, line)
+            end
+            local rand = math.random(1, #files)
+            local f_name = dir .. files[rand]
+            gears.wallpaper.maximized(f_name)
+        end)
     end,
 }
 
