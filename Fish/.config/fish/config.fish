@@ -8,18 +8,8 @@ alias ls "ls --color=tty"
 alias diff "diff --color"
 alias grep "grep --color=auto --exclude-dir={.bzr,CVS,.git,.hg,.svn,.idea,.tox}"
 
-alias sw "dwmswallow \$WINDOWID && "
-
 abbr -a vi "nvim"
 abbr -a vim "nvim"
-
-abbr -a sz "sw zathura"
-abbr -a sv "sw nsxiv"
-abbr -a sm "sw mpv"
-
-abbr -a fz "mew zathura"
-abbr -a fv "mew nsxiv"
-abbr -a fm "mew mpv"
 
 abbr -a tp "trash-put"
 abbr -a p "paru"
@@ -41,12 +31,6 @@ abbr -a glol "git log --graph --oneline --decorate"
 abbr -a l "exa -a"
 abbr -a ll "exa -al"
 
-abbr -a ta "tmux attach -t"
-abbr -a tkss "tmux kill-session -t"
-abbr -a tksv "tmux kill-server"
-abbr -a tl "tmux list-sessions"
-abbr -a ts "tmux new-session -s"
-
 abbr -a genpas "gpg --armor --gen-random 1 5"
 
 abbr -a nn "nmcli device wifi connect"
@@ -66,6 +50,8 @@ abbr -a encr "gpg -c --no-symkey-cache --cipher-algo AES256"
 abbr -a -g x '| xargs'
 
 abbr -a -g g '| grep'
+
+abbr -a get_idf "bass source $HOME/esp/esp-idf/export.sh"
 
 set fish_cursor_default block
 set fish_cursor_insert line
