@@ -28,8 +28,8 @@ abbr -a gl "git log"
 abbr -a glo "git log --pretty='oneline'"
 abbr -a glol "git log --graph --oneline --decorate"
 
-abbr -a l "exa -a"
-abbr -a ll "exa -al"
+abbr -a l "lsd -a"
+abbr -a ll "lsd -al"
 
 abbr -a genpas "gpg --armor --gen-random 1 5"
 

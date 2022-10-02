@@ -503,39 +503,6 @@ packer.startup(function(use)
             }
 
             require('legendary').bind_autocmds {
-                name = 'DisableHighLightOnMove',
-                clear = true,
-                {
-                    { 'InsertEnter', 'CursorMoved' },
-                    function()
-                        vim.opt.hlsearch = false
-                        vim.opt.cursorline = false
-                    end,
-                    description = 'Disable search highlighting and cursorline',
-                },
-            }
-
-            for _, key in ipairs { '*', '#', 'n', 'N' } do
-                require('legendary').bind_keymaps {
-                    {
-                        key,
-                        key .. 'zz' .. ':set hlsearch cursorline<CR>',
-                        mode = { 'n' },
-                    },
-                }
-            end
-
-            for _, key in ipairs { '<C-i>', '<C-o>', '<C-^>' } do
-                require('legendary').bind_keymaps {
-                    {
-                        key,
-                        key .. 'zz' .. ':set cursorline<CR>',
-                        mode = { 'n' },
-                    },
-                }
-            end
-
-            require('legendary').bind_autocmds {
                 name = 'TermSettings',
                 clear = true,
                 {
