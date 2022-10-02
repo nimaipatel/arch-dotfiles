@@ -104,6 +104,14 @@ U.base16_config = function()
     vim.api.nvim_set_hl(0, 'DiagnosticInfo', { fg = BASE16_COLORS.base06 })
     vim.api.nvim_set_hl(0, 'DiagnosticHint', { fg = BASE16_COLORS.base0C })
 
+    vim.api.nvim_set_hl(0, 'DiagnosticUnderlineError', { sp = BASE16_COLORS.base08, undercurl = true })
+    vim.api.nvim_set_hl(0, 'DiagnosticUnderlineWarning', { sp = BASE16_COLORS.base0A, undercurl = true })
+    vim.api.nvim_set_hl(0, 'DiagnosticUnderlineWarn', { sp = BASE16_COLORS.base0A, undercurl = true })
+    vim.api.nvim_set_hl(0, 'DiagnosticUnderlineInfo', { sp = BASE16_COLORS.base06, undercurl = true })
+    vim.api.nvim_set_hl(0, 'DiagnosticUnderlineInformation', { sp = BASE16_COLORS.base06, undercurl = true })
+    vim.api.nvim_set_hl(0, 'DiagnosticUnderlineHint', { sp = BASE16_COLORS.base0C, undercurl = true })
+
+
     vim.api.nvim_set_hl(0, 'IlluminatedWordRead', { bg = BASE16_COLORS.base01 })
     vim.api.nvim_set_hl(0, 'IlluminatedWordText', { bg = BASE16_COLORS.base01 })
     vim.api.nvim_set_hl(0, 'IlluminatedWordWrite', { bg = BASE16_COLORS.base01 })
@@ -431,6 +439,18 @@ packer.startup(function(use)
                     '<Plug>(qf_loc_previous)',
                     description = 'Goto previous location list item',
                     mode = { 'n' },
+                },
+            }
+
+            require('legendary').bind_autocmds {
+                name = 'DiagFloats',
+                clear = true,
+                {
+                    { 'CursorHold', 'CursorHoldI' },
+                    function()
+                        vim.diagnostic.open_float(nil, { focus = false, scope = "cursor" })
+                    end,
+                    description = 'diagnostics hover window on cursor hold',
                 },
             }
 
@@ -938,23 +958,6 @@ packer.startup(function(use)
     }
 
     use {
-        'https://git.sr.ht/~whynothugo/lsp_lines.nvim',
-        config = function()
-            require('lsp_lines').setup()
-            require('legendary').setup()
-            require('which-key').register({
-                d = {
-                    function()
-                        local current = vim.diagnostic.config().virtual_lines
-                        vim.diagnostic.config { virtual_lines = not current }
-                    end,
-                    'toggle virtual diagnostics',
-                },
-            }, { prefix = '<leader>d' })
-        end,
-    }
-
-    use {
         'RRethy/vim-illuminate',
         config = function()
             require('illuminate').configure {
@@ -980,7 +983,7 @@ packer.startup(function(use)
             local lspconfig = require 'lspconfig'
 
             vim.diagnostic.config {
-                underline = false,
+                underline = true,
                 virtual_text = false,
                 float = {
                     show_header = false,
@@ -1281,6 +1284,7 @@ packer.startup(function(use)
             require('luasnip.loaders.from_vscode').lazy_load()
 
             local has_words_before = function()
+                ---@diagnostic disable-next-line: deprecated
                 local line, col = unpack(vim.api.nvim_win_get_cursor(0))
                 return col ~= 0 and
                     vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
