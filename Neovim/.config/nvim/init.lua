@@ -1262,7 +1262,7 @@ packer.startup(function(use)
         requires = {
             'hrsh7th/cmp-nvim-lua',
             'hrsh7th/cmp-nvim-lsp',
-            'tzachar/cmp-fuzzy-buffer',
+            'hrsh7th/cmp-buffer',
             'hrsh7th/cmp-path',
 
             'https://github.com/hrsh7th/cmp-cmdline',
@@ -1383,35 +1383,19 @@ packer.startup(function(use)
                 },
             }
 
-            local fuzzy_buffer = {
-                name = 'fuzzy_buffer',
-                option = {
-                    get_bufnrs = function()
-                        local bufs = {}
-                        for _, buf in ipairs(vim.api.nvim_list_bufs()) do
-                            local buftype = vim.api.nvim_buf_get_option(buf, 'buftype')
-                            if buftype ~= 'nofile' and buftype ~= 'prompt' then
-                                bufs[#bufs + 1] = buf
-                            end
-                        end
-                        return bufs
-                    end,
-                },
-            }
-
             local wk = require 'which-key'
 
             require('legendary').setup()
             wk.register({
                 ['<C-n>'] = {
                     function()
-                        cmp.complete { config = { sources = { fuzzy_buffer } } }
+                        cmp.complete { config = { sources = { { name = 'buffer' } } } }
                     end,
                     'Buffer completion',
                 },
                 ['<C-p>'] = {
                     function()
-                        cmp.complete { config = { sources = { fuzzy_buffer } } }
+                        cmp.complete { config = { sources = { { name = 'buffer' } } } }
                     end,
                     'Buffer completion',
                 },
@@ -1461,13 +1445,13 @@ packer.startup(function(use)
             require('cmp').setup.cmdline('/', {
                 mapping = cmp.mapping.preset.cmdline(),
                 sources = {
-                    fuzzy_buffer,
+                    { name = 'buffer' }
                 },
             })
             require('cmp').setup.cmdline('?', {
                 mapping = cmp.mapping.preset.cmdline(),
                 sources = {
-                    fuzzy_buffer,
+                    { name = 'buffer' }
                 },
             })
             require('cmp').setup.cmdline(':', {
@@ -1483,7 +1467,9 @@ packer.startup(function(use)
         'windwp/nvim-autopairs',
         requires = 'hrsh7th/nvim-cmp',
         config = function()
-            require('nvim-autopairs').setup {}
+            require('nvim-autopairs').setup {
+                enable_check_bracket_line = false,
+            }
             local cmp = require 'cmp'
             local cmp_autopairs = require 'nvim-autopairs.completion.cmp'
             cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done { map_char = { tex = '' } })
