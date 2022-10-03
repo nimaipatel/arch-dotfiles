@@ -1,6 +1,6 @@
 pcall(require, 'luarocks.loader')
 
-require 'beautiful_init'
+require 'utils.beautiful_init'
 
 local xresources = require 'beautiful.xresources'
 local dpi = xresources.apply_dpi
@@ -12,7 +12,7 @@ local memory_widget = require 'widgets.memory'
 local battery_widget = require 'widgets.battery'
 local pipewire_widget = require 'widgets.pipewire'
 local spotify_widget = require 'widgets.spotify'
-local util = require 'util'
+local gaps = require 'utils.gaps'
 
 -- Standard awesome library
 local gears = require 'gears'
@@ -438,15 +438,15 @@ local globalkeys = gears.table.join(
     end),
 
     key({ modkey }, '=', function()
-        util.useless_gaps_resize(1)
+        gaps.useless_gaps_resize(1)
     end, { description = 'increment useless gaps', group = 'gaps' }),
 
     key({ modkey }, '-', function()
-        util.useless_gaps_resize(-1)
+        gaps.useless_gaps_resize(-1)
     end, { description = 'decrement useless gaps', group = 'gaps' }),
 
     key({ modkey }, '0', function()
-        util.useless_gaps_resize()
+        gaps.useless_gaps_resize()
     end, { description = 'reset gaps', group = 'gaps' }),
 
     -- Mod4 + Control + Escape is actually mapped to to just Mod4 using xcape
@@ -941,7 +941,7 @@ awesome.connect_signal('startup', function()
     file:close()
 end)
 
-require 'autostart'
+require 'utils.autostart'
 
 client.connect_signal('manage', function(c)
     if c.class == nil then

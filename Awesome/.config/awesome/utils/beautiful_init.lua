@@ -4,7 +4,6 @@ local gears = require 'gears'
 local opacity = _G['OPACITY']
 local beautiful = require 'beautiful'
 local naughty = require 'naughty'
-local gears = require 'gears'
 local xresources = require 'beautiful.xresources'
 local dpi = xresources.apply_dpi
 
