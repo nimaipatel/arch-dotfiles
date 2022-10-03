@@ -1,10 +1,33 @@
 #!/usr/bin/fish
 
-starship init fish | source
+function fish_mode_prompt; end
+set __fish_git_prompt_color cyan
+set __fish_git_prompt_color_suffix yellow
+set __fish_git_prompt_color_prefix yellow
+function fish_prompt
+    if not set -q VIRTUAL_ENV_DISABLE_PROMPT
+        set -g VIRTUAL_ENV_DISABLE_PROMPT true
+    end
+    set_color -o green
+    printf '%s' $USER
+    set_color -o yellow
+    printf '@'
+    set_color -o blue
+    echo -n (prompt_hostname)
+    set_color -o magenta
+    printf ' %s' (prompt_pwd)
+    printf '%s' (fish_git_prompt)
+    if test -n "$VIRTUAL_ENV"
+        printf "(%s) " (set_color blue)(basename $VIRTUAL_ENV)(set_color normal)
+    end
+    set_color -o yellow
+    printf "\n%% "
+    set_color normal
+end
 
 alias mv "mv -iv"
 alias cp "cp -iv"
-alias ls "ls --color=tty"
+alias ls "lsd"
 alias diff "diff --color"
 alias grep "grep --color=auto --exclude-dir={.bzr,CVS,.git,.hg,.svn,.idea,.tox}"
 
