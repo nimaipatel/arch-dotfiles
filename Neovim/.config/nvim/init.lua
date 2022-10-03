@@ -443,18 +443,6 @@ packer.startup(function(use)
             }
 
             require('legendary').bind_autocmds {
-                name = 'DiagFloats',
-                clear = true,
-                {
-                    { 'CursorHold', 'CursorHoldI' },
-                    function()
-                        vim.diagnostic.open_float(nil, { focus = false, scope = "cursor" })
-                    end,
-                    description = 'diagnostics hover window on cursor hold',
-                },
-            }
-
-            require('legendary').bind_autocmds {
                 name = 'AntiFloatingWindows',
                 clear = true,
                 {
@@ -1176,6 +1164,16 @@ packer.startup(function(use)
             local diaglist = require 'diaglist'
             diaglist.init {}
             require('legendary').setup()
+            require('legendary').bind_keymaps {
+                {
+                    '<C-h>',
+                    function ()
+                        vim.diagnostic.open_float(nil, { focus = false, scope = "cursor" })
+                    end,
+                    description = 'open cursor diagnostics in floating window',
+                    mode = { 'n' },
+                },
+            }
             require('which-key').register({
                 d = { vim.diagnostic.goto_prev, 'Previous diagnostic' },
             }, {
