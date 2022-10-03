@@ -4,6 +4,7 @@ require 'utils.beautiful_init'
 
 local xresources = require 'beautiful.xresources'
 local dpi = xresources.apply_dpi
+local lof_kitty = require 'utils.lof_kitty'
 
 local nm_widget = require 'widgets.nmcli'
 local brightnessctl_widget = require 'widgets.brightnessctl'
@@ -388,15 +389,15 @@ root.buttons(gears.table.join(
 -- {{{ Key bindings
 local globalkeys = gears.table.join(
     key({ modkey }, 't', function()
-        for _, c in ipairs(client.get()) do
-            if c.class:match 'kitty' and (not c.name:match 'nvim') then
-                c:jump_to()
-                return
-            end
+        local predicate = function(cmd)
+            return cmd[1] == "fish"
         end
-        awful.spawn('kitty --single-instance', {
-            tag = TAGS[1],
-        })
+        local fallback = function()
+            awful.spawn('kitty --single-instance', {
+                tag = TAGS[1],
+            })
+        end
+        lof_kitty(predicate, fallback)
     end),
 
     -- this one's for messaging applications. C stands for "chat"?
@@ -409,15 +410,15 @@ local globalkeys = gears.table.join(
     end),
 
     key({ modkey }, 'e', function()
-        for _, c in ipairs(client.get()) do
-            if c.class:match 'kitty' and c.name:match 'nvim' then
-                c:jump_to()
-                return
-            end
+        local predicate = function(cmd)
+            return cmd[1] == "nvim"
         end
-        awful.spawn('kitty --single-instance -e nvim', {
-            tag = TAGS[1],
-        })
+        local fallback = function()
+            awful.spawn('kitty --single-instance -e nvim', {
+                tag = TAGS[1],
+            })
+        end
+        lof_kitty(predicate, fallback)
     end),
 
     key({ modkey }, 'b', function()
