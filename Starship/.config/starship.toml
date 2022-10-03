@@ -1,0 +1,36 @@
+add_newline = false
+
+format = """\
+$username\
+$hostname\
+$directory\
+$git_branch\
+$git_commit\
+$git_state\
+$git_status\
+$character
+"""
+
+[directory]
+format = "in [$path]($style)[$read_only]($read_only_style) "
+
+[character]
+format = "\n$symbol "
+success_symbol = "[><>](bold green)"
+error_symbol = "[><>](bold red)"
+vimcmd_symbol = "[><>](bold green)"
+vimcmd_replace_one_symbol =  "[><>](bold purple)"
+vimcmd_replace_symbol =  "[><>](bold purple)"
+vimcmd_visual_symbol = "[><>](bold yellow)"
+
+[username]
+style_user = "yellow bold"
+style_root = "black bold"
+format = "[$user]($style)"
+disabled = false
+show_always = true
+
+[hostname]
+ssh_only = false
+format =  "@[$hostname](bold red) "
+disabled = false

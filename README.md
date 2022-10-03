@@ -5,6 +5,7 @@ Programs and configs that I use on a daily basis:
 - Neovim
 - Kitty
 - Fish
+- Starship
 - Slock
 - Git
 - Brave
@@ -39,7 +40,7 @@ cd ~ && git clone https://www.github.com/nimaipatel/dotfiles --recurse-submodule
 
 Install configs for programs that I use regularly:
 ```sh
-cd ~/dotfiles && stow Awesome Neovim Kitty Fish Slock Git Brave Flavours Fontconfig Gnupg Haskell Mimeapps Miscscripts Mpd Mpv Ncmpcpp Newsboat Nsxiv Paru Readline X Xsettingsd --adopt
+cd ~/dotfiles && stow Awesome Neovim Kitty Fish Starship Slock Git Brave Flavours Fontconfig Gnupg Haskell Mimeapps Miscscripts Mpd Mpv Ncmpcpp Newsboat Nsxiv Paru Readline X Xsettingsd --adopt
 ```
 
 Install dwm, st, dwmblocks and slock:
