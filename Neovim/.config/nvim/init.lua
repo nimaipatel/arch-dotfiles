@@ -1162,9 +1162,6 @@ packer.startup(function(use)
                     -- Makefiles
                     null_ls.builtins.diagnostics.checkmake,
 
-                    -- C and C++
-                    null_ls.builtins.diagnostics.cppcheck,
-
                     -- English
                     null_ls.builtins.hover.dictionary,
                 },
