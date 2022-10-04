@@ -1,5 +1,5 @@
 {
   "$schema": "https://raw.githubusercontent.com/sumneko/vscode-lua/master/setting/schema.json",
   "runtime.version": "Lua 5.1",
-  "Lua.diagnostics.globals": ["vim"]
+  "Lua.diagnostics.globals": ["vim", "BASE16_COLORS"]
 }

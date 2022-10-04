@@ -111,11 +111,6 @@ U.base16_config = function()
     vim.api.nvim_set_hl(0, 'DiagnosticUnderlineInformation', { sp = BASE16_COLORS.base06, undercurl = true })
     vim.api.nvim_set_hl(0, 'DiagnosticUnderlineHint', { sp = BASE16_COLORS.base0C, undercurl = true })
 
-
-    vim.api.nvim_set_hl(0, 'IlluminatedWordRead', { bg = BASE16_COLORS.base01 })
-    vim.api.nvim_set_hl(0, 'IlluminatedWordText', { bg = BASE16_COLORS.base01 })
-    vim.api.nvim_set_hl(0, 'IlluminatedWordWrite', { bg = BASE16_COLORS.base01 })
-
     vim.api.nvim_set_hl(0, 'Normal', { bg = 'NONE' })
     vim.api.nvim_set_hl(0, 'NormalNC', { bg = 'NONE' })
     vim.api.nvim_set_hl(0, 'LineNr', { bg = 'NONE' })
@@ -602,42 +597,6 @@ packer.startup(function(use)
         end,
     }
 
-    use {
-        'michaelb/sniprun',
-        run = 'bash ./install.sh',
-        config = function()
-            require('sniprun').setup {
-                display = { 'NvimNotify' },
-                display_options = {
-                    notification_timeout = 5,
-                },
-            }
-            require('legendary').setup()
-            require('which-key').register({
-                name = 'code runner',
-                x = { ':SnipRun<CR>', 'execute code' },
-                k = { ':SnipReset<CR>', 'kill execution' },
-                c = { ':SnipClose<CR>', 'clear all output' },
-            }, {
-                prefix = '<leader>x',
-            })
-            require('which-key').register({
-                name = 'code runner',
-                x = { ':SnipRun<CR>', 'execute code' },
-            }, {
-                prefix = '<leader>x',
-                mode = 'v',
-            })
-        end,
-    }
-
-    use {
-        'glacambre/firenvim',
-        run = function()
-            vim.fn['firenvim#install'](1)
-        end,
-    }
-
     use 'baskerville/vim-sxhkdrc'
     use 'fladson/vim-kitty'
 
@@ -860,15 +819,6 @@ packer.startup(function(use)
     }
 
     use {
-        'https://gitlab.com/yorickpeterse/nvim-dd',
-        config = function()
-            require('dd').setup {
-                timeout = 1000,
-            }
-        end,
-    }
-
-    use {
         'https://github.com/williamboman/mason.nvim',
         config = function()
             require('mason').setup {
@@ -908,15 +858,6 @@ packer.startup(function(use)
         config = function()
             require('docs-view').setup {
                 position = 'bottom',
-            }
-        end,
-    }
-
-    use {
-        'RRethy/vim-illuminate',
-        config = function()
-            require('illuminate').configure {
-                delay = 1500,
             }
         end,
     }
