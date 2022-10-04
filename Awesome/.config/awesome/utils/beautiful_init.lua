@@ -76,7 +76,7 @@ beautiful.fg_focus = beautiful.base07
 beautiful.fg_urgent = beautiful.base00
 beautiful.fg_minimize = beautiful.base00
 
-beautiful.useless_gap = dpi(10)
+beautiful.useless_gap = dpi(5)
 beautiful.border_width = dpi(0)
 beautiful.border_normal = beautiful.bg_normal
 beautiful.border_focus = beautiful.bg_focus

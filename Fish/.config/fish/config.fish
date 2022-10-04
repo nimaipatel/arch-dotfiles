@@ -21,7 +21,7 @@ function fish_prompt
         printf "(%s) " (set_color blue)(basename $VIRTUAL_ENV)(set_color normal)
     end
     set_color -o yellow
-    printf "\n%% "
+    printf "\n><> "
     set_color normal
 end
 
