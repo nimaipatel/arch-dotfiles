@@ -908,28 +908,32 @@ awesome.connect_signal('exit', function(reason_restart)
         return
     end
 
-    local file = io.open('/tmp/awesomewm-last-selected-tags', 'w+')
-
+    local sel_tag_file = io.open('/tmp/awesomewm-last-selected-tags', 'w+')
     for s in screen do
-        if file then
-            file:write(s.selected_tag.index, '\n')
+        if sel_tag_file then
+            sel_tag_file:write(s.selected_tag.index, '\n')
         end
     end
+    if sel_tag_file then
+        sel_tag_file:close()
+    end
 
-    if file then
-        file:close()
+    local gaps_file = io.open('/tmp/awesomewm-gaps', 'w+')
+    if gaps_file then
+        gaps_file:write(screen[1].tags[1].gap, '\n')
+        gaps_file:close()
     end
 end)
 
 awesome.connect_signal('startup', function()
-    local file = io.open('/tmp/awesomewm-last-selected-tags', 'r')
-    if not file then
+    local sel_tags_file = io.open('/tmp/awesomewm-last-selected-tags', 'r')
+    if not sel_tags_file then
         return
     end
 
     local selected_tags = {}
 
-    for line in file:lines() do
+    for line in sel_tags_file:lines() do
         table.insert(selected_tags, tonumber(line))
     end
 
@@ -939,7 +943,13 @@ awesome.connect_signal('startup', function()
         t:view_only()
     end
 
-    file:close()
+    local gaps_file = io.open('/tmp/awesomewm-gaps', 'r')
+    if gaps_file then
+        local old_gaps = tonumber(gaps_file:read("*all"))
+        if old_gaps then
+            gaps.useless_gaps_set(old_gaps)
+        end
+    end
 end)
 
 require 'utils.autostart'
