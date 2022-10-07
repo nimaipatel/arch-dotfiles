@@ -63,6 +63,10 @@ beautiful.bg_urgent = beautiful.base08 .. opacity_hex
 beautiful.bg_minimize = beautiful.base0A .. opacity_hex
 beautiful.bg_systray = beautiful.bg_normal .. opacity_hex
 
+beautiful.wibar_bg = beautiful.base00 .. opacity_hex
+
+beautiful.taglist_bg_focus = beautiful.base01 .. opacity_hex
+
 beautiful.titlebar_bg_normal = beautiful.bg_focus
 beautiful.titlebar_bg_focus = beautiful.bg_focus
 
