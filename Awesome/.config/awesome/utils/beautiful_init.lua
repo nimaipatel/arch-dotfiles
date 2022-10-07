@@ -17,6 +17,10 @@ local circle = function(color)
     return gears.surface.load_from_shape(20, 20, gears.shape.circle, color)
 end
 
+beautiful.notification_shape = function(cr, w, h)
+    gears.shape.rounded_rect(cr, w, h, 10)
+end
+
 local unfocused_button = circle(beautiful.base02)
 
 local close_btn = circle(beautiful.base08)
@@ -33,20 +37,20 @@ beautiful.titlebar_maximized_button_focus_active = maximized_btn
 beautiful.titlebar_maximized_button_normal_inactive = unfocused_button
 beautiful.titlebar_maximized_button_focus_inactive = maximized_btn
 
-local ontop_arrow = gears.filesystem.get_configuration_dir() .. 'assets/ontop-arrow.svg'
-local ontop_arrow_colored = gears.color.recolor_image(ontop_arrow, beautiful.base0E)
-local ontop_arrow_grayed = gears.color.recolor_image(ontop_arrow, beautiful.base02)
-beautiful.titlebar_ontop_button_normal_active = ontop_arrow_colored
+local ontop_arrow                               = gears.filesystem.get_configuration_dir() .. 'assets/ontop-arrow.svg'
+local ontop_arrow_colored                       = gears.color.recolor_image(ontop_arrow, beautiful.base0E)
+local ontop_arrow_grayed                        = gears.color.recolor_image(ontop_arrow, beautiful.base02)
+beautiful.titlebar_ontop_button_normal_active   = ontop_arrow_colored
 beautiful.titlebar_ontop_button_normal_inactive = ontop_arrow_grayed
-beautiful.titlebar_ontop_button_focus_active  = ontop_arrow_colored
+beautiful.titlebar_ontop_button_focus_active    = ontop_arrow_colored
 beautiful.titlebar_ontop_button_focus_inactive  = ontop_arrow_grayed
 
-local sticky_pin = gears.filesystem.get_configuration_dir() .. 'assets/sticky-pin.svg'
-local sticky_pin_colored = gears.color.recolor_image(sticky_pin, beautiful.base0D)
-local sticky_pin_grayed = gears.color.recolor_image(sticky_pin, beautiful.base02)
-beautiful.titlebar_sticky_button_normal_active = sticky_pin_colored
-beautiful.titlebar_sticky_button_normal_inactive =sticky_pin_grayed
-beautiful.titlebar_sticky_button_focus_active  = sticky_pin_colored
+local sticky_pin                                 = gears.filesystem.get_configuration_dir() .. 'assets/sticky-pin.svg'
+local sticky_pin_colored                         = gears.color.recolor_image(sticky_pin, beautiful.base0D)
+local sticky_pin_grayed                          = gears.color.recolor_image(sticky_pin, beautiful.base02)
+beautiful.titlebar_sticky_button_normal_active   = sticky_pin_colored
+beautiful.titlebar_sticky_button_normal_inactive = sticky_pin_grayed
+beautiful.titlebar_sticky_button_focus_active    = sticky_pin_colored
 beautiful.titlebar_sticky_button_focus_inactive  = sticky_pin_grayed
 
 beautiful.font = 'sans-serif 14'
