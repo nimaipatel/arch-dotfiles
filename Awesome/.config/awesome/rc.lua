@@ -447,7 +447,7 @@ local globalkeys = gears.table.join(
     end, { description = 'decrement useless gaps', group = 'gaps' }),
 
     key({ modkey }, '0', function()
-        gaps.useless_gaps_resize()
+        gaps.useless_gaps_toggle()
     end, { description = 'reset gaps', group = 'gaps' }),
 
     -- Mod4 + Control + Escape is actually mapped to to just Mod4 using xcape
