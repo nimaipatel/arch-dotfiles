@@ -337,6 +337,7 @@ for s in screen do
             layout = wibox.layout.fixed.horizontal,
             spacing = dpi(30),
             s.mytasklist,
+            require('widgets.quotes')
         },
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,

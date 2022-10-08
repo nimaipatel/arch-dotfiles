@@ -12,7 +12,7 @@ local spotify_widget = wibox.widget {
         font = beautiful.font,
         widget = wibox.widget.textbox,
         align = 'right',
-        forced_width = 300,
+        forced_width = 400,
     },
     {
         id = 'icon',
@@ -20,8 +20,8 @@ local spotify_widget = wibox.widget {
     },
     {
         layout = wibox.container.scroll.horizontal,
-        max_size = 300,
-        forced_width = 300,
+        max_size = 400,
+        forced_width = 400,
         step_function = wibox.container.scroll.step_functions.waiting_nonlinear_back_and_forth,
         speed = 40,
         {
