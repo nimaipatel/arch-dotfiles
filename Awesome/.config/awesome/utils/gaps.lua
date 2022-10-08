@@ -14,10 +14,12 @@ local function squared_corners(c)
     c.shape = gears.shape.rectangle
 end
 
-for _, signal in ipairs({ "property::maximized", "property::fullscreen", "manage" }) do
+for _, signal in ipairs({ "property::floating", "property::maximized", "property::fullscreen", "manage" }) do
     client.connect_signal(signal, function(c)
         local current_gaps = screen[1].tags[1].gap
-        if c.maximized or c.fullscreen or current_gaps == 0 then
+        if c.floating or current_gaps > 0 then
+            rounded_corners(c)
+        elseif c.maximized or c.fullscreen or current_gaps == 0 then
             squared_corners(c)
         else
             rounded_corners(c)
