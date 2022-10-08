@@ -82,23 +82,6 @@ end
 
 U.base16_config = function()
     require('base16-colorscheme').setup(BASE16_COLORS)
-    vim.api.nvim_set_hl(0, 'TabLineFill', { link = 'Normal' })
-
-    vim.api.nvim_set_hl(0, 'TelescopeSelection', { link = 'Visual' })
-    vim.api.nvim_set_hl(0, 'TelescopeNormal', { link = 'Normal' })
-    vim.api.nvim_set_hl(0, 'TelescopePromptNormal', { link = 'TelescopeNormal' })
-    vim.api.nvim_set_hl(0, 'TelescopeBorder', { link = 'TelescopeNormal' })
-    vim.api.nvim_set_hl(0, 'TelescopePromptBorder', { link = 'TelescopeBorder' })
-    vim.api.nvim_set_hl(0, 'TelescopeTitle', { link = 'TelescopeBorder' })
-    vim.api.nvim_set_hl(0, 'TelescopePromptTitle', { link = 'TelescopeTitle' })
-    vim.api.nvim_set_hl(0, 'TelescopeResultsTitle', { link = 'TelescopeTitle' })
-    vim.api.nvim_set_hl(0, 'TelescopePreviewTitle', { link = 'TelescopeTitle' })
-    vim.api.nvim_set_hl(0, 'TelescopePromptPrefix', { link = 'Identifier' })
-
-    vim.api.nvim_set_hl(0, 'LspReferenceText', { link = 'CursorLine' })
-    vim.api.nvim_set_hl(0, 'LspReferenceWrite', { link = 'CursorLine' })
-    vim.api.nvim_set_hl(0, 'LspReferenceRead', { link = 'CursorLine' })
-
     vim.api.nvim_set_hl(0, 'DiagnosticError', { fg = BASE16_COLORS.base08 })
     vim.api.nvim_set_hl(0, 'DiagnosticWarn', { fg = BASE16_COLORS.base0A })
     vim.api.nvim_set_hl(0, 'DiagnosticInfo', { fg = BASE16_COLORS.base06 })
@@ -111,14 +94,7 @@ U.base16_config = function()
     vim.api.nvim_set_hl(0, 'DiagnosticUnderlineInformation', { sp = BASE16_COLORS.base06, undercurl = true })
     vim.api.nvim_set_hl(0, 'DiagnosticUnderlineHint', { sp = BASE16_COLORS.base0C, undercurl = true })
 
-    vim.api.nvim_set_hl(0, 'Normal', { bg = 'NONE' })
-    vim.api.nvim_set_hl(0, 'NormalNC', { bg = 'NONE' })
-    vim.api.nvim_set_hl(0, 'LineNr', { bg = 'NONE' })
-    vim.api.nvim_set_hl(0, 'signcolumn', { bg = 'NONE' })
-    vim.api.nvim_set_hl(0, 'VertSplit', { bg = 'NONE' })
-    vim.api.nvim_set_hl(0, 'NormalFloat', { bg = 'NONE' })
-    vim.api.nvim_set_hl(0, 'FloatBorder', { bg = 'NONE' })
-    vim.api.nvim_set_hl(0, 'CmpItemAbbr', { bg = 'NONE' })
+    vim.api.nvim_set_hl(0, 'NormalFloat', { bg = BASE16_COLORS.base01 })
 end
 
 U.lualine_config = function()
@@ -1001,6 +977,7 @@ packer.startup(function(use)
                 html = { filetypes = { 'html', 'htmldjango' } },
                 cssls = {},
                 hls = {},
+                ltex = {}
             }
 
             local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
@@ -1108,7 +1085,7 @@ packer.startup(function(use)
             require('legendary').bind_keymaps {
                 {
                     '<C-h>',
-                    function ()
+                    function()
                         vim.diagnostic.open_float(nil, { focus = false, scope = "cursor" })
                     end,
                     description = 'open cursor diagnostics in floating window',
@@ -1197,10 +1174,6 @@ packer.startup(function(use)
                     { name = 'nvim_lua' },
                     { name = 'nvim_lsp' },
                     { name = 'calc' },
-                },
-                window = {
-                    completion = cmp.config.window.bordered(),
-                    documentation = cmp.config.window.bordered(),
                 },
                 snippet = {
                     expand = function(args)
