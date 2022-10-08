@@ -977,7 +977,7 @@ gears.timer {
     call_now = true,
     autostart = true,
     callback = function()
-        local dir = '/home/nimai/Pictures/new-wallpapers/'
+        local dir = '/home/nimai/Pictures/wallpapers/'
         awful.spawn.easy_async('ls -A ' .. dir, function(out)
             local files = {}
             for line in out:gmatch('[^\r\n]+') do
