@@ -991,5 +991,7 @@ gears.timer {
     end,
 }
 
+require('utils.flash_focus').enable()
+
 -- }}}
 --
