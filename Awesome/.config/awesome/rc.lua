@@ -148,8 +148,7 @@ local layoutmenu = {
 
 local sysopts = {
     { ' &Restart', 'reboot' },
-    { ' L&ogout', 'pkill -u -KILL ' .. os.getenv 'USER' },
-    { ' &Lock', 'slock' },
+    { ' &Lock', 'dm-tool lock' },
     { ' &Power Off', 'poweroff' },
 }
 
@@ -987,6 +986,7 @@ gears.timer {
             local rand = math.random(1, #files)
             local f_name = dir .. files[rand]
             gears.wallpaper.maximized(f_name)
+            awful.spawn.with_shell("cp -f " .. f_name .. " /home/nimai/.config/wallpaper")
         end)
     end,
 }
