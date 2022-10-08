@@ -94,6 +94,7 @@ U.base16_config = function()
     vim.api.nvim_set_hl(0, 'DiagnosticUnderlineInformation', { sp = BASE16_COLORS.base06, undercurl = true })
     vim.api.nvim_set_hl(0, 'DiagnosticUnderlineHint', { sp = BASE16_COLORS.base0C, undercurl = true })
 
+    vim.api.nvim_set_hl(0, 'Normal', { bg = 'NONE' })
     vim.api.nvim_set_hl(0, 'NormalFloat', { bg = BASE16_COLORS.base01 })
 end
 
