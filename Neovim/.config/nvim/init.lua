@@ -149,8 +149,8 @@ U.lualine_config = function()
 
     require('lualine').setup {
         options = {
-            section_separators = { left = '', right = '' },
-            component_separators = { left = '', right = '' },
+            section_separators = { left = '', right = '' },
+            component_separators = { left = '', right = '' },
             theme = base16_lualine_colors,
         },
         sections = {
