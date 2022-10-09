@@ -15,7 +15,7 @@ local the_battery = wibox.widget {
             left = 0,
             right = 0,
         },
-        border_width = 3,
+        border_width = 1,
         forced_width = 75,
         color = beautiful.base0B,
         background_color = beautiful.base01,
