@@ -415,19 +415,6 @@ packer.startup(function(use)
             }
 
             require('legendary').bind_autocmds {
-                name = 'AntiFloatingWindows',
-                clear = true,
-                {
-                    'FileType',
-                    'wincmd J',
-                    opts = {
-                        pattern = { 'null-ls-info', 'lspinfo' },
-                    },
-                    description = 'turn floating windows into regular splits',
-                },
-            }
-
-            require('legendary').bind_autocmds {
                 name = 'ReloadNvimOnSig',
                 clear = true,
                 {
@@ -514,7 +501,6 @@ packer.startup(function(use)
                     scroll_down = 'n',
                     scroll_up = 'p',
                 },
-                window = { border = 'rounded' },
 
                 plugins = {
                     presets = {
@@ -798,9 +784,7 @@ packer.startup(function(use)
     use {
         'https://github.com/williamboman/mason.nvim',
         config = function()
-            require('mason').setup {
-                ui = { border = 'rounded' },
-            }
+            require('mason').setup {}
         end,
     }
 
@@ -860,7 +844,6 @@ packer.startup(function(use)
                 virtual_text = false,
                 float = {
                     show_header = false,
-                    border = 'rounded',
                     format = function(diagnostic)
                         for _, name in ipairs(vim.diagnostic.severity) do
                             if diagnostic.severity == vim.diagnostic.severity[name] then
@@ -978,15 +961,8 @@ packer.startup(function(use)
                 html = { filetypes = { 'html', 'htmldjango' } },
                 cssls = {},
                 hls = {},
-                ltex = {}
+                grammarly = {}
             }
-
-            local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
-            function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
-                opts = opts or {}
-                opts.border = opts.border or 'rounded'
-                return orig_util_open_floating_preview(contents, syntax, opts, ...)
-            end
 
             local base_config = {
                 root_dir = vim.loop.cwd,
@@ -1029,12 +1005,6 @@ packer.startup(function(use)
                     inlay_hints = {
                         parameter_hints_prefix = '  ',
                         other_hints_prefix = '  ',
-                    },
-                    memory_usage = {
-                        border = 'rounded',
-                    },
-                    symbol_info = {
-                        border = 'rounded',
                     },
                 },
             }
