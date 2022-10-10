@@ -1,6 +1,8 @@
 -- check if we are in GNU/Linux
 local is_gnu_linux = (not not vim.fn.system('uname'):match 'Linux')
 
+vim.g.python3_host_prog = '/usr/bin/python'
+
 -- space bar is leader key
 vim.g.mapleader = ' '
 
