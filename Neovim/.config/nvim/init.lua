@@ -817,6 +817,11 @@ packer.startup(function(use)
             }, {
                 prefix = '<leader>l',
             })
+            require('which-key').register({
+                K = { ':DocsViewToggle<CR>', 'Docs' },
+            }, {
+                prefix = '<leader>',
+            })
         end,
         config = function()
             require('docs-view').setup {
