@@ -421,6 +421,12 @@ local globalkeys = gears.table.join(
         lof_kitty(predicate, fallback)
     end),
 
+    key({ modkey }, 'v', function ()
+        awful.spawn('pavucontrol', {
+            tag = TAGS[4],
+        })
+    end),
+
     key({ modkey }, 'b', function()
         for _, c in ipairs(client.get()) do
             if c.class:match '^Brave%-browser' then
@@ -795,6 +801,7 @@ awful.rules.rules = {
     { rule = { instance = 'libreoffice' }, properties = { tag = TAGS[3] } },
     { rule = { instance = 'soffice' }, properties = { tag = TAGS[3] } },
     { rule = { class = 'Spotify' }, properties = { tag = TAGS[4] } },
+    { rule = { class = 'Pavucontrol' }, properties = { tag = TAGS[4] } },
     { rule = { instance = 'whatsapp-nativefier-d40211' }, properties = { tag = TAGS[5] } },
     { rule = { instance = 'scrcpy' }, properties = { floating = true, tag = TAGS[9] } },
 
