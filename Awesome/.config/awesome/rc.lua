@@ -984,24 +984,28 @@ client.connect_signal('property::urgent', function(c)
     c:jump_to()
 end)
 
-math.randomseed(os.time())
-gears.timer {
-    timeout = 5 * 60,
-    call_now = true,
-    autostart = true,
-    callback = function()
-        local dir = '/home/nimai/Pictures/wallpapers/'
-        awful.spawn.easy_async('ls -A ' .. dir, function(out)
-            local files = {}
-            for line in out:gmatch('[^\r\n]+') do
-                table.insert(files, line)
-            end
-            local rand = math.random(1, #files)
-            local f_name = dir .. files[rand]
-            gears.wallpaper.maximized(f_name)
-            awful.spawn.with_shell("cp -f " .. f_name .. " /home/nimai/.config/wallpaper")
-        end)
-    end,
+local mojave_dir = gears.filesystem.get_configuration_dir() .. '/wallpapers/mojave/'
+bling.module.wallpaper.setup {
+    set_function = bling.module.wallpaper.setters.simple_schedule,
+    wallpaper = {
+        ["00:00:00"] = mojave_dir .. "mojave_dynamic_15.jpeg",
+        ["03:00:00"] = mojave_dir .. "mojave_dynamic_16.jpeg",
+        ["05:00:00"] = mojave_dir .. "mojave_dynamic_1.jpeg",
+        ["06:00:00"] = mojave_dir .. "mojave_dynamic_2.jpeg",
+        ["07:00:00"] = mojave_dir .. "mojave_dynamic_3.jpeg",
+        ["08:00:00"] = mojave_dir .. "mojave_dynamic_4.jpeg",
+        ["09:00:00"] = mojave_dir .. "mojave_dynamic_5.jpeg",
+        ["10:00:00"] = mojave_dir .. "mojave_dynamic_6.jpeg",
+        ["11:00:00"] = mojave_dir .. "mojave_dynamic_7.jpeg",
+        ["13:00:00"] = mojave_dir .. "mojave_dynamic_8.jpeg",
+        ["14:00:00"] = mojave_dir .. "mojave_dynamic_9.jpeg",
+        ["15:00:00"] = mojave_dir .. "mojave_dynamic_10.jpeg",
+        ["16:00:00"] = mojave_dir .. "mojave_dynamic_11.jpeg",
+        ["17:00:00"] = mojave_dir .. "mojave_dynamic_12.jpeg",
+        ["18:00:00"] = mojave_dir .. "mojave_dynamic_13.jpeg",
+        ["20:00:00"] = mojave_dir .. "mojave_dynamic_14.jpeg",
+    },
+    position = "maximized",
 }
 
 bling.module.flash_focus.enable()
