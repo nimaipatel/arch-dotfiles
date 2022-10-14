@@ -38,6 +38,7 @@ KITTY_T=~/.local/share/flavours/base16/templates/kitty/templates/default-256.mus
 NEOVIM_T=~/.config/flavours/neovim.mustache
 VIEB_T=~/.config/flavours/vieb.mustache
 BSPWM_T=~/.config/flavours/bspwm.mustache
+FLAMESHOT_T=~/.config/flavours/flameshot.mustache
 
 # generate themes and merge and write at appropriate locations
 flavours build "$THEME_LOC" "$XRESOURCES_T" | xrdb -merge
@@ -54,6 +55,7 @@ flavours build "$THEME_LOC" "$NEOVIM_T" >~/.config/nvim/base16.lua
 cp ~/.config/nvim/base16.lua ~/.config/awesome/base16.lua
 flavours build "$THEME_LOC" "$VIEB_T" >~/.config/Vieb/colors/base16.css
 flavours build "$THEME_LOC" "$BSPWM_T" | sh
+flavours build "$THEME_LOC" "$FLAMESHOT_T" >~/.config/flameshot/flameshot.ini
 
 # send USR1 signal to all running st instances
 if pidof st 1>/dev/null 2>&1; then

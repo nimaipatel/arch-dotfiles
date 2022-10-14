@@ -542,6 +542,10 @@ local globalkeys = gears.table.join(
         })
     end, { description = 'toggle google keep window', group = 'launcher' }),
 
+    key({ modkey, 'Shift' }, 's', function ()
+        awful.util.spawn('flameshot gui')
+    end),
+
     key({ modkey }, 's', function()
         for _, c in ipairs(client.get()) do
             if c.class:match 'Spotify' then
