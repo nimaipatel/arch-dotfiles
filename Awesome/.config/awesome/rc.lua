@@ -26,6 +26,8 @@ local naughty = require 'naughty'
 local hotkeys_popup = require 'awful.hotkeys_popup'
 require 'awful.hotkeys_popup.keys'
 
+local bling = require 'bling'
+
 local TAGS = { ' ૧ ', ' ૨ ', ' ૩ ', ' ૪ ', ' ૫ ', ' ૬ ', ' ૭ ', ' ૮ ', ' ૯ ' }
 if awesome.startup_errors then
     naughty.notify {
@@ -1002,7 +1004,7 @@ gears.timer {
     end,
 }
 
-require('utils.flash_focus').enable()
+bling.module.flash_focus.enable()
 
 -- }}}
 --
