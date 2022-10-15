@@ -26,8 +26,6 @@ local naughty = require 'naughty'
 local hotkeys_popup = require 'awful.hotkeys_popup'
 require 'awful.hotkeys_popup.keys'
 
-local bling = require 'bling'
-
 local TAGS = { ' ૧ ', ' ૨ ', ' ૩ ', ' ૪ ', ' ૫ ', ' ૬ ', ' ૭ ', ' ૮ ', ' ૯ ' }
 if awesome.startup_errors then
     naughty.notify {
@@ -423,7 +421,7 @@ local globalkeys = gears.table.join(
         lof_kitty(predicate, fallback)
     end),
 
-    key({ modkey }, 'v', function ()
+    key({ modkey }, 'v', function()
         awful.spawn('pavucontrol', {
             tag = TAGS[4],
         })
@@ -550,7 +548,7 @@ local globalkeys = gears.table.join(
         })
     end, { description = 'toggle google keep window', group = 'launcher' }),
 
-    key({ modkey, 'Shift' }, 's', function ()
+    key({ modkey, 'Shift' }, 's', function()
         awful.util.spawn('flameshot gui')
     end),
 
@@ -985,30 +983,27 @@ client.connect_signal('property::urgent', function(c)
 end)
 
 local mojave_dir = gears.filesystem.get_configuration_dir() .. '/wallpapers/mojave/'
-bling.module.wallpaper.setup {
-    set_function = bling.module.wallpaper.setters.simple_schedule,
-    wallpaper = {
-        ["00:00:00"] = mojave_dir .. "mojave_dynamic_15.jpeg",
-        ["03:00:00"] = mojave_dir .. "mojave_dynamic_16.jpeg",
-        ["05:00:00"] = mojave_dir .. "mojave_dynamic_1.jpeg",
-        ["06:00:00"] = mojave_dir .. "mojave_dynamic_2.jpeg",
-        ["07:00:00"] = mojave_dir .. "mojave_dynamic_3.jpeg",
-        ["08:00:00"] = mojave_dir .. "mojave_dynamic_4.jpeg",
-        ["09:00:00"] = mojave_dir .. "mojave_dynamic_5.jpeg",
-        ["10:00:00"] = mojave_dir .. "mojave_dynamic_6.jpeg",
-        ["11:00:00"] = mojave_dir .. "mojave_dynamic_7.jpeg",
-        ["13:00:00"] = mojave_dir .. "mojave_dynamic_8.jpeg",
-        ["14:00:00"] = mojave_dir .. "mojave_dynamic_9.jpeg",
-        ["15:00:00"] = mojave_dir .. "mojave_dynamic_10.jpeg",
-        ["16:00:00"] = mojave_dir .. "mojave_dynamic_11.jpeg",
-        ["17:00:00"] = mojave_dir .. "mojave_dynamic_12.jpeg",
-        ["18:00:00"] = mojave_dir .. "mojave_dynamic_13.jpeg",
-        ["20:00:00"] = mojave_dir .. "mojave_dynamic_14.jpeg",
-    },
-    position = "maximized",
-}
+local wallpaper = require 'utils.wallpaper'
+wallpaper.dynamic({
+    { time = "00:00:00", wallpaper = mojave_dir .. "mojave_dynamic_15.jpeg" },
+    { time = "03:00:00", wallpaper = mojave_dir .. "mojave_dynamic_16.jpeg" },
+    { time = "05:00:00", wallpaper = mojave_dir .. "mojave_dynamic_1.jpeg" },
+    { time = "06:00:00", wallpaper = mojave_dir .. "mojave_dynamic_2.jpeg" },
+    { time = "07:00:00", wallpaper = mojave_dir .. "mojave_dynamic_3.jpeg" },
+    { time = "08:00:00", wallpaper = mojave_dir .. "mojave_dynamic_4.jpeg" },
+    { time = "09:00:00", wallpaper = mojave_dir .. "mojave_dynamic_5.jpeg" },
+    { time = "10:00:00", wallpaper = mojave_dir .. "mojave_dynamic_6.jpeg" },
+    { time = "11:00:00", wallpaper = mojave_dir .. "mojave_dynamic_7.jpeg" },
+    { time = "13:00:00", wallpaper = mojave_dir .. "mojave_dynamic_8.jpeg" },
+    { time = "14:00:00", wallpaper = mojave_dir .. "mojave_dynamic_9.jpeg" },
+    { time = "15:00:00", wallpaper = mojave_dir .. "mojave_dynamic_10.jpeg" },
+    { time = "16:00:00", wallpaper = mojave_dir .. "mojave_dynamic_11.jpeg" },
+    { time = "17:00:00", wallpaper = mojave_dir .. "mojave_dynamic_12.jpeg" },
+    { time = "18:00:00", wallpaper = mojave_dir .. "mojave_dynamic_13.jpeg" },
+    { time = "20:00:00", wallpaper = mojave_dir .. "mojave_dynamic_14.jpeg" },
+})
 
-bling.module.flash_focus.enable()
+require 'utils.flash_focus'.enable()
 
 -- }}}
 --

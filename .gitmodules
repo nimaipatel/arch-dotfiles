@@ -13,6 +13,3 @@
 [submodule "slock"]
 	path = Slock
 	url = gll:nimai/slock
-[submodule "Awesome/.config/awesome/bling"]
-	path = Awesome/.config/awesome/bling
-	url = https://github.com/BlingCorp/bling
