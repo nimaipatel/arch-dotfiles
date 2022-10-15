@@ -1001,7 +1001,11 @@ wallpaper.dynamic({
     { time = "17:00:00", wallpaper = mojave_dir .. "mojave_dynamic_12.jpeg" },
     { time = "18:00:00", wallpaper = mojave_dir .. "mojave_dynamic_13.jpeg" },
     { time = "20:00:00", wallpaper = mojave_dir .. "mojave_dynamic_14.jpeg" },
-})
+}, function(file)
+    gears.wallpaper.maximized(file)
+    local wallpaper_file = os.getenv 'HOME' .. '/.config/wallpaper'
+    awful.util.spawn('cp ' .. file .. ' ' .. wallpaper_file)
+end)
 
 require 'utils.flash_focus'.enable()
 

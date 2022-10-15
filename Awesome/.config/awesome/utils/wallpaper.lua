@@ -45,8 +45,9 @@ local compare_dates = function(first, second)
     return EQ
 end
 
-M.dynamic = function(wallpapers_list, pollrate)
+M.dynamic = function(wallpapers_list, cb, pollrate)
     pollrate = pollrate or (10 * 60)
+    cb = cb or gears.wallpaper.maximized
     if not wallpapers_list then
         error('wallpapers not provided')
         return
@@ -64,7 +65,7 @@ M.dynamic = function(wallpapers_list, pollrate)
                 local time = iter.time
                 local wallpaper = iter.wallpaper
                 if compare_dates(current_time, time) == GT then
-                    gears.wallpaper.maximized(wallpaper)
+                    cb(wallpaper)
                     return
                 end
             end
