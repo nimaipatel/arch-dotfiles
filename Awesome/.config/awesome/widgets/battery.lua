@@ -10,13 +10,13 @@ local the_battery = wibox.widget {
         max_value = 100,
         value = 0,
         margins = {
-            top = 4,
-            bottom = 4,
+            top = 5,
+            bottom = 5,
             left = 0,
             right = 0,
         },
         border_width = 1,
-        forced_width = 75,
+        forced_width = 50,
         color = beautiful.base0B,
         background_color = beautiful.base01,
         id = 'bar',
@@ -25,13 +25,13 @@ local the_battery = wibox.widget {
     {
         id = 'nipple',
         margins = {
-            top = 8,
-            bottom = 8,
+            top = 10,
+            bottom = 10,
             left = 0,
             right = 0,
         },
         border_width = 0,
-        forced_width = 6,
+        forced_width = 4,
         widget = wibox.widget.progressbar,
     },
 }

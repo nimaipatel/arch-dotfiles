@@ -46,7 +46,7 @@ local compare_dates = function(first, second)
 end
 
 M.dynamic = function(wallpapers_list, cb, pollrate)
-    pollrate = pollrate or (10 * 60)
+    pollrate = pollrate or (1 * 60)
     cb = cb or gears.wallpaper.maximized
     if not wallpapers_list then
         error('wallpapers not provided')
