@@ -7,7 +7,7 @@ configuration {
     fullscreen: false;
     run-command: "sh -i -c '{cmd}'";
     run-shell-command: "kitty -e sh -i -c '{cmd}'";
-    font: "monospace 16";
+    font: "sans-serif 14";
     modes: [window,drun,run,ssh,calc,emoji];
 }
 
