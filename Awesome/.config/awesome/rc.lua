@@ -7,6 +7,7 @@ local dpi = xresources.apply_dpi
 local lof_kitty = require 'utils.lof_kitty'
 
 local nm_widget = require 'widgets.nmcli'
+local bluetooth_widget = require('widgets.bluetooth')
 local brightnessctl_widget = require 'widgets.brightnessctl'
 local cpu_bars_widget = require 'widgets.cpu_bars'
 local memory_widget = require 'widgets.memory'
@@ -368,9 +369,10 @@ for s in screen do
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
             spacing = dpi(30),
-            pipewire_widget,
-            brightnessctl_widget,
+            bluetooth_widget,
             nm_widget,
+            pipewire_widget,
+            brightnessctl_widget
         },
     }
 end

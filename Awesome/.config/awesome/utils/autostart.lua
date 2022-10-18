@@ -27,8 +27,6 @@ awesome.connect_signal('startup', function()
     spawn_once('clight --no-auto-recalib', 'pidof clight')
     spawn_once('picom', 'pidof picom')
     spawn_once('buckle', 'pidof buckle')
-    spawn 'blueman-applet'
-    spawn 'nm-applet'
     spawn_once('flameshot', 'pidof flameshot')
     spawn_once('buckle', 'pidof buckle')
 end)
