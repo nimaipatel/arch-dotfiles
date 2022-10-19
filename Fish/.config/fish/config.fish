@@ -59,6 +59,9 @@ abbr -a genpas "gpg --armor --gen-random 1 5"
 abbr -a nn "nmcli device wifi connect"
 abbr -a nls "nmcli device wifi list --rescan yes"
 
+abbr -a bls "bluetoothctl devices"
+abbr -a bb "bluetoothctl connect"
+
 abbr -a ytm "youtube-dl --extract-audio --audio-format mp3 --embed-thumbnail --add-metadata --audio-quality 0"
 
 abbr -a ytl "youtube-dl -f bestvideo+bestaudio --merge-output-format mkv"
