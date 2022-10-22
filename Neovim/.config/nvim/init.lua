@@ -702,16 +702,7 @@ packer.startup(function(use)
         opt = true,
         cmd = { 'DocsViewToggle' },
         setup = function()
-            require('which-key').register({
-                K = { ':DocsViewToggle<CR>', 'Docs' },
-            }, {
-                prefix = '<leader>l',
-            })
-            require('which-key').register({
-                K = { ':DocsViewToggle<CR>', 'Docs' },
-            }, {
-                prefix = '<leader>',
-            })
+            vim.keymap.set('n', '<leader>K', ':DocsViewToggle<CR>', { desc = 'docs' })
         end,
         config = function()
             require('docs-view').setup {
