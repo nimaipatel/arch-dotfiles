@@ -344,13 +344,8 @@ packer.startup(function(use)
     use {
         'mrjones2014/legendary.nvim',
         config = function()
-            require('legendary').setup()
-
-            require('legendary').bind_command {
-                'RefreshColors',
-                U.refresh_base_16,
-                description = 'refresh generated base 16 colors',
-            }
+            vim.api.nvim_create_user_command('RefreshColors', U.refresh_base_16,
+                { desc = 'refresh generated base 16 colors' })
 
             vim.keymap.set('n', '<C-k', '<UP>', { desc = 'move up one line' })
             vim.keymap.set('n', '<C-j', '<DOWN>', { desc = 'move down one line' })
@@ -367,63 +362,59 @@ packer.startup(function(use)
             vim.keymap.set('n', '<C-k>', '<Plug>(qf_loc_previous)',
                 { desc = 'Goto previous location list item' })
 
-            require('legendary').bind_autocmds {
-                name = 'ReloadNvimOnSig',
-                clear = true,
+            vim.api.nvim_create_autocmd(
+                { 'Signal' },
                 {
-                    'Signal',
-                    opts = {
-                        pattern = 'SIGUSR1',
-                    },
-                    'RefreshColors',
-                    description = 'refresh neovim colors when USR1 signal intercepted',
-                },
-            }
+                    pattern = 'SIGUSR1',
+                    callback = U.refresh_base_16,
+                    desc = 'refresh neovim colors when USR1 signal intercepted'
+                }
+            )
 
-            require('legendary').bind_autocmds {
-                name = 'WindowSizeEqual',
-                clear = true,
+            vim.api.nvim_create_autocmd(
+                { 'VimResized' },
                 {
-                    'VimResized',
-                    'wincmd =',
-                    description = 'Resize panes when vim is resized',
-                },
-            }
+                    command = 'wincmd =',
+                    desc = 'Resize panes when vim is resized',
+                }
+            )
 
-            require('legendary').bind_autocmds {
-                name = 'HighLightOnYank',
-                clear = true,
+            vim.api.nvim_create_autocmd(
+                { 'TextYankPost' },
                 {
-                    'TextYankPost',
-                    function()
+                    callback = function()
                         require('vim.highlight').on_yank()
                     end,
-                    description = 'Highlight text on yanking',
-                },
-            }
+                    desc = 'Highlight text on yanking',
+                }
+            )
 
-            require('legendary').bind_autocmds {
-                name = 'TermSettings',
-                clear = true,
+            vim.api.nvim_create_autocmd(
+                { 'TermOpen', 'BufEnter', 'BufWinEnter', 'WinEnter' },
                 {
-                    { 'TermOpen', 'BufEnter', 'BufWinEnter', 'WinEnter' },
-                    'startinsert',
-                    opts = { pattern = { 'term://*' } },
-                    description = 'Start terminal mode in insert mode',
-                },
+                    pattern = { 'term://*' },
+                    command = 'startinsert',
+                    desc = 'Start terminal mode in insert mode',
+                }
+            )
+
+            vim.api.nvim_create_autocmd(
+                { 'BufLeave' },
                 {
-                    { 'BufLeave' },
-                    'stopinsert',
-                    opts = { pattern = { 'term://*' } },
-                    description = 'leave terminal mode immediately when shell exits',
-                },
+                    pattern = { 'term://*' },
+                    command = 'stopinsert',
+                    desc = 'leave terminal mode immediately when shell exits',
+                }
+            )
+
+            vim.api.nvim_create_autocmd(
+                { 'TermClose' },
                 {
-                    { 'TermClose' },
-                    ':call nvim_input("<CR>")',
-                    opts = { pattern = { 'term://*' } },
-                    description = 'leave terminal mode immediately when shell exits',
-                },
-            }
+                    pattern = { 'term://*' },
+                    command = ':call nvim_input("<CR>")',
+                    desc = 'leave terminal mode immediately when shell exits',
+                }
+            )
         end,
     }
 
@@ -557,7 +548,7 @@ packer.startup(function(use)
         config = function()
             vim.opt.fillchars:append 'diff:╱'
 
-            require('legendary').bind_command {
+            vim.api.nvim_create_user_command(
                 'DiffviewToggle',
                 function()
                     local view = require('diffview.lib').get_current_view()
@@ -568,8 +559,10 @@ packer.startup(function(use)
                         vim.cmd 'DiffviewOpen'
                     end
                 end,
-                description = 'Toggle diff view',
-            }
+                {
+                    desc = 'Toggle diff view'
+                }
+            )
 
             require('which-key').register({
                 d = { ':DiffviewToggle<CR>', 'toggle diff view' },
@@ -1045,17 +1038,16 @@ packer.startup(function(use)
                 },
             }
             vim.fn.sign_define('LightBulbSign', { text = U.SEVERITY_SIGNS.HINT, texthl = 'LspDiagnosticsDefaultHint' })
-            require('legendary').bind_autocmds {
-                name = 'LightBulb',
-                clear = true,
+
+            vim.api.nvim_create_autocmd(
+                { 'CursorHold', 'CursorHoldI' },
                 {
-                    { 'CursorHold', 'CursorHoldI' },
-                    function()
+                    callback = function()
                         require('nvim-lightbulb').update_lightbulb()
                     end,
-                    description = 'Show light bulb when code action is available',
-                },
-            }
+                    desc = 'Show light bulb when code action is available',
+                }
+            )
         end,
     }
 
