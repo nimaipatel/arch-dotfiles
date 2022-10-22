@@ -603,12 +603,7 @@ packer.startup(function(use)
         },
         config = function()
             require('nvim-tree').setup {}
-            require('which-key').register({
-                name = 'nvim tree',
-                e = { ':NvimTreeToggle<CR>', 'Toggle file explorer' },
-            }, {
-                prefix = '<leader>e',
-            })
+            vim.keymap.set('n', '<leader>e', ':NvimTreeToggle<CR>', { desc = 'toggle file explorer' })
         end,
     }
 
