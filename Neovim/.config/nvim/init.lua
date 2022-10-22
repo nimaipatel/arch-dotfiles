@@ -1,3 +1,10 @@
+if vim.g.neovide then
+    vim.opt.guifont = "monospace:h12"
+    vim.g.neovide_cursor_animation_length = 0.05
+    vim.g.neovide_cursor_trail_size = 0.00
+    vim.g.neovide_cursor_vfx_mode = "ripple"
+end
+
 -- check if we are in GNU/Linux
 local is_gnu_linux = (not not vim.fn.system('uname'):match 'Linux')
 
@@ -96,7 +103,9 @@ U.base16_config = function()
     vim.api.nvim_set_hl(0, 'DiagnosticUnderlineInformation', { sp = BASE16_COLORS.base06, undercurl = true })
     vim.api.nvim_set_hl(0, 'DiagnosticUnderlineHint', { sp = BASE16_COLORS.base0C, undercurl = true })
 
-    vim.api.nvim_set_hl(0, 'Normal', { bg = 'NONE' })
+    if not vim.g.neovide then
+        vim.api.nvim_set_hl(0, 'Normal', { bg = 'NONE' })
+    end
     vim.api.nvim_set_hl(0, 'NormalFloat', { bg = BASE16_COLORS.base01 })
 end
 
