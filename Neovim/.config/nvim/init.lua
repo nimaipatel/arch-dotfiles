@@ -53,6 +53,54 @@ vim.opt.isfname:append '{,}'
 -- cringe
 vim.opt.mouse = 'a'
 
+vim.keymap.set('n', '<C-k', '<UP>', { desc = 'move up one line' })
+vim.keymap.set('n', '<C-j', '<DOWN>', { desc = 'move down one line' })
+
+vim.api.nvim_create_autocmd(
+    { 'VimResized' },
+    {
+        command = 'wincmd =',
+        desc = 'Resize panes when vim is resized',
+    }
+)
+
+vim.api.nvim_create_autocmd(
+    { 'TextYankPost' },
+    {
+        callback = function()
+            require('vim.highlight').on_yank()
+        end,
+        desc = 'Highlight text on yanking',
+    }
+)
+
+vim.api.nvim_create_autocmd(
+    { 'TermOpen', 'BufEnter', 'BufWinEnter', 'WinEnter' },
+    {
+        pattern = { 'term://*' },
+        command = 'startinsert',
+        desc = 'Start terminal mode in insert mode',
+    }
+)
+
+vim.api.nvim_create_autocmd(
+    { 'BufLeave' },
+    {
+        pattern = { 'term://*' },
+        command = 'stopinsert',
+        desc = 'leave terminal mode immediately when shell exits',
+    }
+)
+
+vim.api.nvim_create_autocmd(
+    { 'TermClose' },
+    {
+        pattern = { 'term://*' },
+        command = ':call nvim_input("<CR>")',
+        desc = 'leave terminal mode immediately when shell exits',
+    }
+)
+
 vim.cmd [[xnoremap <EXPR> v (mode() ==# 'v' ? "\<C-V>" : mode() ==# 'V' ? 'v' : 'V')]]
 
 vim.cmd [[inoremap , ,<C-g>u]]
@@ -185,6 +233,18 @@ U.refresh_base_16 = function()
     U.lualine_config()
     require('cmp.core').new()
 end
+
+vim.api.nvim_create_user_command('RefreshColors', U.refresh_base_16,
+    { desc = 'refresh generated base 16 colors' })
+
+vim.api.nvim_create_autocmd(
+    { 'Signal' },
+    {
+        pattern = 'SIGUSR1',
+        callback = U.refresh_base_16,
+        desc = 'refresh neovim colors when USR1 signal intercepted'
+    }
+)
 
 local packer = require 'packer'
 
@@ -340,84 +400,6 @@ packer.startup(function(use)
         end,
     }
 
-    -- remove
-    use {
-        'mrjones2014/legendary.nvim',
-        config = function()
-            vim.api.nvim_create_user_command('RefreshColors', U.refresh_base_16,
-                { desc = 'refresh generated base 16 colors' })
-
-            vim.keymap.set('n', '<C-k', '<UP>', { desc = 'move up one line' })
-            vim.keymap.set('n', '<C-j', '<DOWN>', { desc = 'move down one line' })
-
-            vim.keymap.set('n', '<A-j>', '<Plug>(qf_qf_next)',
-                { desc = 'Goto next quick-fix list item' })
-
-            vim.keymap.set('n', '<A-k>', '<Plug>(qf_qf_previous)',
-                { desc = 'Goto previous quick-fix list item' })
-
-            vim.keymap.set('n', '<C-j>', '<Plug>(qf_loc_next)',
-                { desc = 'Goto next location list item' })
-
-            vim.keymap.set('n', '<C-k>', '<Plug>(qf_loc_previous)',
-                { desc = 'Goto previous location list item' })
-
-            vim.api.nvim_create_autocmd(
-                { 'Signal' },
-                {
-                    pattern = 'SIGUSR1',
-                    callback = U.refresh_base_16,
-                    desc = 'refresh neovim colors when USR1 signal intercepted'
-                }
-            )
-
-            vim.api.nvim_create_autocmd(
-                { 'VimResized' },
-                {
-                    command = 'wincmd =',
-                    desc = 'Resize panes when vim is resized',
-                }
-            )
-
-            vim.api.nvim_create_autocmd(
-                { 'TextYankPost' },
-                {
-                    callback = function()
-                        require('vim.highlight').on_yank()
-                    end,
-                    desc = 'Highlight text on yanking',
-                }
-            )
-
-            vim.api.nvim_create_autocmd(
-                { 'TermOpen', 'BufEnter', 'BufWinEnter', 'WinEnter' },
-                {
-                    pattern = { 'term://*' },
-                    command = 'startinsert',
-                    desc = 'Start terminal mode in insert mode',
-                }
-            )
-
-            vim.api.nvim_create_autocmd(
-                { 'BufLeave' },
-                {
-                    pattern = { 'term://*' },
-                    command = 'stopinsert',
-                    desc = 'leave terminal mode immediately when shell exits',
-                }
-            )
-
-            vim.api.nvim_create_autocmd(
-                { 'TermClose' },
-                {
-                    pattern = { 'term://*' },
-                    command = ':call nvim_input("<CR>")',
-                    desc = 'leave terminal mode immediately when shell exits',
-                }
-            )
-        end,
-    }
-
     use {
         'folke/which-key.nvim',
         config = function()
@@ -517,7 +499,6 @@ packer.startup(function(use)
 
     use 'tpope/vim-repeat'
 
-    -- remove
     use 'tpope/vim-eunuch'
 
     use {
@@ -733,7 +714,21 @@ packer.startup(function(use)
         end,
     }
 
-    use { 'romainl/vim-qf' }
+    use { 'romainl/vim-qf',
+        config = function()
+            vim.keymap.set('n', '<A-j>', '<Plug>(qf_qf_next)',
+                { desc = 'Goto next quick-fix list item' })
+
+            vim.keymap.set('n', '<A-k>', '<Plug>(qf_qf_previous)',
+                { desc = 'Goto previous quick-fix list item' })
+
+            vim.keymap.set('n', '<C-j>', '<Plug>(qf_loc_next)',
+                { desc = 'Goto next location list item' })
+
+            vim.keymap.set('n', '<C-k>', '<Plug>(qf_loc_previous)',
+                { desc = 'Goto previous location list item' })
+
+        end }
 
     use {
         'https://gitlab.com/yorickpeterse/nvim-pqf',
@@ -992,7 +987,6 @@ packer.startup(function(use)
         end,
     }
 
-    -- remove
     use {
         'onsails/diaglist.nvim',
         config = function()
