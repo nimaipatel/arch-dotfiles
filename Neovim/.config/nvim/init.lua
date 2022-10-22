@@ -524,7 +524,7 @@ packer.startup(function(use)
                     desc = 'Toggle diff view'
                 }
             )
-            vim.keymap.set('n', '<leader>gd', ':DiffviewToggle<CR>', {desc = 'toggle diff view'})
+            vim.keymap.set('n', '<leader>gd', ':DiffviewToggle<CR>', { desc = 'toggle diff view' })
         end,
     }
 
@@ -535,6 +535,7 @@ packer.startup(function(use)
             local gitsigns = require 'gitsigns'
             local actions = require 'gitsigns.actions'
             local wk = require 'which-key'
+
             gitsigns.setup {
                 signs = {
                     change = { text = '│' },
@@ -543,54 +544,32 @@ packer.startup(function(use)
                     changedelete = { text = '│' },
                 },
             }
-            wk.register({
-                name = 'hunks',
-                s = {
-                    function()
-                        gitsigns.stage_hunk { vim.fn.line '.', vim.fn.line 'v' }
-                    end,
-                    'Stage hunk',
-                },
-                r = {
-                    function()
-                        gitsigns.reset_hunk { vim.fn.line '.', vim.fn.line 'v' }
-                    end,
-                    'Reset hunk',
-                },
-            }, {
-                mode = 'v',
-                prefix = '<leader>h',
-            })
-            wk.register({
-                h = { actions.prev_hunk, 'Previous hunk' },
-            }, {
-                prefix = '[',
-            })
-            wk.register({
-                h = { actions.next_hunk, 'Previous hunk' },
-            }, {
-                prefix = ']',
-            })
-            wk.register({
-                name = 'hunks',
-                s = { gitsigns.stage_hunk, 'Stage hunk' },
-                u = { gitsigns.undo_stage_hunk, 'Undo stage hunk' },
-                r = { gitsigns.reset_hunk, 'Reset hunk' },
-                R = { gitsigns.reset_buffer, 'Reset buffer' },
-                o = { gitsigns.preview_hunk, 'Preview hunk' },
-                b = {
-                    function()
-                        gitsigns.blame_line(true)
-                    end,
-                    'Blame line',
-                },
-                S = { gitsigns.stage_buffer, 'Stage buffer' },
-                U = { gitsigns.reset_buffer_index, 'Reset buffer index' },
-                q = { ':Gitsigns setqflist<CR>', 'Quickfix list' },
-                l = { ':Gitsigns setloclist<CR>', 'Location list' },
-            }, {
-                prefix = '<leader>h',
-            })
+
+            wk.register({ ['<leader>'] = { g = { name = 'hunks' } } }, { mode = 'v' })
+            wk.register({ ['<leader>'] = { g = { name = 'hunks' } } }, { mode = 'n' })
+
+            vim.keymap.set('v', '<leader>hs', function()
+                gitsigns.stage_hunk { vim.fn.line '.', vim.fn.line 'v' }
+            end, { desc = 'stage hunk' })
+            vim.keymap.set('v', '<leader>hr', function()
+                gitsigns.reset_hunk { vim.fn.line '.', vim.fn.line 'v' }
+            end, { desc = 'reset hunk' })
+
+            vim.keymap.set('n', ']h', actions.next_hunk, 'next hunk')
+            vim.keymap.set('n', '[h', actions.prev_hunk, 'previous hunk')
+
+            vim.keymap.set('n', '<leader>hs', gitsigns.stage_hunk, { desc = 'stage hunk' })
+            vim.keymap.set('n', '<leader>hS', gitsigns.stage_buffer, { desc = 'stage buffer' })
+
+            vim.keymap.set('n', '<leader>hr', gitsigns.reset_hunk, { desc = 'reset hunk' })
+            vim.keymap.set('n', '<leader>hR', gitsigns.reset_buffer, { desc = 'reset buffer' })
+
+            vim.keymap.set('n', '<leader>ho', gitsigns.preview_hunk, { desc = 'preview buffer' })
+
+            vim.keymap.set('n', '<leader>hu', gitsigns.undo_stage_hunk, { desc = 'undo stage hunk' })
+
+            vim.keymap.set('n', '<leader>hq',  ':Gitsigns setqflist<CR>', { desc = 'quickfix list' })
+            vim.keymap.set('n', '<leader>hl',  ':Gitsigns setloclist<CR>', { desc = 'location list' })
         end,
     }
 
