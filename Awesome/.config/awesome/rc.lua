@@ -431,7 +431,7 @@ local globalkeys = gears.table.join(
 
     key({ modkey }, 'b', function()
         for _, c in ipairs(client.get()) do
-            if c.class:match '^Brave%-browser' then
+            if c.class and c.class:match '^Brave%-browser' then
                 c:jump_to()
                 return
             end
@@ -540,7 +540,7 @@ local globalkeys = gears.table.join(
 
     key({ modkey }, 'g', function()
         for _, c in ipairs(client.get()) do
-            if c.class:match 'Google Keep' then
+            if c.class and c.class:match 'Google Keep' then
                 c:jump_to()
                 return
             end
@@ -556,7 +556,7 @@ local globalkeys = gears.table.join(
 
     key({ modkey }, 's', function()
         for _, c in ipairs(client.get()) do
-            if c.class:match 'Spotify' then
+            if c.class and c.class:match 'Spotify' then
                 c:jump_to()
                 return
             end
