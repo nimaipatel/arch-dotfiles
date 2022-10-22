@@ -608,6 +608,13 @@ packer.startup(function(use)
     }
 
     use {
+        'Pocco81/auto-save.nvim',
+        config = function()
+            require('auto-save').setup({})
+        end
+    }
+
+    use {
         'sindrets/diffview.nvim',
         requires = 'nvim-lua/plenary.nvim',
         config = function()
