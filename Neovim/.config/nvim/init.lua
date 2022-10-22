@@ -510,7 +510,6 @@ packer.startup(function(use)
         requires = 'nvim-lua/plenary.nvim',
         config = function()
             vim.opt.fillchars:append 'diff:╱'
-
             vim.api.nvim_create_user_command(
                 'DiffviewToggle',
                 function()
@@ -525,13 +524,7 @@ packer.startup(function(use)
                     desc = 'Toggle diff view'
                 }
             )
-
-            require('which-key').register({
-                d = { ':DiffviewToggle<CR>', 'toggle diff view' },
-            }, {
-                prefix = '<leader>g',
-                silent = false,
-            })
+            vim.keymap.set('n', '<leader>gd', ':DiffviewToggle<CR>', {desc = 'toggle diff view'})
         end,
     }
 
