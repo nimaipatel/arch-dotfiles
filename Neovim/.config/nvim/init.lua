@@ -448,7 +448,7 @@ packer.startup(function(use)
                     'Re-compile neovim config',
                 },
             }, {
-                prefix = '<leader>c',
+                prefix = '<leader>z',
             })
 
             wk.register({
@@ -560,8 +560,8 @@ packer.startup(function(use)
                 gitsigns.reset_hunk { vim.fn.line '.', vim.fn.line 'v' }
             end, { desc = 'reset hunk' })
 
-            vim.keymap.set('n', ']h', actions.next_hunk, 'next hunk')
-            vim.keymap.set('n', '[h', actions.prev_hunk, 'previous hunk')
+            vim.keymap.set('n', ']h', actions.next_hunk, { desc = 'next hunk' })
+            vim.keymap.set('n', '[h', actions.prev_hunk, { desc = 'previous hunk' })
 
             vim.keymap.set('n', '<leader>hs', gitsigns.stage_hunk, { desc = 'stage hunk' })
             vim.keymap.set('n', '<leader>hS', gitsigns.stage_buffer, { desc = 'stage buffer' })
@@ -573,8 +573,8 @@ packer.startup(function(use)
 
             vim.keymap.set('n', '<leader>hu', gitsigns.undo_stage_hunk, { desc = 'undo stage hunk' })
 
-            vim.keymap.set('n', '<leader>hq',  ':Gitsigns setqflist<CR>', { desc = 'quickfix list' })
-            vim.keymap.set('n', '<leader>hl',  ':Gitsigns setloclist<CR>', { desc = 'location list' })
+            vim.keymap.set('n', '<leader>hq', ':Gitsigns setqflist<CR>', { desc = 'quickfix list' })
+            vim.keymap.set('n', '<leader>hl', ':Gitsigns setloclist<CR>', { desc = 'location list' })
         end,
     }
 
