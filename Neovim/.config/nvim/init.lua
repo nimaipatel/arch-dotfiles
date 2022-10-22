@@ -412,12 +412,6 @@ packer.startup(function(use)
             vim.opt.timeoutlen = 300
             local wk = require 'which-key'
             wk.setup {
-                ignore_missing = true,
-                popup_mappings = {
-                    scroll_down = 'n',
-                    scroll_up = 'p',
-                },
-
                 plugins = {
                     presets = {
                         operators = false,
@@ -494,25 +488,21 @@ packer.startup(function(use)
     use 'tpope/vim-eunuch'
 
     use {
-        'tpope/vim-fugitive',
-        config = function()
-            require('which-key').register({
-                name = 'git',
-                g = { ':Git ', 'prompt' },
-                c = { ':Git commit ', 'Commit' },
-                s = { ':Git status<CR>', 'Commit' },
-            }, {
-                prefix = '<leader>g',
-                silent = false,
-            })
-        end,
-    }
-
-    use {
         'Pocco81/auto-save.nvim',
         config = function()
             require('auto-save').setup({})
         end
+    }
+
+    use {
+        'tpope/vim-fugitive',
+        config = function()
+            local wk = require('which-key')
+            wk.register({ ['<leader>'] = { g = { name = 'git' } } })
+            vim.keymap.set('n', '<leader>gg', ':Git ', { desc = 'prompt' })
+            vim.keymap.set('n', '<leader>gc', ':Git commit', { desc = 'commit' })
+            vim.keymap.set('n', '<leader>gs', ':Git status<CR>', { desc = 'status' })
+        end,
     }
 
     use {
@@ -525,7 +515,6 @@ packer.startup(function(use)
                 'DiffviewToggle',
                 function()
                     local view = require('diffview.lib').get_current_view()
-
                     if view then
                         vim.cmd 'DiffviewClose'
                     else
