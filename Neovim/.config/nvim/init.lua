@@ -334,12 +334,12 @@ packer.startup(function(use)
                     augend.date.alias['%d/%m/%Y'],
                 },
             }
-            vim.api.nvim_set_keymap('n', '<C-a>', require('dial.map').inc_normal(), { noremap = true })
-            vim.api.nvim_set_keymap('n', '<C-x>', require('dial.map').dec_normal(), { noremap = true })
-            vim.api.nvim_set_keymap('v', '<C-a>', require('dial.map').inc_visual(), { noremap = true })
-            vim.api.nvim_set_keymap('v', '<C-x>', require('dial.map').dec_visual(), { noremap = true })
-            vim.api.nvim_set_keymap('v', 'g<C-a>', require('dial.map').inc_gvisual(), { noremap = true })
-            vim.api.nvim_set_keymap('v', 'g<C-x>', require('dial.map').dec_gvisual(), { noremap = true })
+            vim.keymap.set('n', '<C-a>', require('dial.map').inc_normal())
+            vim.keymap.set('n', '<C-x>', require('dial.map').dec_normal())
+            vim.keymap.set('v', '<C-a>', require('dial.map').inc_visual())
+            vim.keymap.set('v', '<C-x>', require('dial.map').dec_visual())
+            vim.keymap.set('v', 'g<C-a>', require('dial.map').inc_gvisual())
+            vim.keymap.set('v', 'g<C-x>', require('dial.map').dec_gvisual())
         end,
     }
 
@@ -355,35 +355,20 @@ packer.startup(function(use)
                 description = 'refresh generated base 16 colors',
             }
 
-            vim.api.nvim_set_keymap('n', '<C-k', '<UP>', { desc = 'move up one line' })
-            vim.api.nvim_set_keymap('n', '<C-j', '<DOWN>', { desc = 'move down one line' })
+            vim.keymap.set('n', '<C-k', '<UP>', { desc = 'move up one line' })
+            vim.keymap.set('n', '<C-j', '<DOWN>', { desc = 'move down one line' })
 
-            require('legendary').bind_keymaps {
-                {
-                    '<A-j>',
-                    '<Plug>(qf_qf_next)',
-                    description = 'Goto next quick-fix list item',
-                    mode = { 'n' },
-                },
-                {
-                    '<A-k>',
-                    '<Plug>(qf_qf_previous)',
-                    description = 'Goto previous quick-fix list item',
-                    mode = { 'n' },
-                },
-                {
-                    '<C-j>',
-                    '<Plug>(qf_loc_next)',
-                    description = 'Goto next location list item',
-                    mode = { 'n' },
-                },
-                {
-                    '<C-k>',
-                    '<Plug>(qf_loc_previous)',
-                    description = 'Goto previous location list item',
-                    mode = { 'n' },
-                },
-            }
+            vim.keymap.set('n', '<A-j>', '<Plug>(qf_qf_next)',
+                { desc = 'Goto next quick-fix list item' })
+
+            vim.keymap.set('n', '<A-k>', '<Plug>(qf_qf_previous)',
+                { desc = 'Goto previous quick-fix list item' })
+
+            vim.keymap.set('n', '<C-j>', '<Plug>(qf_loc_next)',
+                { desc = 'Goto next location list item' })
+
+            vim.keymap.set('n', '<C-k>', '<Plug>(qf_loc_previous)',
+                { desc = 'Goto previous location list item' })
 
             require('legendary').bind_autocmds {
                 name = 'ReloadNvimOnSig',
@@ -449,20 +434,18 @@ packer.startup(function(use)
         'folke/which-key.nvim',
         config = function()
             -- no op for <C-z>
-            vim.api.nvim_set_keymap('n', '<C-z>', '<nop>', { noremap = true, silent = true })
+            vim.keymap.set('n', '<C-z>', '<nop>')
 
             -- when jumping to bottom, center the page
-            vim.api.nvim_set_keymap('n', 'G', 'Gzz', { noremap = true, silent = true })
+            vim.keymap.set('n', 'G', 'Gzz')
 
             -- easier indentation control in visual mode
-            vim.api.nvim_set_keymap('v', '>', '>gv', { noremap = true, silent = true })
-            vim.api.nvim_set_keymap('v', '<', '<gv', { noremap = true, silent = true })
+            vim.keymap.set('v', '>', '>gv')
+            vim.keymap.set('v', '<', '<gv')
 
             -- move lines up and down in visual mode
-            vim.api.nvim_set_keymap('v', 'J', ":m '>+1<CR>gv=gv", { noremap = true, silent = true })
-            vim.api.nvim_set_keymap('v', 'K', ":m '<-2<CR>gv=gv", { noremap = true, silent = true })
-
-            vim.api.nvim_set_keymap('n', '<C-s>', ':wa<cr>', { noremap = true, silent = true })
+            vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv")
+            vim.keymap.set('v', 'K', ":m '<-2<CR>gv=gv")
 
             vim.opt.timeoutlen = 300
             local wk = require 'which-key'
@@ -1025,16 +1008,15 @@ packer.startup(function(use)
         config = function()
             local diaglist = require 'diaglist'
             diaglist.init {}
-            require('legendary').bind_keymaps {
-                {
-                    '<C-h>',
-                    function()
-                        vim.diagnostic.open_float(nil, { focus = false, scope = "cursor" })
-                    end,
-                    description = 'open cursor diagnostics in floating window',
-                    mode = { 'n' },
-                },
-            }
+            vim.keymap.set(
+                'n',
+                '<C-h>',
+                function()
+                    vim.diagnostic.open_float(nil, { focus = false, scope = "cursor" })
+                end,
+                { desc = 'open cursor diagnostics in floating window' }
+            )
+
             require('which-key').register({
                 d = { vim.diagnostic.goto_prev, 'Previous diagnostic' },
             }, {
@@ -1252,8 +1234,8 @@ packer.startup(function(use)
                 mode = 'i',
             })
 
-            vim.api.nvim_set_keymap('c', '<C-j>', '<down>', { noremap = true })
-            vim.api.nvim_set_keymap('c', '<C-k>', '<up>', { noremap = true })
+            vim.keymap.set('c', '<C-j>', '<down>')
+            vim.keymap.set('c', '<C-k>', '<up>')
 
             for _, cmd_type in ipairs { ':', '/', '?', '@' } do
                 cmp.setup.cmdline(cmd_type, {
@@ -1423,18 +1405,8 @@ packer.startup(function(use)
                 prefix = ']',
             })
 
-            require('legendary').bind_keymaps {
-                {
-                    '<C-n>',
-                    '<Plug>(cokeline-focus-next)',
-                    description = 'Next buffer',
-                },
-                {
-                    '<C-p>',
-                    '<Plug>(cokeline-focus-prev)',
-                    description = 'Previous buffer',
-                },
-            }
+            vim.keymap.set('n', '<C-n>', '<Plug>(cokeline-focus-next)', { desc = 'Next buffer' })
+            vim.keymap.set('n', '<C-p>', '<Plug>(cokeline-focus-prev)', { desc = 'Previous buffer' })
 
             wk.register({
                 q = { ':Bdelete<CR>', 'Close buffer' },
