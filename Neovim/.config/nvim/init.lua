@@ -262,15 +262,7 @@ packer.startup(function(use)
         'stevearc/gkeep.nvim',
         run = ':UpdateRemotePlugins',
         config = function()
-            require('which-key').register({
-                name = 'google keep',
-                k = { ':GkeepToggle<cr>', 'toggle google keep' },
-                n = { ':GkeepNew<cr>', 'new google keep' },
-                r = { ':GkeepRefresh<cr>', 'refresh google keep' },
-                c = { ':GkeepCheck<cr>', 'toggle checkbox' },
-            }, {
-                prefix = '<leader>k',
-            })
+            vim.keymap.set('n', '<leader>k', ':GkeepToggle<CR>', { desc = 'toggle google keep' })
         end,
     }
 
