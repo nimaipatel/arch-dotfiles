@@ -747,50 +747,30 @@ packer.startup(function(use)
             }
 
             local on_attach = function(_, buffer)
-                require('which-key').register({
-                    gd = { vim.lsp.buf.definition, 'Go to definition' },
-                }, { buffer = buffer })
-
-                require('which-key').register({
-                    ['<C-s>'] = { vim.lsp.buf.signature_help, 'Signature help' },
-                }, { buffer = buffer, mode = 'i' })
-
-                require('which-key').register({
-                    name = 'LSP',
-                    f = {
-                        function()
-                            vim.lsp.buf.format {
-                                async = true,
-                                filter = function(formatter)
-                                    local disabled_formatters = { 'tsserver', 'html', 'cssls' }
-                                    for _, disabled in ipairs(disabled_formatters) do
-                                        if formatter.name == disabled then
-                                            return false
-                                        end
-                                    end
-                                    return true
-                                end,
-                            }
+                vim.keymap.set('n', 'gq', function()
+                    vim.lsp.buf.format {
+                        async = true,
+                        filter = function(formatter)
+                            local disabled_formatters = { 'tsserver', 'html', 'cssls' }
+                            for _, disabled in ipairs(disabled_formatters) do
+                                if formatter.name == disabled then
+                                    return false
+                                end
+                            end
+                            return true
                         end,
-                        'Format',
-                    },
+                    }
+                end, { buffer = buffer, desc = 'format buffer' })
 
-                    h = { vim.lsp.buf.hover, 'Hover' },
-                    k = { vim.lsp.buf.rename, 'Rename' },
-                    l = { vim.lsp.buf.definition, 'Definitions' },
-                    t = { vim.lsp.buf.type_definition, 'Type definitions' },
-                    r = { vim.lsp.buf.references, 'References' },
-                    i = { vim.lsp.buf.implementation, 'Implementations' },
-                    c = { vim.lsp.buf.code_action, 'Code actions' },
-                    s = {
-                        name = 'symbols',
-                        d = { vim.lsp.buf.document_symbol, 'Document' },
-                        w = { vim.lsp.buf.workspace_symbol, 'Workspace' },
-                    },
-                }, {
-                    prefix = '<leader>l',
-                    buffer = buffer,
-                })
+                vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { buffer = buffer, desc = 'go to definition' })
+                vim.keymap.set('n', 'gr', vim.lsp.buf.references, {buffer = buffer, desc = 'go to references'})
+                vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, {buffer = buffer, desc = 'go to implementation'})
+                vim.keymap.set('n', 'gy', vim.lsp.buf.type_definition, {buffer = buffer, desc = 'go to type definition'})
+                vim.keymap.set('n', '<leader>r', vim.lsp.buf.rename, {buffer = buffer, desc = 'rename'})
+                vim.keymap.set('n', '<leader>c', vim.lsp.buf.code_action, {buffer = buffer, desc = 'code actions'})
+
+                vim.keymap.set('i', '<C-s>', vim.lsp.buf.signature_help, { buffer = buffer, desc = 'signature help' })
+
             end
 
             for type, _ in pairs(U.SEVERITY_SIGNS) do
