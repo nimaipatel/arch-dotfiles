@@ -723,6 +723,7 @@ packer.startup(function(use)
             require('nvim-tree').setup {}
             require('legendary').setup()
             require('which-key').register({
+                name = 'nvim tree',
                 e = { ':NvimTreeToggle<CR>', 'Toggle file explorer' },
             }, {
                 prefix = '<leader>e',
