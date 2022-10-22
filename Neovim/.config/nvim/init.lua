@@ -745,7 +745,8 @@ packer.startup(function(use)
                 vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { buffer = buffer, desc = 'go to definition' })
                 vim.keymap.set('n', 'gr', vim.lsp.buf.references, { buffer = buffer, desc = 'go to references' })
                 vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, { buffer = buffer, desc = 'go to implementation' })
-                vim.keymap.set('n', 'gy', vim.lsp.buf.type_definition, { buffer = buffer, desc = 'go to type definition' })
+                vim.keymap.set('n', 'gy', vim.lsp.buf.type_definition,
+                    { buffer = buffer, desc = 'go to type definition' })
                 vim.keymap.set('n', '<leader>r', vim.lsp.buf.rename, { buffer = buffer, desc = 'rename' })
                 vim.keymap.set('n', '<leader>c', vim.lsp.buf.code_action, { buffer = buffer, desc = 'code actions' })
 
@@ -906,7 +907,8 @@ packer.startup(function(use)
             )
             vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'next diagnostic' })
             vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'previous diagnostic' })
-            vim.keymap.set('n', '<leader>dq', diaglist.open_all_diagnostics, { desc = 'open all diagnostics in quickfix' })
+            vim.keymap.set('n', '<leader>dq', diaglist.open_all_diagnostics,
+                { desc = 'open all diagnostics in quickfix' })
         end,
     }
 
@@ -1059,52 +1061,33 @@ packer.startup(function(use)
                 },
             }
 
-            local wk = require 'which-key'
+            vim.keymap.set('i', '<C-n>', function()
+                cmp.complete { config = { sources = { { name = 'buffer' } } } }
+            end, { desc = 'buffer completion' })
 
-            wk.register({
-                ['<C-n>'] = {
-                    function()
-                        cmp.complete { config = { sources = { { name = 'buffer' } } } }
-                    end,
-                    'Buffer completion',
-                },
-                ['<C-p>'] = {
-                    function()
-                        cmp.complete { config = { sources = { { name = 'buffer' } } } }
-                    end,
-                    'Buffer completion',
-                },
-                ['<C-x><C-f>'] = {
-                    function()
-                        cmp.complete { config = { sources = { { name = 'path' } } } }
-                    end,
-                    'Path completion',
-                },
-                ['<C-x><C-s>'] = {
-                    function()
-                        cmp.complete { config = { sources = { { name = 'luasnip' } } } }
-                    end,
-                    'Snippets',
-                },
+            vim.keymap.set('i', '<C-p>', function()
+                cmp.complete { config = { sources = { { name = 'buffer' } } } }
+            end, { desc = 'buffer completion' })
 
-                ['<C-SPACE>'] = {
-                    function()
-                        cmp.complete {
-                            config = {
-                                sources = {
-                                    { name = 'nvim_lua' },
-                                    { name = 'nvim_lsp' },
-                                    { name = 'calc' },
-                                },
-                            },
-                        }
-                    end,
-                    'Symbol completion',
-                },
-            }, {
-                prefix = '',
-                mode = 'i',
-            })
+            vim.keymap.set('i', '<C-x><C-f>', function()
+                cmp.complete { config = { sources = { { name = 'path' } } } }
+            end, { desc = 'path completion' })
+
+            vim.keymap.set('i', '<C-x><C-s>', function()
+                cmp.complete { config = { sources = { { name = 'luasnip' } } } }
+            end, { desc = 'snippets' })
+
+            vim.keymap.set('i', '<C-SPACE>', function()
+                cmp.complete {
+                    config = {
+                        sources = {
+                            { name = 'nvim_lua' },
+                            { name = 'nvim_lsp' },
+                            { name = 'calc' },
+                        },
+                    },
+                }
+            end, { desc = 'snippets' })
 
             vim.keymap.set('c', '<C-j>', '<down>')
             vim.keymap.set('c', '<C-k>', '<up>')
