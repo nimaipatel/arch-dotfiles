@@ -355,20 +355,8 @@ packer.startup(function(use)
                 description = 'refresh generated base 16 colors',
             }
 
-            require('legendary').bind_keymaps {
-                {
-                    '<C-k>',
-                    '<UP>',
-                    description = 'move up one line',
-                    mode = { 'i' },
-                },
-                {
-                    '<C-j>',
-                    '<down>',
-                    description = 'move down one line',
-                    mode = { 'i' },
-                },
-            }
+            vim.api.nvim_set_keymap('n', '<C-k', '<UP>', { desc = 'move up one line' })
+            vim.api.nvim_set_keymap('n', '<C-j', '<DOWN>', { desc = 'move down one line' })
 
             require('legendary').bind_keymaps {
                 {
