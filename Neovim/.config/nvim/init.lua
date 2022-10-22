@@ -1365,48 +1365,11 @@ packer.startup(function(use)
     use {
         'famiu/bufdelete.nvim',
         config = function()
-            local t = function(s)
-                return vim.api.nvim_replace_termcodes(s, true, true, true)
-            end
-
             local telescope = require 'telescope.builtin'
-            local wk = require 'which-key'
-            wk.register({
-                b = { telescope.buffers, 'Switch buffers' },
-            }, {
-                prefix = '<leader>b',
-            })
-
-            wk.register({
-                b = { '<Plug>(cokeline-focus-prev)', 'Previous buffer' },
-            }, {
-                prefix = '[',
-            })
-            wk.register({
-                b = { '<Plug>(cokeline-focus-next)', 'Next buffer' },
-            }, {
-                prefix = ']',
-            })
-
+            vim.keymap.set('n', '<leader>b', telescope.buffers, { desc = 'find buffer' })
             vim.keymap.set('n', '<C-n>', '<Plug>(cokeline-focus-next)', { desc = 'Next buffer' })
             vim.keymap.set('n', '<C-p>', '<Plug>(cokeline-focus-prev)', { desc = 'Previous buffer' })
-
-            wk.register({
-                q = { ':Bdelete<CR>', 'Close buffer' },
-            }, { prefix = '<leader>' })
-
-            wk.register({
-                name = 'buffers',
-                d = { ':Bdelete<CR>', 'Close buffer' },
-                l = { '<Plug>(cokeline-switch-next)', 'Switch with next buffer' },
-                h = { '<Plug>(cokeline-switch-prev)', 'Switch with previous buffer' },
-            }, { prefix = '<leader>b' })
-
-            wk.register({
-                name = 'buffers',
-                ['<C-n>'] = { t [[<C-\><C-n>:bnext<CR>]], 'Next buffer' },
-                ['<C-p>'] = { t [[<C-\><C-n>:bprevious<CR>]], 'Previous buffer' },
-            }, { mode = 't', prefix = '<C-b>' })
+            vim.keymap.set('n', '<leader>q', ':Bdelete<CR>', { desc = 'close buffer' })
         end,
     }
 
