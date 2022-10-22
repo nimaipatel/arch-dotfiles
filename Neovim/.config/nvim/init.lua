@@ -205,7 +205,6 @@ packer.startup(function(use)
         'stevearc/gkeep.nvim',
         run = ':UpdateRemotePlugins',
         config = function()
-            require('legendary').setup()
             require('which-key').register({
                 name = 'google keep',
                 k = { ':GkeepToggle<cr>', 'toggle google keep' },
@@ -526,7 +525,6 @@ packer.startup(function(use)
                 return vim.api.nvim_replace_termcodes(s, true, true, true)
             end
 
-            require('legendary').setup()
             wk.register({
                 name = 'misc',
                 q = { '<Plug>(qf_qf_toggle)', 'toggle quickfix' },
@@ -548,7 +546,6 @@ packer.startup(function(use)
                 prefix = '<leader>c',
             })
 
-            require('legendary').setup()
             wk.register({
                 ['H'] = { t [[<C-\><C-n><C-w>Ha]], 'Move window to left' },
                 ['J'] = { t [[<C-\><C-n><C-w>Ja]], 'Move window down' },
@@ -594,7 +591,6 @@ packer.startup(function(use)
     use {
         'tpope/vim-fugitive',
         config = function()
-            require('legendary').setup()
             require('which-key').register({
                 name = 'git',
                 g = { ':Git ', 'prompt' },
@@ -634,7 +630,6 @@ packer.startup(function(use)
                 description = 'Toggle diff view',
             }
 
-            require('legendary').setup()
             require('which-key').register({
                 d = { ':DiffviewToggle<CR>', 'toggle diff view' },
             }, {
@@ -659,7 +654,6 @@ packer.startup(function(use)
                     changedelete = { text = '│' },
                 },
             }
-            require('legendary').setup()
             wk.register({
                 name = 'hunks',
                 s = {
@@ -678,7 +672,6 @@ packer.startup(function(use)
                 mode = 'v',
                 prefix = '<leader>h',
             })
-            require('legendary').setup()
             wk.register({
                 h = { actions.prev_hunk, 'Previous hunk' },
             }, {
@@ -737,7 +730,6 @@ packer.startup(function(use)
         },
         config = function()
             require('nvim-tree').setup {}
-            require('legendary').setup()
             require('which-key').register({
                 name = 'nvim tree',
                 e = { ':NvimTreeToggle<CR>', 'Toggle file explorer' },
@@ -828,7 +820,6 @@ packer.startup(function(use)
         opt = true,
         cmd = { 'DocsViewToggle' },
         setup = function()
-            require('legendary').setup()
             require('which-key').register({
                 K = { ':DocsViewToggle<CR>', 'Docs' },
             }, {
@@ -883,17 +874,14 @@ packer.startup(function(use)
             }
 
             local on_attach = function(_, buffer)
-                require('legendary').setup()
                 require('which-key').register({
                     gd = { vim.lsp.buf.definition, 'Go to definition' },
                 }, { buffer = buffer })
 
-                require('legendary').setup()
                 require('which-key').register({
                     ['<C-s>'] = { vim.lsp.buf.signature_help, 'Signature help' },
                 }, { buffer = buffer, mode = 'i' })
 
-                require('legendary').setup()
                 require('which-key').register({
                     name = 'LSP',
                     f = {
@@ -1076,7 +1064,6 @@ packer.startup(function(use)
         config = function()
             local diaglist = require 'diaglist'
             diaglist.init {}
-            require('legendary').setup()
             require('legendary').bind_keymaps {
                 {
                     '<C-h>',
@@ -1259,7 +1246,6 @@ packer.startup(function(use)
 
             local wk = require 'which-key'
 
-            require('legendary').setup()
             wk.register({
                 ['<C-n>'] = {
                     function()
@@ -1459,14 +1445,12 @@ packer.startup(function(use)
 
             local telescope = require 'telescope.builtin'
             local wk = require 'which-key'
-            require('legendary').setup()
             wk.register({
                 b = { telescope.buffers, 'Switch buffers' },
             }, {
                 prefix = '<leader>b',
             })
 
-            require('legendary').setup()
             wk.register({
                 b = { '<Plug>(cokeline-focus-prev)', 'Previous buffer' },
             }, {
@@ -1491,7 +1475,6 @@ packer.startup(function(use)
                 },
             }
 
-            require('legendary').setup()
             wk.register({
                 q = { ':Bdelete<CR>', 'Close buffer' },
             }, { prefix = '<leader>' })
@@ -1503,7 +1486,6 @@ packer.startup(function(use)
                 h = { '<Plug>(cokeline-switch-prev)', 'Switch with previous buffer' },
             }, { prefix = '<leader>b' })
 
-            require('legendary').setup()
             wk.register({
                 name = 'buffers',
                 ['<C-n>'] = { t [[<C-\><C-n>:bnext<CR>]], 'Next buffer' },
@@ -1569,7 +1551,6 @@ packer.startup(function(use)
                 },
             }
             telescope.load_extension 'fzf'
-            require('legendary').setup()
             require('which-key').register({
                 name = 'find files',
                 f = {
@@ -1611,14 +1592,12 @@ packer.startup(function(use)
                 prefix = '<leader>',
             })
 
-            require('legendary').setup()
             require('which-key').register({
                 ['='] = { builtin.spell_suggest, 'Spelling suggestions' },
             }, {
                 prefix = 'z',
             })
 
-            require('legendary').setup()
             require('which-key').register({
                 name = 'string match',
                 t = {
