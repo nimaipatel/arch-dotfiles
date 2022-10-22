@@ -5,9 +5,6 @@ if vim.g.neovide then
     vim.g.neovide_cursor_vfx_mode = "ripple"
 end
 
--- check if we are in GNU/Linux
-local is_gnu_linux = (not not vim.fn.system('uname'):match 'Linux')
-
 vim.g.python3_host_prog = '/usr/bin/python'
 
 -- space bar is leader key
@@ -246,7 +243,7 @@ packer.startup(function(use)
 
     use {
         'rcarriga/nvim-notify',
-        disable = is_gnu_linux,
+        disable = (jit.os == 'Linux'),
         config = function()
             local notify = require 'notify'
             vim.notify = notify
