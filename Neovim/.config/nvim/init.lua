@@ -426,30 +426,14 @@ packer.startup(function(use)
                 },
             }
 
-            local t = function(s)
-                return vim.api.nvim_replace_termcodes(s, true, true, true)
-            end
+            vim.keymap.set('n', '<leader>q', '<Plug>(qf_qf_toggle)', { desc = 'toggle quickfix list' })
+            vim.keymap.set('n', '<leader>l', '<Plug>(qf_loc_toggle)', { desc = 'toggle location list' })
 
-            wk.register({
-                name = 'misc',
-                q = { '<Plug>(qf_qf_toggle)', 'toggle quickfix' },
-                l = { '<Plug>(qf_loc_toggle)', 'toggle location' },
-                w = { ':set list!<CR>', 'Toggle whitespace' },
-                r = { ':set wrap!<CR>', 'Toggle line wrapping' },
-                s = { ':set spell!<CR>', 'Toggle spell check' },
-                n = { ':set relativenumber!<CR>', 'Toggle relative line numbers' },
-                e = { t ':cd ~/.config/nvim | e init.lua <cr>', 'Edit neovim config' },
-                c = {
-                    function()
-                        vim.notify 'Re-compiling neovim config'
-                        vim.cmd [[:source ~/.config/nvim/init.lua]]
-                        vim.cmd [[:PackerCompile profile=true]]
-                    end,
-                    'Re-compile neovim config',
-                },
-            }, {
-                prefix = '<leader>z',
-            })
+            wk.register({ ['<leader>'] = { t = { name = 'toggle' } } })
+            vim.keymap.set('n', '<leader>tw', ':set list!<CR>', { desc = 'whitespace' })
+            vim.keymap.set('n', '<leader>tr', ':set wrap!<CR>', { desc = 'line wrapping' })
+            vim.keymap.set('n', '<leader>ts', ':set spell!<CR>', { desc = 'spell checking' })
+            vim.keymap.set('n', '<leader>tn', ':set relativenumber!<CR>', { desc = 'relative line numbers' })
         end,
     }
 
@@ -1241,7 +1225,7 @@ packer.startup(function(use)
             vim.keymap.set('n', '<leader>b', telescope.buffers, { desc = 'find buffer' })
             vim.keymap.set('n', '<C-n>', '<Plug>(cokeline-focus-next)', { desc = 'Next buffer' })
             vim.keymap.set('n', '<C-p>', '<Plug>(cokeline-focus-prev)', { desc = 'Previous buffer' })
-            vim.keymap.set('n', '<leader>q', ':Bdelete<CR>', { desc = 'close buffer' })
+            vim.keymap.set('n', '<leader>x', ':Bdelete<CR>', { desc = 'close buffer' })
         end,
     }
 
