@@ -763,11 +763,11 @@ packer.startup(function(use)
                 end, { buffer = buffer, desc = 'format buffer' })
 
                 vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { buffer = buffer, desc = 'go to definition' })
-                vim.keymap.set('n', 'gr', vim.lsp.buf.references, {buffer = buffer, desc = 'go to references'})
-                vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, {buffer = buffer, desc = 'go to implementation'})
-                vim.keymap.set('n', 'gy', vim.lsp.buf.type_definition, {buffer = buffer, desc = 'go to type definition'})
-                vim.keymap.set('n', '<leader>r', vim.lsp.buf.rename, {buffer = buffer, desc = 'rename'})
-                vim.keymap.set('n', '<leader>c', vim.lsp.buf.code_action, {buffer = buffer, desc = 'code actions'})
+                vim.keymap.set('n', 'gr', vim.lsp.buf.references, { buffer = buffer, desc = 'go to references' })
+                vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, { buffer = buffer, desc = 'go to implementation' })
+                vim.keymap.set('n', 'gy', vim.lsp.buf.type_definition, { buffer = buffer, desc = 'go to type definition' })
+                vim.keymap.set('n', '<leader>r', vim.lsp.buf.rename, { buffer = buffer, desc = 'rename' })
+                vim.keymap.set('n', '<leader>c', vim.lsp.buf.code_action, { buffer = buffer, desc = 'code actions' })
 
                 vim.keymap.set('i', '<C-s>', vim.lsp.buf.signature_help, { buffer = buffer, desc = 'signature help' })
 
@@ -924,24 +924,9 @@ packer.startup(function(use)
                 end,
                 { desc = 'open cursor diagnostics in floating window' }
             )
-
-            require('which-key').register({
-                d = { vim.diagnostic.goto_prev, 'Previous diagnostic' },
-            }, {
-                prefix = '[',
-            })
-            require('which-key').register({
-                d = { vim.diagnostic.goto_next, 'Next diagnostic' },
-            }, {
-                prefix = ']',
-            })
-            require('which-key').register({
-                name = 'diagnostics',
-                q = { diaglist.open_all_diagnostics, 'send all diagnostics to quickfix' },
-                l = { diaglist.open_buffer_diagnostics, 'send buffer diagnostics to quickfix' },
-            }, {
-                prefix = '<leader>d',
-            })
+            vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'next diagnostic' })
+            vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'previous diagnostic' })
+            vim.keymap.set('n', '<leader>dq', diaglist.open_all_diagnostics, { desc = 'open all diagnostics in quickfix' })
         end,
     }
 
