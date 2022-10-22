@@ -405,6 +405,11 @@ packer.startup(function(use)
             vim.keymap.set('v', '>', '>gv')
             vim.keymap.set('v', '<', '<gv')
 
+            vim.keymap.set('n', 'n', 'nzz')
+            vim.keymap.set('n', 'N', 'Nzz')
+            vim.keymap.set('n', '*', '*zz')
+            vim.keymap.set('n', '#', '#zz')
+
             -- move lines up and down in visual mode
             vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv")
             vim.keymap.set('v', 'K', ":m '<-2<CR>gv=gv")
