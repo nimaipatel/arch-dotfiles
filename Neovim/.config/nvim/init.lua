@@ -450,26 +450,6 @@ packer.startup(function(use)
             }, {
                 prefix = '<leader>z',
             })
-
-            wk.register({
-                ['H'] = { t [[<C-\><C-n><C-w>Ha]], 'Move window to left' },
-                ['J'] = { t [[<C-\><C-n><C-w>Ja]], 'Move window down' },
-                ['K'] = { t [[<C-\><C-n><C-w>Ha]], 'Move move window up' },
-                ['L'] = { t [[<C-\><C-n><C-w>Ja]], 'Move window to right' },
-
-                ['<C-h>'] = { t [[<C-\><C-n><C-w>h]], 'Go to the left window' },
-                ['<C-j>'] = { t [[<C-\><C-n><C-w>j]], 'Go to the down window' },
-                ['<C-k>'] = { t [[<C-\><C-n><C-w>k]], 'Go to the up window' },
-                ['<C-l>'] = { t [[<C-\><C-n><C-w>l]], 'Go to the right window' },
-
-                ['<C-w>'] = { t [[<C-\><C-n><C-w><C-w>]], 'Go to the last window' },
-
-                ['<C-s>'] = { t [[<C-\><C-n><C-w>s]], 'Split window' },
-                ['<C-v>'] = { t [[<C-\><C-n><C-w>v]], 'Split window vertically' },
-            }, {
-                mode = 't',
-                prefix = '<C-w>',
-            })
         end,
     }
 
