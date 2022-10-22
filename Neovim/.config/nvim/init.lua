@@ -357,33 +357,6 @@ packer.startup(function(use)
 
             require('legendary').bind_keymaps {
                 {
-                    'c*',
-                    [[/\<<C-r>=expand('<cword>')<CR>\>\c<CR>``cgn]],
-                    description = 'change word under cursor',
-                    mode = { 'n' },
-                },
-                {
-                    'c#',
-                    [[?\<<C-r>=expand('<cword>')<CR>\>\c<CR>``cgN]],
-                    description = 'change word under cursor',
-                    mode = { 'n' },
-                },
-                {
-                    'd*',
-                    [[/\<<C-r>=expand('<cword>')<CR>\>\c<CR>``dgn]],
-                    description = 'delete word under cursor',
-                    mode = { 'n' },
-                },
-                {
-                    'd#',
-                    [[?\<<C-r>=expand('<cword>')<CR>\>\c<CR>``dgN]],
-                    description = 'change word under cursor',
-                    mode = { 'n' },
-                },
-            }
-
-            require('legendary').bind_keymaps {
-                {
                     '<C-k>',
                     '<UP>',
                     description = 'move up one line',
