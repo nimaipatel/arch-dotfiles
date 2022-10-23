@@ -1292,70 +1292,24 @@ packer.startup(function(use)
                 input = { winblend = 0 }
             }
 
-            require('which-key').register({
-                name = 'find files',
-                f = {
-                    function()
-                        builtin.find_files {
-                            hidden = true,
-                            follow = true,
-                        }
-                    end,
-                    'Find files',
-                },
-                g = { builtin.git_files, 'Git files' },
-                o = { builtin.oldfiles, 'Recent files' },
-                r = { builtin.resume, 'Resume previous' },
-            }, {
-                prefix = '<leader>f',
-            })
-            require('which-key').register({
-                ['<leader>'] = {
-                    function()
-                        builtin.find_files {
-                            hidden = true,
-                            follow = true,
-                        }
-                    end,
-                    'Find files',
-                },
-                ['/'] = {
-                    function()
-                        builtin.live_grep {
-                            additional_args = function()
-                                return { '--follow' }
-                            end,
-                        }
-                    end,
-                    'Live grep',
-                },
-            }, {
-                prefix = '<leader>',
-            })
+            vim.keymap.set('n', '<leader><leader>', function()
+                builtin.find_files {
+                    hidden = true,
+                    follow = true,
+                }
+            end, { desc = 'find files' })
 
-            require('which-key').register({
-                ['='] = { builtin.spell_suggest, 'Spelling suggestions' },
-            }, {
-                prefix = 'z',
-            })
+            vim.keymap.set('n', '<leader>o', builtin.oldfiles, { desc = 'old files' })
 
-            require('which-key').register({
-                name = 'string match',
-                t = {
-                    function()
-                        builtin.live_grep {
-                            additional_args = function()
-                                return { '--follow' }
-                            end,
-                        }
+            vim.keymap.set('n', '<leader>/', function()
+                builtin.live_grep {
+                    additional_args = function()
+                        return { '--follow' }
                     end,
-                    'Live grep',
-                },
-                c = { builtin.grep_string, 'Grep for string under cursor' },
-                s = { builtin.current_buffer_fuzzy_find, 'Buffer lines' },
-            }, {
-                prefix = '<leader>t',
-            })
+                }
+            end, { desc = 'live grep' })
+
+            vim.keymap.set('n', 'z=', builtin.spell_suggest, { desc = 'spelling suggestions' })
         end,
     }
 end)
