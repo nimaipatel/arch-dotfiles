@@ -1251,6 +1251,7 @@ packer.startup(function(use)
         'nvim-telescope/telescope.nvim',
         tag = '0.1.0',
         requires = {
+            'stevearc/dressing.nvim',
             'kyazdani42/nvim-web-devicons',
             { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' },
         },
@@ -1286,6 +1287,11 @@ packer.startup(function(use)
                 },
             }
             telescope.load_extension 'fzf'
+
+            require('dressing').setup {
+                input = { winblend = 0 }
+            }
+
             require('which-key').register({
                 name = 'find files',
                 f = {
