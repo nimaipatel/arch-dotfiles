@@ -514,8 +514,8 @@ packer.startup(function(use)
                 },
             }
 
-            wk.register({ ['<leader>'] = { g = { name = 'hunks' } } }, { mode = 'v' })
-            wk.register({ ['<leader>'] = { g = { name = 'hunks' } } }, { mode = 'n' })
+            wk.register({ ['<leader>'] = { h = { name = 'hunks' } } }, { mode = 'v' })
+            wk.register({ ['<leader>'] = { h = { name = 'hunks' } } }, { mode = 'n' })
 
             vim.keymap.set('v', '<leader>hs', function()
                 gitsigns.stage_hunk { vim.fn.line '.', vim.fn.line 'v' }
@@ -891,7 +891,7 @@ packer.startup(function(use)
             )
             vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'next diagnostic' })
             vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'previous diagnostic' })
-            vim.keymap.set('n', '<leader>dq', diaglist.open_all_diagnostics,
+            vim.keymap.set('n', '<leader>d', diaglist.open_all_diagnostics,
                 { desc = 'open all diagnostics in quickfix' })
         end,
     }
