@@ -1309,6 +1309,8 @@ packer.startup(function(use)
                 }
             end, { desc = 'live grep' })
 
+            vim.keymap.set('n', '<leader>?', builtin.keymaps, { desc = 'search keymaps' })
+
             vim.keymap.set('n', 'z=', builtin.spell_suggest, { desc = 'spelling suggestions' })
         end,
     }
