@@ -1299,7 +1299,7 @@ packer.startup(function(use)
                 }
             end, { desc = 'find files' })
 
-            vim.keymap.set('n', '<leader>o', builtin.oldfiles, { desc = 'old files' })
+            vim.keymap.set('n', '<leader>o', builtin.oldfiles, { desc = 'recent files' })
 
             vim.keymap.set('n', '<leader>/', function()
                 builtin.live_grep {
