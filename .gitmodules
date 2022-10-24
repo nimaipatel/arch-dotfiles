@@ -13,3 +13,6 @@
 [submodule "slock"]
 	path = Slock
 	url = gll:nimai/slock
+[submodule "dmenu-minimal"]
+	path = dmenu-minimal
+	url = gll:nimai/dmenu
