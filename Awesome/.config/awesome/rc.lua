@@ -424,10 +424,17 @@ local globalkeys = gears.table.join(
     end),
 
     key({ modkey }, 'v', function()
-        awful.spawn('pavucontrol', {
+        for _, c in ipairs(client.get()) do
+            if c.class and c.class:match 'Pulsemixer' then
+                c:jump_to()
+                return
+            end
+        end
+        awful.spawn([[kitty --single-instance --class 'Pulsemixer' -e pulsemixer]], {
             tag = TAGS[4],
         })
-    end),
+    end, { description = 'toggle pulsemixer window', group = 'launcher' }),
+
 
     key({ modkey }, 'b', function()
         for _, c in ipairs(client.get()) do
