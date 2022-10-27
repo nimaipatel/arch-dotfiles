@@ -3,6 +3,21 @@ if vim.g.neovide then
     vim.g.neovide_cursor_animation_length = 0.025
     vim.g.neovide_cursor_trail_size = 0.00
     vim.g.neovide_cursor_vfx_mode = "ripple"
+
+    local guifont_change = function(delta)
+        local name, curr = string.match(vim.opt.guifont:get()[1], '(.+):h(%d+)')
+        local new = curr + delta
+        vim.opt.guifont = name .. ':h' .. new
+        print(vim.opt.guifont:get()[0])
+    end
+
+    local guifont_reset = function ()
+        vim.opt.guifont = 'monospace:h12'
+    end
+
+    vim.keymap.set('n', '<C-=>', function() guifont_change(1) end, { desc = 'zoom in guifont' })
+    vim.keymap.set('n', '<C-->', function() guifont_change(-1) end, { desc = 'zoom out guifont' })
+    vim.keymap.set('n', '<C-0>', function() guifont_reset() end, { desc = 'reset guifont' })
 end
 
 vim.g.python3_host_prog = '/usr/bin/python'
