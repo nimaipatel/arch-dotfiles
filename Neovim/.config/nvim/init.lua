@@ -59,9 +59,6 @@ vim.keymap.set('t', [[<C-w><C-k>]], [[<C-\\><C-n><C-w><C-k>]])
 vim.keymap.set('t', [[<C-w><C-l>]], [[<C-\\><C-n><C-w><C-l>]])
 vim.keymap.set('t', [[<C-w><C-w>]], [[<C-\\><C-n><C-w><C-w>]])
 
-vim.keymap.set('n', '<C-k>', '<UP>', { desc = 'move up one line' })
-vim.keymap.set('n', '<C-j>', '<DOWN>', { desc = 'move down one line' })
-
 vim.api.nvim_create_autocmd(
     { 'VimResized' },
     {

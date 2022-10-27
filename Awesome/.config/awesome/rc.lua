@@ -186,7 +186,7 @@ local mymainmenu = awful.menu {
                 { ' &Wallpaper', 'set-wallpaper' },
             },
         },
-        { ' &Editor', 'kitty --single-instance -e nvim' },
+        { ' &Editor', 'neovide' },
         { ' &Browser', os.getenv 'BROWSER' },
         {
             ' &Utilities',
@@ -412,15 +412,16 @@ local globalkeys = gears.table.join(
     end),
 
     key({ modkey }, 'e', function()
-        local predicate = function(cmd)
-            return cmd[1] == "nvim"
+        for _, c in ipairs(client.get()) do
+            if c.class and c.class:match 'neovide' then
+                c:jump_to()
+                return
+            end
         end
-        local fallback = function()
-            awful.spawn('kitty --single-instance -e nvim', {
-                tag = TAGS[1],
-            })
-        end
-        lof_kitty(predicate, fallback)
+        -- urgent tags are automatically focused in this config
+        awful.spawn('neovide', {
+            tag = TAGS[1],
+        })
     end),
 
     key({ modkey }, 'v', function()
@@ -809,6 +810,7 @@ awful.rules.rules = {
     { rule = { instance = 'brave-browser' }, properties = { tag = TAGS[2] } },
     { rule = { instance = 'libreoffice' }, properties = { tag = TAGS[3] } },
     { rule = { instance = 'soffice' }, properties = { tag = TAGS[3] } },
+    { rule = { class = 'neovide' }, properties = { tag = TAGS[1] } },
     { rule = { class = 'Spotify' }, properties = { tag = TAGS[4] } },
     { rule = { class = 'Pavucontrol' }, properties = { tag = TAGS[4] } },
     { rule = { instance = 'whatsapp-nativefier-d40211' }, properties = { tag = TAGS[5] } },
