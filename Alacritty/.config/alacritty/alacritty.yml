@@ -1,6 +1,9 @@
 key_bindings:
   - { key: Return,   mods: Control|Shift, action: SpawnNewInstance }
 
+font:
+  size: 10
+
 cursor:
   style:
     blinking: Always

@@ -31,9 +31,12 @@ alias ls "lsd"
 alias diff "diff --color"
 alias grep "grep --color=auto --exclude-dir={.bzr,CVS,.git,.hg,.svn,.idea,.tox}"
 
-abbr -a vi "neovide"
-abbr -a vim "neovide"
-abbr -a nvim "neovide"
+function gnvim --description "open neovim instance in new terminal"
+    alacritty --class neovim -e nvim $argv & disown
+end
+abbr -a vi "gnvim"
+abbr -a vim "gnvim"
+abbr -a nvim "gnvim"
 
 abbr -a tp "trash-put"
 abbr -a p "paru"

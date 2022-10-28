@@ -27,6 +27,9 @@ local naughty = require 'naughty'
 local hotkeys_popup = require 'awful.hotkeys_popup'
 require 'awful.hotkeys_popup.keys'
 
+local terminal = 'alacritty'
+local editor  = 'alacritty --class neovim -e nvim'
+
 local TAGS = { ' ૧ ', ' ૨ ', ' ૩ ', ' ૪ ', ' ૫ ', ' ૬ ', ' ૭ ', ' ૮ ', ' ૯ ' }
 if awesome.startup_errors then
     naughty.notify {
@@ -156,7 +159,7 @@ local sysopts = {
 local mymainmenu = awful.menu {
     items = {
         { ' &System', sysopts },
-        { ' &Terminal', 'kitty ' },
+        { ' &Terminal', terminal},
         {
             ' &Customize',
             {
@@ -186,7 +189,7 @@ local mymainmenu = awful.menu {
                 { ' &Wallpaper', 'set-wallpaper' },
             },
         },
-        { ' &Editor', 'neovide' },
+        { ' &Editor',  editor},
         { ' &Browser', os.getenv 'BROWSER' },
         {
             ' &Utilities',
@@ -392,13 +395,13 @@ root.buttons(gears.table.join(
 local globalkeys = gears.table.join(
     key({ modkey }, 't', function()
         for _, c in ipairs(client.get()) do
-            if c.class and c.class:match 'kitty' then
+            if c.class and c.class:match 'Alacritty' then
                 c:jump_to()
                 return
             end
         end
         -- urgent tags are automatically focused in this config
-        awful.spawn('kitty', {
+        awful.spawn(terminal, {
             tag = TAGS[1],
         })
     end),
@@ -414,13 +417,13 @@ local globalkeys = gears.table.join(
 
     key({ modkey }, 'e', function()
         for _, c in ipairs(client.get()) do
-            if c.class and c.class:match 'neovide' then
+            if c.class and c.class:match 'neovim' then
                 c:jump_to()
                 return
             end
         end
         -- urgent tags are automatically focused in this config
-        awful.spawn('neovide', {
+        awful.spawn(editor, {
             tag = TAGS[1],
         })
     end),
@@ -432,7 +435,8 @@ local globalkeys = gears.table.join(
                 return
             end
         end
-        awful.spawn([[kitty  --class 'Pulsemixer' -e pulsemixer]], {
+        local pulsemixer = terminal .. ' --class Pulsemixer -e pulsemixer'
+        awful.spawn(pulsemixer, {
             tag = TAGS[4],
         })
     end, { description = 'toggle pulsemixer window', group = 'launcher' }),
@@ -554,7 +558,8 @@ local globalkeys = gears.table.join(
                 return
             end
         end
-        awful.spawn([[kitty --class 'Google Keep' -e nvim -c GkeepOpen]], {
+        local gkeep = terminal .. ' --class "Google Keep" -e nvim -c GkeepOpen'
+        awful.spawn(gkeep, {
             tag = TAGS[6],
         })
     end, { description = 'toggle google keep window', group = 'launcher' }),
