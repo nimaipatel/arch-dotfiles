@@ -1,6 +1,6 @@
 if vim.g.neovide then
-    vim.opt.guifont = "monospace:h12"
-    vim.g.neovide_cursor_animation_length = 0.025
+    vim.opt.guifont = "monospace:h10"
+    vim.g.neovide_cursor_animation_length = 0.00
     vim.g.neovide_cursor_trail_size = 0.00
     vim.g.neovide_cursor_vfx_mode = "ripple"
 
@@ -12,7 +12,7 @@ if vim.g.neovide then
     end
 
     local guifont_reset = function ()
-        vim.opt.guifont = 'monospace:h12'
+        vim.opt.guifont = 'monospace:h10'
     end
 
     vim.keymap.set('n', '<C-=>', function() guifont_change(1) end, { desc = 'zoom in guifont' })
@@ -455,6 +455,7 @@ packer.startup(function(use)
         end,
     }
 
+    use 'kmonad/kmonad-vim'
     use 'baskerville/vim-sxhkdrc'
     use 'fladson/vim-kitty'
 

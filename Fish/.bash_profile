@@ -37,3 +37,10 @@ export PATH="$HOME/.ghcup/bin:$PATH"
 
 # this is always used by fzf
 export FZF_DEFAULT_OPTS="--color=16 --padding=0,1 --cycle --prompt='>=> ' --pointer='>' --info=inline --layout=reverse"
+
+if [ -n "$BASH_VERSION" ]; then
+  # include .bashrc if it exists
+  if [ -f "$HOME/.bashrc" ]; then
+    . "$HOME/.bashrc"
+  fi
+fi

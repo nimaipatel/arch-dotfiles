@@ -156,7 +156,7 @@ local sysopts = {
 local mymainmenu = awful.menu {
     items = {
         { ' &System', sysopts },
-        { ' &Terminal', 'kitty --single-instance' },
+        { ' &Terminal', 'kitty ' },
         {
             ' &Customize',
             {
@@ -391,15 +391,16 @@ root.buttons(gears.table.join(
 -- {{{ Key bindings
 local globalkeys = gears.table.join(
     key({ modkey }, 't', function()
-        local predicate = function(cmd)
-            return cmd[1] == "fish"
+        for _, c in ipairs(client.get()) do
+            if c.class and c.class:match 'kitty' then
+                c:jump_to()
+                return
+            end
         end
-        local fallback = function()
-            awful.spawn('kitty --single-instance', {
-                tag = TAGS[1],
-            })
-        end
-        lof_kitty(predicate, fallback)
+        -- urgent tags are automatically focused in this config
+        awful.spawn('kitty', {
+            tag = TAGS[1],
+        })
     end),
 
     -- this one's for messaging applications. C stands for "chat"?
@@ -431,7 +432,7 @@ local globalkeys = gears.table.join(
                 return
             end
         end
-        awful.spawn([[kitty --single-instance --class 'Pulsemixer' -e pulsemixer]], {
+        awful.spawn([[kitty  --class 'Pulsemixer' -e pulsemixer]], {
             tag = TAGS[4],
         })
     end, { description = 'toggle pulsemixer window', group = 'launcher' }),
@@ -553,7 +554,7 @@ local globalkeys = gears.table.join(
                 return
             end
         end
-        awful.spawn([[kitty --single-instance --class 'Google Keep' -e nvim -c GkeepOpen]], {
+        awful.spawn([[kitty --class 'Google Keep' -e nvim -c GkeepOpen]], {
             tag = TAGS[6],
         })
     end, { description = 'toggle google keep window', group = 'launcher' }),
