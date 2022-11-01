@@ -28,7 +28,7 @@ local hotkeys_popup = require 'awful.hotkeys_popup'
 require 'awful.hotkeys_popup.keys'
 
 local terminal = 'alacritty'
-local editor  = 'alacritty --class neovim -e nvim'
+local editor   = 'alacritty --class Neovim --title Neovim -e nvim'
 
 local TAGS = { ' ૧ ', ' ૨ ', ' ૩ ', ' ૪ ', ' ૫ ', ' ૬ ', ' ૭ ', ' ૮ ', ' ૯ ' }
 if awesome.startup_errors then
@@ -159,7 +159,7 @@ local sysopts = {
 local mymainmenu = awful.menu {
     items = {
         { ' &System', sysopts },
-        { ' &Terminal', terminal},
+        { ' &Terminal', terminal },
         {
             ' &Customize',
             {
@@ -189,7 +189,7 @@ local mymainmenu = awful.menu {
                 { ' &Wallpaper', 'set-wallpaper' },
             },
         },
-        { ' &Editor',  editor},
+        { ' &Editor', editor },
         { ' &Browser', os.getenv 'BROWSER' },
         {
             ' &Utilities',
@@ -401,9 +401,7 @@ local globalkeys = gears.table.join(
             end
         end
         -- urgent tags are automatically focused in this config
-        awful.spawn(terminal, {
-            tag = TAGS[1],
-        })
+        awful.spawn(terminal)
     end),
 
     -- this one's for messaging applications. C stands for "chat"?
@@ -417,15 +415,13 @@ local globalkeys = gears.table.join(
 
     key({ modkey }, 'e', function()
         for _, c in ipairs(client.get()) do
-            if c.class and c.class:match 'neovim' then
+            if c.class and c.class:match 'Neovim' then
                 c:jump_to()
                 return
             end
         end
         -- urgent tags are automatically focused in this config
-        awful.spawn(editor, {
-            tag = TAGS[1],
-        })
+        awful.spawn(editor)
     end),
 
     key({ modkey }, 'v', function()
@@ -435,10 +431,8 @@ local globalkeys = gears.table.join(
                 return
             end
         end
-        local pulsemixer = terminal .. ' --class Pulsemixer -e pulsemixer'
-        awful.spawn(pulsemixer, {
-            tag = TAGS[4],
-        })
+        local pulsemixer = terminal .. ' --class Pulsemixer --title Pulsemixer -e pulsemixer'
+        awful.spawn(pulsemixer)
     end, { description = 'toggle pulsemixer window', group = 'launcher' }),
 
 
@@ -450,9 +444,7 @@ local globalkeys = gears.table.join(
             end
         end
         -- urgent tags are automatically focused in this config
-        awful.spawn('brave', {
-            tag = TAGS[2],
-        })
+        awful.spawn('brave')
     end),
 
     awful.key({ modkey }, 'Delete', function()
@@ -559,9 +551,7 @@ local globalkeys = gears.table.join(
             end
         end
         local gkeep = terminal .. ' --class "Google Keep" -e nvim -c GkeepOpen'
-        awful.spawn(gkeep, {
-            tag = TAGS[6],
-        })
+        awful.spawn(gkeep)
     end, { description = 'toggle google keep window', group = 'launcher' }),
 
     key({ modkey, 'Shift' }, 's', function()
@@ -575,9 +565,7 @@ local globalkeys = gears.table.join(
                 return
             end
         end
-        awful.spawn('spotify-launcher', {
-            tag = TAGS[4],
-        })
+        awful.spawn('spotify-launcher')
     end, { description = 'toggle spotify', group = 'launcher' }),
 
     awful.key({ modkey }, 'F1', hotkeys_popup.show_help, { description = 'show help', group = 'awesome' }),
@@ -817,9 +805,12 @@ awful.rules.rules = {
     { rule = { instance = 'libreoffice' }, properties = { tag = TAGS[3] } },
     { rule = { instance = 'soffice' }, properties = { tag = TAGS[3] } },
     { rule = { class = 'neovide' }, properties = { tag = TAGS[1] } },
+    { rule = { class = 'Neovim' }, properties = { tag = TAGS[1] } },
     { rule = { class = 'Spotify' }, properties = { tag = TAGS[4] } },
     { rule = { class = 'Pavucontrol' }, properties = { tag = TAGS[4] } },
+    { rule = { class = 'Pulsemixer' }, properties = { tag = TAGS[4] } },
     { rule = { instance = 'whatsapp-nativefier-d40211' }, properties = { tag = TAGS[5] } },
+    { rule = { class = 'Google Keep' }, properties = { tag = TAGS[6] } },
     { rule = { instance = 'scrcpy' }, properties = { floating = true, tag = TAGS[9] } },
 
     -- Add titlebars to normal clients and dialogs
