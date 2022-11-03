@@ -2,7 +2,7 @@ key_bindings:
   - { key: Return,   mods: Control|Shift, action: SpawnNewInstance }
 
 font:
-  size: 10
+  size: 12
 
 cursor:
   style:

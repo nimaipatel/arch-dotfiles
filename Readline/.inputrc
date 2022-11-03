@@ -25,7 +25,9 @@ set keymap vi-insert
 "\C-g": abort
 "\C-k": kill-line
 "\C-l": clear-screen
+"\C-n": history-search-forward
 "\C-o": operate-and-get-next
+"\C-p": history-search-backward
 "\C-q": quoted-insert
 "\C-x!": possible-command-completions
 "\C-x$": possible-variable-completions
