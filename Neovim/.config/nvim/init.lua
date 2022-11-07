@@ -11,7 +11,7 @@ if vim.g.neovide then
         print(vim.opt.guifont:get()[0])
     end
 
-    local guifont_reset = function ()
+    local guifont_reset = function()
         vim.opt.guifont = 'monospace:h10'
     end
 
@@ -280,7 +280,7 @@ packer.startup(function(use)
         'stevearc/gkeep.nvim',
         run = ':UpdateRemotePlugins',
         config = function()
-            vim.keymap.set('n', '<leader>k', ':GkeepToggle<CR>', { desc = 'toggle google keep' })
+            vim.keymap.set('n', '<leader>g', ':GkeepToggle<CR>', { desc = 'toggle google keep' })
         end,
     }
 
@@ -644,7 +644,7 @@ packer.startup(function(use)
     }
 
     use {
-        'https://github.com/williamboman/mason.nvim',
+        'williamboman/mason.nvim',
         config = function()
             require('mason').setup {}
         end,
@@ -685,7 +685,7 @@ packer.startup(function(use)
         opt = true,
         cmd = { 'DocsViewToggle' },
         setup = function()
-            vim.keymap.set('n', '<leader>K', ':DocsViewToggle<CR>', { desc = 'docs' })
+            vim.keymap.set('n', '<leader>k', ':DocsViewToggle<CR>', { desc = 'docs' })
         end,
         config = function()
             require('docs-view').setup {
@@ -950,7 +950,7 @@ packer.startup(function(use)
             'hrsh7th/cmp-buffer',
             'hrsh7th/cmp-path',
 
-            'https://github.com/hrsh7th/cmp-cmdline',
+            'hrsh7th/cmp-cmdline',
             'dmitmel/cmp-cmdline-history',
 
             'saadparwaiz1/cmp_luasnip',
@@ -1129,6 +1129,7 @@ packer.startup(function(use)
         requires = 'hrsh7th/nvim-cmp',
         config = function()
             require('nvim-autopairs').setup {
+                map_cr = true,
                 enable_check_bracket_line = false,
             }
             local cmp = require 'cmp'
@@ -1148,102 +1149,12 @@ packer.startup(function(use)
     }
 
     use {
-        'https://github.com/noib3/nvim-cokeline',
-        requires = 'kyazdani42/nvim-web-devicons',
-        config = function()
-            local get_hex = require('cokeline/utils').get_hex
-            local cokeline_fg = function(buffer)
-                if buffer.is_focused then
-                    return BASE16_COLORS.base06
-                else
-                    return BASE16_COLORS.base04
-                end
-            end
-            local cokeline_bg = function(buffer)
-                if buffer.is_focused then
-                    return BASE16_COLORS.base02
-                else
-                    return BASE16_COLORS.base01
-                end
-            end
-
-            require('cokeline').setup {
-                buffers = {
-                    filter_valid = function(buffer)
-                        return buffer.type ~= 'quickfix'
-                    end,
-                },
-                default_hl = {
-                    fg = cokeline_fg,
-                    bg = cokeline_bg,
-                },
-                sidebar = {
-                    filetype = 'NvimTree',
-                    components = {
-                        {
-                            text = '  NvimTree',
-                            fg = vim.g.terminal_color_3,
-                            bg = get_hex('NvimTreeNormal', 'bg'),
-                            style = 'bold',
-                        },
-                    },
-                },
-
-                components = {
-                    {
-                        text = function(buffer)
-                            return ' ' .. buffer.devicon.icon .. ' '
-                        end,
-                        fg = function(buffer)
-                            return buffer.devicon.color
-                        end,
-                    },
-                    {
-                        text = function(buffer)
-                            return buffer.unique_prefix .. buffer.filename .. ' '
-                        end,
-                        style = function(buffer)
-                            return buffer.is_focused and 'bold' or nil
-                        end,
-                    },
-
-                    {
-                        text = function(buffer)
-                            local d = buffer.diagnostics
-                            return (d.errors ~= 0 and U.SEVERITY_SIGNS.ERROR .. '  ' .. d.errors)
-                                or (d.warnings ~= 0 and U.SEVERITY_SIGNS.WARN .. '  ' .. d.warnings)
-                                or ''
-                        end,
-                        fg = function(buffer)
-                            local d = buffer.diagnostics
-                            return (d.errors ~= 0 and get_hex('DiagnosticError', 'fg'))
-                                or (d.warnings ~= 0 and get_hex('DiagnosticWarn', 'fg'))
-                                or nil
-                        end,
-                        truncation = { priority = 1 },
-                    },
-                    {
-                        text = function(buffer)
-                            return buffer.is_modified and '  ' or '  '
-                        end,
-                        fg = function(buffer)
-                            return buffer.is_modified and vim.g.terminal_color_2 or vim.g.terminal_color_7
-                        end,
-                        delete_buffer_on_left_click = true,
-                        truncation = { priority = 1 },
-                    },
-                },
-            }
-        end,
-    }
-
-    use {
         'famiu/bufdelete.nvim',
         config = function()
             local telescope = require 'telescope.builtin'
             vim.keymap.set('n', '<leader>b', telescope.buffers, { desc = 'find buffer' })
-            vim.keymap.set('n', '<C-n>', '<Plug>(cokeline-focus-next)', { desc = 'Next buffer' })
-            vim.keymap.set('n', '<C-p>', '<Plug>(cokeline-focus-prev)', { desc = 'Previous buffer' })
+            vim.keymap.set('n', '<C-n>', ':bnext<CR>', { desc = 'Next buffer' })
+            vim.keymap.set('n', '<C-p>', ':bprevious<CR>', { desc = 'Previous buffer' })
             vim.keymap.set('n', '<leader>x', ':Bdelete<CR>', { desc = 'close buffer' })
         end,
     }
