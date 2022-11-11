@@ -96,4 +96,4 @@ killall xsettingsd
 xsettingsd &
 
 # only doing this for dm-tool
-sudo -- sh -c 'rm -rf /usr/share/themes/FlatColor; cp -r /home/nimai/dotfiles/Flavours/.local/share/themes/FlatColor /usr/share/themes/FlatColor'
+# sudo -- sh -c 'rm -rf /usr/share/themes/FlatColor; cp -r /home/nimai/dotfiles/Flavours/.local/share/themes/FlatColor /usr/share/themes/FlatColor'
