@@ -97,6 +97,8 @@ function fish_hybrid_key_bindings --description \
 end
 set -g fish_key_bindings fish_hybrid_key_bindings
 
+bind -M insert \ez 'fish_commandline_append "&; disown"'
+
 set -x LESS_TERMCAP_mb (printf "\033[01;31m")
 set -x LESS_TERMCAP_md (printf "\033[01;31m")
 set -x LESS_TERMCAP_me (printf "\033[0m")
