@@ -1,4 +1,4 @@
-# Dotfiles managed by GNU Stow
+# Dotfiles managed by GNU Stow (it just werks!!!!!)
 
 Programs and configs that I use on a daily basis:
 - Awesome
