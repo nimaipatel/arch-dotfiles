@@ -446,6 +446,7 @@ packer.startup(function(use)
 
             vim.keymap.set('n', '<leader>q', '<Plug>(qf_qf_toggle)', { desc = 'toggle quickfix list' })
             vim.keymap.set('n', '<leader>l', '<Plug>(qf_loc_toggle)', { desc = 'toggle location list' })
+            vim.keymap.set('n', '<leader>m', ':make<CR>', { desc = 'make' })
 
             wk.register({ ['<leader>'] = { t = { name = 'toggle' } } })
             vim.keymap.set('n', '<leader>tw', ':set list!<CR>', { desc = 'whitespace' })
