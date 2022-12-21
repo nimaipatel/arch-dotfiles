@@ -266,11 +266,6 @@ nnoremap c` :call <SID>Marks("c`")<CR>
 nnoremap y' :call <SID>Marks("y'")<CR>
 nnoremap y` :call <SID>Marks("y`")<CR>
 
-augroup ClearOnMove
-  autocmd!
-  autocmd InsertEnter,CursorMoved * set nohlsearch nocursorline
-augroup END
-
 nnoremap * *zz:set hlsearch cursorline<cr>
 nnoremap # #zz:set hlsearch cursorline<cr>
 nnoremap n nzz:set hlsearch cursorline<cr>

@@ -114,6 +114,9 @@ alias genpas="gpg --armor --gen-random 1 20"
 alias nn="nmcli device wifi connect"
 alias nls="nmcli device wifi list --rescan yes"
 
+alias bls="bluetoothctl devices"
+alias bb="bluetoothctl connect"
+
 alias rr="rsync --archive --verbose --dry-run"
 
 alias encr="gpg -c --no-symkey-cache --cipher-algo AES256"

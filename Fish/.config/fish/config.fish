@@ -84,6 +84,7 @@ set fish_cursor_default block
 set fish_cursor_insert line
 set fish_cursor_replace_one underscore
 set fish_cursor_visual block
+set fish_greeting
 
 function fish_hybrid_key_bindings --description \
 "Vi-style bindings that inherit emacs-style bindings in all modes"
