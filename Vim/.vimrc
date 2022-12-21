@@ -23,9 +23,6 @@ set hlsearch
 set completeopt=menu,preview,longest,noinsert
 
 colorscheme habamax
-hi LineNr ctermfg=darkgray
-hi EndOfBuffer ctermfg=darkgray
-hi ModeMsg ctermbg=black
 
 cnoremap <c-n> <down>
 cnoremap <c-p> <up>
@@ -179,26 +176,6 @@ augroup END
 
 silent! noremap <unique> <silent>  <c-z>  :<c-u>call AltScreenControlZ()<cr>
 
-function! s:CycleThroughColorCol()
-  if &colorcolumn ==# 0
-    set colorcolumn=80
-    echom "colorcolumn is set to 80"
-  elseif &colorcolumn ==# 80
-    set colorcolumn=100
-    echom "colorcolumn is set to 100"
-  elseif &colorcolumn ==# 100
-    set colorcolumn=120
-    echom "colorcolumn is set to 120"
-  elseif &colorcolumn ==# 120
-    set colorcolumn=0
-    echom "colorcolumn is set to 0"
-  else
-    set colorcolumn=0
-    echom "colorcolumn is set to 0"
-  endif
-endfunction
-command! -nargs=0 CycleThroughColorCol call s:CycleThroughColorCol()
-
 nmap <leader>cc :CycleThroughColorCol<cr><leader>c
 nmap <leader>c<esc> :echom "DONE"<cr>
 
@@ -239,11 +216,6 @@ function! s:HightlightYank() abort
   redraw!
   call timer_start(100, {t_id -> clearmatches()})
 endfunction
-
-augroup HightlightYank
-  autocmd!
-  autocmd TextYankPost * if v:event.operator ==# 'y' | call s:HightlightYank() | endif
-augroup END
 
 " add new line without escaping normal mode and move to it
 nnoremap <leader><cr> :call append(line('.'), '')<cr>j

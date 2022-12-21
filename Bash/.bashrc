@@ -139,6 +139,11 @@ rg () {
   grep "$1" -r .
 }
 
+# i = incognito mode (?)
+i () {
+  unset HISTFILE
+}
+
 # shellcheck disable=SC2034
 ffmpeg_blackbars="-vf scale=1920:1080:force_original_aspect_ratio=decrease,pad=1920:1080:(ow-iw)/2:(oh-ih)/2,setsar=1"
 
