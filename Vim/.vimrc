@@ -32,6 +32,8 @@ set timeoutlen=1000 ttimeout ttimeoutlen=0
 
 set shell=/bin/bash
 
+set mouse=a
+
 let g:netrw_banner=0
 let g:netrw_browse_split=4
 let g:netrw_altv=1
@@ -569,3 +571,127 @@ nnoremap <leader>ki :CmdToBuffer imap<cr>
 nnoremap <leader>kl :CmdToBuffer lmap<cr>
 nnoremap <leader>kc :CmdToBuffer cmap<cr>
 nnoremap <leader>kt :CmdToBuffer tmap<cr>
+
+""""""""""""""autosave.vim""""""""""""""""
+
+let g:auto_save_loaded = 1
+
+let s:save_cpo = &cpo
+set cpo&vim
+
+let g:auto_save = 0
+
+let g:auto_save_silent = 0
+
+let g:auto_save_write_all_buffers = 0
+
+let g:auto_save_events = ["InsertLeave", "TextChanged"]
+
+" Check all used events exist
+for event in g:auto_save_events
+  if !exists("##" . event)
+    let eventIndex = index(g:auto_save_events, event)
+    if (eventIndex >= 0)
+      call remove(g:auto_save_events, eventIndex)
+      echo "(AutoSave) Save on " . event . " event is not supported for your Vim version!"
+      echo "(AutoSave) " . event . " was removed from g:auto_save_events variable."
+      echo "(AutoSave) Please, upgrade your Vim to a newer version or use other events in g:auto_save_events!"
+    endif
+  endif
+endfor
+
+augroup auto_save
+  autocmd!
+  for event in g:auto_save_events
+    execute "au " . event . " * nested call AutoSave()"
+  endfor
+augroup END
+
+command AutoSaveToggle :call AutoSaveToggle()
+
+function AutoSave()
+  if s:GetVar('auto_save', 0) == 0
+    return
+  end
+
+  let was_modified = s:IsModified()
+  if !was_modified
+    return
+  end
+
+  if exists("g:auto_save_presave_hook")
+    let g:auto_save_abort = 0
+    execute "" . g:auto_save_presave_hook
+    if g:auto_save_abort >= 1
+      return
+    endif
+  endif
+
+  " Preserve marks that are used to remember start and
+  " end position of the last changed or yanked text (`:h '[`).
+  let first_char_pos = getpos("'[")
+  let last_char_pos = getpos("']")
+
+  call DoSave()
+
+  call setpos("'[", first_char_pos)
+  call setpos("']", last_char_pos)
+
+  if was_modified && !&modified
+    if exists("g:auto_save_postsave_hook")
+      execute "" . g:auto_save_postsave_hook
+    endif
+
+    if g:auto_save_silent == 0
+      echo "(AutoSave) saved at " . strftime("%H:%M:%S")
+    endif
+  endif
+endfunction
+
+function s:IsModified()
+  if g:auto_save_write_all_buffers >= 1
+    let buffers = filter(range(1, bufnr('$')), 'bufexists(v:val)')
+    call filter(buffers, 'getbufvar(v:val, "&modified")')
+    return len(buffers) > 0
+  else
+    return &modified
+  endif
+endfunction
+
+" Resolve variable value by climbing up window-buffer-global hierarchy
+" So, buffer-local or window-local variables override global ones
+" If not found on any level, fallbacks to default value or empty string
+function s:GetVar(...)
+  let varName = a:1
+
+  if exists('w:' . varName)
+    return w:{varName}
+  elseif exists('b:' . varName)
+    return b:{varName}
+  elseif exists('g:' . varName)
+    return g:{varName}
+  else
+    return exists('a:2') ? a:2 : ''
+  endif
+endfunction
+
+function DoSave()
+  if g:auto_save_write_all_buffers >= 1
+    silent! wa
+  else
+    silent! w
+  endif
+endfunction
+
+function AutoSaveToggle()
+  if g:auto_save >= 1
+    let g:auto_save = 0
+    echo "(AutoSave) OFF"
+  else
+    let g:auto_save = 1
+    echo "(AutoSave) ON"
+  endif
+endfunction
+
+let &cpo = s:save_cpo
+unlet s:save_cpo

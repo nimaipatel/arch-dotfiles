@@ -34,6 +34,7 @@ export PATH="${HOME}/.local/share/bin:${PATH}"
 export PATH="$ANDROID_HOME/emulator:$PATH"
 export PATH="$JAVA_HOME/bin:$PATH"
 export PATH="$HOME/.ghcup/bin:$PATH"
+export PATH="$HOME/.cabal/bin:$PATH"
 
 # this is always used by fzf
 export FZF_DEFAULT_OPTS="--color=16 --padding=0,1 --cycle --prompt='>=> ' --pointer='>' --info=inline --layout=reverse"
