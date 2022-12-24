@@ -99,10 +99,6 @@ set keymap vi-insert
 "\e{": complete-into-braces
 "\e~": complete-username
 
-set show-mode-in-prompt on
-set vi-cmd-mode-string "\1\e[2 q\2"
-set vi-ins-mode-string "\1\e[6 q\2"
-
 # no delay after escape
 set keyseq-timeout 0
 
