@@ -13,9 +13,9 @@ stow --target="$HOME" bash vim tmux git readline\
                       miscscripts\
 
 # root configs
-# sudo stow keyd-root --target=/
+sudo stow keyd-root --target=/
 
 # this shit needs to be compiled
-#cd ./dwm-minimal   && sudo make clean install ; make clean && cd ..
-#cd ./st-minimal    && sudo make clean install ; make clean && cd ..
-#cd ./dmenu-minimal && sudo make clean install ; make clean && cd ..
+cd ./dwm-minimal   && sudo make clean install ; make clean && cd ..
+cd ./st-minimal    && sudo make clean install ; make clean && cd ..
+cd ./dmenu-minimal && sudo make clean install ; make clean && cd ..
