@@ -251,6 +251,8 @@ nnoremap k :cprevious<cr> :set cursorline<cr>
 nnoremap <C-j> :lnext<cr> :set cursorline<cr>
 nnoremap <C-k> :lprevious<cr> :set cursorline<cr>
 
+inoremap <C-c> <esc>
+
 " don't undo the whole thing!!
 inoremap , ,<C-g>u
 inoremap . .<C-g>u
@@ -278,7 +280,7 @@ augroup ExVimL
   autocmd FileType vim xnoremap <buffer> <f9> :call <SID>ExecHighlighted()<cr>
 augroup ExVimL
 
-" rsi.vim
+""""""""""""""rsi.vim""""""""""""""""
 inoremap        <C-A> <C-O>^
 inoremap   <C-X><C-A> <C-A>
 cnoremap        <C-A> <Home>
@@ -352,7 +354,7 @@ nnoremap <leader>g :vimgrep  **/*<Left><Left><Left><Left><Left>
 
 nnoremap <leader>f :find<Space>
 
-" sleuth.vim
+"""""""""""""""sleuth.vim""""""""""""""""
 function! s:guess(lines) abort
   let options = {}
   let heuristics = {'spaces': 0, 'hard': 0, 'soft': 0}
