@@ -45,3 +45,5 @@ if [ -n "$BASH_VERSION" ]; then
     . "$HOME/.bashrc"
   fi
 fi
+
+setfont /usr/share/kbd/consolefonts/ter-c28n.psf.gz
