@@ -11,6 +11,9 @@ export VIEB_WINDOW_FRAME=true
 # fix white screen of death in java awt programs
 export _JAVA_AWT_WM_NONREPARENTING=1
 
+# increase size of qt application
+export QT_SCALE_FACTOR=1.25
+
 # my scripts
 export MY_SCRIPTS="$HOME/.local/bin/my_scripts"
 export MY_SCRIPT_ASSETS="$HOME/.local/share/my_script_assets"
