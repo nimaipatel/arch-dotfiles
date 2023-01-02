@@ -1,12 +1,3 @@
-let &t_SI.="\e[5 q" "SI = INSERT mode
-let &t_SR.="\e[4 q" "SR = REPLACE mode
-let &t_EI.="\e[1 q" "EI = NORMAL mode (ELSE)
-
-augroup ResetCursorShape
-au!
-autocmd VimEnter * :normal :startinsert :stopinsert
-augroup END
-
 let mapleader=" "
 
 syntax on
@@ -245,11 +236,11 @@ nnoremap # #zz:set hlsearch cursorline<cr>
 nnoremap n nzz:set hlsearch cursorline<cr>
 nnoremap N Nzz:set hlsearch cursorline<cr>
 
-nnoremap j :cnext<cr> :set cursorline<cr>
-nnoremap k :cprevious<cr> :set cursorline<cr>
+silent nnoremap j :cnext<cr> :set cursorline<cr>
+silent nnoremap k :cprevious<cr> :set cursorline<cr>
 
-nnoremap <C-j> :lnext<cr> :set cursorline<cr>
-nnoremap <C-k> :lprevious<cr> :set cursorline<cr>
+silent nnoremap <C-j> :lnext<cr> :set cursorline<cr>
+silent nnoremap <C-k> :lprevious<cr> :set cursorline<cr>
 
 inoremap <C-c> <esc>
 
@@ -590,7 +581,7 @@ let g:auto_save_loaded = 1
 let s:save_cpo = &cpo
 set cpo&vim
 
-let g:auto_save = 0
+let g:auto_save = 1
 
 let g:auto_save_silent = 0
 
