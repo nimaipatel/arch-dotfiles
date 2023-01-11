@@ -11,11 +11,14 @@ function fish_prompt
     set_color -o green
     printf '%s' $USER
     set_color -o yellow
-    printf '@'
+    printf ' at '
     set_color -o blue
     echo -n (prompt_hostname)
     set_color -o magenta
-    printf ' %s' (prompt_pwd)
+    set_color -o yellow
+    printf ' in '
+    set_color -o blue
+    printf '%s' (prompt_pwd)
     printf '%s' (fish_git_prompt)
     if test -n "$VIRTUAL_ENV"
         printf "(%s) " (set_color blue)(basename $VIRTUAL_ENV)(set_color normal)
