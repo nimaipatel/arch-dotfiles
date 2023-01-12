@@ -1,24 +1,4 @@
-if vim.g.neovide then
-    vim.opt.guifont = "monospace:h10"
-    vim.g.neovide_cursor_animation_length = 0.00
-    vim.g.neovide_cursor_trail_size = 0.00
-    vim.g.neovide_cursor_vfx_mode = "ripple"
-
-    local guifont_change = function(delta)
-        local name, curr = string.match(vim.opt.guifont:get()[1], '(.+):h(%d+)')
-        local new = curr + delta
-        vim.opt.guifont = name .. ':h' .. new
-        print(vim.opt.guifont:get()[0])
-    end
-
-    local guifont_reset = function()
-        vim.opt.guifont = 'monospace:h10'
-    end
-
-    vim.keymap.set('n', '<C-=>', function() guifont_change(1) end, { desc = 'zoom in guifont' })
-    vim.keymap.set('n', '<C-->', function() guifont_change(-1) end, { desc = 'zoom out guifont' })
-    vim.keymap.set('n', '<C-0>', function() guifont_reset() end, { desc = 'reset guifont' })
-end
+vim.cmd [[colorscheme habamax]]
 
 vim.g.python3_host_prog = '/usr/bin/python'
 
@@ -68,12 +48,6 @@ vim.opt.isfname:append '{,}'
 -- cringe
 vim.opt.mouse = 'a'
 
-vim.keymap.set('t', [[<C-w><C-h>]], [[<C-\\><C-n><C-w><C-h>]])
-vim.keymap.set('t', [[<C-w><C-j>]], [[<C-\\><C-n><C-w><C-j>]])
-vim.keymap.set('t', [[<C-w><C-k>]], [[<C-\\><C-n><C-w><C-k>]])
-vim.keymap.set('t', [[<C-w><C-l>]], [[<C-\\><C-n><C-w><C-l>]])
-vim.keymap.set('t', [[<C-w><C-w>]], [[<C-\\><C-n><C-w><C-w>]])
-
 vim.api.nvim_create_autocmd(
     { 'VimResized' },
     {
@@ -89,33 +63,6 @@ vim.api.nvim_create_autocmd(
             require('vim.highlight').on_yank()
         end,
         desc = 'Highlight text on yanking',
-    }
-)
-
-vim.api.nvim_create_autocmd(
-    { 'TermOpen', 'BufEnter', 'BufWinEnter', 'WinEnter' },
-    {
-        pattern = { 'term://*' },
-        command = 'startinsert',
-        desc = 'Start terminal mode in insert mode',
-    }
-)
-
-vim.api.nvim_create_autocmd(
-    { 'BufLeave' },
-    {
-        pattern = { 'term://*' },
-        command = 'stopinsert',
-        desc = 'leave terminal mode immediately when shell exits',
-    }
-)
-
-vim.api.nvim_create_autocmd(
-    { 'TermClose' },
-    {
-        pattern = { 'term://*' },
-        command = ':call nvim_input("<CR>")',
-        desc = 'leave terminal mode immediately when shell exits',
     }
 )
 
@@ -136,137 +83,7 @@ if fn.empty(fn.glob(install_path)) > 0 then
     vim.cmd 'packadd packer.nvim'
 end
 
--- U for utils?
-U = {}
-
-U.SEVERITY_SIGNS = {
-    ERROR = '',
-    WARN = '',
-    INFO = '',
-    HINT = '',
-    DEBUG = '',
-    TRACE = '✎',
-}
-
-U.source_colors = function()
-    vim.cmd [[ source ~/.config/nvim/base16.lua ]]
-end
-
-U.base16_config = function()
-    require('base16-colorscheme').setup(BASE16_COLORS)
-    vim.api.nvim_set_hl(0, 'DiagnosticError', { fg = BASE16_COLORS.base08 })
-    vim.api.nvim_set_hl(0, 'DiagnosticWarn', { fg = BASE16_COLORS.base0A })
-    vim.api.nvim_set_hl(0, 'DiagnosticInfo', { fg = BASE16_COLORS.base06 })
-    vim.api.nvim_set_hl(0, 'DiagnosticHint', { fg = BASE16_COLORS.base0C })
-
-    vim.api.nvim_set_hl(0, 'DiagnosticUnderlineError', { sp = BASE16_COLORS.base08, undercurl = true })
-    vim.api.nvim_set_hl(0, 'DiagnosticUnderlineWarning', { sp = BASE16_COLORS.base0A, undercurl = true })
-    vim.api.nvim_set_hl(0, 'DiagnosticUnderlineWarn', { sp = BASE16_COLORS.base0A, undercurl = true })
-    vim.api.nvim_set_hl(0, 'DiagnosticUnderlineInfo', { sp = BASE16_COLORS.base06, undercurl = true })
-    vim.api.nvim_set_hl(0, 'DiagnosticUnderlineInformation', { sp = BASE16_COLORS.base06, undercurl = true })
-    vim.api.nvim_set_hl(0, 'DiagnosticUnderlineHint', { sp = BASE16_COLORS.base0C, undercurl = true })
-
-    if not vim.g.neovide then
-        vim.api.nvim_set_hl(0, 'Normal', { bg = 'NONE' })
-    end
-    vim.api.nvim_set_hl(0, 'NormalFloat', { bg = BASE16_COLORS.base01 })
-end
-
-U.lualine_config = function()
-    vim.opt.showmode = false
-
-    local colors = {
-        black = BASE16_COLORS.base00,
-        white = BASE16_COLORS.base06,
-        red = BASE16_COLORS.base08,
-        green = BASE16_COLORS.base0B,
-        blue = BASE16_COLORS.base0D,
-        yellow = BASE16_COLORS.base0A,
-        darkgray = BASE16_COLORS.base01,
-        lightgray = BASE16_COLORS.base02,
-        inactivegray = BASE16_COLORS.base03,
-        gray = BASE16_COLORS.base04,
-    }
-
-    local base16_lualine_colors = {
-        normal = {
-            a = { bg = colors.gray, fg = colors.black, gui = 'bold' },
-            b = { bg = colors.lightgray, fg = colors.white },
-            c = { bg = colors.darkgray, fg = colors.gray },
-        },
-        insert = {
-            a = { bg = colors.blue, fg = colors.black, gui = 'bold' },
-            b = { bg = colors.lightgray, fg = colors.white },
-            c = { bg = colors.lightgray, fg = colors.white },
-        },
-        visual = {
-            a = { bg = colors.yellow, fg = colors.black, gui = 'bold' },
-            b = { bg = colors.lightgray, fg = colors.white },
-            c = { bg = colors.inactivegray, fg = colors.black },
-        },
-        replace = {
-            a = { bg = colors.red, fg = colors.black, gui = 'bold' },
-            b = { bg = colors.lightgray, fg = colors.white },
-            c = { bg = colors.black, fg = colors.white },
-        },
-        command = {
-            a = { bg = colors.green, fg = colors.black, gui = 'bold' },
-            b = { bg = colors.lightgray, fg = colors.white },
-            c = { bg = colors.inactivegray, fg = colors.black },
-        },
-        inactive = {
-            a = { bg = colors.darkgray, fg = colors.gray, gui = 'bold' },
-            b = { bg = colors.darkgray, fg = colors.gray },
-            c = { bg = colors.darkgray, fg = colors.gray },
-        },
-    }
-
-    require('lualine').setup {
-        options = {
-            section_separators = { left = '', right = '' },
-            component_separators = { left = '', right = '' },
-            theme = base16_lualine_colors,
-        },
-        sections = {
-            lualine_a = { 'mode' },
-            lualine_b = { 'branch', 'diff' },
-            lualine_c = {
-                'filename',
-                function()
-                    return require('nvim-lightbulb').get_status_text()
-                end,
-            },
-            lualine_x = { 'encoding', 'fileformat', 'filetype' },
-            lualine_y = { 'progress' },
-            lualine_z = { 'location' },
-        },
-    }
-
-    vim.opt.laststatus = 3
-end
-
-U.refresh_base_16 = function()
-    U.source_colors()
-    U.base16_config()
-    U.lualine_config()
-    require('cmp.core').new()
-end
-
-vim.api.nvim_create_user_command('RefreshColors', U.refresh_base_16,
-    { desc = 'refresh generated base 16 colors' })
-
-vim.api.nvim_create_autocmd(
-    { 'Signal' },
-    {
-        pattern = 'SIGUSR1',
-        callback = U.refresh_base_16,
-        desc = 'refresh neovim colors when USR1 signal intercepted'
-    }
-)
-
 local packer = require 'packer'
-
-U.source_colors()
 
 packer.startup(function(use)
     use {
@@ -277,20 +94,10 @@ packer.startup(function(use)
     }
 
     use {
-        'stevearc/gkeep.nvim',
-        run = ':UpdateRemotePlugins',
-        config = function()
-            vim.keymap.set('n', '<leader>g', ':GkeepToggle<CR>', { desc = 'toggle google keep' })
-        end,
-    }
-
-    use {
         'stevearc/dressing.nvim',
         config = function()
             require('dressing').setup {
-                input = {
-                    winblend = 0,
-                },
+                input = { enabled = false, },
                 select = {
                     telescope = {
                         layout_config = {
@@ -301,112 +108,6 @@ packer.startup(function(use)
                     },
                 },
             }
-        end,
-    }
-
-    use {
-        'simrat39/desktop-notify.nvim',
-        config = function()
-            require('desktop-notify').override_vim_notify()
-        end,
-    }
-
-    use {
-        'rcarriga/nvim-notify',
-        disable = (jit.os == 'Linux'),
-        config = function()
-            local notify = require 'notify'
-            vim.notify = notify
-            notify.setup {
-                background_colour = 'Normal',
-                icons = {
-                    DEBUG = U.SEVERITY_SIGNS.DEBUG,
-                    ERROR = U.SEVERITY_SIGNS.ERROR,
-                    INFO = U.SEVERITY_SIGNS.INFO,
-                    TRACE = U.SEVERITY_SIGNS.TRACE,
-                    WARN = U.SEVERITY_SIGNS.WARN,
-                },
-                render = 'default',
-                stages = 'slide',
-                timeout = 5000,
-            }
-        end,
-    }
-
-    use {
-        'monaqa/dial.nvim',
-        config = function()
-            local augend = require 'dial.augend'
-            require('dial.config').augends:register_group {
-                default = {
-                    augend.integer.alias.decimal,
-                    augend.integer.alias.hex,
-                    augend.constant.new { elements = { 'true', 'false' } },
-                    augend.constant.new { elements = { 'True', 'False' } },
-                    augend.constant.new {
-                        elements = {
-                            'Sunday',
-                            'Monday',
-                            'Tuesday',
-                            'Wednesday',
-                            'Thursday',
-                            'Friday',
-                            'Saturday',
-                        },
-                    },
-                    augend.constant.new {
-                        elements = {
-                            'sunday',
-                            'monday',
-                            'tuesday',
-                            'wednesday',
-                            'thursday',
-                            'friday',
-                            'saturday',
-                        },
-                    },
-                    augend.constant.new {
-                        elements = {
-                            'January',
-                            'February',
-                            'March',
-                            'April',
-                            'May',
-                            'June',
-                            'July',
-                            'August',
-                            'September',
-                            'October',
-                            'November',
-                            'December',
-                        },
-                    },
-                    augend.constant.new {
-                        elements = {
-                            'january',
-                            'february',
-                            'march',
-                            'april',
-                            'may',
-                            'june',
-                            'july',
-                            'august',
-                            'september',
-                            'october',
-                            'november',
-                            'december',
-                        },
-                    },
-
-                    augend.date.alias['%d/%m/%Y'],
-                },
-            }
-            vim.keymap.set('n', '<C-a>', require('dial.map').inc_normal())
-            vim.keymap.set('n', '<C-x>', require('dial.map').dec_normal())
-            vim.keymap.set('v', '<C-a>', require('dial.map').inc_visual())
-            vim.keymap.set('v', '<C-x>', require('dial.map').dec_visual())
-            vim.keymap.set('v', 'g<C-a>', require('dial.map').inc_gvisual())
-            vim.keymap.set('v', 'g<C-x>', require('dial.map').dec_gvisual())
         end,
     }
 
@@ -495,29 +196,6 @@ packer.startup(function(use)
     }
 
     use {
-        'sindrets/diffview.nvim',
-        requires = 'nvim-lua/plenary.nvim',
-        config = function()
-            vim.opt.fillchars:append 'diff:╱'
-            vim.api.nvim_create_user_command(
-                'DiffviewToggle',
-                function()
-                    local view = require('diffview.lib').get_current_view()
-                    if view then
-                        vim.cmd 'DiffviewClose'
-                    else
-                        vim.cmd 'DiffviewOpen'
-                    end
-                end,
-                {
-                    desc = 'Toggle diff view'
-                }
-            )
-            vim.keymap.set('n', '<leader>gd', ':DiffviewToggle<CR>', { desc = 'toggle diff view' })
-        end,
-    }
-
-    use {
         'lewis6991/gitsigns.nvim',
         requires = 'nvim-lua/plenary.nvim',
         config = function()
@@ -525,14 +203,7 @@ packer.startup(function(use)
             local actions = require 'gitsigns.actions'
             local wk = require 'which-key'
 
-            gitsigns.setup {
-                signs = {
-                    change = { text = '│' },
-                    delete = { text = '│' },
-                    topdelete = { text = '│' },
-                    changedelete = { text = '│' },
-                },
-            }
+            gitsigns.setup {}
 
             wk.register({ ['<leader>'] = { h = { name = 'hunks' } } }, { mode = 'v' })
             wk.register({ ['<leader>'] = { h = { name = 'hunks' } } }, { mode = 'n' })
@@ -577,17 +248,6 @@ packer.startup(function(use)
         config = function()
             vim.g.license_author = 'Patel, Nimai'
             vim.g.license_email = 'nimai.m.patel@gmail.com'
-        end,
-    }
-
-    use {
-        'kyazdani42/nvim-tree.lua',
-        requires = {
-            'kyazdani42/nvim-web-devicons',
-        },
-        config = function()
-            require('nvim-tree').setup {}
-            vim.keymap.set('n', '<leader>e', ':NvimTreeToggle<CR>', { desc = 'toggle file explorer' })
         end,
     }
 
@@ -637,14 +297,6 @@ packer.startup(function(use)
     }
 
     use {
-        'm-demare/hlargs.nvim',
-        requires = { 'nvim-treesitter/nvim-treesitter' },
-        config = function()
-            require('hlargs').setup()
-        end,
-    }
-
-    use {
         'williamboman/mason.nvim',
         config = function()
             require('mason').setup {}
@@ -670,14 +322,7 @@ packer.startup(function(use)
     use {
         'https://gitlab.com/yorickpeterse/nvim-pqf',
         config = function()
-            require('pqf').setup {
-                signs = {
-                    error = U.SEVERITY_SIGNS.ERROR,
-                    warning = U.SEVERITY_SIGNS.WARN,
-                    info = U.SEVERITY_SIGNS.INFO,
-                    hint = U.SEVERITY_SIGNS.HINT,
-                },
-            }
+            require('pqf').setup {}
         end,
     }
 
@@ -714,20 +359,7 @@ packer.startup(function(use)
             vim.diagnostic.config {
                 underline = true,
                 virtual_text = false,
-                float = {
-                    show_header = false,
-                    format = function(diagnostic)
-                        for _, name in ipairs(vim.diagnostic.severity) do
-                            if diagnostic.severity == vim.diagnostic.severity[name] then
-                                return ('%s  %s (%s)'):format(
-                                    U.SEVERITY_SIGNS[name],
-                                    diagnostic.message,
-                                    diagnostic.source
-                                )
-                            end
-                        end
-                    end,
-                },
+                signs = false;
             }
 
             local on_attach = function(_, buffer)
@@ -756,11 +388,6 @@ packer.startup(function(use)
 
                 vim.keymap.set('i', '<C-s>', vim.lsp.buf.signature_help, { buffer = buffer, desc = 'signature help' })
 
-            end
-
-            for type, _ in pairs(U.SEVERITY_SIGNS) do
-                local hl = 'DiagnosticSign' .. type:lower():gsub('^%l', string.upper)
-                vim.fn.sign_define(hl, { text = '', texthl = hl, numhl = hl })
             end
 
             local function table_merge(t1, t2)
@@ -920,13 +547,8 @@ packer.startup(function(use)
         'kosayoda/nvim-lightbulb',
         config = function()
             require('nvim-lightbulb').setup {
-                sign = { enabled = false },
-                status_text = {
-                    text = U.SEVERITY_SIGNS.HINT .. '  [Code Action]',
-                    enabled = true,
-                },
+                sign = { enabled = true },
             }
-            vim.fn.sign_define('LightBulbSign', { text = U.SEVERITY_SIGNS.HINT, texthl = 'LspDiagnosticsDefaultHint' })
 
             vim.api.nvim_create_autocmd(
                 { 'CursorHold', 'CursorHoldI' },
@@ -958,7 +580,6 @@ packer.startup(function(use)
             'L3MON4D3/LuaSnip',
             'rafamadriz/friendly-snippets',
 
-            'onsails/lspkind-nvim',
             'lukas-reineke/cmp-under-comparator',
         },
         config = function()
@@ -1027,41 +648,6 @@ packer.startup(function(use)
                         cmp.config.compare.length,
                         cmp.config.compare.order,
                     },
-                },
-
-                formatting = {
-                    fields = { 'kind', 'abbr' },
-                    format = function(_, vim_item)
-                        local cmp_kinds = {
-                            Text = '  ',
-                            Method = '  ',
-                            Function = '  ',
-                            Constructor = '  ',
-                            Field = '  ',
-                            Variable = '  ',
-                            Class = '  ',
-                            Interface = '  ',
-                            Module = '  ',
-                            Property = '  ',
-                            Unit = '  ',
-                            Value = '  ',
-                            Enum = '  ',
-                            Keyword = '  ',
-                            Snippet = '  ',
-                            Color = '  ',
-                            File = '  ',
-                            Reference = '  ',
-                            Folder = '  ',
-                            EnumMember = '  ',
-                            Constant = '  ',
-                            Struct = '  ',
-                            Event = '  ',
-                            Operator = '  ',
-                            TypeParameter = '  ',
-                        }
-                        vim_item.kind = cmp_kinds[vim_item.kind] or ''
-                        return vim_item
-                    end,
                 },
             }
 
@@ -1140,16 +726,6 @@ packer.startup(function(use)
     }
 
     use {
-        'RRethy/nvim-base16',
-        config = U.base16_config,
-    }
-
-    use {
-        'nvim-lualine/lualine.nvim',
-        config = U.lualine_config,
-    }
-
-    use {
         'famiu/bufdelete.nvim',
         config = function()
             local telescope = require 'telescope.builtin'
@@ -1220,7 +796,7 @@ packer.startup(function(use)
             telescope.load_extension 'fzf'
 
             require('dressing').setup {
-                input = { winblend = 0 }
+                input = { enabled = false }
             }
 
             vim.keymap.set('n', '<leader><leader>', function()

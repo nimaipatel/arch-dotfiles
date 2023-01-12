@@ -30,7 +30,6 @@ end
 
 alias mv "mv -iv"
 alias cp "cp -iv"
-alias ls "lsd"
 alias diff "diff --color"
 alias grep "grep --color=auto --exclude-dir={.bzr,CVS,.git,.hg,.svn,.idea,.tox}"
 
@@ -54,9 +53,6 @@ abbr -a groot "cd \$(git rev-parse --show-toplevel)"
 abbr -a gl "git log"
 abbr -a glo "git log --pretty='oneline'"
 abbr -a glol "git log --graph --oneline --decorate"
-
-abbr -a l "lsd -A"
-abbr -a ll "lsd -Al"
 
 abbr -a genpas "gpg --armor --gen-random 1 5"
 
