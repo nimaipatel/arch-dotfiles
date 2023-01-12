@@ -12,7 +12,7 @@ function fish_prompt
     printf '%s' $USER
     set_color -o yellow
     printf ' at '
-    set_color -o blue
+    set_color -o red
     echo -n (prompt_hostname)
     set_color -o magenta
     set_color -o yellow
@@ -37,6 +37,9 @@ abbr -a vi "nvim"
 abbr -a vim "nvim"
 abbr -a nvim "nvim"
 
+abbr -a l "ls -Ah"
+abbr -a ll "ls -lAh"
+
 abbr -a tp "trash-put"
 abbr -a p "paru"
 
@@ -46,8 +49,8 @@ abbr -a gcm "git commit"
 abbr -a gg "git commit"
 abbr -a gch "git checkout"
 abbr -a gd "git diff"
-abbr -a gull "git pull origin"
-abbr -a gush "git push origin"
+abbr -a gull "git pull github"
+abbr -a gush "git push github"
 abbr -a gst "git status"
 abbr -a groot "cd \$(git rev-parse --show-toplevel)"
 abbr -a gl "git log"

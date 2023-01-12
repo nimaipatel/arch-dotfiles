@@ -1,51 +1,24 @@
-vim.cmd [[colorscheme habamax]]
-
+vim.g.netrw_liststyle = 3
 vim.g.python3_host_prog = '/usr/bin/python'
-
--- space bar is leader key
 vim.g.mapleader = ' '
+vim.g.loaded_matchparen = 1
 
--- quicker update
 vim.opt.updatetime = 50
-
--- whoaaa
 vim.opt.cmdheight = 0
-
--- fix space for signs
 vim.opt.signcolumn = 'yes'
-
 vim.opt.termguicolors = true
-
--- recurse into directories to search for files with :find
 vim.opt.path:append '**'
-
--- don't wrap lines
 vim.opt.wrap = false
-
--- search options
 vim.opt.hlsearch = true
 vim.opt.incsearch = true
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
 vim.opt.number = true
 vim.opt.relativenumber = true
-
--- netrw default style
-vim.g.netrw_liststyle = 3
-
--- copy and paste with OS clipboard
 vim.opt.clipboard = 'unnamed,unnamedplus'
-
--- whitespace characters
 vim.opt.listchars = 'tab:→ ,space:·,nbsp:␣,trail:•,eol:¶,precedes:«,extends:»'
-
--- completion style
 vim.opt.completeopt = 'menuone,noselect'
-
--- expand environment variables even if they are in braces
 vim.opt.isfname:append '{,}'
-
--- cringe
 vim.opt.mouse = 'a'
 
 vim.api.nvim_create_autocmd(
@@ -75,6 +48,34 @@ vim.cmd [[inoremap ? ?<C-g>u]]
 
 vim.cmd [[nnoremap <EXPR> k (v:count > 5 ? "m'" . v:count : "") . 'k']]
 vim.cmd [[nnoremap <EXPR> j (v:count > 5 ? "m'" . v:count : "") . 'j']]
+
+-- no op for <C-z>
+vim.keymap.set('n', '<C-z>', '<nop>')
+
+-- when jumping to bottom, center the page
+vim.keymap.set('n', 'G', 'Gzz')
+
+-- easier indentation control in visual mode
+vim.keymap.set('v', '>', '>gv')
+vim.keymap.set('v', '<', '<gv')
+
+vim.keymap.set('n', 'n', 'nzz')
+vim.keymap.set('n', 'N', 'Nzz')
+vim.keymap.set('n', '*', '*zz')
+vim.keymap.set('n', '#', '#zz')
+
+-- move lines up and down in visual mode
+vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv")
+vim.keymap.set('v', 'K', ":m '<-2<CR>gv=gv")
+
+vim.keymap.set('n', '<leader>q', '<Plug>(qf_qf_toggle)', { desc = 'toggle quickfix list' })
+vim.keymap.set('n', '<leader>l', '<Plug>(qf_loc_toggle)', { desc = 'toggle location list' })
+vim.keymap.set('n', '<leader>m', ':make<CR>', { desc = 'make' })
+
+vim.keymap.set('n', '<leader>tw', ':set list!<CR>', { desc = 'whitespace' })
+vim.keymap.set('n', '<leader>tr', ':set wrap!<CR>', { desc = 'line wrapping' })
+vim.keymap.set('n', '<leader>ts', ':set spell!<CR>', { desc = 'spell checking' })
+vim.keymap.set('n', '<leader>tn', ':set relativenumber!<CR>', { desc = 'relative line numbers' })
 
 local fn = vim.fn
 local install_path = fn.stdpath 'data' .. '/site/pack/packer/start/packer.nvim'
@@ -112,70 +113,34 @@ packer.startup(function(use)
     }
 
     use {
-        'folke/which-key.nvim',
+        'ellisonleao/gruvbox.nvim',
         config = function()
-            -- no op for <C-z>
-            vim.keymap.set('n', '<C-z>', '<nop>')
-
-            -- when jumping to bottom, center the page
-            vim.keymap.set('n', 'G', 'Gzz')
-
-            -- easier indentation control in visual mode
-            vim.keymap.set('v', '>', '>gv')
-            vim.keymap.set('v', '<', '<gv')
-
-            vim.keymap.set('n', 'n', 'nzz')
-            vim.keymap.set('n', 'N', 'Nzz')
-            vim.keymap.set('n', '*', '*zz')
-            vim.keymap.set('n', '#', '#zz')
-
-            -- move lines up and down in visual mode
-            vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv")
-            vim.keymap.set('v', 'K', ":m '<-2<CR>gv=gv")
-
-            vim.opt.timeoutlen = 300
-            local wk = require 'which-key'
-            wk.setup {
-                plugins = {
-                    presets = {
-                        operators = false,
-                        motions = false,
-                        text_objects = false,
-                    },
-                },
-            }
-
-            vim.keymap.set('n', '<leader>q', '<Plug>(qf_qf_toggle)', { desc = 'toggle quickfix list' })
-            vim.keymap.set('n', '<leader>l', '<Plug>(qf_loc_toggle)', { desc = 'toggle location list' })
-            vim.keymap.set('n', '<leader>m', ':make<CR>', { desc = 'make' })
-
-            wk.register({ ['<leader>'] = { t = { name = 'toggle' } } })
-            vim.keymap.set('n', '<leader>tw', ':set list!<CR>', { desc = 'whitespace' })
-            vim.keymap.set('n', '<leader>tr', ':set wrap!<CR>', { desc = 'line wrapping' })
-            vim.keymap.set('n', '<leader>ts', ':set spell!<CR>', { desc = 'spell checking' })
-            vim.keymap.set('n', '<leader>tn', ':set relativenumber!<CR>', { desc = 'relative line numbers' })
-        end,
+            vim.opt.background = 'dark'
+            require("gruvbox").setup({
+                contrast = 'hard',
+                italic = false,
+            })
+            vim.cmd [[colorscheme gruvbox]]
+        end
     }
 
-    use 'kmonad/kmonad-vim'
-    use 'baskerville/vim-sxhkdrc'
-    use 'fladson/vim-kitty'
-
     use 'svban/YankAssassin.vim'
-
     use 'wbthomason/packer.nvim'
-
     use 'tpope/vim-rsi'
-
     use 'tpope/vim-sleuth'
-
     use 'tpope/vim-commentary'
-
     use 'tpope/vim-surround'
-
     use 'tpope/vim-repeat'
-
     use 'tpope/vim-eunuch'
+
+    use {
+        'tpope/vim-fugitive',
+        config = function()
+            vim.keymap.set('n', '<leader>gg', ':Git ', { desc = 'prompt' })
+            vim.keymap.set('n', '<leader>gc', ':Git commit', { desc = 'commit' })
+            vim.keymap.set('n', '<leader>gs', ':Git status<CR>', { desc = 'status' })
+        end,
+    }
 
     use {
         'Pocco81/auto-save.nvim',
@@ -185,28 +150,13 @@ packer.startup(function(use)
     }
 
     use {
-        'tpope/vim-fugitive',
-        config = function()
-            local wk = require('which-key')
-            wk.register({ ['<leader>'] = { g = { name = 'git' } } })
-            vim.keymap.set('n', '<leader>gg', ':Git ', { desc = 'prompt' })
-            vim.keymap.set('n', '<leader>gc', ':Git commit', { desc = 'commit' })
-            vim.keymap.set('n', '<leader>gs', ':Git status<CR>', { desc = 'status' })
-        end,
-    }
-
-    use {
         'lewis6991/gitsigns.nvim',
         requires = 'nvim-lua/plenary.nvim',
         config = function()
             local gitsigns = require 'gitsigns'
             local actions = require 'gitsigns.actions'
-            local wk = require 'which-key'
 
             gitsigns.setup {}
-
-            wk.register({ ['<leader>'] = { h = { name = 'hunks' } } }, { mode = 'v' })
-            wk.register({ ['<leader>'] = { h = { name = 'hunks' } } }, { mode = 'n' })
 
             vim.keymap.set('v', '<leader>hs', function()
                 gitsigns.stage_hunk { vim.fn.line '.', vim.fn.line 'v' }
@@ -343,13 +293,11 @@ packer.startup(function(use)
     use {
         'neovim/nvim-lspconfig',
         requires = {
-            {
-                'jose-elias-alvarez/null-ls.nvim',
-                requires = { 'nvim-lua/plenary.nvim', 'neovim/nvim-lspconfig' },
-            },
-            { 'akinsho/flutter-tools.nvim' },
-            { 'p00f/clangd_extensions.nvim' },
-            { 'simrat39/rust-tools.nvim' },
+            'jose-elias-alvarez/null-ls.nvim',
+            'nvim-lua/plenary.nvim',
+            'akinsho/flutter-tools.nvim',
+            'p00f/clangd_extensions.nvim',
+            'simrat39/rust-tools.nvim',
         },
 
         config = function()
@@ -759,7 +707,6 @@ packer.startup(function(use)
         tag = '0.1.0',
         requires = {
             'stevearc/dressing.nvim',
-            'kyazdani42/nvim-web-devicons',
             { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' },
         },
         config = function()
@@ -768,9 +715,6 @@ packer.startup(function(use)
             local actions = require 'telescope.actions'
             telescope.setup {
                 defaults = {
-                    prompt_prefix = '  ',
-                    selection_caret = '  ',
-                    entry_prefix = '  ',
                     sorting_strategy = 'ascending',
                     layout_config = {
                         prompt_position = 'top',
