@@ -1,41 +1,9 @@
 #!/usr/bin/fish
 
-function fish_mode_prompt; end
-set __fish_git_prompt_color cyan
-set __fish_git_prompt_color_suffix yellow
-set __fish_git_prompt_color_prefix yellow
-function fish_prompt
-    if not set -q VIRTUAL_ENV_DISABLE_PROMPT
-        set -g VIRTUAL_ENV_DISABLE_PROMPT true
-    end
-    set_color -o green
-    printf '%s' $USER
-    set_color -o yellow
-    printf ' at '
-    set_color -o red
-    echo -n (prompt_hostname)
-    set_color -o magenta
-    set_color -o yellow
-    printf ' in '
-    set_color -o blue
-    printf '%s' (prompt_pwd)
-    printf '%s' (fish_git_prompt)
-    if test -n "$VIRTUAL_ENV"
-        printf "(%s) " (set_color blue)(basename $VIRTUAL_ENV)(set_color normal)
-    end
-    set_color -o yellow
-    printf "\n><> "
-    set_color normal
-end
-
 alias mv "mv -iv"
 alias cp "cp -iv"
 alias diff "diff --color"
 alias grep "grep --color=auto --exclude-dir={.bzr,CVS,.git,.hg,.svn,.idea,.tox}"
-
-abbr -a vi "nvim"
-abbr -a vim "nvim"
-abbr -a nvim "nvim"
 
 abbr -a l "ls -Ah"
 abbr -a ll "ls -lAh"
@@ -56,8 +24,6 @@ abbr -a groot "cd \$(git rev-parse --show-toplevel)"
 abbr -a gl "git log"
 abbr -a glo "git log --pretty='oneline'"
 abbr -a glol "git log --graph --oneline --decorate"
-
-abbr -a genpas "gpg --armor --gen-random 1 5"
 
 abbr -a nn "nmcli device wifi connect"
 abbr -a nls "nmcli device wifi list --rescan yes"
@@ -82,27 +48,4 @@ abbr -a -g g '| grep'
 
 abbr -a get_idf "bass source $HOME/esp/esp-idf/export.sh"
 
-set fish_cursor_default block
-set fish_cursor_insert line
-set fish_cursor_replace_one underscore
-set fish_cursor_visual block
 set fish_greeting
-
-function fish_hybrid_key_bindings --description \
-"Vi-style bindings that inherit emacs-style bindings in all modes"
-    for mode in default insert visual
-        fish_default_key_bindings -M $mode
-    end
-    fish_vi_key_bindings --no-erase
-end
-set -g fish_key_bindings fish_hybrid_key_bindings
-
-bind -M insert \ez 'fish_commandline_append "&; disown"'
-
-set -x LESS_TERMCAP_mb (printf "\033[01;31m")
-set -x LESS_TERMCAP_md (printf "\033[01;31m")
-set -x LESS_TERMCAP_me (printf "\033[0m")
-set -x LESS_TERMCAP_se (printf "\033[0m")
-set -x LESS_TERMCAP_so (printf "\033[01;44;33m")
-set -x LESS_TERMCAP_ue (printf "\033[0m")
-set -x LESS_TERMCAP_us (printf "\033[01;32m")
