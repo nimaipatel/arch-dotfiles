@@ -17,6 +17,7 @@ export PATH="${HOME}/.local/share/bin:${PATH}"
 export PATH="$ANDROID_HOME/emulator:$PATH"
 export PATH="$JAVA_HOME/bin:$PATH"
 export PATH="$HOME/.ghcup/bin:$PATH"
+export PATH="$HOME/.cargo/bin:$PATH"
 
 export _JAVA_AWT_WM_NONREPARENTING=1
 
